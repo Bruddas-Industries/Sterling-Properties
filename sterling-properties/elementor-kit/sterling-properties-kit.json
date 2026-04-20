@@ -1,0 +1,1064 @@
+{
+  "_comment": "=================================================================",
+  "_comment_2": "  STERLING PROPERTIES — ELEMENTOR TEMPLATE KIT",
+  "_comment_3": "  Format: Elementor Kit Export (importable via Elementor > Kit Library > Import)",
+  "_comment_4": "",
+  "_comment_5": "  CUSTOMIZATION GUIDE",
+  "_comment_6": "  -------------------",
+  "_comment_7": "  Colors:     All sections reference CSS variables (--color-primary, etc.)",
+  "_comment_8": "              Change the variables in global.css — no JSON edits required.",
+  "_comment_9": "  Fonts:      Headings use --font-heading, body uses --font-body.",
+  "_comment_10": "  Images:     Search 'REPLACE_WITH_IMAGE_URL' and swap in real media URLs.",
+  "_comment_11": "  Text:       Search 'REPLACE_WITH_' for every placeholder text node.",
+  "_comment_12": "=================================================================",
+
+  "version": "2.0",
+  "title": "Sterling Properties Kit",
+  "templates": [
+
+    {
+      "id": "sp-header",
+      "title": "Header — Sticky Minimal Nav",
+      "type": "header",
+      "_comment": "Sticky nav: logo left, links center, CTA button right. Uses CSS class btn--nav.",
+      "content": [
+        {
+          "id": "sp-header-section",
+          "elType": "section",
+          "settings": {
+            "layout": "full_width",
+            "height": "min-height",
+            "custom_height": { "unit": "px", "size": 80 },
+            "position": "fixed",
+            "z_index": 100,
+            "background_background": "classic",
+            "background_color": "rgba(250,250,248,0.95)",
+            "custom_css": ".elementor-section { backdrop-filter: blur(8px); border-bottom: 1px solid var(--color-border); transition: box-shadow 220ms ease; }",
+            "padding": { "unit": "px", "top": "0", "right": "48", "bottom": "0", "left": "48" }
+          },
+          "elements": [
+            {
+              "id": "sp-header-col-logo",
+              "elType": "column",
+              "settings": { "width": { "size": 25, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-logo-widget",
+                  "elType": "widget",
+                  "widgetType": "theme-site-logo",
+                  "_comment": "LOGO: Upload logo via Appearance > Customize > Site Identity, or replace with image widget.",
+                  "settings": {
+                    "width": { "unit": "px", "size": 160 },
+                    "align": "left"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "sp-header-col-nav",
+              "elType": "column",
+              "settings": { "width": { "size": 50, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-nav-menu",
+                  "elType": "widget",
+                  "widgetType": "nav-menu",
+                  "_comment": "NAV LINKS: Assign the 'Primary Navigation' WordPress menu in widget settings.",
+                  "settings": {
+                    "menu": "primary",
+                    "layout": "horizontal",
+                    "align_items": "center",
+                    "typography_typography": "custom",
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.14 },
+                    "typography_text_transform": "uppercase",
+                    "color": "var(--color-text)",
+                    "color_hover": "var(--color-primary)",
+                    "pointer": "underline",
+                    "animation_duration": "normal"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "sp-header-col-cta",
+              "elType": "column",
+              "settings": { "width": { "size": 25, "unit": "%" }, "content_align": "right" },
+              "elements": [
+                {
+                  "id": "sp-nav-cta",
+                  "elType": "widget",
+                  "widgetType": "button",
+                  "_comment": "CTA BUTTON: Change text and link per site. Style via btn--nav class in global.css.",
+                  "settings": {
+                    "text": "Schedule a Tour",
+                    "link": { "url": "#contact", "is_external": false },
+                    "size": "sm",
+                    "button_type": "custom",
+                    "background_color": "var(--color-primary)",
+                    "hover_background_color": "var(--color-primary-dark)",
+                    "border_radius": { "unit": "px", "top": 4, "right": 4, "bottom": 4, "left": 4 },
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.22 },
+                    "typography_text_transform": "uppercase",
+                    "text_color": "#FFFFFF",
+                    "padding": { "unit": "px", "top": "12", "right": "24", "bottom": "12", "left": "24" }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sp-hero",
+      "title": "Hero — Full-Bleed with Headline Overlay",
+      "type": "page",
+      "_comment": "Full-viewport hero. Background image with gradient scrim. Headline anchored bottom-left.",
+      "content": [
+        {
+          "id": "sp-hero-section",
+          "elType": "section",
+          "settings": {
+            "layout": "full_width",
+            "height": "min-height",
+            "custom_height": { "unit": "vh", "size": 90 },
+            "content_position": "bottom",
+            "background_background": "classic",
+            "background_image": {
+              "url": "REPLACE_WITH_IMAGE_URL",
+              "_comment": "HERO IMAGE: Replace URL with full-bleed property/lifestyle photo. Recommended: 2400×1600px minimum."
+            },
+            "background_position": "center center",
+            "background_size": "cover",
+            "background_overlay_background": "gradient",
+            "background_overlay_gradient_type": "linear",
+            "background_overlay_color": "rgba(0,0,0,0)",
+            "background_overlay_color_b": "rgba(0,0,0,0.65)",
+            "background_overlay_angle": { "unit": "deg", "size": 0 },
+            "background_overlay_opacity": { "unit": "px", "size": 1 },
+            "padding": { "unit": "rem", "top": "0", "right": "6", "bottom": "8", "left": "6" }
+          },
+          "elements": [
+            {
+              "id": "sp-hero-col",
+              "elType": "column",
+              "settings": { "width": { "size": 100, "unit": "%" } },
+              "elements": [
+
+                {
+                  "id": "sp-hero-eyebrow",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "_comment": "EYEBROW: Short location or category label (all caps). Remove if not needed.",
+                  "settings": {
+                    "editor": "<span class=\"eyebrow\" style=\"color:rgba(255,255,255,0.7);\">REPLACE_WITH_LOCATION — EST. 2020</span>",
+                    "margin": { "unit": "rem", "bottom": "1" }
+                  }
+                },
+
+                {
+                  "id": "sp-hero-headline",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "_comment": "HEADLINE: Main hero heading. Keep to 4–8 words for impact. Font: Cormorant Garamond Light.",
+                  "settings": {
+                    "title": "REPLACE_WITH_HERO_HEADLINE",
+                    "header_size": "h1",
+                    "align": "left",
+                    "typography_typography": "custom",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "vw", "size": 6.5 },
+                    "typography_font_size_mobile": { "unit": "rem", "size": 3 },
+                    "typography_font_weight": "300",
+                    "typography_letter_spacing": { "unit": "em", "size": -0.02 },
+                    "typography_line_height": { "unit": "em", "size": 1.05 },
+                    "title_color": "#FFFFFF",
+                    "max_width": { "unit": "ch", "size": 16 },
+                    "margin": { "unit": "rem", "bottom": "1.5" }
+                  }
+                },
+
+                {
+                  "id": "sp-hero-subheadline",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "_comment": "SUBHEADLINE: 1–2 sentence value proposition or tagline.",
+                  "settings": {
+                    "title": "REPLACE_WITH_HERO_SUBHEADLINE — A concise, evocative phrase that sets the tone.",
+                    "header_size": "h3",
+                    "align": "left",
+                    "typography_typography": "custom",
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "rem", "size": 1.25 },
+                    "typography_font_size_mobile": { "unit": "rem", "size": 1 },
+                    "typography_font_weight": "300",
+                    "typography_letter_spacing": { "unit": "em", "size": 0 },
+                    "typography_line_height": { "unit": "em", "size": 1.65 },
+                    "title_color": "rgba(255,255,255,0.85)",
+                    "max_width": { "unit": "ch", "size": 48 },
+                    "margin": { "unit": "rem", "bottom": "2.5" }
+                  }
+                },
+
+                {
+                  "id": "sp-hero-cta",
+                  "elType": "widget",
+                  "widgetType": "button",
+                  "_comment": "HERO CTA: Primary call-to-action. Link to contact section or inquiry form.",
+                  "settings": {
+                    "text": "REPLACE_WITH_CTA_LABEL",
+                    "link": { "url": "#contact", "is_external": false },
+                    "size": "lg",
+                    "button_type": "custom",
+                    "background_color": "var(--color-primary)",
+                    "hover_background_color": "var(--color-primary-dark)",
+                    "border_radius": { "unit": "px", "top": 4, "right": 4, "bottom": 4, "left": 4 },
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.22 },
+                    "typography_text_transform": "uppercase",
+                    "text_color": "#FFFFFF",
+                    "padding": { "unit": "px", "top": "18", "right": "40", "bottom": "18", "left": "40" }
+                  }
+                }
+
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sp-feature-1",
+      "title": "Feature Section 1 — Image Left, Text Right",
+      "type": "page",
+      "_comment": "Alternating feature: image fills left half, text body fills right. Dark-on-light variant.",
+      "content": [
+        {
+          "id": "sp-f1-section",
+          "elType": "section",
+          "settings": {
+            "layout": "full_width",
+            "gap": "no",
+            "height": "min-height",
+            "custom_height": { "unit": "px", "size": 560 },
+            "padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0" }
+          },
+          "elements": [
+
+            {
+              "id": "sp-f1-col-image",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 50, "unit": "%" },
+                "background_background": "classic",
+                "background_image": {
+                  "url": "REPLACE_WITH_IMAGE_URL",
+                  "_comment": "FEATURE IMAGE 1: Interior or lifestyle photo. Recommended: 1200×900px."
+                },
+                "background_size": "cover",
+                "background_position": "center center"
+              },
+              "elements": []
+            },
+
+            {
+              "id": "sp-f1-col-text",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 50, "unit": "%" },
+                "background_background": "classic",
+                "background_color": "var(--color-bg)",
+                "padding": { "unit": "rem", "top": "5", "right": "5", "bottom": "5", "left": "5" },
+                "content_align": "center"
+              },
+              "elements": [
+                {
+                  "id": "sp-f1-eyebrow",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "_comment": "EYEBROW: Short category label (e.g. 'Residences', 'Amenities').",
+                  "settings": {
+                    "editor": "<span class=\"eyebrow\">REPLACE_WITH_SECTION_LABEL</span>"
+                  }
+                },
+                {
+                  "id": "sp-f1-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "_comment": "SECTION HEADING: 3–6 word heading for this feature.",
+                  "settings": {
+                    "title": "REPLACE_WITH_FEATURE_HEADING",
+                    "header_size": "h2",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 2.75 },
+                    "typography_font_weight": "300",
+                    "typography_letter_spacing": { "unit": "em", "size": -0.02 },
+                    "title_color": "var(--color-text)",
+                    "margin": { "unit": "rem", "bottom": "1.5" }
+                  }
+                },
+                {
+                  "id": "sp-f1-divider",
+                  "elType": "widget",
+                  "widgetType": "divider",
+                  "settings": {
+                    "style": "solid",
+                    "weight": { "unit": "px", "size": 1 },
+                    "width": { "unit": "px", "size": 48 },
+                    "align": "left",
+                    "color": "var(--color-primary)",
+                    "margin": { "unit": "rem", "top": "0", "bottom": "1.5" }
+                  }
+                },
+                {
+                  "id": "sp-f1-body",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "_comment": "BODY TEXT: 2–4 sentences describing this feature. Keep scannable.",
+                  "settings": {
+                    "editor": "<p style=\"color:var(--color-text-muted); line-height:1.75; max-width:44ch;\">REPLACE_WITH_FEATURE_BODY_TEXT — Describe what makes this aspect of the property distinctive. Focus on experiential benefits over specifications.</p>",
+                    "margin": { "unit": "rem", "bottom": "2" }
+                  }
+                },
+                {
+                  "id": "sp-f1-cta",
+                  "elType": "widget",
+                  "widgetType": "button",
+                  "_comment": "INLINE CTA: Text link or ghost button. Remove if not needed.",
+                  "settings": {
+                    "text": "Learn More",
+                    "link": { "url": "#", "is_external": false },
+                    "size": "sm",
+                    "button_type": "custom",
+                    "background_color": "transparent",
+                    "border_border": "solid",
+                    "border_width": { "unit": "px", "top": 1, "right": 1, "bottom": 1, "left": 1 },
+                    "border_color": "var(--color-text)",
+                    "hover_background_color": "var(--color-text)",
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.22 },
+                    "typography_text_transform": "uppercase",
+                    "text_color": "var(--color-text)",
+                    "hover_color": "#FFFFFF",
+                    "padding": { "unit": "px", "top": "14", "right": "28", "bottom": "14", "left": "28" }
+                  }
+                }
+              ]
+            }
+
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sp-feature-2",
+      "title": "Feature Section 2 — Text Left, Image Right (Reversed)",
+      "type": "page",
+      "_comment": "Mirror of Feature 1. Text on left, image on right. Uses slightly darker bg for rhythm.",
+      "content": [
+        {
+          "id": "sp-f2-section",
+          "elType": "section",
+          "settings": {
+            "layout": "full_width",
+            "gap": "no",
+            "height": "min-height",
+            "custom_height": { "unit": "px", "size": 560 },
+            "padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0" }
+          },
+          "elements": [
+
+            {
+              "id": "sp-f2-col-text",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 50, "unit": "%" },
+                "background_background": "classic",
+                "background_color": "var(--color-bg-alt)",
+                "padding": { "unit": "rem", "top": "5", "right": "5", "bottom": "5", "left": "5" },
+                "content_align": "center"
+              },
+              "elements": [
+                {
+                  "id": "sp-f2-eyebrow",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": { "editor": "<span class=\"eyebrow\">REPLACE_WITH_SECTION_LABEL</span>" }
+                },
+                {
+                  "id": "sp-f2-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "settings": {
+                    "title": "REPLACE_WITH_FEATURE_HEADING",
+                    "header_size": "h2",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 2.75 },
+                    "typography_font_weight": "300",
+                    "typography_letter_spacing": { "unit": "em", "size": -0.02 },
+                    "title_color": "var(--color-text)",
+                    "margin": { "unit": "rem", "bottom": "1.5" }
+                  }
+                },
+                {
+                  "id": "sp-f2-divider",
+                  "elType": "widget",
+                  "widgetType": "divider",
+                  "settings": {
+                    "style": "solid",
+                    "weight": { "unit": "px", "size": 1 },
+                    "width": { "unit": "px", "size": 48 },
+                    "align": "left",
+                    "color": "var(--color-primary)",
+                    "margin": { "unit": "rem", "top": "0", "bottom": "1.5" }
+                  }
+                },
+                {
+                  "id": "sp-f2-body",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": {
+                    "editor": "<p style=\"color:var(--color-text-muted); line-height:1.75; max-width:44ch;\">REPLACE_WITH_FEATURE_BODY_TEXT</p>",
+                    "margin": { "unit": "rem", "bottom": "2" }
+                  }
+                },
+                {
+                  "id": "sp-f2-cta",
+                  "elType": "widget",
+                  "widgetType": "button",
+                  "settings": {
+                    "text": "Learn More",
+                    "link": { "url": "#", "is_external": false },
+                    "size": "sm",
+                    "button_type": "custom",
+                    "background_color": "transparent",
+                    "border_border": "solid",
+                    "border_width": { "unit": "px", "top": 1, "right": 1, "bottom": 1, "left": 1 },
+                    "border_color": "var(--color-text)",
+                    "hover_background_color": "var(--color-text)",
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.22 },
+                    "typography_text_transform": "uppercase",
+                    "text_color": "var(--color-text)",
+                    "hover_color": "#FFFFFF",
+                    "padding": { "unit": "px", "top": "14", "right": "28", "bottom": "14", "left": "28" }
+                  }
+                }
+              ]
+            },
+
+            {
+              "id": "sp-f2-col-image",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 50, "unit": "%" },
+                "background_background": "classic",
+                "background_image": { "url": "REPLACE_WITH_IMAGE_URL" },
+                "background_size": "cover",
+                "background_position": "center center"
+              },
+              "elements": []
+            }
+
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sp-feature-3",
+      "title": "Feature Section 3 — Image Left, Text Right (Dark Variant)",
+      "type": "page",
+      "_comment": "Same layout as Feature 1 but the text body uses a dark background for visual contrast.",
+      "content": [
+        {
+          "id": "sp-f3-section",
+          "elType": "section",
+          "settings": {
+            "layout": "full_width",
+            "gap": "no",
+            "height": "min-height",
+            "custom_height": { "unit": "px", "size": 560 },
+            "padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0" }
+          },
+          "elements": [
+
+            {
+              "id": "sp-f3-col-image",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 50, "unit": "%" },
+                "background_background": "classic",
+                "background_image": { "url": "REPLACE_WITH_IMAGE_URL" },
+                "background_size": "cover",
+                "background_position": "center center"
+              },
+              "elements": []
+            },
+
+            {
+              "id": "sp-f3-col-text",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 50, "unit": "%" },
+                "background_background": "classic",
+                "background_color": "var(--color-text)",
+                "padding": { "unit": "rem", "top": "5", "right": "5", "bottom": "5", "left": "5" },
+                "content_align": "center"
+              },
+              "elements": [
+                {
+                  "id": "sp-f3-eyebrow",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": {
+                    "editor": "<span class=\"eyebrow\" style=\"color:var(--color-primary);\">REPLACE_WITH_SECTION_LABEL</span>"
+                  }
+                },
+                {
+                  "id": "sp-f3-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "settings": {
+                    "title": "REPLACE_WITH_FEATURE_HEADING",
+                    "header_size": "h2",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 2.75 },
+                    "typography_font_weight": "300",
+                    "typography_letter_spacing": { "unit": "em", "size": -0.02 },
+                    "title_color": "var(--color-bg)",
+                    "margin": { "unit": "rem", "bottom": "1.5" }
+                  }
+                },
+                {
+                  "id": "sp-f3-divider",
+                  "elType": "widget",
+                  "widgetType": "divider",
+                  "settings": {
+                    "style": "solid",
+                    "weight": { "unit": "px", "size": 1 },
+                    "width": { "unit": "px", "size": 48 },
+                    "align": "left",
+                    "color": "var(--color-primary)",
+                    "margin": { "unit": "rem", "top": "0", "bottom": "1.5" }
+                  }
+                },
+                {
+                  "id": "sp-f3-body",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": {
+                    "editor": "<p style=\"color:rgba(250,250,248,0.7); line-height:1.75; max-width:44ch;\">REPLACE_WITH_FEATURE_BODY_TEXT</p>",
+                    "margin": { "unit": "rem", "bottom": "2" }
+                  }
+                },
+                {
+                  "id": "sp-f3-cta",
+                  "elType": "widget",
+                  "widgetType": "button",
+                  "settings": {
+                    "text": "Learn More",
+                    "link": { "url": "#", "is_external": false },
+                    "size": "sm",
+                    "button_type": "custom",
+                    "background_color": "transparent",
+                    "border_border": "solid",
+                    "border_width": { "unit": "px", "top": 1, "right": 1, "bottom": 1, "left": 1 },
+                    "border_color": "rgba(255,255,255,0.5)",
+                    "hover_background_color": "rgba(255,255,255,0.1)",
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.22 },
+                    "typography_text_transform": "uppercase",
+                    "text_color": "#FFFFFF",
+                    "hover_color": "#FFFFFF",
+                    "padding": { "unit": "px", "top": "14", "right": "28", "bottom": "14", "left": "28" }
+                  }
+                }
+              ]
+            }
+
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sp-amenities",
+      "title": "Amenities / Services Grid",
+      "type": "page",
+      "_comment": "3-column icon + heading + text card grid. Duplicate columns to add more items.",
+      "content": [
+        {
+          "id": "sp-amenities-section",
+          "elType": "section",
+          "settings": {
+            "layout": "boxed",
+            "content_width": { "unit": "px", "size": 1280 },
+            "background_background": "classic",
+            "background_color": "var(--color-bg-alt)",
+            "padding": {
+              "unit": "rem",
+              "top": "7", "right": "6", "bottom": "7", "left": "6"
+            }
+          },
+          "elements": [
+
+            {
+              "id": "sp-amenities-intro-col",
+              "elType": "column",
+              "settings": { "width": { "size": 100, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-amenities-eyebrow",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": { "editor": "<span class=\"eyebrow\">REPLACE_WITH_SECTION_LABEL</span>" }
+                },
+                {
+                  "id": "sp-amenities-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "_comment": "SECTION HEADING: 'Amenities', 'Services', or whatever fits the property.",
+                  "settings": {
+                    "title": "REPLACE_WITH_GRID_SECTION_HEADING",
+                    "header_size": "h2",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 3 },
+                    "typography_font_weight": "300",
+                    "typography_letter_spacing": { "unit": "em", "size": -0.02 },
+                    "title_color": "var(--color-text)",
+                    "max_width": { "unit": "ch", "size": 36 },
+                    "margin": { "unit": "rem", "bottom": "1.5" }
+                  }
+                },
+                {
+                  "id": "sp-amenities-subhead",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": {
+                    "editor": "<p style=\"color:var(--color-text-muted); max-width:52ch; line-height:1.75;\">REPLACE_WITH_GRID_INTRO_PARAGRAPH</p>",
+                    "margin": { "unit": "rem", "bottom": "4" }
+                  }
+                }
+              ]
+            },
+
+            {
+              "id": "sp-amenities-card-1",
+              "elType": "column",
+              "settings": { "width": { "size": 33.33, "unit": "%" } },
+              "_comment": "CARD 1: Duplicate this column block to add more amenity cards.",
+              "elements": [
+                {
+                  "id": "sp-icon-1",
+                  "elType": "widget",
+                  "widgetType": "icon",
+                  "_comment": "ICON: Choose from Elementor icon library or upload SVG. Swap color to --color-primary.",
+                  "settings": {
+                    "icon": { "library": "solid", "value": "fas fa-home" },
+                    "primary_color": "var(--color-primary)",
+                    "size": { "unit": "px", "size": 32 },
+                    "align": "left",
+                    "margin": { "unit": "rem", "bottom": "1" }
+                  }
+                },
+                {
+                  "id": "sp-card-1-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "_comment": "CARD HEADING: 1–3 words.",
+                  "settings": {
+                    "title": "REPLACE_WITH_CARD_HEADING",
+                    "header_size": "h4",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 1.5 },
+                    "typography_font_weight": "400",
+                    "title_color": "var(--color-text)",
+                    "margin": { "unit": "rem", "bottom": "0.75" }
+                  }
+                },
+                {
+                  "id": "sp-card-1-text",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "_comment": "CARD BODY: 1–2 sentences max.",
+                  "settings": {
+                    "editor": "<p style=\"color:var(--color-text-muted); font-size:0.9rem; line-height:1.7; max-width:36ch;\">REPLACE_WITH_CARD_BODY_TEXT</p>"
+                  }
+                }
+              ]
+            },
+
+            {
+              "id": "sp-amenities-card-2",
+              "elType": "column",
+              "settings": { "width": { "size": 33.33, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-icon-2",
+                  "elType": "widget",
+                  "widgetType": "icon",
+                  "settings": {
+                    "icon": { "library": "solid", "value": "fas fa-leaf" },
+                    "primary_color": "var(--color-primary)",
+                    "size": { "unit": "px", "size": 32 },
+                    "align": "left",
+                    "margin": { "unit": "rem", "bottom": "1" }
+                  }
+                },
+                {
+                  "id": "sp-card-2-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "settings": {
+                    "title": "REPLACE_WITH_CARD_HEADING",
+                    "header_size": "h4",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 1.5 },
+                    "typography_font_weight": "400",
+                    "title_color": "var(--color-text)",
+                    "margin": { "unit": "rem", "bottom": "0.75" }
+                  }
+                },
+                {
+                  "id": "sp-card-2-text",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": {
+                    "editor": "<p style=\"color:var(--color-text-muted); font-size:0.9rem; line-height:1.7; max-width:36ch;\">REPLACE_WITH_CARD_BODY_TEXT</p>"
+                  }
+                }
+              ]
+            },
+
+            {
+              "id": "sp-amenities-card-3",
+              "elType": "column",
+              "settings": { "width": { "size": 33.33, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-icon-3",
+                  "elType": "widget",
+                  "widgetType": "icon",
+                  "settings": {
+                    "icon": { "library": "solid", "value": "fas fa-star" },
+                    "primary_color": "var(--color-primary)",
+                    "size": { "unit": "px", "size": 32 },
+                    "align": "left",
+                    "margin": { "unit": "rem", "bottom": "1" }
+                  }
+                },
+                {
+                  "id": "sp-card-3-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "settings": {
+                    "title": "REPLACE_WITH_CARD_HEADING",
+                    "header_size": "h4",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 1.5 },
+                    "typography_font_weight": "400",
+                    "title_color": "var(--color-text)",
+                    "margin": { "unit": "rem", "bottom": "0.75" }
+                  }
+                },
+                {
+                  "id": "sp-card-3-text",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": {
+                    "editor": "<p style=\"color:var(--color-text-muted); font-size:0.9rem; line-height:1.7; max-width:36ch;\">REPLACE_WITH_CARD_BODY_TEXT</p>"
+                  }
+                }
+              ]
+            }
+
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sp-cta-contact",
+      "title": "CTA / Contact Section",
+      "type": "page",
+      "_comment": "Dark full-width CTA section. Headline + short copy + primary button. Anchor ID: #contact.",
+      "content": [
+        {
+          "id": "sp-cta-section",
+          "elType": "section",
+          "settings": {
+            "layout": "full_width",
+            "background_background": "classic",
+            "background_color": "var(--color-text)",
+            "padding": {
+              "unit": "rem",
+              "top": "8", "right": "6", "bottom": "8", "left": "6"
+            },
+            "css_classes": "cta-section",
+            "custom_id": "contact"
+          },
+          "elements": [
+            {
+              "id": "sp-cta-col",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 100, "unit": "%" },
+                "text_align": "center"
+              },
+              "elements": [
+
+                {
+                  "id": "sp-cta-eyebrow",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "settings": {
+                    "editor": "<span class=\"eyebrow\" style=\"color:var(--color-primary);\">REPLACE_WITH_CTA_LABEL</span>"
+                  }
+                },
+
+                {
+                  "id": "sp-cta-heading",
+                  "elType": "widget",
+                  "widgetType": "heading",
+                  "_comment": "CTA HEADING: Conversational, action-oriented. E.g. 'Ready to Call It Home?'",
+                  "settings": {
+                    "title": "REPLACE_WITH_CTA_HEADING",
+                    "header_size": "h2",
+                    "align": "center",
+                    "typography_font_family": "Cormorant Garamond",
+                    "typography_font_size": { "unit": "rem", "size": 3.25 },
+                    "typography_font_weight": "300",
+                    "typography_letter_spacing": { "unit": "em", "size": -0.02 },
+                    "title_color": "var(--color-bg)",
+                    "margin": { "unit": "rem", "bottom": "1.5" }
+                  }
+                },
+
+                {
+                  "id": "sp-cta-divider",
+                  "elType": "widget",
+                  "widgetType": "divider",
+                  "settings": {
+                    "style": "solid",
+                    "weight": { "unit": "px", "size": 1 },
+                    "width": { "unit": "px", "size": 48 },
+                    "align": "center",
+                    "color": "var(--color-primary)",
+                    "margin": { "unit": "rem", "top": "0", "bottom": "1.5" }
+                  }
+                },
+
+                {
+                  "id": "sp-cta-body",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "_comment": "CTA COPY: 1–2 sentence supporting statement.",
+                  "settings": {
+                    "editor": "<p style=\"color:rgba(250,250,248,0.7); line-height:1.75; max-width:52ch; margin-inline:auto; margin-bottom:2.5rem;\">REPLACE_WITH_CTA_BODY_TEXT</p>"
+                  }
+                },
+
+                {
+                  "id": "sp-cta-button",
+                  "elType": "widget",
+                  "widgetType": "button",
+                  "_comment": "CTA BUTTON: Link to inquiry form, contact page, or mailto.",
+                  "settings": {
+                    "text": "REPLACE_WITH_CTA_BUTTON_LABEL",
+                    "link": { "url": "#", "is_external": false },
+                    "size": "lg",
+                    "button_type": "custom",
+                    "background_color": "var(--color-primary)",
+                    "hover_background_color": "var(--color-primary-dark)",
+                    "border_radius": { "unit": "px", "top": 4, "right": 4, "bottom": 4, "left": 4 },
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.22 },
+                    "typography_text_transform": "uppercase",
+                    "text_color": "#FFFFFF",
+                    "padding": { "unit": "px", "top": "18", "right": "48", "bottom": "18", "left": "48" }
+                  }
+                }
+
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sp-footer",
+      "title": "Footer — Logo + Nav + Copyright",
+      "type": "footer",
+      "_comment": "Dark footer. Logo top-left, nav links top-right, copyright bar at bottom.",
+      "content": [
+        {
+          "id": "sp-footer-section",
+          "elType": "section",
+          "settings": {
+            "layout": "full_width",
+            "background_background": "classic",
+            "background_color": "var(--color-text)",
+            "padding": {
+              "unit": "rem",
+              "top": "6", "right": "6", "bottom": "4", "left": "6"
+            }
+          },
+          "elements": [
+
+            {
+              "id": "sp-footer-col-logo",
+              "elType": "column",
+              "settings": { "width": { "size": 50, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-footer-logo",
+                  "elType": "widget",
+                  "widgetType": "theme-site-logo",
+                  "_comment": "FOOTER LOGO: Will appear white if the logo has a transparent background.",
+                  "settings": {
+                    "width": { "unit": "px", "size": 140 },
+                    "align": "left",
+                    "css_filters_css_filter": "brightness(0) invert(1)",
+                    "opacity": { "unit": "px", "size": 0.75 }
+                  }
+                },
+                {
+                  "id": "sp-footer-tagline",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "_comment": "TAGLINE: Optional 1-line brand descriptor. Remove if not needed.",
+                  "settings": {
+                    "editor": "<p style=\"color:rgba(250,250,248,0.4); font-size:0.75rem; letter-spacing:0.08em; margin-top:1rem;\">REPLACE_WITH_FOOTER_TAGLINE</p>"
+                  }
+                }
+              ]
+            },
+
+            {
+              "id": "sp-footer-col-nav",
+              "elType": "column",
+              "settings": {
+                "width": { "size": 50, "unit": "%" },
+                "content_align": "right"
+              },
+              "elements": [
+                {
+                  "id": "sp-footer-nav",
+                  "elType": "widget",
+                  "widgetType": "nav-menu",
+                  "_comment": "FOOTER NAV: Assign the 'Footer Navigation' WordPress menu in widget settings.",
+                  "settings": {
+                    "menu": "footer",
+                    "layout": "horizontal",
+                    "align_items": "right",
+                    "typography_font_family": "Inter",
+                    "typography_font_size": { "unit": "px", "size": 11 },
+                    "typography_font_weight": "500",
+                    "typography_letter_spacing": { "unit": "em", "size": 0.14 },
+                    "typography_text_transform": "uppercase",
+                    "color": "rgba(250,250,248,0.45)",
+                    "color_hover": "rgba(250,250,248,0.85)",
+                    "pointer": "none"
+                  }
+                }
+              ]
+            },
+
+            {
+              "id": "sp-footer-divider-col",
+              "elType": "column",
+              "settings": { "width": { "size": 100, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-footer-divider",
+                  "elType": "widget",
+                  "widgetType": "divider",
+                  "settings": {
+                    "style": "solid",
+                    "weight": { "unit": "px", "size": 1 },
+                    "color": "rgba(255,255,255,0.1)",
+                    "margin": { "unit": "rem", "top": "3", "bottom": "2" }
+                  }
+                }
+              ]
+            },
+
+            {
+              "id": "sp-footer-bottom-col",
+              "elType": "column",
+              "settings": { "width": { "size": 100, "unit": "%" } },
+              "elements": [
+                {
+                  "id": "sp-footer-copyright",
+                  "elType": "widget",
+                  "widgetType": "text-editor",
+                  "_comment": "COPYRIGHT: The [current_year] shortcode is not native to Elementor — use a shortcode plugin, or hardcode the year and update annually.",
+                  "settings": {
+                    "editor": "<p style=\"color:rgba(250,250,248,0.35); font-size:0.7rem; letter-spacing:0.08em;\">© REPLACE_WITH_YEAR REPLACE_WITH_COMPANY_NAME. All rights reserved. &nbsp;·&nbsp; <a href=\"/privacy-policy\" style=\"color:rgba(250,250,248,0.35);\">Privacy Policy</a></p>"
+                  }
+                }
+              ]
+            }
+
+          ]
+        }
+      ]
+    }
+
+  ],
+
+  "kit_settings": {
+    "_comment": "Global kit settings — applied site-wide via Elementor > Site Settings > Global Colors/Fonts.",
+    "system_colors": [
+      { "id": "color-primary",  "title": "Accent",      "color": "#8B6F4E" },
+      { "id": "color-text",     "title": "Text",         "color": "#1A1A1A" },
+      { "id": "color-bg",       "title": "Background",   "color": "#FAFAF8" },
+      { "id": "color-bg-alt",   "title": "Alt BG",       "color": "#F2F0EC" }
+    ],
+    "system_typography": [
+      {
+        "id": "heading",
+        "title": "Heading",
+        "typography_font_family": "Cormorant Garamond",
+        "typography_font_weight": "300",
+        "typography_letter_spacing": { "unit": "em", "size": -0.02 }
+      },
+      {
+        "id": "body",
+        "title": "Body",
+        "typography_font_family": "Inter",
+        "typography_font_weight": "400",
+        "typography_letter_spacing": { "unit": "em", "size": 0 }
+      },
+      {
+        "id": "accent",
+        "title": "Accent / Label",
+        "typography_font_family": "Inter",
+        "typography_font_weight": "500",
+        "typography_letter_spacing": { "unit": "em", "size": 0.22 },
+        "typography_text_transform": "uppercase"
+      }
+    ]
+  }
+}

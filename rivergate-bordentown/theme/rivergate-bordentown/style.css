@@ -1,0 +1,24 @@
+/*
+Theme Name:  Rivergate Bordentown
+Theme URI:   https://bruddaindustries.com
+Author:      Brudda's Industries
+Author URI:  https://bruddaindustries.com
+Description: Sterling Properties base theme adapted for Rivergate Bordentown Waterfront.
+             All visual design is handled through Elementor templates and CSS custom
+             properties — swapping brand colors and fonts requires only editing global.css.
+Version:     1.0.0
+License:     GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: rivergate-bordentown
+Tags:        elementor, custom-background, full-width-template, one-column
+
+------------------------------------------------------------------------
+CUSTOMIZATION GUIDE
+------------------------------------------------------------------------
+All design tokens live in: assets/css/global.css
+  — Change --color-primary to swap the accent color
+  — Change --font-heading / --font-body to swap typefaces
+
+Elementor visual templates live in: ../../elementor-kit/
+------------------------------------------------------------------------
+*/

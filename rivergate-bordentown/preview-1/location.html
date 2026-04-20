@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location &amp; Neighborhood — Rivergate Bordentown Waterfront</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme/rivergate-bordentown/assets/css/global.css">
+  <style>
+    .preview-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      background: #1B5E91; color: #fff; text-align: center;
+      padding: 10px 24px; font-family: 'Inter', sans-serif;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .preview-banner strong { font-weight: 600; }
+
+    .page-hero {
+      position: relative; min-height: 380px; display: flex;
+      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-10); overflow: hidden;
+    }
+    .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
+    .page-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 50%; }
+    .page-hero__bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.08) 100%);
+    }
+    .page-hero__content {
+      position: relative; z-index: 1; width: 100%;
+      max-width: var(--container-max); margin-inline: auto;
+      padding-inline: var(--section-padding-x); color: #fff;
+    }
+    .page-hero__content .eyebrow { color: rgba(255,255,255,0.6); }
+    .page-hero__content h1 { color: #fff; max-width: 20ch; margin-bottom: 0; font-size: var(--text-3xl); }
+
+    /* Google Maps embed */
+    .map-embed {
+      width: 100%; height: 520px; border: 0; display: block;
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    @media (max-width: 768px) { .map-embed { height: 360px; } }
+
+    /* POI legend */
+    .poi-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-8); margin-top: var(--space-10);
+    }
+    .poi-category {}
+    .poi-category__label {
+      display: flex; align-items: center; gap: var(--space-3);
+      font-size: var(--text-xs); letter-spacing: var(--tracking-widest);
+      text-transform: uppercase; font-weight: var(--weight-medium);
+      color: var(--color-text); margin-bottom: var(--space-5);
+      padding-bottom: var(--space-3); border-bottom: 1.5px solid var(--color-border);
+    }
+    .poi-dot {
+      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+    }
+    .poi-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .poi-item {
+      display: flex; align-items: flex-start; gap: var(--space-3);
+    }
+    .poi-marker {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .poi-item-text {}
+    .poi-item-name {
+      font-size: var(--text-sm); color: var(--color-text);
+      font-weight: var(--weight-medium); display: block;
+    }
+    .poi-item-detail {
+      font-size: var(--text-xs); color: var(--color-text-muted);
+      letter-spacing: 0.02em; display: block; margin-top: 2px;
+    }
+
+    /* Colors for POI categories */
+    .dot--transit   { background: #1B5E91; }
+    .dot--shopping  { background: #2E7D32; }
+    .dot--dining    { background: #C62828; }
+    .dot--rec       { background: #6A1B9A; }
+    .dot--education { background: #E65100; }
+
+    /* Transit stats strip */
+    .transit-strip {
+      background: var(--color-text); color: var(--color-bg);
+      padding-block: var(--space-8);
+    }
+    .transit-strip .container {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-6); text-align: center;
+    }
+    .transit-stat__number {
+      font-family: var(--font-heading); font-size: var(--text-3xl);
+      font-weight: var(--weight-light); color: #fff; display: block;
+      letter-spacing: var(--tracking-tight);
+    }
+    .transit-stat__label {
+      font-size: var(--text-xs); letter-spacing: var(--tracking-wider);
+      text-transform: uppercase; color: rgba(248,249,251,0.55);
+      display: block; margin-top: var(--space-2);
+    }
+
+    @media (max-width: 640px) {
+      .poi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.1em; color: var(--color-text); text-transform: uppercase; line-height: 1.1;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.7;">Bordentown</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a href="contact.html" class="btn btn--nav">Schedule a Tour</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="amenities.html">Amenities</a>
+    <a href="floor-plans.html">Floor Plans</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="location.html">Location</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="nav-overlay__divider"></div>
+  <a href="contact.html" class="btn btn--primary nav-overlay__cta">Schedule a Tour</a>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-label="Location">
+  <div class="page-hero__bg">
+    <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/slide-home-1.jpg" alt="Rivergate Bordentown waterfront location" loading="eager">
+  </div>
+  <div class="page-hero__content">
+    <span class="eyebrow">Bordentown, New Jersey</span>
+    <h1>Location &amp; Neighborhood</h1>
+  </div>
+</section>
+
+
+<!-- TRANSIT STATS STRIP -->
+<div class="transit-strip">
+  <div class="container">
+    <div>
+      <span class="transit-stat__number">Steps</span>
+      <span class="transit-stat__label">to River Line Light Rail</span>
+    </div>
+    <div>
+      <span class="transit-stat__number">~45 min</span>
+      <span class="transit-stat__label">to Philadelphia via transit</span>
+    </div>
+    <div>
+      <span class="transit-stat__number">~75 min</span>
+      <span class="transit-stat__label">to New York Penn Station</span>
+    </div>
+    <div>
+      <span class="transit-stat__number">~20 min</span>
+      <span class="transit-stat__label">to Princeton, NJ</span>
+    </div>
+    <div>
+      <span class="transit-stat__number">I-295</span>
+      <span class="transit-stat__label">I-195 · Route 206 · Turnpike</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- GOOGLE MAP -->
+<section>
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">500 Bluff View Circle · Bordentown, NJ 08505</span>
+      <h2>Find Us on the Map</h2>
+      <p>Situated along the Delaware River in historic Bordentown, New Jersey — at the crossroads of natural beauty and regional connectivity.</p>
+    </div>
+
+    <div style="margin-top: var(--space-8); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+      <iframe
+        class="map-embed"
+        src="https://maps.google.com/maps?q=500+Bluff+View+Circle,Bordentown,NJ+08505&output=embed&z=15"
+        title="Rivergate Bordentown location map"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6);">
+      <a href="https://maps.google.com/?q=500+Bluff+View+Circle+Bordentown+NJ+08505" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
+      <a href="contact.html" class="btn btn--secondary">Contact Leasing Office</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- POINTS OF INTEREST -->
+<section class="section--alt">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Neighborhood Guide</span>
+      <h2>Points of Interest</h2>
+      <p>Everything you need — transit, shopping, dining, recreation, and more — is close at hand from Rivergate Bordentown.</p>
+    </div>
+
+    <div class="poi-grid">
+
+      <!-- Transit -->
+      <div class="poi-category" data-animate>
+        <div class="poi-category__label">
+          <span class="poi-dot dot--transit"></span>
+          Transit &amp; Commuting
+        </div>
+        <div class="poi-list">
+          <div class="poi-item">
+            <span class="poi-marker dot--transit"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">River Line Light Rail</span>
+              <span class="poi-item-detail">Steps from Rivergate · Bordentown Station</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--transit"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Trenton Transit Center</span>
+              <span class="poi-item-detail">NJ Transit + Amtrak Northeast Corridor · ~10 min via River Line</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--transit"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">I-295 On-Ramp</span>
+              <span class="poi-item-detail">Minutes from property · North to NYC, South to Philadelphia</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--transit"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">New Jersey Turnpike</span>
+              <span class="poi-item-detail">Exit 7 · ~5 minutes</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--transit"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">I-195 &amp; Route 206</span>
+              <span class="poi-item-detail">Nearby access to Shore points and Princeton corridor</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shopping -->
+      <div class="poi-category" data-animate>
+        <div class="poi-category__label">
+          <span class="poi-dot dot--shopping"></span>
+          Shopping &amp; Retail
+        </div>
+        <div class="poi-list">
+          <div class="poi-item">
+            <span class="poi-marker dot--shopping"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Bordentown City</span>
+              <span class="poi-item-detail">Boutique shops, galleries, and local markets · ~1 mile</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--shopping"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Hamilton Marketplace</span>
+              <span class="poi-item-detail">Target, Best Buy, major retail chains · ~10 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--shopping"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Shoppes at Hamilton</span>
+              <span class="poi-item-detail">Lifestyle retail and dining · ~12 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--shopping"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Quaker Bridge Mall</span>
+              <span class="poi-item-detail">Full regional mall · ~20 min</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dining -->
+      <div class="poi-category" data-animate>
+        <div class="poi-category__label">
+          <span class="poi-dot dot--dining"></span>
+          Dining &amp; Entertainment
+        </div>
+        <div class="poi-list">
+          <div class="poi-item">
+            <span class="poi-marker dot--dining"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Bordentown City Dining</span>
+              <span class="poi-item-detail">Local restaurants, cafes, and bars along Farnsworth Ave</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--dining"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Trenton Restaurant Scene</span>
+              <span class="poi-item-detail">Diverse dining options · ~15 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--dining"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Hamilton Area Dining</span>
+              <span class="poi-item-detail">Chain and local restaurants near Hamilton Marketplace</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recreation -->
+      <div class="poi-category" data-animate>
+        <div class="poi-category__label">
+          <span class="poi-dot dot--rec"></span>
+          Recreation &amp; Outdoors
+        </div>
+        <div class="poi-list">
+          <div class="poi-item">
+            <span class="poi-marker dot--rec"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Crystal Lake Park</span>
+              <span class="poi-item-detail">Walking trails, fishing, and open green space · ~5 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--rec"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Kuser Farm Park</span>
+              <span class="poi-item-detail">Historic park with trails and community events · ~15 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--rec"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Grounds For Sculpture</span>
+              <span class="poi-item-detail">World-class sculpture park · ~20 min · Hamilton, NJ</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--rec"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Old York Country Club</span>
+              <span class="poi-item-detail">Golf · ~10 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--rec"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Rancocas Golf Club</span>
+              <span class="poi-item-detail">Golf · ~15 min · Mount Holly, NJ</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--rec"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">The Jersey Shore</span>
+              <span class="poi-item-detail">Point Pleasant, Asbury Park, Long Beach Island · ~60 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--rec"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Delaware River Waterfront</span>
+              <span class="poi-item-detail">Walking and cycling paths · At your doorstep</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="poi-category" data-animate>
+        <div class="poi-category__label">
+          <span class="poi-dot dot--education"></span>
+          Education &amp; Healthcare
+        </div>
+        <div class="poi-list">
+          <div class="poi-item">
+            <span class="poi-marker dot--education"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Bordentown Regional School District</span>
+              <span class="poi-item-detail">K–12 schools serving the Bordentown community</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--education"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Princeton University</span>
+              <span class="poi-item-detail">~20 min north via Route 206</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--education"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Rider University</span>
+              <span class="poi-item-detail">Lawrenceville, NJ · ~20 min</span>
+            </span>
+          </div>
+          <div class="poi-item">
+            <span class="poi-marker dot--education"></span>
+            <span class="poi-item-text">
+              <span class="poi-item-name">Capital Health Medical Center</span>
+              <span class="poi-item-detail">Hopewell, NJ · ~20 min</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- TRANSIT DEEP DIVE -->
+<article class="feature">
+  <div class="feature__image">
+    <img src="https://rivergatebordentown.com/wp-content/uploads/2015/07/slide-home-5a.jpg" alt="Rivergate Bordentown community near transit" loading="lazy">
+  </div>
+  <div class="feature__body" data-animate>
+    <span class="eyebrow">Transit-Oriented Living</span>
+    <h2>The Region at Your Doorstep</h2>
+    <div class="divider"></div>
+    <p>Rivergate was intentionally developed as a transit-oriented community. The Bordentown River Line station is steps from your front door — providing direct, car-free access to Trenton's Transit Center and connections to the entire Northeast Corridor.</p>
+    <p style="margin-top: var(--space-4);">From Trenton, NJ Transit and Amtrak connect you north to New York Penn Station and south to Philadelphia 30th Street Station. Whether you commute daily or travel occasionally, Rivergate keeps you connected without the car.</p>
+    <ul style="margin-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3);">
+      <li style="display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted);">
+        <span style="color: var(--color-primary);">—</span> Bordentown River Line Station — steps away
+      </li>
+      <li style="display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted);">
+        <span style="color: var(--color-primary);">—</span> Trenton Transit Center — ~10 min · NJ Transit + Amtrak
+      </li>
+      <li style="display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted);">
+        <span style="color: var(--color-primary);">—</span> New York Penn Station — ~75 min by rail
+      </li>
+      <li style="display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted);">
+        <span style="color: var(--color-primary);">—</span> Philadelphia 30th Street — ~45 min by rail
+      </li>
+      <li style="display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted);">
+        <span style="color: var(--color-primary);">—</span> I-295, I-195, Route 206 &amp; NJ Turnpike nearby
+      </li>
+    </ul>
+    <a href="https://maps.google.com/?q=500+Bluff+View+Circle+Bordentown+NJ+08505" target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="margin-top: var(--space-6);">Get Directions</a>
+  </div>
+</article>
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="eyebrow" style="color: rgba(255,255,255,0.5);">Come See It</span>
+    <div class="divider"></div>
+    <h2>Location Changes Everything</h2>
+    <p>Visit Rivergate Bordentown and experience the unmatched combination of waterfront living and regional connectivity.</p>
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="contact.html" class="btn btn--primary">Schedule a Tour</a>
+      <a href="https://maps.google.com/?q=500+Bluff+View+Circle+Bordentown+NJ+08505" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">Get Directions</a>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.14em; color: rgba(248,249,251,0.85); text-transform: uppercase; line-height: 1.2;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.6;">Bordentown</span>
+      </span>
+    </a>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="amenities.html">Amenities</a>
+      <a href="floor-plans.html">Floor Plans</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="location.html">Location</a>
+      <a href="contact.html">Contact</a>
+      <a href="residents.html">Residents</a>
+      <a href="https://rivergatebordentown.com/pay-rent/" target="_blank" rel="noopener noreferrer">Pay Rent</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
+    <div style="display:flex; gap: var(--space-5);">
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
+    </div>
+  </div>
+</footer>
+
+<div class="preview-banner" role="status">
+  <strong>Design Preview — Multi-Page</strong> · preview-1/location.html · Static mockup using live Rivergate assets
+</div>
+
+<script>
+  (function () {
+    var header = document.getElementById('site-header'); if (!header) return;
+    window.addEventListener('scroll', function () { header.classList.toggle('is-scrolled', window.scrollY > 10); }, { passive: true });
+  }());
+  (function () {
+    var toggle = document.getElementById('nav-toggle'); var overlay = document.getElementById('nav-overlay');
+    if (!toggle || !overlay) return;
+    function closeNav() { overlay.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); document.body.classList.remove('nav-is-open'); }
+    function openNav()  { overlay.classList.add('is-open');    toggle.setAttribute('aria-expanded','true');  document.body.classList.add('nav-is-open'); }
+    toggle.addEventListener('click', function () { overlay.classList.contains('is-open') ? closeNav() : openNav(); });
+    overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeNav(); });
+  }());
+  (function () {
+    var items = document.querySelectorAll('[data-animate]'); if (!items.length) return;
+    if (!window.IntersectionObserver) { items.forEach(function (el) { el.classList.add('is-visible'); }); return; }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    items.forEach(function (el) { observer.observe(el); });
+  }());
+</script>
+</body>
+</html>

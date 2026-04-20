@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floor Plans — Rivergate Bordentown Waterfront</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme/rivergate-bordentown/assets/css/global.css">
+  <style>
+    .preview-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      background: #1B5E91; color: #fff; text-align: center;
+      padding: 10px 24px; font-family: 'Inter', sans-serif;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .preview-banner strong { font-weight: 600; }
+
+    .page-hero {
+      position: relative; min-height: 380px; display: flex;
+      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-10); overflow: hidden;
+    }
+    .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
+    .page-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+    .page-hero__bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.08) 100%);
+    }
+    .page-hero__content {
+      position: relative; z-index: 1; width: 100%;
+      max-width: var(--container-max); margin-inline: auto;
+      padding-inline: var(--section-padding-x); color: #fff;
+    }
+    .page-hero__content .eyebrow { color: rgba(255,255,255,0.6); }
+    .page-hero__content h1 { color: #fff; max-width: 20ch; margin-bottom: 0; font-size: var(--text-3xl); }
+
+    .plan-card {
+      border-radius: var(--radius-lg); padding: var(--space-7);
+      display: flex; flex-direction: column; gap: var(--space-3);
+    }
+    .plan-card--default { border: 1.5px solid var(--color-border); }
+    .plan-card--featured { border: 1.5px solid var(--color-primary); background: var(--color-bg-alt); }
+
+    .plan-meta {
+      display: flex; gap: var(--space-5); margin-top: var(--space-2);
+    }
+    .plan-meta-item {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .plan-meta-item span:first-child {
+      font-size: var(--text-xs); letter-spacing: var(--tracking-wider);
+      text-transform: uppercase; color: var(--color-text-muted);
+    }
+    .plan-meta-item span:last-child {
+      font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text);
+    }
+
+    .group-label {
+      font-size: var(--text-xs); letter-spacing: var(--tracking-widest);
+      text-transform: uppercase; color: var(--color-text-muted);
+      margin-top: var(--space-10); margin-bottom: var(--space-5);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .includes-strip {
+      background: var(--color-bg-alt);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      padding-block: var(--space-7);
+    }
+    .includes-strip .container {
+      display: flex; gap: var(--space-8); flex-wrap: wrap; align-items: center;
+    }
+    .includes-strip p { max-width: none; margin: 0; font-size: var(--text-sm); color: var(--color-text-muted); }
+
+    .appfolio-note {
+      background: var(--color-surface); border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg); padding: var(--space-7);
+      display: flex; align-items: flex-start; gap: var(--space-5); margin-top: var(--space-8);
+    }
+    .appfolio-note svg { flex-shrink: 0; color: var(--color-primary); }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.1em; color: var(--color-text); text-transform: uppercase; line-height: 1.1;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.7;">Bordentown</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a href="contact.html" class="btn btn--nav">Schedule a Tour</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="amenities.html">Amenities</a>
+    <a href="floor-plans.html">Floor Plans</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="location.html">Location</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="nav-overlay__divider"></div>
+  <a href="contact.html" class="btn btn--primary nav-overlay__cta">Schedule a Tour</a>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-label="Floor Plans">
+  <div class="page-hero__bg">
+    <img src="https://rivergatebordentown.com/wp-content/uploads/2015/07/slide-home-3a.jpg" alt="Rivergate Bordentown exterior" loading="eager">
+  </div>
+  <div class="page-hero__content">
+    <span class="eyebrow">One &amp; Two Bedroom</span>
+    <h1>Floor Plans</h1>
+  </div>
+</section>
+
+
+<!-- INCLUDED IN EVERY HOME STRIP -->
+<div class="includes-strip">
+  <div class="container">
+    <p style="font-size: var(--text-xs); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-primary); flex-shrink: 0;">Every Residence Includes</p>
+    <p>9-foot ceilings &nbsp;·&nbsp; Private balcony &nbsp;·&nbsp; In-unit washer/dryer &nbsp;·&nbsp; Designer kitchen &nbsp;·&nbsp; Quartz countertops &nbsp;·&nbsp; Stainless appliances &nbsp;·&nbsp; Central A/C &nbsp;·&nbsp; Gas heat</p>
+  </div>
+</div>
+
+
+<!-- FLOOR PLANS -->
+<section>
+  <div class="container">
+
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Choose Your Residence</span>
+      <h2>Eight Thoughtfully Designed Layouts</h2>
+      <p>From intimate one-bedrooms to expansive two-bedroom suites, every Rivergate floor plan is built around the way you actually live. All plans feature private balconies and the full suite of designer finishes.</p>
+    </div>
+
+    <!-- ONE BEDROOM -->
+    <h3 class="group-label">One Bedroom — Three Plans</h3>
+    <div class="card-grid">
+
+      <div class="plan-card plan-card--default" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 1B</span>
+        <h3 style="font-size: var(--text-2xl);">The Borden</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>773</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">Open living/dining area with abundant natural light, a private balcony, and a spacious master bedroom. Designer kitchen with stainless appliances and quartz countertops.</p>
+        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+      <div class="plan-card plan-card--default" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 1B2</span>
+        <h3 style="font-size: var(--text-2xl);">The Rivergate</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>737</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">Efficiently designed open living and dining area with balcony access and a generous bedroom. Designer kitchen with all stainless finishes.</p>
+        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+      <div class="plan-card plan-card--default" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 1B3</span>
+        <h3 style="font-size: var(--text-2xl);">The Wright</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>863</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">Our largest one-bedroom layout features an open living/dining area with private balcony, designer kitchen, and a large master bedroom with walk-in closet.</p>
+        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+    </div>
+
+    <!-- TWO BEDROOM -->
+    <h3 class="group-label">Two Bedroom — Five Plans</h3>
+    <div class="card-grid">
+
+      <div class="plan-card plan-card--default" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B</span>
+        <h3 style="font-size: var(--text-2xl);">The Chester</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>1,033</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">Two bedrooms and two full baths with a private balcony, a large open living/dining area, and a full designer kitchen.</p>
+        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+      <div class="plan-card plan-card--featured" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B2 — Most Popular</span>
+        <h3 style="font-size: var(--text-2xl);">The Dayton</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>1,160</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">Expansive living/dining area with private balcony access, a designer kitchen, and a luxurious master suite — the most popular two-bedroom layout at Rivergate.</p>
+        <a href="contact.html" class="btn btn--primary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+      <div class="plan-card plan-card--default" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B3</span>
+        <h3 style="font-size: var(--text-2xl);">The Edison</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>1,287</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">One of our larger two-bedroom residences, with open living/dining areas, a designer kitchen, and two well-appointed bedrooms with private balcony.</p>
+        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+      <div class="plan-card plan-card--default" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B5</span>
+        <h3 style="font-size: var(--text-2xl);">The Farnsworth</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>1,149</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">A designer kitchen with spacious open living and dining areas and private balcony — ideal for comfortable everyday two-bedroom living.</p>
+        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+      <div class="plan-card plan-card--default" data-animate>
+        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B6</span>
+        <h3 style="font-size: var(--text-2xl);">The Hamilton</h3>
+        <div class="plan-meta">
+          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+          <div class="plan-meta-item"><span>Sq Ft</span><span>1,342</span></div>
+          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        </div>
+        <div class="divider" style="margin-block: 0;"></div>
+        <p class="card__text">Our most expansive residence — an open layout with generous living/dining areas, designer kitchen, private balcony, and two spacious bedrooms.</p>
+        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+      </div>
+
+    </div>
+
+    <!-- APPFOLIO NOTE -->
+    <div class="appfolio-note" data-animate>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4l3 3"/>
+      </svg>
+      <div>
+        <p style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-primary); margin-bottom: var(--space-2); max-width: none;">Live Availability &amp; Pricing</p>
+        <p style="max-width: 72ch;">Real-time pricing and availability will be managed through <strong>AppFolio</strong> and embedded directly on this page in the WordPress build. Contact our leasing team today for current rates, move-in specials, and to check availability for a specific floor plan.</p>
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-5);">
+          <a href="contact.html" class="btn btn--primary">Contact Leasing</a>
+          <a href="tel:6092980303" class="btn btn--secondary">Call 609.298.0303</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="eyebrow" style="color: rgba(255,255,255,0.5);">Find Your Home</span>
+    <div class="divider"></div>
+    <h2>Ready to Schedule a Tour?</h2>
+    <p>See any of these floor plans in person. Our leasing team is ready to find the right fit for your lifestyle and move-in timeline.</p>
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="contact.html" class="btn btn--primary">Schedule a Tour</a>
+      <a href="tel:6092980303" class="btn btn--ghost">Call 609.298.0303</a>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.14em; color: rgba(248,249,251,0.85); text-transform: uppercase; line-height: 1.2;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.6;">Bordentown</span>
+      </span>
+    </a>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="amenities.html">Amenities</a>
+      <a href="floor-plans.html">Floor Plans</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="location.html">Location</a>
+      <a href="contact.html">Contact</a>
+      <a href="residents.html">Residents</a>
+      <a href="https://rivergatebordentown.com/pay-rent/" target="_blank" rel="noopener noreferrer">Pay Rent</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
+    <div style="display:flex; gap: var(--space-5);">
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
+    </div>
+  </div>
+</footer>
+
+<div class="preview-banner" role="status">
+  <strong>Design Preview — Multi-Page</strong> · preview-1/floor-plans.html · Static mockup using live Rivergate assets
+</div>
+
+<script>
+  (function () {
+    var header = document.getElementById('site-header'); if (!header) return;
+    window.addEventListener('scroll', function () { header.classList.toggle('is-scrolled', window.scrollY > 10); }, { passive: true });
+  }());
+  (function () {
+    var toggle = document.getElementById('nav-toggle'); var overlay = document.getElementById('nav-overlay');
+    if (!toggle || !overlay) return;
+    function closeNav() { overlay.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); document.body.classList.remove('nav-is-open'); }
+    function openNav()  { overlay.classList.add('is-open');    toggle.setAttribute('aria-expanded','true');  document.body.classList.add('nav-is-open'); }
+    toggle.addEventListener('click', function () { overlay.classList.contains('is-open') ? closeNav() : openNav(); });
+    overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeNav(); });
+  }());
+  (function () {
+    var items = document.querySelectorAll('[data-animate]'); if (!items.length) return;
+    document.querySelectorAll('.card-grid').forEach(function (grid) {
+      grid.querySelectorAll('[data-animate]').forEach(function (el, i) { el.style.transitionDelay = (i % 5 * 90) + 'ms'; });
+    });
+    if (!window.IntersectionObserver) { items.forEach(function (el) { el.classList.add('is-visible'); }); return; }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    items.forEach(function (el) { observer.observe(el); });
+  }());
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+/*
+Theme Name:  Sterling Properties
+Theme URI:   https://bruddaindustries.com
+Author:      Brudda's Industries
+Author URI:  https://bruddaindustries.com
+Description: A lightweight, Elementor-first theme built for luxury property
+             marketing sites. All visual design is handled through Elementor
+             templates and CSS custom properties — swapping brand colors and
+             fonts for a new site requires only editing global.css variables.
+Version:     1.0.0
+License:     GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: sterling-properties
+Tags:        elementor, custom-background, full-width-template, one-column
+
+------------------------------------------------------------------------
+CUSTOMIZATION GUIDE
+------------------------------------------------------------------------
+This file exists only for WordPress theme registration.
+DO NOT add design styles here.
+
+All design tokens live in: assets/css/global.css
+  — Change --color-primary to swap the accent color
+  — Change --font-heading / --font-body to swap typefaces
+  — All spacing, radius, and shadow values are also in that file
+
+Elementor visual templates live in: ../../elementor-kit/
+------------------------------------------------------------------------
+*/

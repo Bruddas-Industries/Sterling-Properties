@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amenities — Rivergate Bordentown Waterfront</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme/rivergate-bordentown/assets/css/global.css">
+  <style>
+    .preview-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      background: #1B5E91; color: #fff; text-align: center;
+      padding: 10px 24px; font-family: 'Inter', sans-serif;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .preview-banner strong { font-weight: 600; }
+
+    .page-hero {
+      position: relative; min-height: 380px; display: flex;
+      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-10); overflow: hidden;
+    }
+    .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
+    .page-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+    .page-hero__bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.08) 100%);
+    }
+    .page-hero__content {
+      position: relative; z-index: 1; width: 100%;
+      max-width: var(--container-max); margin-inline: auto;
+      padding-inline: var(--section-padding-x); color: #fff;
+    }
+    .page-hero__content .eyebrow { color: rgba(255,255,255,0.6); }
+    .page-hero__content h1 { color: #fff; max-width: 20ch; margin-bottom: 0; font-size: var(--text-3xl); }
+
+    .feature-list {
+      display: flex; flex-direction: column; gap: var(--space-3);
+      list-style: none; padding: 0; margin: 0;
+    }
+    .feature-list li {
+      display: flex; gap: var(--space-3); font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .feature-list li span { color: var(--color-primary); flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.1em; color: var(--color-text); text-transform: uppercase; line-height: 1.1;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.7;">Bordentown</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a href="contact.html" class="btn btn--nav">Schedule a Tour</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="amenities.html">Amenities</a>
+    <a href="floor-plans.html">Floor Plans</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="location.html">Location</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="nav-overlay__divider"></div>
+  <a href="contact.html" class="btn btn--primary nav-overlay__cta">Schedule a Tour</a>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-label="Amenities">
+  <div class="page-hero__bg">
+    <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/amenities-1.jpg" alt="Rivergate clubhouse and pool" loading="eager">
+  </div>
+  <div class="page-hero__content">
+    <span class="eyebrow">Community &amp; Apartment</span>
+    <h1>Amenities</h1>
+  </div>
+</section>
+
+
+<!-- CLUBHOUSE FEATURE -->
+<article class="feature feature--reverse feature--alt">
+  <div class="feature__image">
+    <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/amenities-1.jpg" alt="Rivergate Bordentown clubhouse" loading="lazy">
+  </div>
+  <div class="feature__body" data-animate>
+    <span class="eyebrow">Community Hub</span>
+    <h2>The Rivergate Clubhouse</h2>
+    <div class="divider"></div>
+    <p>The Rivergate Clubhouse serves as the beating heart of the community — an elegantly appointed gathering space for residents to socialize, relax, and connect. Whether hosting a private event or enjoying a quiet afternoon, the clubhouse sets a tone of refined, resort-style living.</p>
+    <p style="margin-top: var(--space-4);">Adjacent to the fitness studio and overlooking the landscaped grounds and heated pool, the clubhouse places every cornerstone amenity within steps of one another.</p>
+  </div>
+</article>
+
+
+<!-- POOL FEATURE -->
+<article class="feature">
+  <div class="feature__image">
+    <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/slide-amenities-1.jpg" alt="Rivergate resort-style heated pool" loading="lazy">
+  </div>
+  <div class="feature__body" data-animate>
+    <span class="eyebrow">Outdoor Living</span>
+    <h2>Resort-Style Pool &amp; Grounds</h2>
+    <div class="divider"></div>
+    <p>The resort-style heated outdoor swimming pool and sun deck offer a private retreat that rivals any five-star resort. Professionally landscaped and irrigated grounds surround the property, creating a lush, tranquil setting year-round.</p>
+    <p style="margin-top: var(--space-4);">A dedicated outdoor BBQ and entertaining area sits just off the pool — perfect for weekend gatherings, summer cookouts, and casual evenings with neighbors.</p>
+  </div>
+</article>
+
+
+<!-- AMENITY CARDS -->
+<section class="section--alt">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">What's Included</span>
+      <h2>Everything You Need, Right Here</h2>
+      <p>From secured access to riverside transit, Rivergate delivers an elevated living experience designed for how you actually live.</p>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="6" y="14" width="28" height="20" rx="2"/>
+          <path d="M14 14V10a6 6 0 0 1 12 0v4"/>
+          <circle cx="20" cy="24" r="3"/>
+        </svg>
+        <h3 class="card__heading">Secured Access</h3>
+        <p class="card__text">Controlled building entrances and secured garage parking for residents' peace of mind around the clock.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M8 28 C8 20 32 20 32 28"/>
+          <ellipse cx="20" cy="28" rx="12" ry="4"/>
+          <path d="M20 24 V12"/>
+          <circle cx="20" cy="10" r="3"/>
+        </svg>
+        <h3 class="card__heading">Heated Pool</h3>
+        <p class="card__text">Resort-style heated swimming pool with sun deck — a private retreat right outside your door, all season long.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="6" y="18" width="10" height="14" rx="1"/>
+          <rect x="24" y="10" width="10" height="22" rx="1"/>
+          <path d="M16 24 h8"/>
+        </svg>
+        <h3 class="card__heading">Fitness Studio</h3>
+        <p class="card__text">State-of-the-art fitness center with modern equipment — no gym membership required.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="20" cy="20" r="12"/>
+          <path d="M20 8 v4 M20 28 v4 M8 20 h4 M28 20 h4"/>
+          <circle cx="20" cy="20" r="4"/>
+        </svg>
+        <h3 class="card__heading">Rivergate Clubhouse</h3>
+        <p class="card__text">An exclusive community clubhouse — social hub for residents, ideal for private events and everyday gathering.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10 20 h20"/>
+          <path d="M14 20 V14 M26 20 V14"/>
+          <ellipse cx="20" cy="20" rx="10" ry="3"/>
+          <path d="M17 26 l-2 6 M23 26 l2 6 M20 26 v6"/>
+          <path d="M15 14 q2-4 5-4 q3 0 5 4"/>
+        </svg>
+        <h3 class="card__heading">Outdoor BBQ Area</h3>
+        <p class="card__text">Dedicated outdoor barbecue and entertaining area — perfect for gatherings in a beautifully landscaped setting.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M8 32 L20 8 L32 32 Z"/>
+          <path d="M14 32 V22 h12 v10"/>
+        </svg>
+        <h3 class="card__heading">Private Balconies</h3>
+        <p class="card__text">Private balconies in every residence — the perfect perch for morning coffee with river and courtyard views.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="8" y="12" width="24" height="16" rx="2"/>
+          <path d="M14 28 v4 M26 28 v4 M12 32 h16"/>
+          <path d="M14 18 h4 M14 22 h12"/>
+        </svg>
+        <h3 class="card__heading">In-Unit Washer/Dryer</h3>
+        <p class="card__text">Full-size washer and dryer in every home — the convenience you expect, included.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10 34 L10 18 L20 8 L30 18 L30 34"/>
+          <rect x="16" y="24" width="8" height="10"/>
+        </svg>
+        <h3 class="card__heading">9-Foot Ceilings</h3>
+        <p class="card__text">Soaring 9-foot ceilings throughout create an open, airy atmosphere that sets Rivergate apart.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="20" cy="20" r="12"/>
+          <path d="M20 14 L20 20 L26 23"/>
+        </svg>
+        <h3 class="card__heading">River Line Access</h3>
+        <p class="card__text">Steps from the River Line Light Rail — commute to Trenton, connect to NYC or Philly without a car.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="8" y="16" width="14" height="14" rx="1"/>
+          <path d="M22 22 h6 a2 2 0 0 1 2 2 v4 a2 2 0 0 1-2 2 h-6"/>
+          <path d="M8 20 h-2 M8 26 h-2"/>
+        </svg>
+        <h3 class="card__heading">Designer Kitchens</h3>
+        <p class="card__text">Stainless steel appliances, shaker espresso cabinetry, quartz countertops, and Kohler fixtures throughout.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="8" y="8" width="24" height="24" rx="2"/>
+          <path d="M8 16 h24 M16 8 v24"/>
+        </svg>
+        <h3 class="card__heading">Secured Garage Parking</h3>
+        <p class="card__text">Free-standing secured garages available at select locations — additional surface parking also on-site.</p>
+      </div>
+
+      <div class="card" data-animate>
+        <svg class="card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="10" y="6" width="20" height="28" rx="2"/>
+          <path d="M10 18 h20"/>
+          <circle cx="28" cy="12" r="1.5"/>
+          <path d="M14 26 h8"/>
+        </svg>
+        <h3 class="card__heading">Elevator Access</h3>
+        <p class="card__text">Elevator service available in select buildings for added convenience and accessibility.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- APARTMENT FEATURES -->
+<section>
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Apartment Features</span>
+      <h2>Refined Interiors, Down to Every Detail</h2>
+      <p>Every Rivergate residence is finished with upscale materials and thoughtful touches that make coming home feel like a luxury.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-10); margin-top: var(--space-10);">
+
+      <div data-animate>
+        <p style="font-size: var(--text-xs); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-primary); margin-bottom: var(--space-4);">Kitchen</p>
+        <ul class="feature-list">
+          <li><span>—</span> Shaker-style espresso wood cabinetry with quartz countertops</li>
+          <li><span>—</span> Stainless steel self-cleaning range with microwave</li>
+          <li><span>—</span> Dishwasher and refrigerator with icemaker hookup</li>
+          <li><span>—</span> Stainless steel sink with Kohler single-lever faucet</li>
+        </ul>
+      </div>
+
+      <div data-animate>
+        <p style="font-size: var(--text-xs); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-primary); margin-bottom: var(--space-4);">Interior</p>
+        <ul class="feature-list">
+          <li><span>—</span> Soaring 9-foot ceilings throughout</li>
+          <li><span>—</span> Private balcony in every residence</li>
+          <li><span>—</span> Plush carpeting and mini blinds included</li>
+          <li><span>—</span> In-unit full-size washer and dryer</li>
+          <li><span>—</span> Walk-in closets (select floor plans)</li>
+          <li><span>—</span> Ample in-unit storage throughout</li>
+        </ul>
+      </div>
+
+      <div data-animate>
+        <p style="font-size: var(--text-xs); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-primary); margin-bottom: var(--space-4);">Climate &amp; Connectivity</p>
+        <ul class="feature-list">
+          <li><span>—</span> Individual gas heating controls</li>
+          <li><span>—</span> Central air conditioning</li>
+          <li><span>—</span> Pre-wired for cable TV and high-speed internet</li>
+          <li><span>—</span> Elevator access (select buildings)</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="eyebrow" style="color: rgba(255,255,255,0.5);">See It in Person</span>
+    <div class="divider"></div>
+    <h2>Tour the Amenities Yourself</h2>
+    <p>Our leasing team is ready to walk you through the clubhouse, fitness studio, pool, and model residences.</p>
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="contact.html" class="btn btn--primary">Schedule a Tour</a>
+      <a href="floor-plans.html" class="btn btn--ghost">View Floor Plans</a>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.14em; color: rgba(248,249,251,0.85); text-transform: uppercase; line-height: 1.2;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.6;">Bordentown</span>
+      </span>
+    </a>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="amenities.html">Amenities</a>
+      <a href="floor-plans.html">Floor Plans</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="location.html">Location</a>
+      <a href="contact.html">Contact</a>
+      <a href="residents.html">Residents</a>
+      <a href="https://rivergatebordentown.com/pay-rent/" target="_blank" rel="noopener noreferrer">Pay Rent</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
+    <div style="display:flex; gap: var(--space-5);">
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
+    </div>
+  </div>
+</footer>
+
+<div class="preview-banner" role="status">
+  <strong>Design Preview — Multi-Page</strong> · preview-1/amenities.html · Static mockup using live Rivergate assets
+</div>
+
+<script>
+  (function () {
+    var header = document.getElementById('site-header'); if (!header) return;
+    window.addEventListener('scroll', function () { header.classList.toggle('is-scrolled', window.scrollY > 10); }, { passive: true });
+  }());
+  (function () {
+    var toggle = document.getElementById('nav-toggle'); var overlay = document.getElementById('nav-overlay');
+    if (!toggle || !overlay) return;
+    function closeNav() { overlay.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); document.body.classList.remove('nav-is-open'); }
+    function openNav()  { overlay.classList.add('is-open');    toggle.setAttribute('aria-expanded','true');  document.body.classList.add('nav-is-open'); }
+    toggle.addEventListener('click', function () { overlay.classList.contains('is-open') ? closeNav() : openNav(); });
+    overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeNav(); });
+  }());
+  (function () {
+    var items = document.querySelectorAll('[data-animate]'); if (!items.length) return;
+    document.querySelectorAll('.card-grid').forEach(function (grid) {
+      grid.querySelectorAll('[data-animate]').forEach(function (el, i) { el.style.transitionDelay = (i % 5 * 90) + 'ms'; });
+    });
+    if (!window.IntersectionObserver) { items.forEach(function (el) { el.classList.add('is-visible'); }); return; }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    items.forEach(function (el) { observer.observe(el); });
+  }());
+</script>
+</body>
+</html>

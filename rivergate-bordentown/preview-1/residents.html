@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resident Portal — Rivergate Bordentown Waterfront</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme/rivergate-bordentown/assets/css/global.css">
+  <style>
+    .preview-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      background: #1B5E91; color: #fff; text-align: center;
+      padding: 10px 24px; font-family: 'Inter', sans-serif;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .preview-banner strong { font-weight: 600; }
+
+    .page-hero {
+      position: relative; min-height: 320px; display: flex;
+      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-10); overflow: hidden;
+    }
+    .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
+    .page-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+    .page-hero__bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.1) 100%);
+    }
+    .page-hero__content {
+      position: relative; z-index: 1; width: 100%;
+      max-width: var(--container-max); margin-inline: auto;
+      padding-inline: var(--section-padding-x); color: #fff;
+    }
+    .page-hero__content .eyebrow { color: rgba(255,255,255,0.6); }
+    .page-hero__content h1 { color: #fff; max-width: 20ch; margin-bottom: 0; font-size: var(--text-3xl); }
+
+    /* Portal action cards */
+    .portal-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-5); margin-top: var(--space-8);
+    }
+    .portal-card {
+      border-radius: var(--radius-lg); padding: var(--space-7);
+      display: flex; flex-direction: column; gap: var(--space-4);
+      transition: box-shadow var(--duration) var(--ease-out), transform var(--duration) var(--ease-out);
+    }
+    .portal-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .portal-card--primary {
+      background: var(--color-primary); color: #fff;
+    }
+    .portal-card--primary h3, .portal-card--primary p { color: #fff; }
+    .portal-card--primary p { color: rgba(255,255,255,0.8); }
+    .portal-card--border { border: 1.5px solid var(--color-border); background: var(--color-surface); }
+    .portal-card--alt { background: var(--color-bg-alt); border: 1.5px solid var(--color-border); }
+    .portal-card__icon { color: var(--color-primary); }
+    .portal-card--primary .portal-card__icon { color: rgba(255,255,255,0.85); }
+
+    /* Resources list */
+    .resource-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .resource-item {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      border: 1.5px solid var(--color-border); border-radius: var(--radius-base);
+      background: var(--color-surface);
+      transition: border-color var(--duration) var(--ease-out), background var(--duration) var(--ease-out);
+      cursor: pointer;
+    }
+    .resource-item:hover { border-color: var(--color-primary); background: var(--color-bg-alt); }
+    .resource-item svg { color: var(--color-primary); flex-shrink: 0; }
+    .resource-item__text {}
+    .resource-item__name { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text); display: block; }
+    .resource-item__desc { font-size: var(--text-xs); color: var(--color-text-muted); display: block; margin-top: 2px; }
+    .resource-item__arrow { margin-left: auto; color: var(--color-text-muted); flex-shrink: 0; }
+
+    /* Policy section */
+    .policy-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-6); margin-top: var(--space-8);
+    }
+    .policy-block {}
+    .policy-block__heading {
+      font-size: var(--text-xs); letter-spacing: var(--tracking-widest);
+      text-transform: uppercase; color: var(--color-primary);
+      margin-bottom: var(--space-4); display: block;
+    }
+    .policy-block ul { display: flex; flex-direction: column; gap: var(--space-2); }
+    .policy-block li {
+      display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted);
+    }
+    .policy-block li span { color: var(--color-primary); flex-shrink: 0; }
+
+    /* Emergency contacts */
+    .emergency-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-5); margin-top: var(--space-8);
+    }
+    .emergency-card {
+      padding: var(--space-6); border-radius: var(--radius-lg);
+      border: 1.5px solid var(--color-border); background: var(--color-surface);
+    }
+    .emergency-card--urgent { border-color: #C62828; background: #FFF5F5; }
+    .emergency-card__label {
+      font-size: var(--text-xs); letter-spacing: var(--tracking-wider);
+      text-transform: uppercase; color: var(--color-text-muted);
+      margin-bottom: var(--space-2); display: block;
+    }
+    .emergency-card--urgent .emergency-card__label { color: #C62828; }
+    .emergency-card__name { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text); display: block; margin-bottom: var(--space-2); }
+    .emergency-card__contact { font-family: var(--font-heading); font-size: var(--text-xl); font-weight: var(--weight-light); }
+    .emergency-card__contact a { color: var(--color-primary); }
+    .emergency-card--urgent .emergency-card__contact a { color: #C62828; }
+
+    @media (max-width: 640px) {
+      .portal-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.1em; color: var(--color-text); text-transform: uppercase; line-height: 1.1;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.7;">Bordentown</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a href="contact.html" class="btn btn--nav">Leasing Office</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="amenities.html">Amenities</a>
+    <a href="floor-plans.html">Floor Plans</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="location.html">Location</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="nav-overlay__divider"></div>
+  <a href="contact.html" class="btn btn--primary nav-overlay__cta">Leasing Office</a>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-label="Resident Portal">
+  <div class="page-hero__bg">
+    <img src="https://rivergatebordentown.com/wp-content/uploads/2015/07/slide-home-3a.jpg" alt="Rivergate Bordentown community" loading="eager">
+  </div>
+  <div class="page-hero__content">
+    <span class="eyebrow">Current Residents</span>
+    <h1>Welcome Home</h1>
+  </div>
+</section>
+
+
+<!-- PORTAL QUICK ACCESS -->
+<section>
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Resident Services</span>
+      <h2>Your Online Resident Portal</h2>
+      <p>Everything you need to manage your home at Rivergate — from paying rent to submitting a maintenance request — is available through our resident portal powered by AppFolio.</p>
+    </div>
+
+    <div class="portal-grid">
+
+      <div class="portal-card portal-card--primary" data-animate>
+        <svg class="portal-card__icon" width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="8" y="10" width="24" height="20" rx="2"/>
+          <path d="M14 20 h8 M18 16 v8"/>
+        </svg>
+        <h3 style="font-size: var(--text-xl);">Pay Rent Online</h3>
+        <p>Set up autopay, make one-time payments, and view your payment history — all in one place.</p>
+        <a href="https://rivergatebordentown.com/pay-rent/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" style="align-self: flex-start; margin-top: auto;">Pay Rent →</a>
+      </div>
+
+      <div class="portal-card portal-card--border" data-animate>
+        <svg class="portal-card__icon" width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10 14 h20 M10 20 h14 M10 26 h8"/>
+          <circle cx="30" cy="26" r="6"/>
+          <path d="M30 23 v3 l2 2"/>
+        </svg>
+        <h3 style="font-size: var(--text-xl);">Maintenance Requests</h3>
+        <p class="card__text">Submit and track maintenance requests online. Our team responds promptly to all service requests.</p>
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="align-self: flex-start; margin-top: auto;">Submit Request →</a>
+      </div>
+
+      <div class="portal-card portal-card--alt" data-animate>
+        <svg class="portal-card__icon" width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="8" y="8" width="24" height="28" rx="2"/>
+          <path d="M14 16 h12 M14 22 h12 M14 28 h8"/>
+        </svg>
+        <h3 style="font-size: var(--text-xl);">Lease Documents</h3>
+        <p class="card__text">Access your lease agreement, addenda, and renewal documents securely through the resident portal.</p>
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="align-self: flex-start; margin-top: auto;">View Documents →</a>
+      </div>
+
+      <div class="portal-card portal-card--border" data-animate>
+        <svg class="portal-card__icon" width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="20" cy="16" r="6"/>
+          <path d="M8 34 c0-8 24-8 24 0"/>
+        </svg>
+        <h3 style="font-size: var(--text-xl);">Manage Your Account</h3>
+        <p class="card__text">Update contact information, add authorized occupants, and manage your account preferences.</p>
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="align-self: flex-start; margin-top: auto;">My Account →</a>
+      </div>
+
+    </div>
+
+    <!-- AppFolio note -->
+    <div style="margin-top: var(--space-8); padding: var(--space-6); background: var(--color-bg-alt); border-radius: var(--radius-lg); border: 1.5px solid var(--color-border); display: flex; gap: var(--space-4); align-items: flex-start;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" style="flex-shrink: 0; margin-top: 2px;" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4M12 16h.01"/>
+      </svg>
+      <p style="max-width: none; font-size: var(--text-sm);">The resident portal is powered by <strong>AppFolio Property Manager</strong>. If you do not have login credentials or are having trouble accessing your account, please contact the leasing office at <a href="tel:6092980303" style="color: var(--color-primary);">609.298.0303</a> or <a href="mailto:rivergate@sterlingpropertiesnj.com" style="color: var(--color-primary);">rivergate@sterlingpropertiesnj.com</a>.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- RESOURCES -->
+<section class="section--alt">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Resident Resources</span>
+      <h2>Helpful Information &amp; Documents</h2>
+      <p>Quick access to forms, policies, and information you may need during your tenancy at Rivergate.</p>
+    </div>
+
+    <div style="max-width: 740px; margin-top: var(--space-8);">
+      <div class="resource-list">
+
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="resource-item" data-animate>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <span class="resource-item__text">
+            <span class="resource-item__name">Rental Application (PDF)</span>
+            <span class="resource-item__desc">Printable application for new residents</span>
+          </span>
+          <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="resource-item" data-animate>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span class="resource-item__text">
+            <span class="resource-item__name">Move-In / Move-Out Checklist</span>
+            <span class="resource-item__desc">Document your residence condition at move-in and move-out</span>
+          </span>
+          <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="resource-item" data-animate>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span class="resource-item__text">
+            <span class="resource-item__name">Community Rules &amp; Regulations</span>
+            <span class="resource-item__desc">Parking, noise, pet, and community policy guidelines</span>
+          </span>
+          <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="resource-item" data-animate>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+          <span class="resource-item__text">
+            <span class="resource-item__name">Lease Renewal Information</span>
+            <span class="resource-item__desc">Questions about renewing your lease? Contact the leasing office early.</span>
+          </span>
+          <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+
+        <a href="https://rivergatebordentown.com/residents/" target="_blank" rel="noopener noreferrer" class="resource-item" data-animate>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <span class="resource-item__text">
+            <span class="resource-item__name">Renter's Insurance Information</span>
+            <span class="resource-item__desc">Renter's insurance requirements and recommendations</span>
+          </span>
+          <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- COMMUNITY POLICIES -->
+<section>
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Community Guidelines</span>
+      <h2>Living at Rivergate</h2>
+      <p>A brief overview of key community policies. Full details are available in your lease agreement and community rules document.</p>
+    </div>
+
+    <div class="policy-grid">
+
+      <div class="policy-block" data-animate>
+        <span class="policy-block__heading">Parking</span>
+        <ul>
+          <li><span>—</span> Surface parking and secured garage available</li>
+          <li><span>—</span> All vehicles must be registered with the leasing office</li>
+          <li><span>—</span> Visitor parking available in designated areas</li>
+          <li><span>—</span> No commercial vehicles or RVs</li>
+        </ul>
+      </div>
+
+      <div class="policy-block" data-animate>
+        <span class="policy-block__heading">Noise &amp; Quiet Hours</span>
+        <ul>
+          <li><span>—</span> Quiet hours: 10pm – 8am on weekdays</li>
+          <li><span>—</span> Quiet hours: 11pm – 9am on weekends</li>
+          <li><span>—</span> Loud music or disturbances may result in lease violation</li>
+          <li><span>—</span> Be considerate of shared walls and common areas</li>
+        </ul>
+      </div>
+
+      <div class="policy-block" data-animate>
+        <span class="policy-block__heading">Pool &amp; Amenity Hours</span>
+        <ul>
+          <li><span>—</span> Pool open seasonally — Memorial Day through Labor Day</li>
+          <li><span>—</span> Pool hours posted at the clubhouse</li>
+          <li><span>—</span> Residents must present key fob for access</li>
+          <li><span>—</span> No lifeguard on duty — swim at your own risk</li>
+        </ul>
+      </div>
+
+      <div class="policy-block" data-animate>
+        <span class="policy-block__heading">Packages &amp; Deliveries</span>
+        <ul>
+          <li><span>—</span> Package delivery instructions provided at move-in</li>
+          <li><span>—</span> Contact leasing office for package pickup procedures</li>
+          <li><span>—</span> Large deliveries require advance notice to management</li>
+        </ul>
+      </div>
+
+      <div class="policy-block" data-animate>
+        <span class="policy-block__heading">Maintenance</span>
+        <ul>
+          <li><span>—</span> Submit requests through the online portal (AppFolio)</li>
+          <li><span>—</span> Emergency maintenance available 24/7 by phone</li>
+          <li><span>—</span> Routine maintenance responded to within 1–3 business days</li>
+          <li><span>—</span> Residents responsible for reporting issues promptly</li>
+        </ul>
+      </div>
+
+      <div class="policy-block" data-animate>
+        <span class="policy-block__heading">Move-Out</span>
+        <ul>
+          <li><span>—</span> 60-day written notice required prior to vacating</li>
+          <li><span>—</span> Schedule a move-out inspection with the leasing office</li>
+          <li><span>—</span> Return all keys and fobs on move-out day</li>
+          <li><span>—</span> Security deposit returned per NJ state law</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- EMERGENCY CONTACTS -->
+<section class="section--alt">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Emergency &amp; Contact Information</span>
+      <h2>Who to Call</h2>
+      <p>Keep these numbers handy for emergencies, maintenance, and leasing questions.</p>
+    </div>
+
+    <div class="emergency-grid">
+
+      <div class="emergency-card emergency-card--urgent" data-animate>
+        <span class="emergency-card__label">Life-Threatening Emergency</span>
+        <span class="emergency-card__name">Police, Fire, or Medical</span>
+        <span class="emergency-card__contact"><a href="tel:911">911</a></span>
+      </div>
+
+      <div class="emergency-card emergency-card--urgent" data-animate>
+        <span class="emergency-card__label">Non-Emergency Police</span>
+        <span class="emergency-card__name">Bordentown City Police Dept</span>
+        <span class="emergency-card__contact"><a href="tel:6092984000">609.298.4000</a></span>
+      </div>
+
+      <div class="emergency-card" data-animate>
+        <span class="emergency-card__label">After-Hours Maintenance</span>
+        <span class="emergency-card__name">Rivergate Emergency Line</span>
+        <span class="emergency-card__contact"><a href="tel:6092980303">609.298.0303</a></span>
+      </div>
+
+      <div class="emergency-card" data-animate>
+        <span class="emergency-card__label">Leasing Office</span>
+        <span class="emergency-card__name">Mon–Fri 9am–6pm, Sat 10am–4pm</span>
+        <span class="emergency-card__contact"><a href="tel:6092980303">609.298.0303</a></span>
+      </div>
+
+      <div class="emergency-card" data-animate>
+        <span class="emergency-card__label">Gas Emergency</span>
+        <span class="emergency-card__name">New Jersey Natural Gas</span>
+        <span class="emergency-card__contact"><a href="tel:18002218844">1.800.221.8844</a></span>
+      </div>
+
+      <div class="emergency-card" data-animate>
+        <span class="emergency-card__label">Electric Outage</span>
+        <span class="emergency-card__name">PSE&amp;G Outage Reporting</span>
+        <span class="emergency-card__contact"><a href="tel:18003506368">1.800.350.6368</a></span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="eyebrow" style="color: rgba(255,255,255,0.5);">Need Help?</span>
+    <div class="divider"></div>
+    <h2>We're Here for You</h2>
+    <p>The Rivergate leasing and management team is available Monday through Saturday. Don't hesitate to reach out.</p>
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="contact.html" class="btn btn--primary">Contact the Leasing Office</a>
+      <a href="tel:6092980303" class="btn btn--ghost">Call 609.298.0303</a>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo" aria-label="Rivergate Bordentown — Home">
+      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.14em; color: rgba(248,249,251,0.85); text-transform: uppercase; line-height: 1.2;">
+        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.6;">Bordentown</span>
+      </span>
+    </a>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="amenities.html">Amenities</a>
+      <a href="floor-plans.html">Floor Plans</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="location.html">Location</a>
+      <a href="contact.html">Contact</a>
+      <a href="residents.html">Residents</a>
+      <a href="https://rivergatebordentown.com/pay-rent/" target="_blank" rel="noopener noreferrer">Pay Rent</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
+    <div style="display:flex; gap: var(--space-5);">
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
+      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
+    </div>
+  </div>
+</footer>
+
+<div class="preview-banner" role="status">
+  <strong>Design Preview — Multi-Page</strong> · preview-1/residents.html · Static mockup using live Rivergate assets
+</div>
+
+<script>
+  (function () {
+    var header = document.getElementById('site-header'); if (!header) return;
+    window.addEventListener('scroll', function () { header.classList.toggle('is-scrolled', window.scrollY > 10); }, { passive: true });
+  }());
+  (function () {
+    var toggle = document.getElementById('nav-toggle'); var overlay = document.getElementById('nav-overlay');
+    if (!toggle || !overlay) return;
+    function closeNav() { overlay.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); document.body.classList.remove('nav-is-open'); }
+    function openNav()  { overlay.classList.add('is-open');    toggle.setAttribute('aria-expanded','true');  document.body.classList.add('nav-is-open'); }
+    toggle.addEventListener('click', function () { overlay.classList.contains('is-open') ? closeNav() : openNav(); });
+    overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeNav(); });
+  }());
+  (function () {
+    var items = document.querySelectorAll('[data-animate]'); if (!items.length) return;
+    if (!window.IntersectionObserver) { items.forEach(function (el) { el.classList.add('is-visible'); }); return; }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    items.forEach(function (el) { observer.observe(el); });
+  }());
+</script>
+</body>
+</html>

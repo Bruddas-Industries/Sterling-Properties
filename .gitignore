@@ -1,0 +1,22 @@
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup-db/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archives (use theme folders, not zips)
+*.zip
+*.tar.gz
+
+# Claude Code
+.claude/settings.local.json
+
+# Node (if build tools get added later)
+node_modules/
