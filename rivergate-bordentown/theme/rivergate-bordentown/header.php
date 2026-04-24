@@ -13,10 +13,8 @@
     <nav class="nav-inner" aria-label="<?php esc_attr_e( 'Primary navigation', 'rivergate-bordentown' ); ?>">
 
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav-logo" aria-label="<?php bloginfo( 'name' ); ?> — Home">
-            <!-- LOGO SLOT: Replace span with <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png"> -->
-            <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.1em; color: var(--color-text); text-transform: uppercase;">
-                <?php bloginfo( 'name' ); ?>
-            </span>
+            <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logos/rivergate-logo-blue.png"
+                 alt="<?php bloginfo( 'name' ); ?>" height="40">
         </a>
 
         <div class="nav-links" id="nav-links" role="list">

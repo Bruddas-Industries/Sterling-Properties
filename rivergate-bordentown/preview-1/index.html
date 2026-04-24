@@ -69,14 +69,12 @@
     }
   </style>
 </head>
-<body>
+<body class="has-video-hero">
 
 <header class="site-header" id="site-header" role="banner">
   <nav class="nav-inner" aria-label="Primary navigation">
     <a href="index.html" class="nav-logo" aria-label="Rivergate Bordentown — Home">
-      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.1em; color: var(--color-text); text-transform: uppercase; line-height: 1.1;">
-        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.7;">Bordentown</span>
-      </span>
+      <img src="../theme/rivergate-bordentown/assets/images/logos/rivergate-logo-blue.png" alt="Rivergate Bordentown" height="40">
     </a>
     <div class="nav-actions">
       <a href="contact.html" class="btn btn--nav">Schedule a Tour</a>
@@ -101,9 +99,13 @@
 
 
 <!-- HERO -->
-<section class="hero" aria-label="Welcome to Rivergate Bordentown">
+<section class="hero hero--video" aria-label="Welcome to Rivergate Bordentown">
   <div class="hero__bg">
-    <img src="https://rivergatebordentown.com/wp-content/uploads/2015/07/slide-home-1a.jpg" alt="Rivergate Bordentown waterfront exterior" loading="eager">
+    <video autoplay muted loop playsinline preload="auto"
+           poster="../theme/rivergate-bordentown/assets/images/aerials/aerial-1.jpg">
+      <source src="../theme/rivergate-bordentown/assets/video/rivergate-hero.mp4" type="video/mp4">
+      <img src="../theme/rivergate-bordentown/assets/images/aerials/aerial-1.jpg" alt="Rivergate Bordentown waterfront aerial">
+    </video>
   </div>
   <div class="hero__content">
     <span class="eyebrow hero__eyebrow">500 Bluff View Circle · Bordentown, NJ</span>
@@ -120,7 +122,7 @@
 <!-- ABOUT -->
 <article class="feature" id="about">
   <div class="feature__image">
-    <img src="https://rivergatebordentown.com/wp-content/uploads/2015/07/slide-home-3a.jpg" alt="Rivergate Bordentown building exterior" loading="lazy">
+    <img src="../theme/rivergate-bordentown/assets/images/exterior/exterior-3.jpg" alt="Rivergate Bordentown building exterior" loading="lazy">
   </div>
   <div class="feature__body" data-animate>
     <span class="eyebrow">Premier Waterfront Community</span>
@@ -136,7 +138,7 @@
 <!-- AMENITIES TEASER -->
 <article class="feature feature--reverse feature--alt">
   <div class="feature__image">
-    <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/amenities-1.jpg" alt="Rivergate Bordentown clubhouse and pool" loading="lazy">
+    <img src="../theme/rivergate-bordentown/assets/images/clubhouse/clubhouse-1.jpg" alt="Rivergate Bordentown clubhouse and pool" loading="lazy">
   </div>
   <div class="feature__body" data-animate>
     <span class="eyebrow">Community Amenities</span>
@@ -202,13 +204,13 @@
     </div>
     <div class="amenity-img-grid">
       <div class="amenity-img-card" data-animate>
-        <img src="https://rivergatebordentown.com/wp-content/uploads/2015/07/slide-home-5a.jpg" alt="Rivergate exterior view" loading="lazy">
+        <img src="../theme/rivergate-bordentown/assets/images/exterior/exterior-5.jpg" alt="Rivergate exterior view" loading="lazy">
       </div>
       <div class="amenity-img-card" data-animate>
-        <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/amenities-bbq.jpg" alt="Outdoor BBQ and entertaining area" loading="lazy">
+        <img src="../theme/rivergate-bordentown/assets/images/amenities/amenity-3.jpg" alt="Outdoor BBQ and entertaining area" loading="lazy">
       </div>
       <div class="amenity-img-card" data-animate>
-        <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/amenities-3.jpg" alt="Community amenity space" loading="lazy">
+        <img src="../theme/rivergate-bordentown/assets/images/amenities/amenity-4.jpg" alt="Community amenity space" loading="lazy">
       </div>
     </div>
     <div style="margin-top: var(--space-8); text-align: center;">
@@ -221,7 +223,7 @@
 <!-- LOCATION TEASER -->
 <article class="feature">
   <div class="feature__image">
-    <img src="https://rivergatebordentown.com/wp-content/uploads/2014/12/slide-home-1.jpg" alt="Rivergate location and community" loading="lazy">
+    <img src="../theme/rivergate-bordentown/assets/images/aerials/aerial-2.jpg" alt="Rivergate location and community" loading="lazy">
   </div>
   <div class="feature__body" data-animate>
     <span class="eyebrow">Location</span>
@@ -340,9 +342,7 @@
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <a href="index.html" class="footer-logo" aria-label="Rivergate Bordentown — Home">
-      <span style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.14em; color: rgba(248,249,251,0.85); text-transform: uppercase; line-height: 1.2;">
-        Rivergate<br><span style="font-size: 0.7em; letter-spacing: 0.2em; opacity: 0.6;">Bordentown</span>
-      </span>
+      <img src="../theme/rivergate-bordentown/assets/images/logos/rivergate-logo-white.png" alt="Rivergate Bordentown" height="44" style="opacity: 0.85;">
     </a>
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="amenities.html">Amenities</a>
@@ -356,7 +356,10 @@
   </div>
   <div class="footer-bottom">
     <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
-    <div style="display:flex; gap: var(--space-5);">
+    <div style="display:flex; gap: var(--space-5); align-items: center;">
+      <a href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
+        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" height="28" style="opacity: 0.45; display: block;">
+      </a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
     </div>
@@ -368,6 +371,8 @@
 </div>
 
 <script>
+  (function () {
+  }());
   (function () {
     var header = document.getElementById('site-header');
     if (!header) return;

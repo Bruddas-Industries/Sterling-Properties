@@ -515,6 +515,49 @@ body.nav-is-open { overflow: hidden; }
   line-height: 1.65;
 }
 
+/* Full-viewport video hero variant */
+.hero--video {
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .hero--video { min-height: 100vh; }
+}
+
+.hero__bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Transparent-until-scroll navbar — applies only when body.has-video-hero */
+.has-video-hero .site-header {
+  position: fixed;
+  background-color: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.has-video-hero .site-header.is-scrolled {
+  background-color: rgba(248, 249, 251, 0.97);
+  border-bottom-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.has-video-hero .site-header:not(.is-scrolled) .nav-logo img {
+  filter: brightness(0) invert(1);
+}
+
+.has-video-hero .site-header:not(.is-scrolled) .nav-toggle span {
+  background-color: #fff;
+}
+
+.has-video-hero .site-header:not(.is-scrolled) .btn--nav {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
 
 /* --------------------------------------------------------------------------
    7. FEATURE SECTIONS (alternating image/text)
