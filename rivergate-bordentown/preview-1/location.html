@@ -41,6 +41,25 @@
     }
     @media (max-width: 768px) { .map-embed { height: 360px; } }
 
+    /* Interactive POI list items */
+    .poi-item[data-poi] {
+      cursor: pointer; border-radius: var(--radius-sm);
+      padding: var(--space-2); margin: calc(-1 * var(--space-2));
+      transition: background-color var(--duration) var(--ease-out);
+    }
+    .poi-item[data-poi]:hover { background-color: var(--color-bg-alt); }
+    .poi-item[data-poi].is-active { background-color: var(--color-bg-alt); }
+    .poi-item[data-poi].is-active .poi-item-name { color: var(--color-primary); }
+
+    @keyframes poi-flash {
+      0%   { background-color: rgba(27, 94, 145, 0.20); }
+      55%  { background-color: rgba(27, 94, 145, 0.20); }
+      100% { background-color: var(--color-bg-alt); }
+    }
+    .poi-item.is-highlighted {
+      animation: poi-flash 1000ms ease-out forwards;
+    }
+
     /* POI legend */
     .poi-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -185,14 +204,7 @@
     </div>
 
     <div style="margin-top: var(--space-8); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
-      <iframe
-        class="map-embed"
-        src="https://maps.google.com/maps?q=500+Bluff+View+Circle,Bordentown,NJ+08505&output=embed&z=15"
-        title="Rivergate Bordentown location map"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+      <div id="poi-map" class="map-embed"></div>
     </div>
 
     <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6);">
@@ -497,7 +509,7 @@
     <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
     <div style="display:flex; gap: var(--space-5); align-items: center;">
       <a href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
-        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" height="28" style="opacity: 0.45; display: block;">
+        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" style="height: 28px; width: auto; opacity: 0.45; display: block;">
       </a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
@@ -532,5 +544,158 @@
     items.forEach(function (el) { observer.observe(el); });
   }());
 </script>
+
+<script>
+function initMap() {
+  var mapStyles = [
+    { elementType: 'geometry', stylers: [{ color: '#f0f0f0' }] },
+    { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+    { elementType: 'labels.text.fill', stylers: [{ color: '#6b6b6b' }] },
+    { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f5f5' }] },
+    { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#1B5E91' }] },
+    { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#a8c5d8' }] },
+    { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#ffffff' }] },
+    { featureType: 'road.arterial', elementType: 'geometry', stylers: [{ color: '#e8e8e8' }] },
+    { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#d8d8d8' }] },
+    { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#e8ede8' }] },
+    { featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#e8e8e8' }] },
+    { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: '#c0c0c0' }] },
+    { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#f0f0f0' }] }
+  ];
+
+  var map = new google.maps.Map(document.getElementById('poi-map'), {
+    center: { lat: 40.1423, lng: -74.7090 },
+    zoom: 12,
+    styles: mapStyles,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: true,
+    zoomControl: true
+  });
+
+  var pois = [
+    { name: 'River Line Light Rail',            lat: 40.1486, lng: -74.7191, category: 'transit'    },
+    { name: 'Trenton Transit Center',            lat: 40.2171, lng: -74.7555, category: 'transit'    },
+    { name: 'I-295 On-Ramp',                    lat: 40.1400, lng: -74.7300, category: 'transit'    },
+    { name: 'New Jersey Turnpike',               lat: 40.1195, lng: -74.7401, category: 'transit'    },
+    { name: 'Bordentown City',                   lat: 40.1487, lng: -74.7190, category: 'shopping'   },
+    { name: 'Hamilton Marketplace',              lat: 40.2029, lng: -74.7209, category: 'shopping'   },
+    { name: 'Shoppes at Hamilton',               lat: 40.2174, lng: -74.6869, category: 'shopping'   },
+    { name: 'Quaker Bridge Mall',                lat: 40.2473, lng: -74.6657, category: 'shopping'   },
+    { name: 'Bordentown City Dining',            lat: 40.1483, lng: -74.7182, category: 'dining'     },
+    { name: 'Trenton Restaurant Scene',          lat: 40.2170, lng: -74.7430, category: 'dining'     },
+    { name: 'Hamilton Area Dining',              lat: 40.2050, lng: -74.7100, category: 'dining'     },
+    { name: 'Crystal Lake Park',                 lat: 40.1577, lng: -74.7257, category: 'rec'        },
+    { name: 'Kuser Farm Park',                   lat: 40.2086, lng: -74.7374, category: 'rec'        },
+    { name: 'Grounds For Sculpture',             lat: 40.2005, lng: -74.7388, category: 'rec'        },
+    { name: 'Old York Country Club',             lat: 40.1673, lng: -74.6877, category: 'rec'        },
+    { name: 'Rancocas Golf Club',                lat: 39.9939, lng: -74.7756, category: 'rec'        },
+    { name: 'Delaware River Waterfront',         lat: 40.1420, lng: -74.7100, category: 'rec'        },
+    { name: 'Bordentown Regional School District', lat: 40.1503, lng: -74.7184, category: 'education' },
+    { name: 'Princeton University',              lat: 40.3431, lng: -74.6514, category: 'education'  },
+    { name: 'Rider University',                  lat: 40.2845, lng: -74.7200, category: 'education'  },
+    { name: 'Capital Health Medical Center',     lat: 40.3243, lng: -74.7629, category: 'education'  }
+  ];
+
+  var categoryColors = {
+    transit:   '#1B5E91',
+    shopping:  '#2E7D32',
+    dining:    '#C62828',
+    rec:       '#6A1B9A',
+    education: '#E65100'
+  };
+
+  var activeInfoWindow = null;
+  var markersByName = {};
+
+  /* Property marker */
+  var propertyMarker = new google.maps.Marker({
+    position: { lat: 40.1423, lng: -74.7090 },
+    map: map,
+    title: 'Rivergate Bordentown',
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillColor: '#1B5E91',
+      fillOpacity: 1,
+      strokeColor: '#ffffff',
+      strokeWeight: 3,
+      scale: 12
+    },
+    zIndex: 100
+  });
+  var propertyInfoWindow = new google.maps.InfoWindow({
+    content: '<div style="font-family:Inter,sans-serif;padding:4px 8px 4px 2px;min-width:200px"><strong style="font-size:14px;color:#1C2B3A;display:block;margin-bottom:4px">Rivergate Bordentown</strong><span style="font-size:12px;color:#666">500 Bluff View Circle, Bordentown, NJ</span></div>'
+  });
+  propertyMarker.addListener('mouseover', function () { propertyInfoWindow.open(map, propertyMarker); });
+  propertyMarker.addListener('mouseout',  function () { if (activeInfoWindow !== propertyInfoWindow) propertyInfoWindow.close(); });
+  propertyMarker.addListener('click', function () {
+    if (activeInfoWindow) activeInfoWindow.close();
+    propertyInfoWindow.open(map, propertyMarker);
+    activeInfoWindow = propertyInfoWindow;
+  });
+
+  /* POI markers */
+  pois.forEach(function (poi) {
+    var marker = new google.maps.Marker({
+      position: { lat: poi.lat, lng: poi.lng },
+      map: map,
+      title: poi.name,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: categoryColors[poi.category],
+        fillOpacity: 0.9,
+        strokeColor: '#ffffff',
+        strokeWeight: 2,
+        scale: 7
+      }
+    });
+    var infoWindow = new google.maps.InfoWindow({
+      content: '<div style="font-family:Inter,sans-serif;padding:4px 8px 4px 2px;min-width:140px"><strong style="font-size:13px;color:#1C2B3A;">' + poi.name + '</strong></div>'
+    });
+    marker.addListener('mouseover', function () { infoWindow.open(map, marker); });
+    marker.addListener('mouseout',  function () { if (activeInfoWindow !== infoWindow) infoWindow.close(); });
+    marker.addListener('click', function () {
+      if (activeInfoWindow) activeInfoWindow.close();
+      infoWindow.open(map, marker);
+      activeInfoWindow = infoWindow;
+      document.querySelectorAll('.poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
+      document.querySelectorAll('.poi-item.is-highlighted').forEach(function (el) { el.classList.remove('is-highlighted'); });
+      var listItem = document.querySelector('.poi-item[data-poi="' + poi.name + '"]');
+      if (listItem) {
+        listItem.classList.add('is-active');
+        listItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setTimeout(function () {
+          listItem.classList.remove('is-highlighted');
+          void listItem.offsetWidth; /* force reflow to restart animation */
+          listItem.classList.add('is-highlighted');
+          listItem.addEventListener('animationend', function () { listItem.classList.remove('is-highlighted'); }, { once: true });
+        }, 400);
+      }
+    });
+    markersByName[poi.name] = { marker: marker, infoWindow: infoWindow };
+  });
+
+  /* Wire up POI list items to pan the map */
+  document.querySelectorAll('.poi-item-name').forEach(function (nameEl) {
+    var name = nameEl.textContent.trim();
+    if (!markersByName[name]) return;
+    var item = nameEl.closest('.poi-item');
+    if (!item) return;
+    item.setAttribute('data-poi', name);
+    item.addEventListener('click', function () {
+      var entry = markersByName[name];
+      map.panTo(entry.marker.getPosition());
+      map.setZoom(14);
+      if (activeInfoWindow) activeInfoWindow.close();
+      entry.infoWindow.open(map, entry.marker);
+      activeInfoWindow = entry.infoWindow;
+      document.querySelectorAll('.poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
+      item.classList.add('is-active');
+      document.getElementById('poi-map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE&callback=initMap"></script>
 </body>
 </html>

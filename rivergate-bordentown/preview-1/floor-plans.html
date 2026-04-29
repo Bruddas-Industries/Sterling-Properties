@@ -80,6 +80,23 @@
       display: flex; align-items: flex-start; gap: var(--space-5); margin-top: var(--space-8);
     }
     .appfolio-note svg { flex-shrink: 0; color: var(--color-primary); }
+
+    .plan-tabs {
+      display: flex; gap: 0; margin-bottom: var(--space-8);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .plan-tab-btn {
+      padding: var(--space-3) var(--space-7);
+      font-family: var(--font-heading); font-size: var(--text-base);
+      letter-spacing: var(--tracking-wide); text-transform: uppercase;
+      color: var(--color-text-muted); border: none; background: none;
+      cursor: pointer; border-bottom: 2px solid transparent;
+      margin-bottom: -1px; transition: color var(--duration) var(--ease-out),
+      border-color var(--duration) var(--ease-out);
+    }
+    .plan-tab-btn:hover { color: var(--color-text); }
+    .plan-tab-btn.is-active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+    .plan-panel[hidden] { display: none; }
   </style>
 </head>
 <body>
@@ -142,128 +159,136 @@
       <p>From intimate one-bedrooms to expansive two-bedroom suites, every Rivergate floor plan is built around the way you actually live. All plans feature private balconies and the full suite of designer finishes.</p>
     </div>
 
-    <!-- ONE BEDROOM -->
-    <h3 class="group-label">One Bedroom — Three Plans</h3>
-    <div class="card-grid">
-
-      <div class="plan-card plan-card--default" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 1B</span>
-        <h3 style="font-size: var(--text-2xl);">The Borden</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>773</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
-        </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">Open living/dining area with abundant natural light, a private balcony, and a spacious master bedroom. Designer kitchen with stainless appliances and quartz countertops.</p>
-        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
-
-      <div class="plan-card plan-card--default" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 1B2</span>
-        <h3 style="font-size: var(--text-2xl);">The Rivergate</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>737</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
-        </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">Efficiently designed open living and dining area with balcony access and a generous bedroom. Designer kitchen with all stainless finishes.</p>
-        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
-
-      <div class="plan-card plan-card--default" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 1B3</span>
-        <h3 style="font-size: var(--text-2xl);">The Wright</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>863</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
-        </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">Our largest one-bedroom layout features an open living/dining area with private balcony, designer kitchen, and a large master bedroom with walk-in closet.</p>
-        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
-
+    <!-- TABS -->
+    <div class="plan-tabs" role="tablist" aria-label="Floor plan bedroom types">
+      <button class="plan-tab-btn is-active" role="tab" aria-selected="true" aria-controls="panel-1br" data-tab="1br">1 Bedroom</button>
+      <button class="plan-tab-btn" role="tab" aria-selected="false" aria-controls="panel-2br" data-tab="2br">2 Bedroom</button>
     </div>
 
-    <!-- TWO BEDROOM -->
-    <h3 class="group-label">Two Bedroom — Five Plans</h3>
-    <div class="card-grid">
+    <!-- ONE BEDROOM PANEL -->
+    <div id="panel-1br" class="plan-panel" role="tabpanel" data-panel="1br">
+      <div class="card-grid">
 
-      <div class="plan-card plan-card--default" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B</span>
-        <h3 style="font-size: var(--text-2xl);">The Chester</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>1,033</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        <div class="plan-card plan-card--default" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 1B</span>
+          <h3 style="font-size: var(--text-2xl);">The Borden</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>773</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">Open living/dining area with abundant natural light, a private balcony, and a spacious master bedroom. Designer kitchen with stainless appliances and quartz countertops.</p>
+          <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
         </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">Two bedrooms and two full baths with a private balcony, a large open living/dining area, and a full designer kitchen.</p>
-        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
 
-      <div class="plan-card plan-card--featured" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B2 — Most Popular</span>
-        <h3 style="font-size: var(--text-2xl);">The Dayton</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>1,160</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        <div class="plan-card plan-card--default" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 1B2</span>
+          <h3 style="font-size: var(--text-2xl);">The Rivergate</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>737</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">Efficiently designed open living and dining area with balcony access and a generous bedroom. Designer kitchen with all stainless finishes.</p>
+          <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
         </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">Expansive living/dining area with private balcony access, a designer kitchen, and a luxurious master suite — the most popular two-bedroom layout at Rivergate.</p>
-        <a href="contact.html" class="btn btn--primary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
 
-      <div class="plan-card plan-card--default" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B3</span>
-        <h3 style="font-size: var(--text-2xl);">The Edison</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>1,287</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        <div class="plan-card plan-card--default" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 1B3</span>
+          <h3 style="font-size: var(--text-2xl);">The Wright</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>1</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>1</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>863</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">Our largest one-bedroom layout features an open living/dining area with private balcony, designer kitchen, and a large master bedroom with walk-in closet.</p>
+          <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
         </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">One of our larger two-bedroom residences, with open living/dining areas, a designer kitchen, and two well-appointed bedrooms with private balcony.</p>
-        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
 
-      <div class="plan-card plan-card--default" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B5</span>
-        <h3 style="font-size: var(--text-2xl);">The Farnsworth</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>1,149</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+      </div>
+    </div>
+
+    <!-- TWO BEDROOM PANEL -->
+    <div id="panel-2br" class="plan-panel" role="tabpanel" data-panel="2br" hidden>
+      <div class="card-grid">
+
+        <div class="plan-card plan-card--default" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 2B</span>
+          <h3 style="font-size: var(--text-2xl);">The Chester</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>1,033</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">Two bedrooms and two full baths with a private balcony, a large open living/dining area, and a full designer kitchen.</p>
+          <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
         </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">A designer kitchen with spacious open living and dining areas and private balcony — ideal for comfortable everyday two-bedroom living.</p>
-        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
 
-      <div class="plan-card plan-card--default" data-animate>
-        <span class="eyebrow" style="margin-bottom: 0;">Plan 2B6</span>
-        <h3 style="font-size: var(--text-2xl);">The Hamilton</h3>
-        <div class="plan-meta">
-          <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
-          <div class="plan-meta-item"><span>Sq Ft</span><span>1,342</span></div>
-          <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+        <div class="plan-card plan-card--featured" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 2B2 — Most Popular</span>
+          <h3 style="font-size: var(--text-2xl);">The Dayton</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>1,160</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">Expansive living/dining area with private balcony access, a designer kitchen, and a luxurious master suite — the most popular two-bedroom layout at Rivergate.</p>
+          <a href="contact.html" class="btn btn--primary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
         </div>
-        <div class="divider" style="margin-block: 0;"></div>
-        <p class="card__text">Our most expansive residence — an open layout with generous living/dining areas, designer kitchen, private balcony, and two spacious bedrooms.</p>
-        <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
-      </div>
 
+        <div class="plan-card plan-card--default" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 2B3</span>
+          <h3 style="font-size: var(--text-2xl);">The Edison</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>1,287</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">One of our larger two-bedroom residences, with open living/dining areas, a designer kitchen, and two well-appointed bedrooms with private balcony.</p>
+          <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+        </div>
+
+        <div class="plan-card plan-card--default" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 2B5</span>
+          <h3 style="font-size: var(--text-2xl);">The Farnsworth</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>1,149</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">A designer kitchen with spacious open living and dining areas and private balcony — ideal for comfortable everyday two-bedroom living.</p>
+          <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+        </div>
+
+        <div class="plan-card plan-card--default" data-animate>
+          <span class="eyebrow" style="margin-bottom: 0;">Plan 2B6</span>
+          <h3 style="font-size: var(--text-2xl);">The Hamilton</h3>
+          <div class="plan-meta">
+            <div class="plan-meta-item"><span>Bed</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Bath</span><span>2</span></div>
+            <div class="plan-meta-item"><span>Sq Ft</span><span>1,342</span></div>
+            <div class="plan-meta-item"><span>Balcony</span><span>Yes</span></div>
+          </div>
+          <div class="divider" style="margin-block: 0;"></div>
+          <p class="card__text">Our most expansive residence — an open layout with generous living/dining areas, designer kitchen, private balcony, and two spacious bedrooms.</p>
+          <a href="contact.html" class="btn btn--secondary" style="align-self: flex-start; margin-top: var(--space-3);">Request Pricing &amp; Availability</a>
+        </div>
+
+      </div>
     </div>
 
     <!-- APPFOLIO NOTE -->
@@ -320,7 +345,7 @@
     <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
     <div style="display:flex; gap: var(--space-5); align-items: center;">
       <a href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
-        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" height="28" style="opacity: 0.45; display: block;">
+        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" style="height: 28px; width: auto; opacity: 0.45; display: block;">
       </a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
@@ -356,6 +381,32 @@
       entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     items.forEach(function (el) { observer.observe(el); });
+  }());
+  (function () {
+    var tabs = document.querySelectorAll('.plan-tab-btn');
+    var panels = document.querySelectorAll('.plan-panel');
+    tabs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = btn.getAttribute('data-tab');
+        tabs.forEach(function (t) { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+        panels.forEach(function (panel) {
+          if (panel.getAttribute('data-panel') === target) {
+            panel.removeAttribute('hidden');
+            panel.querySelectorAll('[data-animate]').forEach(function (el, i) {
+              el.style.transitionDelay = (i % 5 * 90) + 'ms';
+              requestAnimationFrame(function () { el.classList.add('is-visible'); });
+            });
+          } else {
+            panel.setAttribute('hidden', '');
+            panel.querySelectorAll('[data-animate]').forEach(function (el) {
+              el.classList.remove('is-visible');
+            });
+          }
+        });
+      });
+    });
   }());
 </script>
 </body>

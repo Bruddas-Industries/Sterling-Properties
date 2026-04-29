@@ -62,10 +62,40 @@
     }
     .form-group textarea { resize: vertical; min-height: 120px; }
 
+    .also-like-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .also-like-card {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); overflow: hidden;
+      transition: box-shadow var(--duration) var(--ease-out), transform var(--duration) var(--ease-out);
+    }
+    .also-like-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .also-like-card__img {
+      height: 180px; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-border) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .also-like-card__img-label {
+      font-family: var(--font-heading); font-size: var(--text-xl);
+      color: var(--color-text-muted); letter-spacing: var(--tracking-tight); opacity: 0.4;
+    }
+    .also-like-card__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+    .badge--soon {
+      display: inline-block; font-size: var(--text-xs); letter-spacing: var(--tracking-wider);
+      text-transform: uppercase; background: var(--color-bg-alt); color: var(--color-text-muted);
+      padding: 3px var(--space-3); border-radius: var(--radius-sm); border: 1px solid var(--color-border);
+      align-self: flex-start;
+    }
+    .also-like-card__name { font-family: var(--font-heading); font-size: var(--text-xl); color: var(--color-text); font-weight: var(--weight-light); margin: 0; }
+    .also-like-card__location { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+
     @media (max-width: 768px) {
       .amenity-img-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
+      .also-like-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -112,7 +142,7 @@
     <h1 class="hero__headline">Waterfront Living on the Delaware River</h1>
     <p class="hero__subheadline">159 luxury rental residences where resort-style amenities meet unmatched transit access to New York, Philadelphia, and beyond.</p>
     <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
-      <a href="contact.html" class="btn btn--primary">Schedule a Tour</a>
+      <a href="contact.html" class="btn btn--primary">Contact Us</a>
       <a href="floor-plans.html" class="btn btn--ghost">View Floor Plans</a>
     </div>
   </div>
@@ -339,6 +369,54 @@
 </section>
 
 
+<!-- YOU MAY ALSO LIKE -->
+<section class="section--alt">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Sterling Properties</span>
+      <h2>More Communities You May Like</h2>
+      <p>Rivergate Bordentown is one of several luxury communities managed by Sterling Properties across New Jersey. Explore our portfolio to find the right home for you.</p>
+    </div>
+    <div class="also-like-grid">
+
+      <div class="also-like-card" data-animate>
+        <div class="also-like-card__img">
+          <span class="also-like-card__img-label">Sterling</span>
+        </div>
+        <div class="also-like-card__body">
+          <span class="badge--soon">Coming Soon</span>
+          <p class="also-like-card__name">The Reserve at Hamilton</p>
+          <p class="also-like-card__location">Hamilton Township, NJ</p>
+        </div>
+      </div>
+
+      <div class="also-like-card" data-animate>
+        <div class="also-like-card__img">
+          <span class="also-like-card__img-label">Sterling</span>
+        </div>
+        <div class="also-like-card__body">
+          <span class="badge--soon">Coming Soon</span>
+          <p class="also-like-card__name">Riverside Commons</p>
+          <p class="also-like-card__location">Burlington City, NJ</p>
+        </div>
+      </div>
+
+      <div class="also-like-card" data-animate>
+        <div class="also-like-card__img">
+          <span class="also-like-card__img-label">Sterling</span>
+        </div>
+        <div class="also-like-card__body">
+          <span class="badge--soon">Coming Soon</span>
+          <p class="also-like-card__name">The Bluffs at Lawrence</p>
+          <p class="also-like-card__location">Lawrence Township, NJ</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <a href="index.html" class="footer-logo" aria-label="Rivergate Bordentown — Home">
@@ -358,7 +436,7 @@
     <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
     <div style="display:flex; gap: var(--space-5); align-items: center;">
       <a href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
-        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" height="28" style="opacity: 0.45; display: block;">
+        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" style="height: 28px; width: auto; opacity: 0.45; display: block;">
       </a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
       <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
