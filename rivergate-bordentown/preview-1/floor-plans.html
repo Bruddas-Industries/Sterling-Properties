@@ -42,14 +42,16 @@
     .plan-card--featured { border: 1.5px solid var(--color-primary); background: var(--color-bg-alt); }
 
     .plan-meta {
-      display: flex; gap: var(--space-5); margin-top: var(--space-2);
+      display: flex; gap: var(--space-4); margin-top: var(--space-2);
+      align-self: flex-start;
     }
     .plan-meta-item {
       display: flex; flex-direction: column; gap: 2px;
     }
     .plan-meta-item span:first-child {
-      font-size: var(--text-xs); letter-spacing: var(--tracking-wider);
+      font-size: var(--text-xs); letter-spacing: var(--tracking-wide);
       text-transform: uppercase; color: var(--color-text-muted);
+      white-space: nowrap;
     }
     .plan-meta-item span:last-child {
       font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text);
@@ -80,6 +82,8 @@
       display: flex; align-items: flex-start; gap: var(--space-5); margin-top: var(--space-8);
     }
     .appfolio-note svg { flex-shrink: 0; color: var(--color-primary); }
+
+    .plan-card .btn { white-space: normal; text-align: left; }
 
     .plan-tabs {
       display: flex; gap: 0; margin-bottom: var(--space-8);
