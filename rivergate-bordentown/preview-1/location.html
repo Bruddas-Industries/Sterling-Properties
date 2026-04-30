@@ -101,6 +101,23 @@
     .dot--rec       { background: #6A1B9A; }
     .dot--education { background: #E65100; }
 
+    /* Google Maps InfoWindow overrides — compact modern style */
+    .gm-style .gm-style-iw-c {
+      border-radius: 6px !important;
+      padding: 0 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+      min-width: 0 !important;
+    }
+    .gm-style .gm-style-iw-d {
+      overflow: hidden !important;
+      padding: 0 !important;
+    }
+    /* Hide tail arrow */
+    .gm-style .gm-style-iw-tc { display: none !important; }
+    .gm-style .gm-style-iw-t::after { display: none !important; }
+    /* Hide close button */
+    .gm-ui-hover-effect { display: none !important; }
+
     /* Transit stats strip */
     .transit-strip {
       background: var(--color-text); color: var(--color-bg);
@@ -295,8 +312,8 @@
           <div class="poi-item">
             <span class="poi-marker dot--shopping"></span>
             <span class="poi-item-text">
-              <span class="poi-item-name">Shoppes at Hamilton</span>
-              <span class="poi-item-detail">Lifestyle retail and dining · ~12 min</span>
+              <span class="poi-item-name">MarketFair</span>
+              <span class="poi-item-detail">Upscale shops, dining & cinema · ~25 min · Princeton, NJ</span>
             </span>
           </div>
           <div class="poi-item">
@@ -371,8 +388,8 @@
           <div class="poi-item">
             <span class="poi-marker dot--rec"></span>
             <span class="poi-item-text">
-              <span class="poi-item-name">Old York Country Club</span>
-              <span class="poi-item-detail">Golf · ~10 min</span>
+              <span class="poi-item-name">Cream Ridge Golf Course</span>
+              <span class="poi-item-detail">Golf · ~20 min · Cream Ridge, NJ</span>
             </span>
           </div>
           <div class="poi-item">
@@ -506,13 +523,14 @@
     </nav>
   </div>
   <div class="footer-bottom">
-    <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
-    <div style="display:flex; gap: var(--space-5); align-items: center;">
-      <a href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
-        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" style="height: 28px; width: auto; opacity: 0.45; display: block;">
-      </a>
-      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
-      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
+    <p class="footer-bottom__copy">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved. Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.</p>
+    <a class="footer-bottom__brand" href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
+      <img class="footer-sterling-logo" src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties">
+    </a>
+    <div class="footer-bottom__links">
+      <a href="#">Privacy Policy</a>
+      <a href="../theme/rivergate-bordentown/assets/pdf/RivergateBrochure.pdf" target="_blank" rel="noopener noreferrer">Brochure</a>
+      <a href="../theme/rivergate-bordentown/assets/pdf/Rivergate-Rental-Application.pdf" target="_blank" rel="noopener noreferrer">Rental Application</a>
     </div>
   </div>
 </footer>
@@ -564,8 +582,8 @@ function initMap() {
   ];
 
   var map = new google.maps.Map(document.getElementById('poi-map'), {
-    center: { lat: 40.1423, lng: -74.7090 },
-    zoom: 12,
+    center: { lat: 40.1700, lng: -74.7250 },
+    zoom: 11,
     styles: mapStyles,
     mapTypeControl: false,
     streetViewControl: false,
@@ -575,26 +593,26 @@ function initMap() {
 
   var pois = [
     { name: 'River Line Light Rail',            lat: 40.1486, lng: -74.7191, category: 'transit'    },
-    { name: 'Trenton Transit Center',            lat: 40.2171, lng: -74.7555, category: 'transit'    },
-    { name: 'I-295 On-Ramp',                    lat: 40.1400, lng: -74.7300, category: 'transit'    },
-    { name: 'New Jersey Turnpike',               lat: 40.1195, lng: -74.7401, category: 'transit'    },
-    { name: 'Bordentown City',                   lat: 40.1487, lng: -74.7190, category: 'shopping'   },
-    { name: 'Hamilton Marketplace',              lat: 40.2029, lng: -74.7209, category: 'shopping'   },
-    { name: 'Shoppes at Hamilton',               lat: 40.2174, lng: -74.6869, category: 'shopping'   },
-    { name: 'Quaker Bridge Mall',                lat: 40.2473, lng: -74.6657, category: 'shopping'   },
-    { name: 'Bordentown City Dining',            lat: 40.1483, lng: -74.7182, category: 'dining'     },
+    { name: 'Trenton Transit Center',            lat: 40.2188, lng: -74.7543, category: 'transit'    },
+    { name: 'I-295 On-Ramp',                    lat: 40.1563, lng: -74.7183, category: 'transit'    },
+    { name: 'New Jersey Turnpike',               lat: 40.1541, lng: -74.7010, category: 'transit'    },
+    { name: 'Bordentown City',                   lat: 40.1483, lng: -74.7162, category: 'shopping'   },
+    { name: 'Hamilton Marketplace',              lat: 40.1939, lng: -74.6393, category: 'shopping'   },
+    { name: 'MarketFair',                        lat: 40.3148, lng: -74.6610, category: 'shopping'   },
+    { name: 'Quaker Bridge Mall',                lat: 40.2911, lng: -74.6830, category: 'shopping'   },
+    { name: 'Bordentown City Dining',            lat: 40.1483, lng: -74.7162, category: 'dining'     },
     { name: 'Trenton Restaurant Scene',          lat: 40.2170, lng: -74.7430, category: 'dining'     },
     { name: 'Hamilton Area Dining',              lat: 40.2050, lng: -74.7100, category: 'dining'     },
-    { name: 'Crystal Lake Park',                 lat: 40.1577, lng: -74.7257, category: 'rec'        },
-    { name: 'Kuser Farm Park',                   lat: 40.2086, lng: -74.7374, category: 'rec'        },
-    { name: 'Grounds For Sculpture',             lat: 40.2005, lng: -74.7388, category: 'rec'        },
-    { name: 'Old York Country Club',             lat: 40.1673, lng: -74.6877, category: 'rec'        },
-    { name: 'Rancocas Golf Club',                lat: 39.9939, lng: -74.7756, category: 'rec'        },
-    { name: 'Delaware River Waterfront',         lat: 40.1420, lng: -74.7100, category: 'rec'        },
-    { name: 'Bordentown Regional School District', lat: 40.1503, lng: -74.7184, category: 'education' },
-    { name: 'Princeton University',              lat: 40.3431, lng: -74.6514, category: 'education'  },
-    { name: 'Rider University',                  lat: 40.2845, lng: -74.7200, category: 'education'  },
-    { name: 'Capital Health Medical Center',     lat: 40.3243, lng: -74.7629, category: 'education'  }
+    { name: 'Crystal Lake Park',                 lat: 40.1172, lng: -74.7396, category: 'rec'        },
+    { name: 'Kuser Farm Park',                   lat: 40.2149, lng: -74.7195, category: 'rec'        },
+    { name: 'Grounds For Sculpture',             lat: 40.2368, lng: -74.7189, category: 'rec'        },
+    { name: 'Cream Ridge Golf Course',           lat: 40.1474, lng: -74.5380, category: 'rec'        },
+    { name: 'Rancocas Golf Club',                lat: 40.0133, lng: -74.8950, category: 'rec'        },
+    { name: 'Delaware River Waterfront',         lat: 40.1280, lng: -74.7450, category: 'rec'        },
+    { name: 'Bordentown Regional School District', lat: 40.1440, lng: -74.7044, category: 'education' },
+    { name: 'Princeton University',              lat: 40.3431, lng: -74.6551, category: 'education'  },
+    { name: 'Rider University',                  lat: 40.2812, lng: -74.7408, category: 'education'  },
+    { name: 'Capital Health Medical Center',     lat: 40.2919, lng: -74.8031, category: 'rec'        }
   ];
 
   var categoryColors = {
@@ -610,7 +628,7 @@ function initMap() {
 
   /* Property marker */
   var propertyMarker = new google.maps.Marker({
-    position: { lat: 40.1423, lng: -74.7090 },
+    position: { lat: 40.1278, lng: -74.7380 },
     map: map,
     title: 'Rivergate Bordentown',
     icon: {
@@ -624,7 +642,7 @@ function initMap() {
     zIndex: 100
   });
   var propertyInfoWindow = new google.maps.InfoWindow({
-    content: '<div style="font-family:Inter,sans-serif;padding:4px 8px 4px 2px;min-width:200px"><strong style="font-size:14px;color:#1C2B3A;display:block;margin-bottom:4px">Rivergate Bordentown</strong><span style="font-size:12px;color:#666">500 Bluff View Circle, Bordentown, NJ</span></div>'
+    content: '<div style="font-family:Inter,sans-serif;padding:10px 14px;line-height:1.3"><strong style="font-size:12px;color:#1C2B3A;display:block;letter-spacing:0.02em">Rivergate Bordentown</strong><span style="font-size:11px;color:#888;margin-top:2px;display:block">500 Bluff View Circle, Bordentown, NJ</span></div>'
   });
   propertyMarker.addListener('mouseover', function () { propertyInfoWindow.open(map, propertyMarker); });
   propertyMarker.addListener('mouseout',  function () { if (activeInfoWindow !== propertyInfoWindow) propertyInfoWindow.close(); });
@@ -650,11 +668,16 @@ function initMap() {
       }
     });
     var infoWindow = new google.maps.InfoWindow({
-      content: '<div style="font-family:Inter,sans-serif;padding:4px 8px 4px 2px;min-width:140px"><strong style="font-size:13px;color:#1C2B3A;">' + poi.name + '</strong></div>'
+      content: '<div style="font-family:Inter,sans-serif;padding:8px 12px;line-height:1"><span style="font-size:11px;font-weight:600;color:#1C2B3A;letter-spacing:0.02em">' + poi.name + '</span></div>'
     });
     marker.addListener('mouseover', function () { infoWindow.open(map, marker); });
     marker.addListener('mouseout',  function () { if (activeInfoWindow !== infoWindow) infoWindow.close(); });
     marker.addListener('click', function () {
+      if (activeInfoWindow === infoWindow) {
+        infoWindow.close();
+        activeInfoWindow = null;
+        return;
+      }
       if (activeInfoWindow) activeInfoWindow.close();
       infoWindow.open(map, marker);
       activeInfoWindow = infoWindow;
@@ -673,6 +696,11 @@ function initMap() {
       }
     });
     markersByName[poi.name] = { marker: marker, infoWindow: infoWindow };
+  });
+
+  /* Close active InfoWindow when clicking empty map area */
+  map.addListener('click', function () {
+    if (activeInfoWindow) { activeInfoWindow.close(); activeInfoWindow = null; }
   });
 
   /* Wire up POI list items to pan the map */

@@ -71,10 +71,30 @@
       border-bottom: 1px solid var(--color-border);
       padding-block: var(--space-7);
     }
-    .includes-strip .container {
-      display: flex; gap: var(--space-8); flex-wrap: wrap; align-items: center;
+    .includes-strip__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--space-5);
     }
-    .includes-strip p { max-width: none; margin: 0; font-size: var(--text-sm); color: var(--color-text-muted); }
+    .includes-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-3) var(--space-6);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .includes-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .includes-item svg { color: var(--color-primary); flex-shrink: 0; }
 
     .appfolio-note {
       background: var(--color-surface); border: 1.5px solid var(--color-border);
@@ -146,9 +166,42 @@
 
 <!-- INCLUDED IN EVERY HOME STRIP -->
 <div class="includes-strip">
-  <div class="container">
-    <p style="font-size: var(--text-xs); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-primary); flex-shrink: 0;">Every Residence Includes</p>
-    <p>9-foot ceilings &nbsp;·&nbsp; Private balcony &nbsp;·&nbsp; In-unit washer/dryer &nbsp;·&nbsp; Designer kitchen &nbsp;·&nbsp; Quartz countertops &nbsp;·&nbsp; Stainless appliances &nbsp;·&nbsp; Central A/C &nbsp;·&nbsp; Gas heat</p>
+  <div class="container includes-strip__inner">
+    <p class="eyebrow">Every Residence Includes</p>
+    <ul class="includes-list">
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        9-foot ceilings
+      </li>
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Private balcony
+      </li>
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        In-unit washer/dryer
+      </li>
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Designer kitchen
+      </li>
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Quartz countertops
+      </li>
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Stainless appliances
+      </li>
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Central A/C
+      </li>
+      <li class="includes-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Gas heat
+      </li>
+    </ul>
   </div>
 </div>
 
@@ -346,13 +399,14 @@
     </nav>
   </div>
   <div class="footer-bottom">
-    <p style="color: rgba(248,249,251,0.4); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); max-width: none;">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved.</p>
-    <div style="display:flex; gap: var(--space-5); align-items: center;">
-      <a href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
-        <img src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties" style="height: 28px; width: auto; opacity: 0.45; display: block;">
-      </a>
-      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Privacy Policy</a>
-      <a href="#" style="font-size: var(--text-xs); color: rgba(248,249,251,0.4); letter-spacing: var(--tracking-wide);">Rental Application</a>
+    <p class="footer-bottom__copy">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved. Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.</p>
+    <a class="footer-bottom__brand" href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
+      <img class="footer-sterling-logo" src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties">
+    </a>
+    <div class="footer-bottom__links">
+      <a href="#">Privacy Policy</a>
+      <a href="../theme/rivergate-bordentown/assets/pdf/RivergateBrochure.pdf" target="_blank" rel="noopener noreferrer">Brochure</a>
+      <a href="../theme/rivergate-bordentown/assets/pdf/Rivergate-Rental-Application.pdf" target="_blank" rel="noopener noreferrer">Rental Application</a>
     </div>
   </div>
 </footer>
