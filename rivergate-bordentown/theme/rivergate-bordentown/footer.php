@@ -28,6 +28,18 @@
 
         <nav class="footer-nav" aria-label="<?php esc_attr_e( 'Footer navigation', 'rivergate-bordentown' ); ?>">
             <?php
+            /*
+             * Footer menu — configure in WP Admin > Appearance > Menus > Footer.
+             * Required items:
+             *   Amenities        → /amenities/
+             *   Floor Plans      → /floor-plans/
+             *   Gallery          → /gallery/
+             *   Location         → /location/
+             *   Contact          → /contact/
+             *   Residents        → /residents/
+             *   Pay Rent         → https://sterlingproperties.appfolio.com/connect  (external, open in new tab)
+             *   Apply Now        → https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN  (external, open in new tab)
+             */
             wp_nav_menu( [
                 'theme_location' => 'footer',
                 'container'      => false,
