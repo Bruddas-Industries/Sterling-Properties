@@ -34,73 +34,6 @@
     .page-hero__content .eyebrow { color: rgba(255,255,255,0.6); }
     .page-hero__content h1 { color: #fff; max-width: 20ch; margin-bottom: 0; font-size: var(--text-3xl); }
 
-    /* Google Maps embed */
-    .map-embed {
-      width: 100%; height: 520px; border: 0; display: block;
-      border-radius: var(--radius-lg); overflow: hidden;
-    }
-    @media (max-width: 768px) { .map-embed { height: 360px; } }
-
-    /* Interactive POI list items */
-    .poi-item[data-poi] {
-      cursor: pointer; border-radius: var(--radius-sm);
-      padding: var(--space-2); margin: calc(-1 * var(--space-2));
-      transition: background-color var(--duration) var(--ease-out);
-    }
-    .poi-item[data-poi]:hover { background-color: var(--color-bg-alt); }
-    .poi-item[data-poi].is-active { background-color: var(--color-bg-alt); }
-    .poi-item[data-poi].is-active .poi-item-name { color: var(--color-primary); }
-
-    @keyframes poi-flash {
-      0%   { background-color: rgba(27, 94, 145, 0.20); }
-      55%  { background-color: rgba(27, 94, 145, 0.20); }
-      100% { background-color: var(--color-bg-alt); }
-    }
-    .poi-item.is-highlighted {
-      animation: poi-flash 1000ms ease-out forwards;
-    }
-
-    /* POI legend */
-    .poi-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: var(--space-8); margin-top: var(--space-10);
-    }
-    .poi-category {}
-    .poi-category__label {
-      display: flex; align-items: center; gap: var(--space-3);
-      font-size: var(--text-xs); letter-spacing: var(--tracking-widest);
-      text-transform: uppercase; font-weight: var(--weight-medium);
-      color: var(--color-text); margin-bottom: var(--space-5);
-      padding-bottom: var(--space-3); border-bottom: 1.5px solid var(--color-border);
-    }
-    .poi-dot {
-      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
-    }
-    .poi-list { display: flex; flex-direction: column; gap: var(--space-3); }
-    .poi-item {
-      display: flex; align-items: flex-start; gap: var(--space-3);
-    }
-    .poi-marker {
-      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-      margin-top: 6px;
-    }
-    .poi-item-text {}
-    .poi-item-name {
-      font-size: var(--text-sm); color: var(--color-text);
-      font-weight: var(--weight-medium); display: block;
-    }
-    .poi-item-detail {
-      font-size: var(--text-xs); color: var(--color-text-muted);
-      letter-spacing: 0.02em; display: block; margin-top: 2px;
-    }
-
-    /* Colors for POI categories */
-    .dot--transit   { background: #1B5E91; }
-    .dot--shopping  { background: #2E7D32; }
-    .dot--dining    { background: #C62828; }
-    .dot--rec       { background: #6A1B9A; }
-    .dot--education { background: #E65100; }
-
     /* Google Maps InfoWindow overrides — compact modern style */
     .gm-style .gm-style-iw-c {
       border-radius: 6px !important;
@@ -117,6 +50,8 @@
     .gm-style .gm-style-iw-t::after { display: none !important; }
     /* Hide close button */
     .gm-ui-hover-effect { display: none !important; }
+    /* Hide close button row that creates unwanted top gap */
+    .gm-style .gm-style-iw-chr { display: none !important; }
 
     /* Transit stats strip */
     .transit-strip {
@@ -138,8 +73,204 @@
       display: block; margin-top: var(--space-2);
     }
 
+    /* ============================================================
+       NEIGHBORHOOD EXPLORER — split-panel layout
+       ============================================================ */
+    .neighborhood-explorer-section {
+      padding-block: 0;
+      background: var(--color-bg);
+    }
+    .explorer-intro {
+      max-width: var(--container-max); margin-inline: auto;
+      padding-inline: var(--section-padding-x);
+      padding-top: var(--space-9);
+      padding-bottom: var(--space-8);
+    }
+    .neighborhood-explorer {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      align-items: start;
+      max-width: var(--container-max);
+      margin-inline: auto;
+      padding-inline: var(--section-padding-x);
+      gap: var(--space-8);
+      padding-bottom: var(--space-10);
+    }
+
+    /* LEFT PANEL — tabs + list */
+    .explorer__list-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Category tabs */
+    .explorer__tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      border-bottom: 1.5px solid var(--color-border);
+      margin-bottom: var(--space-6);
+    }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1.5px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      transition: color var(--duration) var(--ease-out),
+                  border-color var(--duration) var(--ease-out);
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--color-text); }
+    .tab-btn.is-active {
+      color: var(--color-text);
+      font-weight: var(--weight-semibold, 600);
+      border-bottom-color: var(--color-primary);
+    }
+    .tab-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .tab-dot--transit   { background: #1B5E91; }
+    .tab-dot--shopping  { background: #2E7D32; }
+    .tab-dot--dining    { background: #C62828; }
+    .tab-dot--rec       { background: #6A1B9A; }
+    .tab-dot--education { background: #E65100; }
+
+    /* POI lists */
+    .explorer__list {
+      overflow-y: auto;
+      max-height: calc(100vh - 220px);
+      padding-right: var(--space-2);
+      scroll-behavior: smooth;
+    }
+    .explorer__list::-webkit-scrollbar { width: 4px; }
+    .explorer__list::-webkit-scrollbar-track { background: transparent; }
+    .explorer__list::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+
+    .poi-category-list { margin-bottom: var(--space-6); }
+    .poi-category-list:last-child { margin-bottom: 0; }
+
+    /* Category list heading */
+    .poi-cat-heading {
+      display: flex; align-items: center; gap: var(--space-3);
+      font-size: var(--text-xs); letter-spacing: var(--tracking-widest);
+      text-transform: uppercase; font-weight: var(--weight-medium);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .poi-cat-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* Individual POI item */
+    .explorer-poi-item {
+      display: flex; align-items: flex-start; gap: var(--space-3);
+      padding: var(--space-3) var(--space-2);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background-color var(--duration) var(--ease-out);
+    }
+    .explorer-poi-item:hover { background-color: var(--color-bg-alt); }
+    .explorer-poi-item.is-active { background-color: var(--color-bg-alt); }
+    .explorer-poi-item.is-active .explorer-poi-name { color: var(--color-primary); }
+
+    @keyframes poi-flash {
+      0%   { background-color: rgba(27, 94, 145, 0.20); }
+      55%  { background-color: rgba(27, 94, 145, 0.20); }
+      100% { background-color: var(--color-bg-alt); }
+    }
+    .explorer-poi-item.is-highlighted {
+      animation: poi-flash 1000ms ease-out forwards;
+    }
+
+    /* Number badge */
+    .poi-num-badge {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+      color: #fff;
+      margin-top: 1px;
+      line-height: 1;
+    }
+
+    .explorer-poi-name {
+      font-size: var(--text-sm); color: var(--color-text);
+      font-weight: var(--weight-medium); display: block;
+      transition: color var(--duration) var(--ease-out);
+    }
+    .explorer-poi-detail {
+      font-size: var(--text-xs); color: var(--color-text-muted);
+      letter-spacing: 0.02em; display: block; margin-top: 2px;
+    }
+
+    /* Directions row below list */
+    .explorer-actions {
+      display: flex; gap: var(--space-4); flex-wrap: wrap;
+      margin-top: var(--space-6);
+    }
+
+    /* RIGHT PANEL — sticky map */
+    .explorer__map-panel {
+      position: sticky;
+      top: 80px;
+    }
+    .explorer-map {
+      width: 100%; height: calc(100vh - 120px);
+      min-height: 480px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: block;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Tab visibility filter */
+    .neighborhood-explorer[data-active-tab="transit"]   .poi-category-list:not([data-category="transit"]),
+    .neighborhood-explorer[data-active-tab="shopping"]  .poi-category-list:not([data-category="shopping"]),
+    .neighborhood-explorer[data-active-tab="dining"]    .poi-category-list:not([data-category="dining"]),
+    .neighborhood-explorer[data-active-tab="rec"]       .poi-category-list:not([data-category="rec"]),
+    .neighborhood-explorer[data-active-tab="education"] .poi-category-list:not([data-category="education"]) {
+      display: none;
+    }
+
+    /* Hide category heading when a specific tab is active — redundant with the tab label */
+    .neighborhood-explorer:not([data-active-tab="all"]) .poi-cat-heading { display: none; }
+
+    /* Mobile — single column, list first then map */
+    @media (max-width: 900px) {
+      .neighborhood-explorer {
+        grid-template-columns: 1fr;
+      }
+      .explorer__map-panel {
+        position: static;
+        order: 2;
+      }
+      .explorer__list-panel {
+        order: 1;
+      }
+      .explorer-map {
+        height: 360px;
+        min-height: 300px;
+      }
+      .explorer__list {
+        max-height: 480px;
+      }
+    }
     @media (max-width: 640px) {
-      .poi-grid { grid-template-columns: 1fr; }
+      .tab-btn { padding: var(--space-2) var(--space-3); font-size: 10px; }
     }
   </style>
 </head>
@@ -211,251 +342,252 @@
 </div>
 
 
-<!-- GOOGLE MAP -->
-<section>
-  <div class="container">
-    <div class="section-intro" data-animate>
-      <span class="eyebrow">500 Bluff View Circle · Bordentown, NJ 08505</span>
-      <h2>Find Us on the Map</h2>
-      <p>Situated along the Delaware River in historic Bordentown, New Jersey — at the crossroads of natural beauty and regional connectivity.</p>
-    </div>
+<!-- NEIGHBORHOOD EXPLORER -->
+<section class="neighborhood-explorer-section" aria-label="Neighborhood explorer">
 
-    <div style="margin-top: var(--space-8); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
-      <div id="poi-map" class="map-embed"></div>
-    </div>
-
-    <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6);">
-      <a href="https://maps.google.com/?q=500+Bluff+View+Circle+Bordentown+NJ+08505" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
-      <a href="contact.html" class="btn btn--secondary">Contact Leasing Office</a>
-    </div>
+  <!-- Section intro — full width above the split panel -->
+  <div class="explorer-intro" data-animate>
+    <span class="eyebrow">500 Bluff View Circle · Bordentown, NJ 08505</span>
+    <h2>Explore the Neighborhood</h2>
+    <p>Everything you need — transit, shopping, dining, recreation, and more — is close at hand from Rivergate Bordentown. Filter by category or explore everything at once.</p>
   </div>
-</section>
 
+  <!-- Split panel: list left, map right -->
+  <div class="neighborhood-explorer" id="neighborhood-explorer" data-active-tab="all">
 
-<!-- POINTS OF INTEREST -->
-<section class="section--alt">
-  <div class="container">
-    <div class="section-intro" data-animate>
-      <span class="eyebrow">Neighborhood Guide</span>
-      <h2>Points of Interest</h2>
-      <p>Everything you need — transit, shopping, dining, recreation, and more — is close at hand from Rivergate Bordentown.</p>
+    <!-- LEFT: category tabs + scrollable POI list -->
+    <div class="explorer__list-panel">
+
+      <!-- Tabs -->
+      <div class="explorer__tabs" role="tablist" aria-label="Neighborhood categories">
+        <button class="tab-btn is-active" role="tab" aria-selected="true"  data-tab="all"       aria-controls="explorer-list">All</button>
+        <button class="tab-btn"           role="tab" aria-selected="false" data-tab="transit"   aria-controls="explorer-list"><span class="tab-dot tab-dot--transit"></span>Transit</button>
+        <button class="tab-btn"           role="tab" aria-selected="false" data-tab="dining"    aria-controls="explorer-list"><span class="tab-dot tab-dot--dining"></span>Dining</button>
+        <button class="tab-btn"           role="tab" aria-selected="false" data-tab="shopping"  aria-controls="explorer-list"><span class="tab-dot tab-dot--shopping"></span>Shopping</button>
+        <button class="tab-btn"           role="tab" aria-selected="false" data-tab="rec"       aria-controls="explorer-list"><span class="tab-dot tab-dot--rec"></span>Recreation</button>
+        <button class="tab-btn"           role="tab" aria-selected="false" data-tab="education" aria-controls="explorer-list"><span class="tab-dot tab-dot--education"></span>Education</button>
+      </div>
+
+      <!-- Scrollable list -->
+      <div class="explorer__list" id="explorer-list" role="tabpanel">
+
+        <!-- Transit -->
+        <div class="poi-category-list" data-category="transit">
+          <div class="poi-cat-heading">
+            <span class="poi-cat-dot" style="background:#1B5E91"></span>
+            Transit &amp; Commuting
+          </div>
+          <div class="explorer-poi-item" data-poi="River Line Light Rail">
+            <span class="poi-num-badge" style="background:#1B5E91">1</span>
+            <span>
+              <span class="explorer-poi-name">River Line Light Rail</span>
+              <span class="explorer-poi-detail">Steps from Rivergate · Bordentown Station</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Trenton Transit Center">
+            <span class="poi-num-badge" style="background:#1B5E91">2</span>
+            <span>
+              <span class="explorer-poi-name">Trenton Transit Center</span>
+              <span class="explorer-poi-detail">NJ Transit + Amtrak Northeast Corridor · ~10 min via River Line</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="I-295 On-Ramp">
+            <span class="poi-num-badge" style="background:#1B5E91">3</span>
+            <span>
+              <span class="explorer-poi-name">I-295 On-Ramp</span>
+              <span class="explorer-poi-detail">Minutes from property · North to NYC, South to Philadelphia</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="New Jersey Turnpike">
+            <span class="poi-num-badge" style="background:#1B5E91">4</span>
+            <span>
+              <span class="explorer-poi-name">New Jersey Turnpike</span>
+              <span class="explorer-poi-detail">Exit 7 · ~5 minutes</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="I-195 &amp; Route 206">
+            <span class="poi-num-badge" style="background:#1B5E91">5</span>
+            <span>
+              <span class="explorer-poi-name">I-195 &amp; Route 206</span>
+              <span class="explorer-poi-detail">Nearby access to Shore points and Princeton corridor</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Dining -->
+        <div class="poi-category-list" data-category="dining">
+          <div class="poi-cat-heading">
+            <span class="poi-cat-dot" style="background:#C62828"></span>
+            Dining &amp; Entertainment
+          </div>
+          <div class="explorer-poi-item" data-poi="Bordentown City Dining">
+            <span class="poi-num-badge" style="background:#C62828">1</span>
+            <span>
+              <span class="explorer-poi-name">Bordentown City Dining</span>
+              <span class="explorer-poi-detail">Local restaurants, cafes, and bars along Farnsworth Ave</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Trenton Restaurant Scene">
+            <span class="poi-num-badge" style="background:#C62828">2</span>
+            <span>
+              <span class="explorer-poi-name">Trenton Restaurant Scene</span>
+              <span class="explorer-poi-detail">Diverse dining options · ~15 min</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Hamilton Area Dining">
+            <span class="poi-num-badge" style="background:#C62828">3</span>
+            <span>
+              <span class="explorer-poi-name">Hamilton Area Dining</span>
+              <span class="explorer-poi-detail">Chain and local restaurants near Hamilton Marketplace</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Shopping -->
+        <div class="poi-category-list" data-category="shopping">
+          <div class="poi-cat-heading">
+            <span class="poi-cat-dot" style="background:#2E7D32"></span>
+            Shopping &amp; Retail
+          </div>
+          <div class="explorer-poi-item" data-poi="Bordentown City">
+            <span class="poi-num-badge" style="background:#2E7D32">1</span>
+            <span>
+              <span class="explorer-poi-name">Bordentown City</span>
+              <span class="explorer-poi-detail">Boutique shops, galleries, and local markets · ~1 mile</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Hamilton Marketplace">
+            <span class="poi-num-badge" style="background:#2E7D32">2</span>
+            <span>
+              <span class="explorer-poi-name">Hamilton Marketplace</span>
+              <span class="explorer-poi-detail">Target, Best Buy, major retail chains · ~10 min</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="MarketFair">
+            <span class="poi-num-badge" style="background:#2E7D32">3</span>
+            <span>
+              <span class="explorer-poi-name">MarketFair</span>
+              <span class="explorer-poi-detail">Upscale shops, dining &amp; cinema · ~25 min · Princeton, NJ</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Quaker Bridge Mall">
+            <span class="poi-num-badge" style="background:#2E7D32">4</span>
+            <span>
+              <span class="explorer-poi-name">Quaker Bridge Mall</span>
+              <span class="explorer-poi-detail">Full regional mall · ~20 min</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Recreation -->
+        <div class="poi-category-list" data-category="rec">
+          <div class="poi-cat-heading">
+            <span class="poi-cat-dot" style="background:#6A1B9A"></span>
+            Recreation &amp; Outdoors
+          </div>
+          <div class="explorer-poi-item" data-poi="Crystal Lake Park">
+            <span class="poi-num-badge" style="background:#6A1B9A">1</span>
+            <span>
+              <span class="explorer-poi-name">Crystal Lake Park</span>
+              <span class="explorer-poi-detail">Walking trails, fishing, and open green space · ~5 min</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Kuser Farm Park">
+            <span class="poi-num-badge" style="background:#6A1B9A">2</span>
+            <span>
+              <span class="explorer-poi-name">Kuser Farm Park</span>
+              <span class="explorer-poi-detail">Historic park with trails and community events · ~15 min</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Grounds For Sculpture">
+            <span class="poi-num-badge" style="background:#6A1B9A">3</span>
+            <span>
+              <span class="explorer-poi-name">Grounds For Sculpture</span>
+              <span class="explorer-poi-detail">World-class sculpture park · ~20 min · Hamilton, NJ</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Cream Ridge Golf Course">
+            <span class="poi-num-badge" style="background:#6A1B9A">4</span>
+            <span>
+              <span class="explorer-poi-name">Cream Ridge Golf Course</span>
+              <span class="explorer-poi-detail">Golf · ~20 min · Cream Ridge, NJ</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Rancocas Golf Club">
+            <span class="poi-num-badge" style="background:#6A1B9A">5</span>
+            <span>
+              <span class="explorer-poi-name">Rancocas Golf Club</span>
+              <span class="explorer-poi-detail">Golf · ~15 min · Mount Holly, NJ</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="The Jersey Shore">
+            <span class="poi-num-badge" style="background:#6A1B9A">6</span>
+            <span>
+              <span class="explorer-poi-name">The Jersey Shore</span>
+              <span class="explorer-poi-detail">Point Pleasant, Asbury Park, Long Beach Island · ~60 min</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Delaware River Waterfront">
+            <span class="poi-num-badge" style="background:#6A1B9A">7</span>
+            <span>
+              <span class="explorer-poi-name">Delaware River Waterfront</span>
+              <span class="explorer-poi-detail">Walking and cycling paths · At your doorstep</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="poi-category-list" data-category="education">
+          <div class="poi-cat-heading">
+            <span class="poi-cat-dot" style="background:#E65100"></span>
+            Education &amp; Healthcare
+          </div>
+          <div class="explorer-poi-item" data-poi="Bordentown Regional School District">
+            <span class="poi-num-badge" style="background:#E65100">1</span>
+            <span>
+              <span class="explorer-poi-name">Bordentown Regional School District</span>
+              <span class="explorer-poi-detail">K–12 schools serving the Bordentown community</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Princeton University">
+            <span class="poi-num-badge" style="background:#E65100">2</span>
+            <span>
+              <span class="explorer-poi-name">Princeton University</span>
+              <span class="explorer-poi-detail">~20 min north via Route 206</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Rider University">
+            <span class="poi-num-badge" style="background:#E65100">3</span>
+            <span>
+              <span class="explorer-poi-name">Rider University</span>
+              <span class="explorer-poi-detail">Lawrenceville, NJ · ~20 min</span>
+            </span>
+          </div>
+          <div class="explorer-poi-item" data-poi="Capital Health Medical Center">
+            <span class="poi-num-badge" style="background:#E65100">4</span>
+            <span>
+              <span class="explorer-poi-name">Capital Health Medical Center</span>
+              <span class="explorer-poi-detail">Hopewell, NJ · ~20 min</span>
+            </span>
+          </div>
+        </div>
+
+      </div><!-- /.explorer__list -->
+
+      <!-- Directions actions -->
+      <div class="explorer-actions">
+        <a href="https://maps.google.com/?q=500+Bluff+View+Circle+Bordentown+NJ+08505" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
+        <a href="contact.html" class="btn btn--secondary">Contact Leasing Office</a>
+      </div>
+
+    </div><!-- /.explorer__list-panel -->
+
+    <!-- RIGHT: sticky map -->
+    <div class="explorer__map-panel">
+      <div id="poi-map" class="explorer-map"></div>
     </div>
 
-    <div class="poi-grid">
-
-      <!-- Transit -->
-      <div class="poi-category" data-animate>
-        <div class="poi-category__label">
-          <span class="poi-dot dot--transit"></span>
-          Transit &amp; Commuting
-        </div>
-        <div class="poi-list">
-          <div class="poi-item">
-            <span class="poi-marker dot--transit"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">River Line Light Rail</span>
-              <span class="poi-item-detail">Steps from Rivergate · Bordentown Station</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--transit"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Trenton Transit Center</span>
-              <span class="poi-item-detail">NJ Transit + Amtrak Northeast Corridor · ~10 min via River Line</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--transit"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">I-295 On-Ramp</span>
-              <span class="poi-item-detail">Minutes from property · North to NYC, South to Philadelphia</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--transit"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">New Jersey Turnpike</span>
-              <span class="poi-item-detail">Exit 7 · ~5 minutes</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--transit"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">I-195 &amp; Route 206</span>
-              <span class="poi-item-detail">Nearby access to Shore points and Princeton corridor</span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Shopping -->
-      <div class="poi-category" data-animate>
-        <div class="poi-category__label">
-          <span class="poi-dot dot--shopping"></span>
-          Shopping &amp; Retail
-        </div>
-        <div class="poi-list">
-          <div class="poi-item">
-            <span class="poi-marker dot--shopping"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Bordentown City</span>
-              <span class="poi-item-detail">Boutique shops, galleries, and local markets · ~1 mile</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--shopping"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Hamilton Marketplace</span>
-              <span class="poi-item-detail">Target, Best Buy, major retail chains · ~10 min</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--shopping"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">MarketFair</span>
-              <span class="poi-item-detail">Upscale shops, dining & cinema · ~25 min · Princeton, NJ</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--shopping"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Quaker Bridge Mall</span>
-              <span class="poi-item-detail">Full regional mall · ~20 min</span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dining -->
-      <div class="poi-category" data-animate>
-        <div class="poi-category__label">
-          <span class="poi-dot dot--dining"></span>
-          Dining &amp; Entertainment
-        </div>
-        <div class="poi-list">
-          <div class="poi-item">
-            <span class="poi-marker dot--dining"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Bordentown City Dining</span>
-              <span class="poi-item-detail">Local restaurants, cafes, and bars along Farnsworth Ave</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--dining"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Trenton Restaurant Scene</span>
-              <span class="poi-item-detail">Diverse dining options · ~15 min</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--dining"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Hamilton Area Dining</span>
-              <span class="poi-item-detail">Chain and local restaurants near Hamilton Marketplace</span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recreation -->
-      <div class="poi-category" data-animate>
-        <div class="poi-category__label">
-          <span class="poi-dot dot--rec"></span>
-          Recreation &amp; Outdoors
-        </div>
-        <div class="poi-list">
-          <div class="poi-item">
-            <span class="poi-marker dot--rec"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Crystal Lake Park</span>
-              <span class="poi-item-detail">Walking trails, fishing, and open green space · ~5 min</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--rec"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Kuser Farm Park</span>
-              <span class="poi-item-detail">Historic park with trails and community events · ~15 min</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--rec"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Grounds For Sculpture</span>
-              <span class="poi-item-detail">World-class sculpture park · ~20 min · Hamilton, NJ</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--rec"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Cream Ridge Golf Course</span>
-              <span class="poi-item-detail">Golf · ~20 min · Cream Ridge, NJ</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--rec"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Rancocas Golf Club</span>
-              <span class="poi-item-detail">Golf · ~15 min · Mount Holly, NJ</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--rec"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">The Jersey Shore</span>
-              <span class="poi-item-detail">Point Pleasant, Asbury Park, Long Beach Island · ~60 min</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--rec"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Delaware River Waterfront</span>
-              <span class="poi-item-detail">Walking and cycling paths · At your doorstep</span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Education -->
-      <div class="poi-category" data-animate>
-        <div class="poi-category__label">
-          <span class="poi-dot dot--education"></span>
-          Education &amp; Healthcare
-        </div>
-        <div class="poi-list">
-          <div class="poi-item">
-            <span class="poi-marker dot--education"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Bordentown Regional School District</span>
-              <span class="poi-item-detail">K–12 schools serving the Bordentown community</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--education"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Princeton University</span>
-              <span class="poi-item-detail">~20 min north via Route 206</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--education"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Rider University</span>
-              <span class="poi-item-detail">Lawrenceville, NJ · ~20 min</span>
-            </span>
-          </div>
-          <div class="poi-item">
-            <span class="poi-marker dot--education"></span>
-            <span class="poi-item-text">
-              <span class="poi-item-name">Capital Health Medical Center</span>
-              <span class="poi-item-detail">Hopewell, NJ · ~20 min</span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  </div><!-- /.neighborhood-explorer -->
 </section>
 
 
@@ -582,39 +714,18 @@ function initMap() {
     { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#f0f0f0' }] }
   ];
 
+  var defaultCenter = { lat: 40.1700, lng: -74.7250 };
+  var defaultZoom   = 11;
+
   var map = new google.maps.Map(document.getElementById('poi-map'), {
-    center: { lat: 40.1700, lng: -74.7250 },
-    zoom: 11,
+    center: defaultCenter,
+    zoom: defaultZoom,
     styles: mapStyles,
     mapTypeControl: false,
     streetViewControl: false,
     fullscreenControl: true,
     zoomControl: true
   });
-
-  var pois = [
-    { name: 'River Line Light Rail',            lat: 40.1486, lng: -74.7191, category: 'transit'    },
-    { name: 'Trenton Transit Center',            lat: 40.2188, lng: -74.7543, category: 'transit'    },
-    { name: 'I-295 On-Ramp',                    lat: 40.1563, lng: -74.7183, category: 'transit'    },
-    { name: 'New Jersey Turnpike',               lat: 40.1541, lng: -74.7010, category: 'transit'    },
-    { name: 'Bordentown City',                   lat: 40.1483, lng: -74.7162, category: 'shopping'   },
-    { name: 'Hamilton Marketplace',              lat: 40.1939, lng: -74.6393, category: 'shopping'   },
-    { name: 'MarketFair',                        lat: 40.3148, lng: -74.6610, category: 'shopping'   },
-    { name: 'Quaker Bridge Mall',                lat: 40.2911, lng: -74.6830, category: 'shopping'   },
-    { name: 'Bordentown City Dining',            lat: 40.1483, lng: -74.7162, category: 'dining'     },
-    { name: 'Trenton Restaurant Scene',          lat: 40.2170, lng: -74.7430, category: 'dining'     },
-    { name: 'Hamilton Area Dining',              lat: 40.2050, lng: -74.7100, category: 'dining'     },
-    { name: 'Crystal Lake Park',                 lat: 40.1172, lng: -74.7396, category: 'rec'        },
-    { name: 'Kuser Farm Park',                   lat: 40.2149, lng: -74.7195, category: 'rec'        },
-    { name: 'Grounds For Sculpture',             lat: 40.2368, lng: -74.7189, category: 'rec'        },
-    { name: 'Cream Ridge Golf Course',           lat: 40.1474, lng: -74.5380, category: 'rec'        },
-    { name: 'Rancocas Golf Club',                lat: 40.0133, lng: -74.8950, category: 'rec'        },
-    { name: 'Delaware River Waterfront',         lat: 40.1280, lng: -74.7450, category: 'rec'        },
-    { name: 'Bordentown Regional School District', lat: 40.1440, lng: -74.7044, category: 'education' },
-    { name: 'Princeton University',              lat: 40.3431, lng: -74.6551, category: 'education'  },
-    { name: 'Rider University',                  lat: 40.2812, lng: -74.7408, category: 'education'  },
-    { name: 'Capital Health Medical Center',     lat: 40.2919, lng: -74.8031, category: 'rec'        }
-  ];
 
   var categoryColors = {
     transit:   '#1B5E91',
@@ -624,23 +735,68 @@ function initMap() {
     education: '#E65100'
   };
 
+  /* Build a numbered SVG marker data-URL */
+  function makeSvgMarker(num, color) {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">'
+      + '<circle cx="14" cy="14" r="13" fill="' + color + '" stroke="#ffffff" stroke-width="2.5"/>'
+      + '<text x="14" y="19" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#ffffff">' + num + '</text>'
+      + '</svg>';
+    return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+  }
+
+  /* Property home-pin SVG */
+  var homeSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">'
+    + '<circle cx="18" cy="18" r="17" fill="#1B5E91" stroke="#ffffff" stroke-width="3"/>'
+    + '<path d="M18 10 L26 17 L24 17 L24 26 L20 26 L20 21 L16 21 L16 26 L12 26 L12 17 L10 17 Z" fill="#ffffff"/>'
+    + '</svg>';
+  var homeMarkerIcon = {
+    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(homeSvg),
+    scaledSize: new google.maps.Size(36, 36),
+    anchor: new google.maps.Point(18, 18)
+  };
+
+  var pois = [
+    /* Transit */
+    { name: 'River Line Light Rail',              lat: 40.1486, lng: -74.7191, category: 'transit',   num: 1 },
+    { name: 'Trenton Transit Center',             lat: 40.2188, lng: -74.7543, category: 'transit',   num: 2 },
+    { name: 'I-295 On-Ramp',                     lat: 40.1563, lng: -74.7183, category: 'transit',   num: 3 },
+    { name: 'New Jersey Turnpike',                lat: 40.1541, lng: -74.7010, category: 'transit',   num: 4 },
+    { name: 'I-195 & Route 206',                 lat: 40.1450, lng: -74.6850, category: 'transit',   num: 5 },
+    /* Dining */
+    { name: 'Bordentown City Dining',             lat: 40.1483, lng: -74.7162, category: 'dining',    num: 1 },
+    { name: 'Trenton Restaurant Scene',           lat: 40.2170, lng: -74.7430, category: 'dining',    num: 2 },
+    { name: 'Hamilton Area Dining',               lat: 40.2050, lng: -74.7100, category: 'dining',    num: 3 },
+    /* Shopping */
+    { name: 'Bordentown City',                    lat: 40.1483, lng: -74.7162, category: 'shopping',  num: 1 },
+    { name: 'Hamilton Marketplace',               lat: 40.1939, lng: -74.6393, category: 'shopping',  num: 2 },
+    { name: 'MarketFair',                         lat: 40.3148, lng: -74.6610, category: 'shopping',  num: 3 },
+    { name: 'Quaker Bridge Mall',                 lat: 40.2911, lng: -74.6830, category: 'shopping',  num: 4 },
+    /* Recreation */
+    { name: 'Crystal Lake Park',                  lat: 40.1172, lng: -74.7396, category: 'rec',       num: 1 },
+    { name: 'Kuser Farm Park',                    lat: 40.2149, lng: -74.7195, category: 'rec',       num: 2 },
+    { name: 'Grounds For Sculpture',              lat: 40.2368, lng: -74.7189, category: 'rec',       num: 3 },
+    { name: 'Cream Ridge Golf Course',            lat: 40.1474, lng: -74.5380, category: 'rec',       num: 4 },
+    { name: 'Rancocas Golf Club',                 lat: 40.0133, lng: -74.8950, category: 'rec',       num: 5 },
+    { name: 'The Jersey Shore',                   lat: 40.0800, lng: -74.0400, category: 'rec',       num: 6 },
+    { name: 'Delaware River Waterfront',          lat: 40.1280, lng: -74.7450, category: 'rec',       num: 7 },
+    /* Education */
+    { name: 'Bordentown Regional School District', lat: 40.1440, lng: -74.7044, category: 'education', num: 1 },
+    { name: 'Princeton University',               lat: 40.3431, lng: -74.6551, category: 'education', num: 2 },
+    { name: 'Rider University',                   lat: 40.2812, lng: -74.7408, category: 'education', num: 3 },
+    { name: 'Capital Health Medical Center',      lat: 40.2919, lng: -74.8031, category: 'education', num: 4 }
+  ];
+
   var activeInfoWindow = null;
-  var markersByName = {};
+  var markersByName    = {};
+  var markersByCategory = {};
 
   /* Property marker */
   var propertyMarker = new google.maps.Marker({
     position: { lat: 40.1278, lng: -74.7380 },
     map: map,
     title: 'Rivergate Bordentown',
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      fillColor: '#1B5E91',
-      fillOpacity: 1,
-      strokeColor: '#ffffff',
-      strokeWeight: 3,
-      scale: 12
-    },
-    zIndex: 100
+    icon: homeMarkerIcon,
+    zIndex: 200
   });
   var propertyInfoWindow = new google.maps.InfoWindow({
     content: '<div style="font-family:Inter,sans-serif;padding:10px 14px;line-height:1.3"><strong style="font-size:12px;color:#1C2B3A;display:block;letter-spacing:0.02em">Rivergate Bordentown</strong><span style="font-size:11px;color:#888;margin-top:2px;display:block">500 Bluff View Circle, Bordentown, NJ</span></div>'
@@ -655,72 +811,111 @@ function initMap() {
 
   /* POI markers */
   pois.forEach(function (poi) {
+    var color  = categoryColors[poi.category];
     var marker = new google.maps.Marker({
       position: { lat: poi.lat, lng: poi.lng },
       map: map,
       title: poi.name,
       icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: categoryColors[poi.category],
-        fillOpacity: 0.9,
-        strokeColor: '#ffffff',
-        strokeWeight: 2,
-        scale: 7
-      }
+        url: makeSvgMarker(poi.num, color),
+        scaledSize: new google.maps.Size(28, 28),
+        anchor: new google.maps.Point(14, 14)
+      },
+      zIndex: 100
     });
     var infoWindow = new google.maps.InfoWindow({
-      content: '<div style="font-family:Inter,sans-serif;padding:8px 12px;line-height:1"><span style="font-size:11px;font-weight:600;color:#1C2B3A;letter-spacing:0.02em">' + poi.name + '</span></div>'
+      content: '<div style="font-family:Inter,sans-serif;padding:8px 12px;line-height:1;display:flex;align-items:center;gap:8px">'
+        + '<span style="flex-shrink:0;width:20px;height:20px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">' + poi.num + '</span>'
+        + '<span style="font-size:12px;font-weight:600;color:#1C2B3A;letter-spacing:0.02em;white-space:nowrap">' + poi.name + '</span></div>'
     });
     marker.addListener('mouseover', function () { infoWindow.open(map, marker); });
     marker.addListener('mouseout',  function () { if (activeInfoWindow !== infoWindow) infoWindow.close(); });
     marker.addListener('click', function () {
-      if (activeInfoWindow === infoWindow) {
-        infoWindow.close();
-        activeInfoWindow = null;
-        return;
-      }
+      if (activeInfoWindow === infoWindow) { infoWindow.close(); activeInfoWindow = null; return; }
       if (activeInfoWindow) activeInfoWindow.close();
       infoWindow.open(map, marker);
       activeInfoWindow = infoWindow;
-      document.querySelectorAll('.poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
-      document.querySelectorAll('.poi-item.is-highlighted').forEach(function (el) { el.classList.remove('is-highlighted'); });
-      var listItem = document.querySelector('.poi-item[data-poi="' + poi.name + '"]');
-      if (listItem) {
-        listItem.classList.add('is-active');
-        listItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        setTimeout(function () {
-          listItem.classList.remove('is-highlighted');
-          void listItem.offsetWidth; /* force reflow to restart animation */
-          listItem.classList.add('is-highlighted');
-          listItem.addEventListener('animationend', function () { listItem.classList.remove('is-highlighted'); }, { once: true });
-        }, 400);
-      }
+      highlightListItem(poi.name);
     });
-    markersByName[poi.name] = { marker: marker, infoWindow: infoWindow };
+    markersByName[poi.name] = { marker: marker, infoWindow: infoWindow, category: poi.category };
+    if (!markersByCategory[poi.category]) markersByCategory[poi.category] = [];
+    markersByCategory[poi.category].push(marker);
   });
 
-  /* Close active InfoWindow when clicking empty map area */
+  /* Close InfoWindow on empty-map click */
   map.addListener('click', function () {
     if (activeInfoWindow) { activeInfoWindow.close(); activeInfoWindow = null; }
   });
 
-  /* Wire up POI list items to pan the map */
-  document.querySelectorAll('.poi-item-name').forEach(function (nameEl) {
-    var name = nameEl.textContent.trim();
-    if (!markersByName[name]) return;
-    var item = nameEl.closest('.poi-item');
-    if (!item) return;
-    item.setAttribute('data-poi', name);
+  /* Highlight list item and scroll into view within the left panel */
+  function highlightListItem(name) {
+    document.querySelectorAll('.explorer-poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
+    document.querySelectorAll('.explorer-poi-item.is-highlighted').forEach(function (el) { el.classList.remove('is-highlighted'); });
+    var listItem = document.querySelector('.explorer-poi-item[data-poi="' + name + '"]');
+    if (!listItem) return;
+    listItem.classList.add('is-active');
+    listItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    setTimeout(function () {
+      listItem.classList.remove('is-highlighted');
+      void listItem.offsetWidth;
+      listItem.classList.add('is-highlighted');
+      listItem.addEventListener('animationend', function () { listItem.classList.remove('is-highlighted'); }, { once: true });
+    }, 300);
+  }
+
+  /* Wire list items to the map */
+  document.querySelectorAll('.explorer-poi-item[data-poi]').forEach(function (item) {
+    var name = item.getAttribute('data-poi');
+    var entry = markersByName[name];
+    if (!entry) return;
     item.addEventListener('click', function () {
-      var entry = markersByName[name];
       map.panTo(entry.marker.getPosition());
       map.setZoom(14);
       if (activeInfoWindow) activeInfoWindow.close();
       entry.infoWindow.open(map, entry.marker);
       activeInfoWindow = entry.infoWindow;
-      document.querySelectorAll('.poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
+      document.querySelectorAll('.explorer-poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
       item.classList.add('is-active');
-      document.getElementById('poi-map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('poi-map').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+
+  /* Tab switching */
+  var explorer = document.getElementById('neighborhood-explorer');
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tab = btn.getAttribute('data-tab');
+      /* Update tab UI */
+      document.querySelectorAll('.tab-btn').forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+      /* Update data attribute (drives CSS visibility) */
+      explorer.setAttribute('data-active-tab', tab);
+      /* Toggle marker visibility */
+      Object.keys(markersByName).forEach(function (name) {
+        var entry = markersByName[name];
+        var show  = (tab === 'all') || (entry.category === tab);
+        entry.marker.setVisible(show);
+        if (!show && activeInfoWindow === entry.infoWindow) {
+          entry.infoWindow.close();
+          activeInfoWindow = null;
+        }
+      });
+      /* Fit bounds to visible category, or reset to default for "all" */
+      if (tab === 'all') {
+        map.setCenter(defaultCenter);
+        map.setZoom(defaultZoom);
+      } else if (markersByCategory[tab]) {
+        var bounds = new google.maps.LatLngBounds();
+        markersByCategory[tab].forEach(function (m) { bounds.extend(m.getPosition()); });
+        bounds.extend(propertyMarker.getPosition()); /* always include home */
+        map.fitBounds(bounds, { top: 60, right: 40, bottom: 60, left: 40 });
+      }
+      /* Clear active list item highlight */
+      document.querySelectorAll('.explorer-poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
     });
   });
 }
