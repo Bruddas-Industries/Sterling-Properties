@@ -10,7 +10,7 @@ define(
     'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap'
 );
 
-define( 'RIVERGATE_VERSION', '1.0.0' );
+define( 'RIVERGATE_VERSION', '1.1.0' );
 
 
 // ---------------------------------------------------------------------------

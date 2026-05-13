@@ -10,15 +10,15 @@
   <style>
     .preview-banner {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
-      background: #1B5E91; color: #fff; text-align: center;
+      background: #0472BB; color: #fff; text-align: center;
       padding: 10px 24px; font-family: 'Inter', sans-serif;
       font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
     }
     .preview-banner strong { font-weight: 600; }
 
     .page-hero {
-      position: relative; min-height: 380px; display: flex;
-      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-10); overflow: hidden;
+      position: relative; min-height: 360px; display: flex;
+      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-9); overflow: hidden;
     }
     .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
     .page-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
@@ -118,6 +118,7 @@
   <nav class="nav-overlay__links" aria-label="Primary navigation">
     <a href="amenities.html">Amenities</a>
     <a href="floor-plans.html">Floor Plans</a>
+    <a href="availability.html">Availability</a>
     <a href="gallery.html">Gallery</a>
     <a href="location.html">Location</a>
     <a href="contact.html">Contact</a>
@@ -149,23 +150,23 @@
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-item gallery-item--wide" data-animate>
+      <div class="gallery-item gallery-item--wide" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/exterior/exterior-1.jpg" alt="Rivergate Bordentown waterfront exterior" loading="lazy">
         <div class="gallery-item__caption">Waterfront Exterior</div>
       </div>
-      <div class="gallery-item" data-animate>
+      <div class="gallery-item" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/exterior/exterior-2.jpg" alt="Rivergate building view" loading="lazy">
         <div class="gallery-item__caption">Building View</div>
       </div>
-      <div class="gallery-item" data-animate>
+      <div class="gallery-item" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/exterior/exterior-4.jpg" alt="Rivergate Bordentown building exterior" loading="lazy">
         <div class="gallery-item__caption">Community Exterior</div>
       </div>
-      <div class="gallery-item" data-animate>
+      <div class="gallery-item" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/exterior/exterior-5.jpg" alt="Rivergate grounds and exterior" loading="lazy">
         <div class="gallery-item__caption">Grounds &amp; Landscaping</div>
       </div>
-      <div class="gallery-item" data-animate>
+      <div class="gallery-item" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/aerials/aerial-4.jpg" alt="Rivergate community view" loading="lazy">
         <div class="gallery-item__caption">Community View</div>
       </div>
@@ -184,23 +185,23 @@
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-item gallery-item--tall" data-animate>
+      <div class="gallery-item gallery-item--tall" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/clubhouse/clubhouse-1.jpg" alt="Rivergate clubhouse and pool" loading="lazy">
         <div class="gallery-item__caption">Clubhouse &amp; Pool</div>
       </div>
-      <div class="gallery-item gallery-item--wide" data-animate>
+      <div class="gallery-item gallery-item--wide" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/amenities/amenity-3.jpg" alt="Outdoor BBQ entertaining area" loading="lazy">
         <div class="gallery-item__caption">Outdoor BBQ Area</div>
       </div>
-      <div class="gallery-item" data-animate>
+      <div class="gallery-item" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/amenities/amenity-4.jpg" alt="Rivergate amenity space" loading="lazy">
         <div class="gallery-item__caption">Amenity Space</div>
       </div>
-      <div class="gallery-item" data-animate>
+      <div class="gallery-item" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/amenities/amenity-5.jpg" alt="Rivergate amenity detail" loading="lazy">
         <div class="gallery-item__caption">Amenity Detail</div>
       </div>
-      <div class="gallery-item" data-animate>
+      <div class="gallery-item" data-animate="scale">
         <img src="../theme/rivergate-bordentown/assets/images/amenities/amenity-1.jpg" alt="Pool and outdoor living at Rivergate" loading="lazy">
         <div class="gallery-item__caption">Pool Deck</div>
       </div>
@@ -249,6 +250,7 @@
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="amenities.html">Amenities</a>
       <a href="floor-plans.html">Floor Plans</a>
+      <a href="availability.html">Availability</a>
       <a href="gallery.html">Gallery</a>
       <a href="location.html">Location</a>
       <a href="contact.html">Contact</a>
@@ -290,6 +292,9 @@
   }());
   (function () {
     var items = document.querySelectorAll('[data-animate]'); if (!items.length) return;
+    document.querySelectorAll('.gallery-grid').forEach(function (grid) {
+      grid.querySelectorAll('[data-animate]').forEach(function (el, i) { el.style.transitionDelay = (i % 6 * 70) + 'ms'; });
+    });
     if (!window.IntersectionObserver) { items.forEach(function (el) { el.classList.add('is-visible'); }); return; }
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });

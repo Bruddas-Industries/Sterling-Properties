@@ -14,15 +14,19 @@
    -------------------------------------------------------------------------- */
 
 :root {
-  /* Colors */
-  --color-primary:      #1B5E91;   /* River navy — accent buttons, highlights   */
-  --color-primary-dark: #114575;   /* Hover state for accent color              */
-  --color-bg:           #F8F9FB;   /* Cool off-white — slightly blue-tinted     */
-  --color-bg-alt:       #EDF1F7;   /* Soft blue-grey for alternate sections     */
-  --color-surface:      #FFFFFF;   /* Card / panel backgrounds                  */
-  --color-text:         #1A2535;   /* Deep navy-black for body text             */
-  --color-text-muted:   #5A6B80;   /* Secondary / caption text                  */
-  --color-border:       #D6DCE6;   /* Subtle dividers and input borders         */
+  /* Colors — Rivergate brand (2026 style guide: #0a2556 navy, #0472bb blue, #3c6992 steel) */
+  --color-navy:         #0A2556;   /* Deep brand navy — dark sections, headings  */
+  --color-blue:         #0472BB;   /* Bright brand blue — primary accent         */
+  --color-blue-mid:     #3C6992;   /* Mid steel blue — secondary accent          */
+
+  --color-primary:      #0472BB;   /* Bright blue — buttons, links, highlights   */
+  --color-primary-dark: #035A97;   /* Hover state — deeper bright blue           */
+  --color-bg:           #EAF1F9;   /* Soft blue-tinted page background           */
+  --color-bg-alt:       #D8E5F2;   /* Deeper soft blue for alternate sections    */
+  --color-surface:      #FFFFFF;   /* Card / panel backgrounds — crisp white     */
+  --color-text:         #0A2556;   /* Deep brand navy — body text + dark sections*/
+  --color-text-muted:   #51678A;   /* Bluer muted secondary / caption text       */
+  --color-border:       #C2D2E6;   /* Bluer dividers and input borders           */
 
   /* Typography
      Cormorant Garamond (headings) + Inter (body) — same stack as base theme.
@@ -53,20 +57,20 @@
   --tracking-wider:   0.14em;
   --tracking-widest:  0.22em;
 
-  /* Spacing scale (8-point grid) */
+  /* Spacing scale (8-point grid) — tightened for a denser vertical rhythm */
   --space-1:  0.25rem;
   --space-2:  0.5rem;
   --space-3:  0.75rem;
   --space-4:  1rem;
   --space-5:  1.5rem;
   --space-6:  2rem;
-  --space-7:  3rem;
-  --space-8:  4rem;
-  --space-9:  6rem;
-  --space-10: 8rem;
+  --space-7:  2.5rem;
+  --space-8:  3.5rem;
+  --space-9:  4.5rem;
+  --space-10: 6rem;
 
   /* Section padding */
-  --section-padding-y: clamp(4rem, 8vw, 8rem);
+  --section-padding-y: clamp(3rem, 6vw, 5.5rem);
   --section-padding-x: clamp(1.5rem, 6vw, 6rem);
 
   /* Layout */
@@ -172,6 +176,9 @@ h6 { font-size: var(--text-base); font-weight: var(--weight-medium); }
   margin-bottom: var(--space-4);
 }
 
+/* Eyebrow on dark / coloured backgrounds */
+.eyebrow--light { color: rgba(255, 255, 255, 0.65); }
+
 p {
   max-width: 68ch;
   line-height: 1.75;
@@ -224,8 +231,9 @@ section {
 
 .divider {
   width: 48px;
-  height: 1px;
-  background-color: var(--color-primary);
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-blue), var(--color-blue-mid));
+  border-radius: var(--radius-full);
   margin-block: var(--space-6);
 }
 
@@ -240,7 +248,7 @@ section {
   z-index: 100;
   width: 100%;
   height: var(--nav-height);
-  background-color: rgba(248, 249, 251, 0.95);
+  background-color: rgba(234, 241, 249, 0.95);
   /* Note: backdrop-filter intentionally omitted — it creates a containing block
      for position:fixed descendants, which breaks the full-screen overlay */
   border-bottom: 1px solid var(--color-border);
@@ -397,14 +405,15 @@ body.nav-is-open { overflow: hidden; }
 .nav-overlay__links a:nth-child(3) { transition-delay: 160ms; }
 .nav-overlay__links a:nth-child(4) { transition-delay: 210ms; }
 .nav-overlay__links a:nth-child(5) { transition-delay: 260ms; }
+.nav-overlay__links a:nth-child(6) { transition-delay: 310ms; }
 
 .nav-overlay__links a:hover { color: #fff; }
 
 .nav-overlay__cta {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 380ms var(--ease-out) 300ms,
-              transform 380ms var(--ease-out) 300ms,
+  transition: opacity 380ms var(--ease-out) 360ms,
+              transform 380ms var(--ease-out) 360ms,
               background-color var(--duration) var(--ease-out),
               box-shadow var(--duration) var(--ease-out);
 }
@@ -540,7 +549,7 @@ body.nav-is-open { overflow: hidden; }
 }
 
 .has-video-hero .site-header.is-scrolled {
-  background-color: rgba(248, 249, 251, 0.97);
+  background-color: rgba(234, 241, 249, 0.97);
   border-bottom-color: var(--color-border);
   box-shadow: var(--shadow-sm);
 }
@@ -577,7 +586,7 @@ body.has-video-hero.nav-is-open .site-header {
   grid-template-columns: 1fr 1fr;
   gap: 0;
   align-items: stretch;
-  min-height: 560px;
+  min-height: 480px;
 }
 
 .feature--reverse .feature__image { order: 2; }
@@ -586,7 +595,7 @@ body.has-video-hero.nav-is-open .site-header {
 .feature__image {
   position: relative;
   overflow: hidden;
-  min-height: 480px;
+  min-height: 380px;
 }
 
 .feature__image img {
@@ -644,20 +653,32 @@ body.has-video-hero.nav-is-open .site-header {
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-7);
-  margin-top: var(--space-9);
+  gap: var(--space-6);
+  margin-top: var(--space-8);
 }
 
 .card {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  transition: transform var(--duration) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-4px);
 }
 
 .card__icon {
   width: 40px;
   height: 40px;
   color: var(--color-primary);
+  transition: color var(--duration) var(--ease-out),
+              transform var(--duration) var(--ease-out);
+}
+
+.card:hover .card__icon {
+  color: var(--color-blue);
+  transform: scale(1.08);
 }
 
 .card__heading {
@@ -666,6 +687,11 @@ body.has-video-hero.nav-is-open .site-header {
   font-weight: var(--weight-light);
   letter-spacing: var(--tracking-tight);
   color: var(--color-text);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.card:hover .card__heading {
+  color: var(--color-blue);
 }
 
 .card__text {
@@ -719,7 +745,7 @@ body.has-video-hero.nav-is-open .site-header {
 .site-footer {
   background-color: var(--color-text);
   color: rgba(248,249,251,0.6);
-  padding-block: var(--space-9) var(--space-7);
+  padding-block: var(--space-8) var(--space-6);
 }
 
 .footer-inner {
@@ -754,6 +780,7 @@ body.has-video-hero.nav-is-open .site-header {
 }
 
 .footer-nav a {
+  position: relative;
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-wider);
@@ -762,7 +789,19 @@ body.has-video-hero.nav-is-open .site-header {
   transition: color var(--duration) var(--ease-out);
 }
 
-.footer-nav a:hover { color: rgba(248,249,251,0.9); }
+.footer-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-blue);
+  transition: width var(--duration) var(--ease-out);
+}
+
+.footer-nav a:hover { color: rgba(248,249,251,0.95); }
+.footer-nav a:hover::after { width: 100%; }
 
 .footer-bottom {
   display: grid;
@@ -880,6 +919,8 @@ body.has-video-hero.nav-is-open .site-header {
 .btn--secondary:hover {
   background-color: var(--color-text);
   color: var(--color-bg);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn--ghost {
@@ -906,6 +947,92 @@ body.has-video-hero.nav-is-open .site-header {
 
 
 /* --------------------------------------------------------------------------
+   11b. ACCORDION (collapsible lists)
+   -------------------------------------------------------------------------- */
+
+.accordion {
+  border-top: 1px solid var(--color-border);
+}
+
+.accordion__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accordion__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.accordion__trigger:hover,
+.accordion__trigger[aria-expanded="true"] {
+  color: var(--color-blue);
+}
+
+.accordion__label-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 2px;
+}
+
+.accordion__trigger[aria-expanded="true"] .accordion__label-eyebrow {
+  color: var(--color-blue);
+}
+
+.accordion__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  transition: transform var(--duration) var(--ease-out);
+}
+
+.accordion__icon::before,
+.accordion__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: currentColor;
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+}
+
+.accordion__icon::before { width: 100%; height: 2px; }
+.accordion__icon::after  { width: 2px; height: 100%; }
+
+/* + rotates toward × when open */
+.accordion__trigger[aria-expanded="true"] .accordion__icon {
+  transform: rotate(45deg);
+}
+
+.accordion__panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 320ms var(--ease-out);
+}
+
+.accordion__panel-inner {
+  padding-bottom: var(--space-5);
+}
+
+
+/* --------------------------------------------------------------------------
    12. SCROLL ANIMATIONS
    -------------------------------------------------------------------------- */
 
@@ -916,9 +1043,22 @@ body.has-video-hero.nav-is-open .site-header {
               transform 700ms var(--ease-out);
 }
 
+/* Directional / scale reveal variants — same [data-animate] hook + JS toggle */
+[data-animate="left"]  { transform: translateX(-36px); }
+[data-animate="right"] { transform: translateX(36px); }
+[data-animate="scale"] { transform: scale(0.94); }
+[data-animate="fade"]  { transform: none; }
+
 [data-animate].is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+[data-animate="left"].is-visible,
+[data-animate="right"].is-visible,
+[data-animate="scale"].is-visible,
+[data-animate="fade"].is-visible {
+  transform: none;
 }
 
 /* Stagger delays — applied by JS index, these are fallback overrides */
@@ -931,7 +1071,10 @@ body.has-video-hero.nav-is-open .site-header {
 
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  [data-animate] {
+  [data-animate],
+  [data-animate="left"],
+  [data-animate="right"],
+  [data-animate="scale"] {
     opacity: 1;
     transform: none;
     transition: none;

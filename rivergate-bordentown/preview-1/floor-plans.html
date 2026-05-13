@@ -10,15 +10,15 @@
   <style>
     .preview-banner {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
-      background: #1B5E91; color: #fff; text-align: center;
+      background: #0472BB; color: #fff; text-align: center;
       padding: 10px 24px; font-family: 'Inter', sans-serif;
       font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
     }
     .preview-banner strong { font-weight: 600; }
 
     .page-hero {
-      position: relative; min-height: 380px; display: flex;
-      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-10); overflow: hidden;
+      position: relative; min-height: 360px; display: flex;
+      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-9); overflow: hidden;
     }
     .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
     .page-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
@@ -37,9 +37,20 @@
     .plan-card {
       border-radius: var(--radius-lg); padding: var(--space-7);
       display: flex; flex-direction: column; gap: var(--space-3);
+      background: var(--color-surface);
+      transition: border-color var(--duration) var(--ease-out),
+                  transform var(--duration) var(--ease-out),
+                  box-shadow var(--duration) var(--ease-out);
     }
     .plan-card--default { border: 1.5px solid var(--color-border); }
     .plan-card--featured { border: 1.5px solid var(--color-primary); background: var(--color-bg-alt); }
+    .plan-card:hover {
+      border-color: var(--color-blue);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .plan-card h3 { transition: color var(--duration) var(--ease-out); }
+    .plan-card:hover h3 { color: var(--color-blue); }
 
     .plan-meta {
       display: flex; gap: var(--space-4); margin-top: var(--space-2);
@@ -60,48 +71,52 @@
     .group-label {
       font-size: var(--text-xs); letter-spacing: var(--tracking-widest);
       text-transform: uppercase; color: var(--color-text-muted);
-      margin-top: var(--space-10); margin-bottom: var(--space-5);
+      margin-top: var(--space-8); margin-bottom: var(--space-5);
       padding-bottom: var(--space-3);
       border-bottom: 1px solid var(--color-border);
     }
 
-    .includes-strip {
-      background: var(--color-bg-alt);
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
-      padding-block: var(--space-7);
+    /* "Every Residence Includes" — full-width navy → blue band */
+    .includes-band {
+      background: linear-gradient(135deg, #0A2556 0%, #143A72 55%, #0472BB 100%);
+      color: #fff;
+      padding-block: var(--space-9);
     }
-    .includes-strip__inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: var(--space-5);
+    .includes-band__head { max-width: 640px; }
+    .includes-band h2 { color: #fff; margin-bottom: var(--space-4); }
+    .includes-band p { color: rgba(255,255,255,0.8); max-width: 56ch; }
+    .includes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: var(--space-2) var(--space-7);
+      margin-top: var(--space-6);
+      list-style: none; margin-left: 0; padding: 0;
     }
-    .includes-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: var(--space-3) var(--space-6);
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .includes-grid li {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      font-size: var(--text-base); color: #fff;
     }
-    .includes-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      color: var(--color-text-muted);
+    .includes-grid__icon {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
-    .includes-item svg { color: var(--color-primary); flex-shrink: 0; }
+    .includes-grid__icon svg { color: #fff; }
 
-    .appfolio-note {
-      background: var(--color-surface); border: 1.5px solid var(--color-border);
+    /* Availability hand-off card (replaces the old embedded AppFolio widget) */
+    .availability-cta {
+      background: var(--color-navy); color: #fff;
       border-radius: var(--radius-lg); padding: var(--space-7);
-      display: flex; align-items: flex-start; gap: var(--space-5); margin-top: var(--space-8);
+      display: flex; gap: var(--space-6) var(--space-8); align-items: center;
+      justify-content: space-between; flex-wrap: wrap;
+      margin-top: var(--space-9);
     }
-    .appfolio-note svg { flex-shrink: 0; color: var(--color-primary); }
+    .availability-cta h2 { color: #fff; margin-bottom: var(--space-3); font-size: var(--text-2xl); }
+    .availability-cta p { color: rgba(255,255,255,0.8); margin: 0; max-width: 52ch; }
+    .availability-cta .btn { flex-shrink: 0; }
 
     .plan-card .btn { white-space: normal; text-align: left; }
 
@@ -143,6 +158,7 @@
   <nav class="nav-overlay__links" aria-label="Primary navigation">
     <a href="amenities.html">Amenities</a>
     <a href="floor-plans.html">Floor Plans</a>
+    <a href="availability.html">Availability</a>
     <a href="gallery.html">Gallery</a>
     <a href="location.html">Location</a>
     <a href="contact.html">Contact</a>
@@ -164,46 +180,26 @@
 </section>
 
 
-<!-- INCLUDED IN EVERY HOME STRIP -->
-<div class="includes-strip">
-  <div class="container includes-strip__inner">
-    <p class="eyebrow">Every Residence Includes</p>
-    <ul class="includes-list">
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        9-foot ceilings
-      </li>
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Private balcony
-      </li>
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        In-unit washer/dryer
-      </li>
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Designer kitchen
-      </li>
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Quartz countertops
-      </li>
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Stainless appliances
-      </li>
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Central A/C
-      </li>
-      <li class="includes-item">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Gas heat
-      </li>
+<!-- EVERY RESIDENCE INCLUDES -->
+<section class="includes-band" aria-label="Standard features in every residence">
+  <div class="container">
+    <div class="includes-band__head" data-animate>
+      <span class="eyebrow eyebrow--light">Standard in Every Home</span>
+      <h2>Every Residence Includes</h2>
+      <p>No upgrades, no add-ons. Every Rivergate apartment arrives fully appointed with designer finishes from the day you move in.</p>
+    </div>
+    <ul class="includes-grid">
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> 9-Foot Ceilings</li>
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Private Balcony</li>
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> In-Unit Washer/Dryer</li>
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Designer Kitchen</li>
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Quartz Countertops</li>
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Stainless Appliances</li>
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Central Air Conditioning</li>
+      <li data-animate><span class="includes-grid__icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Individual Gas Heat</li>
     </ul>
   </div>
-</div>
+</section>
 
 
 <!-- FLOOR PLANS -->
@@ -372,30 +368,14 @@
       </div>
     </div>
 
-    <!-- APPFOLIO AVAILABILITY WIDGET -->
-    <div style="margin-top: var(--space-10);" data-animate>
-      <div class="section-intro" style="margin-bottom: var(--space-6);">
-        <span class="eyebrow">Live Availability &amp; Pricing</span>
-        <h2>Check What's Available Now</h2>
-        <p>Real-time availability and pricing is managed through <strong>AppFolio</strong>. Apply directly online — no appointment needed.</p>
+    <!-- AVAILABILITY HAND-OFF — live pricing & embed now live on availability.html -->
+    <div class="availability-cta" data-animate>
+      <div>
+        <span class="eyebrow eyebrow--light">Live Pricing &amp; Availability</span>
+        <h2>See What's Available Now</h2>
+        <p>Real-time unit availability, pricing, and online applications all live on the Availability page.</p>
       </div>
-      <div style="border-radius: var(--radius-lg); overflow: hidden; border: 1.5px solid var(--color-border); background: var(--color-surface); position: relative;">
-        <!-- Fallback shown if AppFolio blocks iframe embedding -->
-        <div id="appfolio-fallback" style="padding: var(--space-10); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-5);">
-          <p style="color: var(--color-text-muted); font-size: var(--text-sm); max-width: 48ch;">AppFolio listing can't be embedded in a preview — click below to view live availability in a new tab.</p>
-          <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" target="_blank" rel="noopener noreferrer" class="btn btn--primary">View Availability &amp; Apply in AppFolio →</a>
-        </div>
-        <iframe
-          src="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN"
-          width="100%"
-          height="700"
-          frameborder="0"
-          title="Rivergate Bordentown — Available Units"
-          loading="lazy"
-          style="display: block; position: absolute; inset: 0; height: 100%;"
-          onload="document.getElementById('appfolio-fallback').style.display='none'; this.style.position='static'; this.style.height='700px';">
-        </iframe>
-      </div>
+      <a href="availability.html" class="btn btn--primary">Click Here for Availability →</a>
     </div>
 
   </div>
@@ -425,6 +405,7 @@
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="amenities.html">Amenities</a>
       <a href="floor-plans.html">Floor Plans</a>
+      <a href="availability.html">Availability</a>
       <a href="gallery.html">Gallery</a>
       <a href="location.html">Location</a>
       <a href="contact.html">Contact</a>
@@ -466,8 +447,8 @@
   }());
   (function () {
     var items = document.querySelectorAll('[data-animate]'); if (!items.length) return;
-    document.querySelectorAll('.card-grid').forEach(function (grid) {
-      grid.querySelectorAll('[data-animate]').forEach(function (el, i) { el.style.transitionDelay = (i % 5 * 90) + 'ms'; });
+    document.querySelectorAll('.card-grid, .includes-grid').forEach(function (grid) {
+      grid.querySelectorAll('[data-animate]').forEach(function (el, i) { el.style.transitionDelay = (i % 6 * 70) + 'ms'; });
     });
     if (!window.IntersectionObserver) { items.forEach(function (el) { el.classList.add('is-visible'); }); return; }
     var observer = new IntersectionObserver(function (entries) {

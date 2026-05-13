@@ -10,7 +10,7 @@
   <style>
     .preview-banner {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
-      background: #1B5E91; color: #fff; text-align: center;
+      background: #0472BB; color: #fff; text-align: center;
       padding: 10px 24px; font-family: 'Inter', sans-serif;
       font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
     }
@@ -32,7 +32,7 @@
 
     .contact-grid {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: var(--space-10); align-items: start;
+      gap: var(--space-8); align-items: start;
     }
     .contact-info p { max-width: none; margin-bottom: var(--space-4); }
     .contact-info .contact-label {
@@ -119,6 +119,7 @@
   <nav class="nav-overlay__links" aria-label="Primary navigation">
     <a href="amenities.html">Amenities</a>
     <a href="floor-plans.html">Floor Plans</a>
+    <a href="availability.html">Availability</a>
     <a href="gallery.html">Gallery</a>
     <a href="location.html">Location</a>
     <a href="contact.html">Contact</a>
@@ -152,7 +153,7 @@
 
 <!-- ABOUT -->
 <article class="feature" id="about">
-  <div class="feature__image">
+  <div class="feature__image" data-animate="fade">
     <img src="../theme/rivergate-bordentown/assets/images/exterior/exterior-3.jpg" alt="Rivergate Bordentown building exterior" loading="lazy">
   </div>
   <div class="feature__body" data-animate>
@@ -161,14 +162,17 @@
     <div class="divider"></div>
     <p>Rivergate Bordentown is a transit-oriented waterfront community by Sterling Properties, offering a luxurious collection of one and two-bedroom residences perched along the Delaware River in historic Bordentown, New Jersey.</p>
     <p style="margin-top: var(--space-4);">Designed for discerning renters who demand both comfort and connectivity, Rivergate places the River Line Light Rail at your doorstep — with direct access to Trenton, and convenient connections to NYC, Philadelphia, and the Jersey Shore.</p>
-    <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" class="btn btn--primary" style="margin-top: var(--space-4);" target="_blank" rel="noopener noreferrer">Check Availability &amp; Apply</a>
+    <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-5);">
+      <a href="availability.html" class="btn btn--primary">Check Availability</a>
+      <a href="floor-plans.html" class="btn btn--secondary">View Floor Plans</a>
+    </div>
   </div>
 </article>
 
 
 <!-- AMENITIES TEASER -->
 <article class="feature feature--reverse feature--alt">
-  <div class="feature__image">
+  <div class="feature__image" data-animate="fade">
     <img src="../theme/rivergate-bordentown/assets/images/clubhouse/clubhouse-1.jpg" alt="Rivergate Bordentown clubhouse and pool" loading="lazy">
   </div>
   <div class="feature__body" data-animate>
@@ -218,8 +222,9 @@
       </div>
     </div>
 
-    <div style="margin-top: var(--space-8); text-align: center;">
+    <div style="margin-top: var(--space-7); display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
       <a href="floor-plans.html" class="btn btn--secondary">See All 8 Floor Plans</a>
+      <a href="availability.html" class="btn btn--primary">Check Live Availability</a>
     </div>
   </div>
 </section>
@@ -253,7 +258,7 @@
 
 <!-- LOCATION TEASER -->
 <article class="feature">
-  <div class="feature__image">
+  <div class="feature__image" data-animate="fade">
     <img src="../theme/rivergate-bordentown/assets/images/aerials/aerial-2.jpg" alt="Rivergate location and community" loading="lazy">
   </div>
   <div class="feature__body" data-animate>
@@ -426,6 +431,7 @@
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="amenities.html">Amenities</a>
       <a href="floor-plans.html">Floor Plans</a>
+      <a href="availability.html">Availability</a>
       <a href="gallery.html">Gallery</a>
       <a href="location.html">Location</a>
       <a href="contact.html">Contact</a>

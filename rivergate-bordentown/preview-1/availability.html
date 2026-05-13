@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Availability — Rivergate Bordentown Waterfront</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme/rivergate-bordentown/assets/css/global.css">
+  <style>
+    .preview-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      background: #0472BB; color: #fff; text-align: center;
+      padding: 10px 24px; font-family: 'Inter', sans-serif;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .preview-banner strong { font-weight: 600; }
+
+    .page-hero {
+      position: relative; min-height: 360px; display: flex;
+      align-items: flex-end; padding-block: 0; padding-bottom: var(--space-9); overflow: hidden;
+    }
+    .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
+    .page-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
+    .page-hero__bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,37,86,0.82) 0%, rgba(10,37,86,0.4) 55%, rgba(10,37,86,0.12) 100%);
+    }
+    .page-hero__content {
+      position: relative; z-index: 1; width: 100%;
+      max-width: var(--container-max); margin-inline: auto;
+      padding-inline: var(--section-padding-x); color: #fff;
+    }
+    .page-hero__content .eyebrow { color: rgba(255,255,255,0.7); }
+    .page-hero__content h1 { color: #fff; max-width: 20ch; margin-bottom: 0; font-size: var(--text-3xl); }
+
+    .appfolio-frame {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      border: 1.5px solid var(--color-border); background: var(--color-surface);
+      box-shadow: var(--shadow-md); margin-top: var(--space-7);
+    }
+    .appfolio-fallback {
+      padding: var(--space-9); text-align: center; display: flex;
+      flex-direction: column; align-items: center; gap: var(--space-5);
+    }
+    .appfolio-fallback p { color: var(--color-text-muted); font-size: var(--text-sm); max-width: 48ch; }
+
+    .apply-band {
+      background: linear-gradient(135deg, #0A2556 0%, #143A72 55%, #0472BB 100%);
+      color: #fff; border-radius: var(--radius-lg); padding: var(--space-8);
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: var(--space-5); margin-top: var(--space-8);
+    }
+    .apply-band h2 { color: #fff; margin-bottom: 0; }
+    .apply-band p { color: rgba(255,255,255,0.8); max-width: 52ch; }
+    .apply-band__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center; }
+
+    .how-it-works {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-6); margin-top: var(--space-8);
+    }
+    .how-step {
+      display: flex; flex-direction: column; gap: var(--space-3);
+      padding: var(--space-6); border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg); background: var(--color-surface);
+      transition: border-color var(--duration) var(--ease-out), transform var(--duration) var(--ease-out), box-shadow var(--duration) var(--ease-out);
+    }
+    .how-step:hover { border-color: var(--color-blue); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .how-step__num {
+      width: 34px; height: 34px; border-radius: var(--radius-full);
+      background: var(--color-bg-alt); color: var(--color-primary);
+      font-family: var(--font-heading); font-size: var(--text-lg);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .how-step h3 { font-size: var(--text-lg); }
+    .how-step p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Rivergate Bordentown — Home">
+      <img src="../theme/rivergate-bordentown/assets/images/logos/rivergate-logo-blue.png" alt="Rivergate Bordentown" height="40">
+    </a>
+    <div class="nav-actions">
+      <a href="contact.html" class="btn btn--nav">Schedule a Tour</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="amenities.html">Amenities</a>
+    <a href="floor-plans.html">Floor Plans</a>
+    <a href="availability.html">Availability</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="location.html">Location</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="nav-overlay__divider"></div>
+  <a href="contact.html" class="btn btn--primary nav-overlay__cta">Schedule a Tour</a>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-label="Availability">
+  <div class="page-hero__bg">
+    <img src="../theme/rivergate-bordentown/assets/images/aerials/aerial-3.jpg" alt="Rivergate Bordentown waterfront aerial" loading="eager">
+  </div>
+  <div class="page-hero__content">
+    <span class="eyebrow">Pricing &amp; Online Applications</span>
+    <h1>Availability</h1>
+  </div>
+</section>
+
+
+<!-- LIVE AVAILABILITY -->
+<section>
+  <div class="container">
+
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Real-Time Listings</span>
+      <h2>Check What's Available Now</h2>
+      <p>Live unit availability, pricing, and online applications are all managed through <strong>AppFolio</strong>. Browse open residences below and apply directly online — no appointment required.</p>
+    </div>
+
+    <div class="appfolio-frame" data-animate>
+      <!-- Fallback shown if AppFolio blocks iframe embedding (common in static previews) -->
+      <div id="appfolio-fallback" class="appfolio-fallback">
+        <p>The AppFolio listing can't be embedded in this preview — click below to view live availability and apply in a new tab.</p>
+        <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" target="_blank" rel="noopener noreferrer" class="btn btn--primary">View Availability &amp; Apply in AppFolio →</a>
+      </div>
+      <iframe
+        src="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN"
+        width="100%"
+        height="760"
+        frameborder="0"
+        title="Rivergate Bordentown — Available Units"
+        loading="lazy"
+        style="display: block; position: absolute; inset: 0; height: 100%;"
+        onload="document.getElementById('appfolio-fallback').style.display='none'; this.style.position='static'; this.style.height='760px';">
+      </iframe>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="how-it-works">
+      <div class="how-step" data-animate>
+        <span class="how-step__num">1</span>
+        <h3>Browse Live Listings</h3>
+        <p>See every available residence with current pricing and move-in dates, updated in real time.</p>
+      </div>
+      <div class="how-step" data-animate data-delay="1">
+        <span class="how-step__num">2</span>
+        <h3>Apply Online</h3>
+        <p>Submit your application securely through AppFolio in minutes — no office visit needed.</p>
+      </div>
+      <div class="how-step" data-animate data-delay="2">
+        <span class="how-step__num">3</span>
+        <h3>Move In</h3>
+        <p>Our leasing team guides you through approval, lease signing, and key handoff from there.</p>
+      </div>
+    </div>
+
+    <!-- APPLY BAND -->
+    <div class="apply-band" data-animate>
+      <span class="eyebrow eyebrow--light">Ready When You Are</span>
+      <h2>Start Your Application</h2>
+      <p>Have a floor plan in mind already? Apply now, or reach out to the leasing team with any questions.</p>
+      <div class="apply-band__actions">
+        <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" class="btn btn--primary" target="_blank" rel="noopener noreferrer">Apply in AppFolio →</a>
+        <a href="contact.html" class="btn btn--ghost">Schedule a Tour</a>
+        <a href="tel:6092980303" class="btn btn--ghost">Call 609.298.0303</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="eyebrow" style="color: rgba(255,255,255,0.5);">Still Deciding?</span>
+    <div class="divider"></div>
+    <h2>Explore the Floor Plans</h2>
+    <p>Compare all eight layouts — one and two bedroom — then come back here to check live availability.</p>
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="floor-plans.html" class="btn btn--primary">View Floor Plans</a>
+      <a href="amenities.html" class="btn btn--ghost">See the Amenities</a>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo" aria-label="Rivergate Bordentown — Home">
+      <img src="../theme/rivergate-bordentown/assets/images/logos/rivergate-logo-white.png" alt="Rivergate Bordentown" height="44" style="opacity: 0.85;">
+    </a>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="amenities.html">Amenities</a>
+      <a href="floor-plans.html">Floor Plans</a>
+      <a href="availability.html">Availability</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="location.html">Location</a>
+      <a href="contact.html">Contact</a>
+      <a href="residents.html">Residents</a>
+      <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer">Pay Rent</a>
+      <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" target="_blank" rel="noopener noreferrer">Apply Now</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-bottom__copy">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved. Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.</p>
+    <a class="footer-bottom__brand" href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
+      <img class="footer-sterling-logo" src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties">
+    </a>
+    <div class="footer-bottom__links">
+      <a href="#">Privacy Policy</a>
+      <a href="../theme/rivergate-bordentown/assets/pdf/RivergateBrochure.pdf" target="_blank" rel="noopener noreferrer">Brochure</a>
+      <a href="../theme/rivergate-bordentown/assets/pdf/Rivergate-Rental-Application.pdf" target="_blank" rel="noopener noreferrer">Rental Application</a>
+    </div>
+  </div>
+</footer>
+
+<div class="preview-banner" role="status">
+  <strong>Design Preview — Multi-Page</strong> · preview-1/availability.html · Static mockup using live Rivergate assets
+</div>
+
+<script>
+  (function () {
+    var header = document.getElementById('site-header'); if (!header) return;
+    window.addEventListener('scroll', function () { header.classList.toggle('is-scrolled', window.scrollY > 10); }, { passive: true });
+  }());
+  (function () {
+    var toggle = document.getElementById('nav-toggle'); var overlay = document.getElementById('nav-overlay');
+    if (!toggle || !overlay) return;
+    function closeNav() { overlay.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); document.body.classList.remove('nav-is-open'); }
+    function openNav()  { overlay.classList.add('is-open');    toggle.setAttribute('aria-expanded','true');  document.body.classList.add('nav-is-open'); }
+    toggle.addEventListener('click', function () { overlay.classList.contains('is-open') ? closeNav() : openNav(); });
+    overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeNav(); });
+  }());
+  (function () {
+    var items = document.querySelectorAll('[data-animate]'); if (!items.length) return;
+    document.querySelectorAll('.card-grid, .how-it-works').forEach(function (grid) {
+      grid.querySelectorAll('[data-animate]').forEach(function (el, i) { el.style.transitionDelay = (i % 5 * 90) + 'ms'; });
+    });
+    if (!window.IntersectionObserver) { items.forEach(function (el) { el.classList.add('is-visible'); }); return; }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    items.forEach(function (el) { observer.observe(el); });
+  }());
+</script>
+</body>
+</html>
