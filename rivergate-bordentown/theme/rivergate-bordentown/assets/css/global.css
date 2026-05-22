@@ -947,6 +947,85 @@ body.has-video-hero.nav-is-open .site-header {
 
 
 /* --------------------------------------------------------------------------
+   11a. ANIMATED CTA — colour-pulse + travelling border (.btn--pulse)
+   --------------------------------------------------------------------------
+   Subtle eye-catch for the primary "Schedule a Tour" action. COLOUR ONLY —
+   no scaling / heartbeat. A bright highlight also traces the button outline.
+   Both effects honour prefers-reduced-motion.
+   -------------------------------------------------------------------------- */
+
+@property --rg-bd-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.btn--pulse {
+  position: relative;
+  isolation: isolate;
+  --rg-bd-angle: 0deg;            /* static fallback where @property is unsupported */
+  border: none;
+  background-color: var(--color-primary);
+  /* Gradient shifts deeper → lighter → deeper across the face */
+  background-image: linear-gradient(100deg,
+    var(--color-primary-dark) 0%,
+    var(--color-primary) 30%,
+    #4FB0E8 50%,
+    var(--color-primary) 70%,
+    var(--color-primary-dark) 100%);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  animation: rg-btn-pulse 5s ease-in-out infinite alternate;
+}
+
+.btn--pulse:hover {
+  background-color: var(--color-primary-dark);
+  animation-duration: 2.6s;       /* livens up under the cursor */
+}
+
+@keyframes rg-btn-pulse {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* Bright highlight that travels around the outline */
+.btn--pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;                    /* above the fill, below the label */
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--rg-bd-angle),
+    rgba(255,255,255,0)   0deg,
+    rgba(255,255,255,0)   250deg,
+    rgba(191,227,255,0.9) 312deg,
+    #ffffff               335deg,
+    rgba(191,227,255,0.9) 352deg,
+    rgba(255,255,255,0)   360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: rg-btn-border 3.2s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rg-btn-border {
+  to { --rg-bd-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--pulse {
+    animation: none;
+    background-image: none;
+    background-color: var(--color-primary);
+  }
+  .btn--pulse::after { animation: none; display: none; }
+}
+
+
+/* --------------------------------------------------------------------------
    11b. ACCORDION (collapsible lists)
    -------------------------------------------------------------------------- */
 
