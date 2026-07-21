@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resident Portal — Rivergate Bordentown Waterfront</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Brand fonts: Logam (titles) + Noyh (body) load via @font-face in global.css.
+       System fallbacks apply until the webfont files are added to theme assets/fonts/. -->
   <link rel="stylesheet" href="../theme/rivergate-bordentown/assets/css/global.css">
   <style>
     .preview-banner {
@@ -46,7 +46,7 @@
     }
     .portal-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
     .portal-card--primary {
-      background: var(--color-primary); color: #fff;
+      background: var(--color-navy); color: #fff;
     }
     .portal-card--primary h3, .portal-card--primary p { color: #fff; }
     .portal-card--primary p { color: rgba(255,255,255,0.8); }
@@ -407,7 +407,7 @@
 
       <div class="emergency-card" data-animate>
         <span class="emergency-card__label">Leasing Office</span>
-        <span class="emergency-card__name">Mon–Fri 9am–6pm, Sat 10am–4pm</span>
+        <span class="emergency-card__name">Tue–Fri 10am–6pm, Sat 10am–5pm</span>
         <span class="emergency-card__contact"><a href="tel:6092980303">609.298.0303</a></span>
       </div>
 
@@ -434,7 +434,7 @@
     <span class="eyebrow" style="color: rgba(255,255,255,0.5);">Need Help?</span>
     <div class="divider"></div>
     <h2>We're Here for You</h2>
-    <p>The Rivergate leasing and management team is available Monday through Saturday. Don't hesitate to reach out.</p>
+    <p>The Rivergate leasing and management team is available Tuesday through Saturday. Don't hesitate to reach out.</p>
     <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
       <a href="index.html#contact" class="btn btn--primary">Contact the Leasing Office</a>
       <a href="tel:6092980303" class="btn btn--ghost">Call 609.298.0303</a>
@@ -460,6 +460,12 @@
       <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer">Pay Rent</a>
       <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" target="_blank" rel="noopener noreferrer">Apply Now</a>
     </nav>
+  </div>
+  <div class="footer-badges" aria-label="Fair housing and community policies">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/EH_LightBlue.svg" alt="Equal Housing Opportunity" width="26" height="25">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/HC_LightBlue.svg" alt="ADA / wheelchair accessible" width="22" height="25">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/Pets_white.svg" alt="Pet-friendly community" width="34" height="30">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/SmokingProhibited_white.svg" alt="Non-smoking community" width="30" height="30">
   </div>
   <div class="footer-bottom">
     <p class="footer-bottom__copy">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved. Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.</p>
