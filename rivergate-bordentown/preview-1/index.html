@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rivergate Bordentown Waterfront — Luxury Apartments on the Delaware River</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Brand fonts: Logam (titles) + Noyh (body) load via @font-face in global.css.
+       System fallbacks apply until the webfont files are added to theme assets/fonts/. -->
   <link rel="stylesheet" href="../theme/rivergate-bordentown/assets/css/global.css">
   <style>
     /* Floating "under construction" preview badge — bottom-right, expands on hover/focus */
@@ -103,6 +103,23 @@
     /* ============================================================
        RESIDENCE FEATURES — plain checkmark list, no blurbs
        ============================================================ */
+    .residences-split {
+      display: grid; grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--space-8); align-items: center; margin-top: var(--space-8);
+    }
+    .residences-split__photo {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      min-height: 440px; align-self: stretch;
+    }
+    .residences-split__photo img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      transition: transform 600ms var(--ease-out);
+    }
+    .residences-split__photo:hover img { transform: scale(1.04); }
+    @media (max-width: 860px) {
+      .residences-split { grid-template-columns: 1fr; }
+      .residences-split__photo { min-height: 300px; order: -1; }
+    }
     .residence-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: var(--space-2) var(--space-7); margin-top: var(--space-8);
@@ -205,10 +222,27 @@
       font-size: var(--text-xs); color: var(--color-text-muted);
       margin-top: var(--space-3); font-style: italic;
     }
+    /* Floor-plan image (.fp-plan-img), disabled-tour pill (.fp-vtour-disabled),
+       and the Matterport lightbox (.mp-modal) styles live in global.css — shared
+       with floor-plans.html. */
 
     /* ============================================================
        LOCATION — interactive stat toggles
        ============================================================ */
+    .location-photo {
+      position: relative; margin-top: var(--space-7); overflow: hidden;
+      border-radius: var(--radius-lg); height: clamp(240px, 32vw, 400px);
+    }
+    .location-photo img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .location-photo__caption {
+      position: absolute; left: var(--space-5); bottom: var(--space-5); z-index: 1;
+      color: #fff; font-size: var(--text-sm); letter-spacing: var(--tracking-wide);
+      background: rgba(10,37,86,0.55); padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-base);
+    }
     .loc-stats {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: var(--space-5); margin-top: var(--space-7);
@@ -384,7 +418,7 @@
        STERLING PORTFOLIO BANNER (above contact)
        ============================================================ */
     .sterling-banner {
-      background: linear-gradient(135deg, #0A2556 0%, #143A72 55%, #0472BB 100%);
+      background: linear-gradient(135deg, #0A2556 0%, #24507E 55%, #3C6992 100%);
       color: #fff;
     }
     .sterling-banner .container {
@@ -573,7 +607,7 @@
             <span class="amenity__name">River Line Access</span>
             <span class="amenity__plus" aria-hidden="true"></span>
           </button>
-          <div class="amenity__panel"><p class="amenity__detail">Light Rail steps away — Trenton, NYC, and Philly without a car.</p></div>
+          <div class="amenity__panel"><p class="amenity__detail">Convenient River Line access — reach Trenton, NYC, and Philly without a car.</p></div>
         </div>
 
         <div class="amenity" data-animate>
@@ -608,7 +642,10 @@
       <div class="amenities-photo" data-animate="right">
         <img src="../theme/rivergate-bordentown/assets/images/clubhouse/clubhouse-1.jpg" alt="Rivergate Bordentown clubhouse and pool" loading="lazy">
         <div class="amenities-photo__overlay">
-          <a href="gallery.html" class="btn btn--primary">View Gallery</a>
+          <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+            <button type="button" class="btn btn--primary" data-mp="https://my.matterport.com/show/?m=RUxNh5SDzmG" data-name="Rivergate Amenities">Take a Virtual Tour</button>
+            <a href="gallery.html" class="btn btn--ghost">View Gallery</a>
+          </div>
         </div>
       </div>
     </div>
@@ -619,6 +656,8 @@
 <!-- RESIDENCE FEATURES -->
 <section id="residences" aria-label="Residence features">
   <div class="container">
+   <div class="residences-split">
+    <div class="residences-split__text">
     <div class="section-intro" data-animate>
       <span class="eyebrow">Residence Features</span>
       <h2>Refined Interiors, Down to Every Detail</h2>
@@ -638,6 +677,11 @@
       <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Cable &amp; High-Speed Ready</li>
       <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Ample In-Unit Storage</li>
     </ul>
+    </div><!-- /.residences-split__text -->
+    <div class="residences-split__photo" data-animate="right">
+      <img src="../theme/rivergate-bordentown/assets/images/units/living-room-2.jpg" alt="Rivergate residence interior — open living area with designer kitchen beyond" loading="lazy">
+    </div>
+   </div><!-- /.residences-split -->
   </div>
 </section>
 
@@ -647,7 +691,7 @@
   <div class="container">
     <div class="section-intro" data-animate>
       <span class="eyebrow">Floor Plans</span>
-      <h2>Eight Distinct Residences</h2>
+      <h2>Nine Distinct Residences</h2>
       <p>Select a residence to view its details. All plans include a private balcony and the full suite of designer finishes.</p>
     </div>
 
@@ -658,6 +702,7 @@
         <button class="fp-option" type="button" role="tab" data-plan="borden"></button>
         <button class="fp-option" type="button" role="tab" data-plan="rivergate"></button>
         <button class="fp-option" type="button" role="tab" data-plan="chester"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="burlington"></button>
         <button class="fp-option" type="button" role="tab" data-plan="dayton"></button>
         <button class="fp-option" type="button" role="tab" data-plan="farnsworth"></button>
         <button class="fp-option" type="button" role="tab" data-plan="edison"></button>
@@ -694,12 +739,18 @@
       <p>Tap a number to see what it means. Then filter the map by category to explore everything close to home.</p>
     </div>
 
+    <!-- Neighborhood photo -->
+    <div class="location-photo" data-animate="fade">
+      <img src="../theme/rivergate-bordentown/assets/images/aerials/neighborhood-waterfront.jpg" alt="Aerial view of Rivergate along the Delaware River in Bordentown, New Jersey" loading="lazy">
+      <span class="location-photo__caption">On the Delaware River in Bordentown, New Jersey</span>
+    </div>
+
     <!-- Interactive stat toggles -->
     <div class="loc-stats" data-animate>
       <button class="loc-stat" type="button" aria-expanded="false">
-        <span class="loc-stat__num">Steps</span>
+        <span class="loc-stat__num">Nearby</span>
         <span class="loc-stat__hint">Tap to reveal</span>
-        <span class="loc-stat__label"><span>to the River Line Light Rail at your door</span></span>
+        <span class="loc-stat__label"><span>River Line Light Rail for car-free trips to Trenton, Philadelphia &amp; NYC</span></span>
       </button>
       <button class="loc-stat" type="button" aria-expanded="false">
         <span class="loc-stat__num">~45 min</span>
@@ -729,7 +780,7 @@
           <!-- Transit -->
           <div class="poi-category-list" data-category="transit">
             <div class="poi-cat-heading"><span class="poi-cat-dot" style="background:#0472BB"></span>Transit &amp; Commuting</div>
-            <div class="explorer-poi-item" data-poi="River Line Light Rail"><span class="poi-num-badge" style="background:#0472BB">1</span><span><span class="explorer-poi-name">River Line Light Rail</span><span class="explorer-poi-detail">Steps from Rivergate · Bordentown Station</span></span></div>
+            <div class="explorer-poi-item" data-poi="River Line Light Rail"><span class="poi-num-badge" style="background:#0472BB">1</span><span><span class="explorer-poi-name">River Line Light Rail</span><span class="explorer-poi-detail">Near Rivergate · Bordentown Station</span></span></div>
             <div class="explorer-poi-item" data-poi="Trenton Transit Center"><span class="poi-num-badge" style="background:#0472BB">2</span><span><span class="explorer-poi-name">Trenton Transit Center</span><span class="explorer-poi-detail">NJ Transit + Amtrak · ~10 min via River Line</span></span></div>
             <div class="explorer-poi-item" data-poi="I-295 On-Ramp"><span class="poi-num-badge" style="background:#0472BB">3</span><span><span class="explorer-poi-name">I-295 On-Ramp</span><span class="explorer-poi-detail">Minutes away · North to NYC, South to Philadelphia</span></span></div>
             <div class="explorer-poi-item" data-poi="New Jersey Turnpike"><span class="poi-num-badge" style="background:#0472BB">4</span><span><span class="explorer-poi-name">New Jersey Turnpike</span><span class="explorer-poi-detail">Exit 7 · ~5 minutes</span></span></div>
@@ -870,7 +921,7 @@
         </div>
         <div>
           <p class="contact-label">Leasing Office Hours</p>
-          <p>Monday – Friday: 9am – 6pm<br>Saturday: 10am – 4pm<br>Sunday: By Appointment</p>
+          <p>Tuesday – Friday: 10:00 AM – 6:00 PM<br>Saturday: 10:00 AM – 5:00 PM<br>Sunday &amp; Monday: Closed</p>
         </div>
       </div>
 
@@ -901,6 +952,7 @@
             <option value="1br-rivergate">One Bedroom — The Rivergate (737 sq ft)</option>
             <option value="1br-wright">One Bedroom — The Wright (863 sq ft)</option>
             <option value="2br-chester">Two Bedroom — The Chester (1,033 sq ft)</option>
+            <option value="2br-burlington">Two Bedroom — The Burlington (1,043 sq ft)</option>
             <option value="2br-dayton">Two Bedroom — The Dayton (1,160 sq ft)</option>
             <option value="2br-edison">Two Bedroom — The Edison (1,287 sq ft)</option>
             <option value="2br-farnsworth">Two Bedroom — The Farnsworth (1,149 sq ft)</option>
@@ -941,6 +993,12 @@
       <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" target="_blank" rel="noopener noreferrer">Apply Now</a>
     </nav>
   </div>
+  <div class="footer-badges" aria-label="Fair housing and community policies">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/EH_LightBlue.svg" alt="Equal Housing Opportunity" width="26" height="25">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/HC_LightBlue.svg" alt="ADA / wheelchair accessible" width="22" height="25">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/Pets_white.svg" alt="Pet-friendly community" width="34" height="30">
+    <img src="../theme/rivergate-bordentown/assets/images/badges/SmokingProhibited_white.svg" alt="Non-smoking community" width="30" height="30">
+  </div>
   <div class="footer-bottom">
     <p class="footer-bottom__copy">&copy; 2026 Rivergate Bordentown. A Sterling Properties Community. All rights reserved. Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.</p>
     <a class="footer-bottom__brand" href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
@@ -953,6 +1011,18 @@
     </div>
   </div>
 </footer>
+
+<!-- Matterport virtual-tour lightbox -->
+<div class="mp-modal" id="mp-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Virtual tour">
+  <div class="mp-modal__backdrop" data-mp-close></div>
+  <div class="mp-modal__dialog">
+    <button class="mp-modal__close" type="button" data-mp-close aria-label="Close virtual tour">&times;</button>
+    <div class="mp-modal__title" id="mp-modal-title">Virtual Tour</div>
+    <div class="mp-modal__frame">
+      <iframe id="mp-modal-iframe" title="Matterport 3D virtual tour" allow="fullscreen; vr" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
 
 <div class="preview-badge" role="status" tabindex="0" aria-label="Design preview — static mockup using live Rivergate assets" title="Design Preview — static mockup using live Rivergate assets">
   <span class="preview-badge__icon" aria-hidden="true">
@@ -1037,15 +1107,20 @@
 
   /* Floor-plan selector — data-driven detail panel, defaults to The Wright */
   (function () {
+    var FP_BASE = '../theme/rivergate-bordentown/assets/images/floorplans/';
+    var MP = 'https://my.matterport.com/show/?m=';
+    /* mp: Matterport tour URL, or null where no tour exists yet
+       (Borden, Chester, Burlington, Hamilton — tour button is disabled). */
     var PLANS = {
-      wright:     { name: 'The Wright',     code: 'Plan 1B3', bed: 1, bath: 1, sqft: '863',   tag: '' },
-      borden:     { name: 'The Borden',     code: 'Plan 1B',  bed: 1, bath: 1, sqft: '773',   tag: '' },
-      rivergate:  { name: 'The Rivergate',  code: 'Plan 1B2', bed: 1, bath: 1, sqft: '737',   tag: '' },
-      chester:    { name: 'The Chester',    code: 'Plan 2B',  bed: 2, bath: 2, sqft: '1,033', tag: '' },
-      dayton:     { name: 'The Dayton',     code: 'Plan 2B2', bed: 2, bath: 2, sqft: '1,160', tag: 'Most Popular' },
-      farnsworth: { name: 'The Farnsworth', code: 'Plan 2B5', bed: 2, bath: 2, sqft: '1,149', tag: '' },
-      edison:     { name: 'The Edison',     code: 'Plan 2B3', bed: 2, bath: 2, sqft: '1,287', tag: '' },
-      hamilton:   { name: 'The Hamilton',   code: 'Plan 2B6', bed: 2, bath: 2, sqft: '1,342', tag: '' }
+      wright:     { name: 'The Wright',     code: 'Plan 1B3', bed: 1, bath: 1, sqft: '863',   tag: '',             img: 'wright.jpg',     mp: MP + 'ZJFssUi1zKd' },
+      borden:     { name: 'The Borden',     code: 'Plan 1B',  bed: 1, bath: 1, sqft: '773',   tag: '',             img: 'borden.jpg',     mp: null },
+      rivergate:  { name: 'The Rivergate',  code: 'Plan 1B2', bed: 1, bath: 1, sqft: '737',   tag: '',             img: 'rivergate.jpg',  mp: MP + '18Ngo5NtdyU' },
+      chester:    { name: 'The Chester',    code: 'Plan 2B',  bed: 2, bath: 2, sqft: '1,033', tag: '',             img: 'chester.jpg',    mp: null },
+      burlington: { name: 'The Burlington', code: 'Plan 2B4', bed: 2, bath: 2, sqft: '1,043', tag: '',             img: 'burlington.jpg', mp: null },
+      dayton:     { name: 'The Dayton',     code: 'Plan 2B2', bed: 2, bath: 2, sqft: '1,160', tag: 'Most Popular', img: 'dayton.jpg',     mp: MP + 'FURMkxr2zpm' },
+      farnsworth: { name: 'The Farnsworth', code: 'Plan 2B5', bed: 2, bath: 2, sqft: '1,149', tag: '',             img: 'farnsworth.jpg', mp: MP + 'AHnca1wS9bX' },
+      edison:     { name: 'The Edison',     code: 'Plan 2B3', bed: 2, bath: 2, sqft: '1,287', tag: '',             img: 'edison.jpg',     mp: MP + 'ghub4RNmR3A' },
+      hamilton:   { name: 'The Hamilton',   code: 'Plan 2B6', bed: 2, bath: 2, sqft: '1,342', tag: '',             img: 'hamilton.jpg',   mp: null }
     };
     var APPLY_URL = 'https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN';
     var options = document.querySelectorAll('.fp-option');
@@ -1067,6 +1142,9 @@
     function renderDetail(key) {
       var p = PLANS[key];
       if (!p) return;
+      var tourBtn = p.mp
+        ? '<button type="button" class="btn btn--secondary" data-mp="' + p.mp + '" data-name="' + p.name + '">Take a Virtual Tour</button>'
+        : '<span class="btn btn--secondary fp-vtour-disabled" aria-disabled="true" title="Virtual tour coming soon">Virtual Tour Coming Soon</span>';
       detail.innerHTML =
         '<p class="fp-detail__eyebrow">' + p.code + (p.tag ? ' · ' + p.tag : '') + '</p>' +
         '<h3 class="fp-detail__name">' + p.name + '</h3>' +
@@ -1076,16 +1154,12 @@
           '<div class="fp-spec"><span>Square Feet</span><span>' + p.sqft + '</span></div>' +
           '<div class="fp-spec"><span>Balcony</span><span>Yes</span></div>' +
         '</div>' +
-        '<div class="fp-diagram" role="img" aria-label="' + p.name + ' floor plan diagram (coming soon)">' +
-          '<span class="fp-diagram__watermark">' + p.name + '</span>' +
-          '<span class="fp-diagram__note">Floor-plan diagram coming soon</span>' +
-        '</div>' +
+        '<img class="fp-plan-img" src="' + FP_BASE + p.img + '" alt="' + p.name + ' floor plan — ' + p.bed + ' bed, ' + p.bath + ' bath, ' + p.sqft + ' sq ft" loading="lazy">' +
         '<div class="fp-detail__actions">' +
-          '<a class="btn btn--secondary" href="#contact" data-vtour>Take a Virtual Tour</a>' +
+          tourBtn +
           '<a class="btn btn--primary" href="availability.html">Check Availability</a>' +
           '<a class="btn btn--secondary" href="' + APPLY_URL + '" target="_blank" rel="noopener noreferrer">Apply Now</a>' +
-        '</div>' +
-        '<p class="fp-vtour-note">Matterport virtual tours coming soon — schedule a visit to see it in person.</p>';
+        '</div>';
     }
 
     function select(opt) {
@@ -1102,6 +1176,33 @@
     /* Default-select The Wright so the panel is never blank */
     var first = document.querySelector('.fp-option[data-plan="wright"]') || options[0];
     select(first);
+  }());
+
+  /* Matterport virtual-tour lightbox — opens for any [data-mp] trigger */
+  (function () {
+    var modal = document.getElementById('mp-modal');
+    var frame = document.getElementById('mp-modal-iframe');
+    var title = document.getElementById('mp-modal-title');
+    if (!modal || !frame) return;
+    function openTour(url, name) {
+      frame.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'play=1';
+      title.textContent = name ? name + ' — Virtual Tour' : 'Virtual Tour';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mp-open');
+    }
+    function closeTour() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      frame.src = '';
+      document.body.classList.remove('mp-open');
+    }
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest ? e.target.closest('[data-mp]') : null;
+      if (trigger) { e.preventDefault(); openTour(trigger.getAttribute('data-mp'), trigger.getAttribute('data-name')); return; }
+      if (e.target.closest && e.target.closest('[data-mp-close]')) { closeTour(); }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTour(); });
   }());
 </script>
 
