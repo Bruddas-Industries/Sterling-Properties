@@ -1,0 +1,70 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "1280px",
+			"wideSize": "1440px"
+		},
+		"color": {
+			"custom": false,
+			"customDuotone": false,
+			"customGradient": false,
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"link": true,
+			"palette": [
+				{ "slug": "primary",     "color": "#3C6992", "name": "Muted Blue (Primary)" },
+				{ "slug": "primary-dark","color": "#2E5474", "name": "Muted Blue (Dark)" },
+				{ "slug": "navy",        "color": "#0A2556", "name": "Navy (Accent)" },
+				{ "slug": "blue",        "color": "#0472BB", "name": "Bright Blue (Buttons)" },
+				{ "slug": "surface",     "color": "#FFFFFF", "name": "White / Surface" },
+				{ "slug": "text",        "color": "#0A2556", "name": "Body Text (Navy)" },
+				{ "slug": "text-muted",  "color": "#51678A", "name": "Muted Text" },
+				{ "slug": "border",      "color": "#C2D2E6", "name": "Border" }
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"lineHeight": true,
+			"dropCap": false,
+			"fontFamilies": [
+				{
+					"slug": "heading",
+					"name": "Heading (Logam)",
+					"fontFamily": "'Logam', 'Century Gothic', 'Futura', system-ui, sans-serif"
+				},
+				{
+					"slug": "body",
+					"name": "Body (Noyh)",
+					"fontFamily": "'Noyh', 'Inter', system-ui, -apple-system, sans-serif"
+				}
+			],
+			"fontSizes": [
+				{ "slug": "small",   "name": "Small",         "size": "clamp(0.875rem, 1.8vw, 1rem)" },
+				{ "slug": "medium",  "name": "Base",          "size": "clamp(1rem, 2vw, 1.125rem)" },
+				{ "slug": "large",   "name": "Large",         "size": "clamp(1.125rem, 2.2vw, 1.375rem)" },
+				{ "slug": "x-large", "name": "Heading",       "size": "clamp(1.75rem, 3.5vw, 2.5rem)" },
+				{ "slug": "xx-large","name": "Display",       "size": "clamp(2.5rem, 5vw, 3.75rem)" }
+			]
+		},
+		"spacing": {
+			"customSpacingSize": true,
+			"units": [ "px", "rem", "em", "vw", "%" ],
+			"spacingSizes": [
+				{ "slug": "30", "name": "Small",   "size": "1rem" },
+				{ "slug": "40", "name": "Medium",  "size": "1.5rem" },
+				{ "slug": "50", "name": "Large",   "size": "2rem" },
+				{ "slug": "60", "name": "X-Large", "size": "3.5rem" },
+				{ "slug": "70", "name": "Section",  "size": "clamp(3rem, 6vw, 5.5rem)" }
+			]
+		},
+		"blocks": {
+			"core/button": {
+				"border": { "radius": true }
+			}
+		}
+	}
+}

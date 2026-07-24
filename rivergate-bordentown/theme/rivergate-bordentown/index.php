@@ -1,9 +1,9 @@
 <?php
 /**
  * index.php — Rivergate Bordentown
- * Fallback template. In normal operation the home page uses an Elementor
- * full-page template; this file only renders if Elementor is inactive or
- * no template is assigned.
+ * Generic fallback template for blog/archive/single views and any page with no
+ * specific template assigned. The homepage uses the "Block Canvas" page template
+ * (templates/page-canvas.php) with the Rivergate Homepage block pattern.
  */
 
 get_header();

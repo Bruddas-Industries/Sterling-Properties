@@ -61,8 +61,8 @@ Examples:
 
 Before pushing a theme to production:
 
-- [ ] Bump `THEME_VERSION` constant in `functions.php`
-- [ ] Test in Local on PHP 8.x
-- [ ] Confirm Elementor templates load correctly
+- [ ] Bump the `_VERSION` constant in `functions.php` (busts CSS/JS + editor-script caches)
+- [ ] Test in Local on PHP 8.x (WordPress 6.3+)
+- [ ] Confirm the homepage pattern + dynamic blocks render correctly (front end + editor)
 - [ ] Check mobile breakpoints
-- [ ] Run `wp search-replace` after migrating to update URLs
+- [ ] Run `wp search-replace` after migrating to update URLs, then re-save Permalinks

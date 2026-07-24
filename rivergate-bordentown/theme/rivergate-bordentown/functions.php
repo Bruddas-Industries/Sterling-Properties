@@ -1,16 +1,17 @@
 <?php
 /**
  * Rivergate Bordentown — functions.php
- * Forked from Sterling Properties base theme.
- * Only constants and text domain differ from the base.
+ * Base template theme for Sterling Properties network.
+ * Fork this file for each new property — update constants and text domain only.
  */
 
-define(
-    'RIVERGATE_GOOGLE_FONTS_URL',
-    'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;700&display=swap'
-);
+// Brand fonts (Logam + Noyh Geometric Slim) load via @font-face in global.css —
+// the .otf files live in assets/fonts/. No external font request needed.
+define( 'RIVERGATE_VERSION', '1.5.0' );
+define( 'RIVERGATE_MAPS_API_KEY', '' ); // Add your Google Maps API key here
 
-define( 'RIVERGATE_VERSION', '1.2.0' );
+// Block editor integration: dynamic blocks, block styles, patterns, body class.
+require_once get_template_directory() . '/inc/blocks.php';
 
 
 // ---------------------------------------------------------------------------
@@ -24,8 +25,10 @@ function rivergate_theme_setup(): void {
         'search-form', 'comment-form', 'comment-list',
         'gallery', 'caption', 'style', 'script',
     ] );
-    add_filter( 'should_load_separate_core_block_assets', '__return_false' );
-    add_theme_support( 'elementor' );
+    add_theme_support( 'align-wide' );
+    add_theme_support( 'editor-styles' );
+    add_theme_support( 'responsive-embeds' );
+    add_editor_style( 'assets/css/global.css' );
 
     register_nav_menus( [
         'primary' => __( 'Primary Navigation', 'rivergate-bordentown' ),
@@ -40,42 +43,33 @@ add_action( 'after_setup_theme', 'rivergate_theme_setup' );
 // ---------------------------------------------------------------------------
 
 function rivergate_enqueue_assets(): void {
-    wp_enqueue_style( 'rivergate-fonts-preconnect', 'https://fonts.gstatic.com', [], null );
-    wp_enqueue_style( 'rivergate-google-fonts', RIVERGATE_GOOGLE_FONTS_URL, [], null );
     wp_enqueue_style(
         'rivergate-global',
         get_template_directory_uri() . '/assets/css/global.css',
-        [ 'rivergate-google-fonts' ],
+        [],
         RIVERGATE_VERSION
     );
 
-    wp_register_script( 'rivergate-scroll', false, [], RIVERGATE_VERSION, true );
-    wp_enqueue_script( 'rivergate-scroll' );
-    wp_add_inline_script(
-        'rivergate-scroll',
-        '(function(){
-            var h = document.querySelector(".site-header");
-            if (!h) return;
-            window.addEventListener("scroll", function() {
-                h.classList.toggle("is-scrolled", window.scrollY > 10);
-            }, { passive: true });
-        }())'
+    wp_enqueue_script(
+        'rivergate-main',
+        get_template_directory_uri() . '/assets/js/main.js',
+        [],
+        RIVERGATE_VERSION,
+        true
     );
 }
 add_action( 'wp_enqueue_scripts', 'rivergate_enqueue_assets' );
 
 
 // ---------------------------------------------------------------------------
-// 3. ELEMENTOR SUPPORT
+// 3. PAGE TEMPLATES
 // ---------------------------------------------------------------------------
 
-function rivergate_elementor_support(): void {
-    add_theme_support( 'elementor' );
-}
-add_action( 'elementor/init', 'rivergate_elementor_support' );
-
 function rivergate_add_page_templates( array $templates ): array {
-    $templates['templates/full-width.php'] = __( 'Rivergate Full Width', 'rivergate-bordentown' );
+    // All pages are built with the block editor on the Block Canvas template,
+    // using the "Rivergate Page — *" block patterns (see patterns/page-*.php).
+    $templates['templates/page-canvas.php'] = __( 'Block Canvas (Full Width)', 'rivergate-bordentown' );
+    $templates['templates/full-width.php']  = __( 'Rivergate Full Width', 'rivergate-bordentown' );
     return $templates;
 }
 add_filter( 'theme_page_templates', 'rivergate_add_page_templates' );
@@ -100,9 +94,6 @@ add_action( 'init', 'rivergate_clean_head' );
 // ---------------------------------------------------------------------------
 
 function rivergate_body_classes( array $classes ): array {
-    if ( function_exists( 'elementor_load_plugin_textdomain' ) ) {
-        $classes[] = 'has-elementor';
-    }
     if ( is_page() ) {
         $post = get_post();
         if ( $post ) {
@@ -147,3 +138,88 @@ class Rivergate_Nav_Walker extends Walker_Nav_Menu {
     public function end_el( &$output, $data_object, $depth = 0, $args = null ): void {}
 }
 endif;
+
+
+// ---------------------------------------------------------------------------
+// 7. HELPER — get ACF field with fallback (graceful when ACF not active)
+// ---------------------------------------------------------------------------
+
+/**
+ * Wrapper around get_field() that returns $fallback when ACF is not active
+ * or when the field has no saved value.
+ *
+ * @param string    $name     ACF field name.
+ * @param int|false $post_id  Post ID, or false for the current post.
+ * @param mixed     $fallback Value returned when field is empty or ACF inactive.
+ * @return mixed
+ */
+function rivergate_field( string $name, $post_id = false, $fallback = '' ) {
+    if ( ! function_exists( 'get_field' ) ) {
+        return $fallback;
+    }
+    $val = get_field( $name, $post_id );
+    return ( $val !== false && $val !== null && $val !== '' ) ? $val : $fallback;
+}
+
+
+// ---------------------------------------------------------------------------
+// 8. CUSTOM POST TYPES
+// ---------------------------------------------------------------------------
+
+function rivergate_register_post_types(): void {
+
+    register_post_type( 'rg_amenity', [
+        'labels'       => [
+            'name'          => __( 'Amenities',    'rivergate-bordentown' ),
+            'singular_name' => __( 'Amenity',      'rivergate-bordentown' ),
+            'add_new_item'  => __( 'Add Amenity',  'rivergate-bordentown' ),
+            'edit_item'     => __( 'Edit Amenity', 'rivergate-bordentown' ),
+            'all_items'     => __( 'All Amenities','rivergate-bordentown' ),
+        ],
+        'public'       => false,
+        'show_ui'      => true,
+        'show_in_menu' => true,
+        'menu_icon'    => 'dashicons-star-filled',
+        'supports'     => [ 'title', 'page-attributes' ],
+        'has_archive'  => false,
+        'rewrite'      => false,
+    ] );
+
+    register_post_type( 'rg_floor_plan', [
+        'labels'       => [
+            'name'          => __( 'Floor Plans',    'rivergate-bordentown' ),
+            'singular_name' => __( 'Floor Plan',     'rivergate-bordentown' ),
+            'add_new_item'  => __( 'Add Floor Plan', 'rivergate-bordentown' ),
+            'edit_item'     => __( 'Edit Floor Plan','rivergate-bordentown' ),
+            'all_items'     => __( 'All Floor Plans','rivergate-bordentown' ),
+        ],
+        'public'       => false,
+        'show_ui'      => true,
+        'show_in_menu' => true,
+        'menu_icon'    => 'dashicons-layout',
+        'supports'     => [ 'title', 'page-attributes' ],
+        'has_archive'  => false,
+        'rewrite'      => false,
+    ] );
+}
+add_action( 'init', 'rivergate_register_post_types' );
+
+
+// ---------------------------------------------------------------------------
+// 9. ACF FIELD GROUPS (registered in code — no DB entries required)
+//    Requires: Advanced Custom Fields (free or Pro)
+//    Install:  Plugins → Add New → search "Advanced Custom Fields"
+// ---------------------------------------------------------------------------
+// 9. ACF LOCAL JSON — point ACF at the theme's acf-json/ directory
+//    Field group definitions live in acf-json/*.json (version-controlled).
+//    Requires: Advanced Custom Fields (free or Pro)
+// ---------------------------------------------------------------------------
+
+add_filter( 'acf/settings/load_json', function ( array $paths ): array {
+    $paths[] = get_template_directory() . '/acf-json';
+    return $paths;
+} );
+
+add_filter( 'acf/settings/save_json', function (): string {
+    return get_stylesheet_directory() . '/acf-json';
+} );

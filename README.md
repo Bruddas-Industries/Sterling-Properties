@@ -31,8 +31,8 @@ Sterling Properties/
 
 ## Tech Stack
 
-- **WordPress** — CMS
-- **Elementor** — Page builder (visual templates)
-- **Custom PHP themes** — Lightweight, Elementor-first (no Gutenberg)
+- **WordPress Multisite** — CMS (one network, `rivergate-bordentown` is the base theme)
+- **Native block editor (Gutenberg)** — pages built from custom dynamic blocks + block patterns ([architecture](CLAUDE.md#block-editor-architecture--how-every-page-is-built)); no Elementor
+- **Custom PHP themes** — minimal shells; design lives in blocks/patterns + CSS tokens
 - **CSS custom properties** — All design tokens in `assets/css/global.css`
 - **Static HTML previews** — Client-facing previews hosted on Vercel

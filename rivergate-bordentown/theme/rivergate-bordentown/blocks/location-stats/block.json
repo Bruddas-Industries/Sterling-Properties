@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/location-stats",
+	"title": "Rivergate Location Stats",
+	"category": "rivergate",
+	"icon": "location",
+	"description": "Three tap-to-reveal location stat cards.",
+	"keywords": [ "location", "stats", "transit" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"stat1Num":   { "type": "string", "default": "Steps" },
+		"stat1Label": { "type": "string", "default": "to the River Line Light Rail at your door" },
+		"stat2Num":   { "type": "string", "default": "~45 min" },
+		"stat2Label": { "type": "string", "default": "to Philadelphia by rail" },
+		"stat3Num":   { "type": "string", "default": "~75 min" },
+		"stat3Label": { "type": "string", "default": "to New York Penn Station" }
+	},
+	"render": "file:./render.php"
+}

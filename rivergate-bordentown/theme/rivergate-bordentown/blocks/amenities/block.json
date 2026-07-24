@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/amenities",
+	"title": "Rivergate Amenities Accordion",
+	"category": "rivergate",
+	"icon": "star-filled",
+	"description": "Expandable amenity cards (from the Amenities post type) beside a feature photo.",
+	"keywords": [ "amenities", "accordion", "features" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"maxItems":     { "type": "number", "default": 8 },
+		"photoId":      { "type": "number", "default": 0 },
+		"photoUrl":     { "type": "string", "default": "" },
+		"photoCaption": { "type": "string", "default": "The Rivergate Clubhouse" }
+	},
+	"render": "file:./render.php"
+}

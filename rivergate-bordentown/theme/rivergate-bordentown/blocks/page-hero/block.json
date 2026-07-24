@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/page-hero",
+	"title": "Rivergate Page Hero",
+	"category": "rivergate",
+	"icon": "cover-image",
+	"description": "Inner-page hero — a background image with an eyebrow and page title.",
+	"keywords": [ "hero", "page", "title", "banner" ],
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false,
+		"align": [ "full" ]
+	},
+	"attributes": {
+		"eyebrow":  { "type": "string", "default": "" },
+		"heading":  { "type": "string", "default": "Page Title" },
+		"imageId":  { "type": "number", "default": 0 },
+		"imageUrl": { "type": "string", "default": "" }
+	},
+	"render": "file:./render.php"
+}

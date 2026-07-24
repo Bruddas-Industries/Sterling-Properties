@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/availability-embed",
+	"title": "Rivergate Availability Embed",
+	"category": "rivergate",
+	"icon": "embed-generic",
+	"description": "AppFolio live-listings iframe with a click-through fallback.",
+	"keywords": [ "availability", "appfolio", "listings", "apply" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"applyUrl": { "type": "string", "default": "" }
+	},
+	"render": "file:./render.php"
+}

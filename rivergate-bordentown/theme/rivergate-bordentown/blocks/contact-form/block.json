@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/contact-form",
+	"title": "Rivergate Tour-Request Form",
+	"category": "rivergate",
+	"icon": "email",
+	"description": "Leasing / tour-request contact form. Submissions are emailed to the recipient address.",
+	"keywords": [ "contact", "form", "tour", "leasing" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"recipientEmail": { "type": "string", "default": "" }
+	},
+	"render": "file:./render.php"
+}

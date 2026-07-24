@@ -1,0 +1,314 @@
+/**
+ * Rivergate Bordentown — main.js
+ * Shared JavaScript for all pages.
+ */
+
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------
+     1. STICKY HEADER — shadow on scroll; transparency on video-hero pages
+     ------------------------------------------------------------------ */
+  var header = document.getElementById('site-header');
+  if (header) {
+    window.addEventListener('scroll', function () {
+      header.classList.toggle('is-scrolled', window.scrollY > 10);
+    }, { passive: true });
+  }
+
+  /* ------------------------------------------------------------------
+     2. FULL-SCREEN OVERLAY NAV
+     ------------------------------------------------------------------ */
+  var toggle  = document.getElementById('nav-toggle');
+  var overlay = document.getElementById('nav-overlay');
+
+  if (toggle && overlay) {
+    function closeNav() {
+      overlay.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-is-open');
+    }
+    function openNav() {
+      overlay.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('nav-is-open');
+    }
+
+    toggle.addEventListener('click', function () {
+      overlay.classList.contains('is-open') ? closeNav() : openNav();
+    });
+
+    overlay.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeNav);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeNav();
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     3. SMOOTH SCROLL — in-page anchor links
+     ------------------------------------------------------------------ */
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+      var href = this.getAttribute('href');
+      if (href === '#') return;
+      var target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     4. SCROLL-REVEAL ANIMATIONS
+     ------------------------------------------------------------------ */
+  var animItems = document.querySelectorAll('[data-animate]');
+  if (animItems.length) {
+    /* Stagger grid children */
+    document.querySelectorAll('.card-grid, .amenity-grid, .residence-grid, .communities-teaser, .how-it-works, .portal-grid').forEach(function (grid) {
+      grid.querySelectorAll('[data-animate]').forEach(function (el, i) {
+        el.style.transitionDelay = (i % 6 * 70) + 'ms';
+      });
+    });
+
+    if (!window.IntersectionObserver) {
+      animItems.forEach(function (el) { el.classList.add('is-visible'); });
+    } else {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      animItems.forEach(function (el) { observer.observe(el); });
+    }
+  }
+
+  /* ------------------------------------------------------------------
+     5. AMENITY ACCORDION (homepage + amenities page)
+     ------------------------------------------------------------------ */
+  document.querySelectorAll('.amenity').forEach(function (item) {
+    var head  = item.querySelector('.amenity__head');
+    var panel = item.querySelector('.amenity__panel');
+    if (!head || !panel) return;
+
+    head.addEventListener('click', function () {
+      var open = item.classList.toggle('is-open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '';
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     6. LOCATION STAT TOGGLES (homepage + location page)
+     ------------------------------------------------------------------ */
+  document.querySelectorAll('.loc-stat').forEach(function (stat) {
+    stat.addEventListener('click', function () {
+      var open = stat.classList.toggle('is-revealed');
+      stat.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     7. FLOOR PLAN SELECTOR (homepage)
+        PLANS data is injected as an inline <script> by the rivergate/floor-plans
+        block (blocks/floor-plans/render.php) via wp_add_inline_script() so it
+        reflects the Floor Plan CPT.
+     ------------------------------------------------------------------ */
+  // Safety guard — PLANS should always be set by the PHP template on the
+  // homepage, but default to an empty object on other pages.
+  var PLANS     = window.PLANS || {};
+  var APPLY_URL = 'https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN';
+  var AVAIL_URL = document.querySelector('meta[name="rg-avail-url"]')
+    ? document.querySelector('meta[name="rg-avail-url"]').getAttribute('content')
+    : '/availability/';
+
+  var fpOptions = document.querySelectorAll('.fp-option');
+  var fpDetail  = document.getElementById('fp-detail');
+
+  if (fpOptions.length && fpDetail) {
+    fpOptions.forEach(function (opt) {
+      var p = PLANS[opt.getAttribute('data-plan')];
+      if (!p) return;
+      opt.innerHTML =
+        '<span class="fp-option__specs">' + p.bed + ' Bed / ' + p.bath + ' Bath / Balcony</span>' +
+        '<span class="fp-option__name">' + p.name + '</span>' +
+        '<span class="fp-option__size">' + p.sqft + ' sq ft</span>' +
+        (p.tag ? '<span class="fp-option__tag">' + p.tag + '</span>' : '');
+    });
+
+    function renderDetail(key) {
+      var p = PLANS[key];
+      if (!p) return;
+      var img = p.image
+        ? '<img class="fp-plan-img" src="' + p.image + '" alt="' + p.name + ' floor plan — ' + p.bed + ' bed, ' + p.bath + ' bath, ' + p.sqft + ' sq ft" loading="lazy">'
+        : '';
+      var tour = p.mp
+        ? '<button type="button" class="btn btn--secondary" data-mp="' + p.mp + '" data-name="' + p.name + '">Take a Virtual Tour</button>'
+        : '<span class="btn btn--secondary fp-vtour-disabled" aria-disabled="true" title="Virtual tour coming soon">Virtual Tour Coming Soon</span>';
+      var last = p.pdf
+        ? '<a class="btn btn--secondary" href="' + p.pdf + '" target="_blank" rel="noopener noreferrer">Download PDF</a>'
+        : '<a class="btn btn--secondary" href="' + APPLY_URL + '" target="_blank" rel="noopener noreferrer">Apply Now</a>';
+      fpDetail.innerHTML =
+        '<p class="fp-detail__eyebrow">' + p.code + (p.tag ? ' · ' + p.tag : '') + '</p>' +
+        '<h3 class="fp-detail__name">' + p.name + '</h3>' +
+        '<div class="fp-detail__specs">' +
+          '<div class="fp-spec"><span>Bedrooms</span><span>' + p.bed + '</span></div>' +
+          '<div class="fp-spec"><span>Bathrooms</span><span>' + p.bath + '</span></div>' +
+          '<div class="fp-spec"><span>Square Feet</span><span>' + p.sqft + '</span></div>' +
+          (p.rent ? '<div class="fp-spec"><span>Starting Rent</span><span>' + p.rent + '</span></div>' : '') +
+          '<div class="fp-spec"><span>Balcony</span><span>Yes</span></div>' +
+        '</div>' +
+        img +
+        '<div class="fp-detail__actions">' +
+          tour +
+          '<a class="btn btn--primary" href="' + AVAIL_URL + '">Check Availability</a>' +
+          last +
+        '</div>';
+    }
+
+    function selectPlan(opt) {
+      fpOptions.forEach(function (o) { o.classList.remove('is-active'); o.setAttribute('aria-selected', 'false'); });
+      opt.classList.add('is-active');
+      opt.setAttribute('aria-selected', 'true');
+      renderDetail(opt.getAttribute('data-plan'));
+    }
+
+    fpOptions.forEach(function (opt) {
+      opt.addEventListener('click', function () { selectPlan(opt); });
+    });
+
+    /* Default: The Wright */
+    var defaultOpt = document.querySelector('.fp-option[data-plan="wright"]') || fpOptions[0];
+    if (defaultOpt) selectPlan(defaultOpt);
+  }
+
+  /* ------------------------------------------------------------------
+     8. FLOOR PLANS PAGE — 1BR / 2BR tab switcher
+     ------------------------------------------------------------------ */
+  var planTabBtns   = document.querySelectorAll('.plan-tab-btn');
+  var planPanels    = document.querySelectorAll('.plan-panel');
+
+  if (planTabBtns.length && planPanels.length) {
+    planTabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = btn.getAttribute('data-tab');
+        planTabBtns.forEach(function (b) { b.classList.remove('is-active'); });
+        planPanels.forEach(function (p) { p.hidden = true; });
+        btn.classList.add('is-active');
+        var panel = document.getElementById('plan-' + target);
+        if (panel) panel.hidden = false;
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     9. GALLERY — category filter tabs
+     ------------------------------------------------------------------ */
+  var galleryTabs  = document.querySelectorAll('.gallery-tab');
+  var galleryItems = document.querySelectorAll('.gallery-item[data-category]');
+
+  if (galleryTabs.length && galleryItems.length) {
+    galleryTabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var cat = tab.getAttribute('data-filter');
+        galleryTabs.forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     10. NEIGHBORHOOD EXPLORER — tab filter
+     ------------------------------------------------------------------ */
+  var explorerEl  = document.getElementById('neighborhood-explorer');
+  var explorerTabs = document.querySelectorAll('.tab-btn[data-tab]');
+
+  if (explorerEl && explorerTabs.length) {
+    explorerTabs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        explorerTabs.forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+        explorerEl.setAttribute('data-active-tab', btn.getAttribute('data-tab'));
+      });
+    });
+
+    /* POI item → highlight row (Google Maps integration handled in location template) */
+    document.querySelectorAll('.explorer-poi-item').forEach(function (item) {
+      item.addEventListener('click', function () {
+        document.querySelectorAll('.explorer-poi-item').forEach(function (i) { i.classList.remove('is-active'); });
+        item.classList.add('is-active');
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     11. APPFOLIO IFRAME — hide fallback if iframe loads
+     ------------------------------------------------------------------ */
+  var afIframe   = document.querySelector('.appfolio-frame iframe');
+  var afFallback = document.getElementById('appfolio-fallback');
+
+  if (afIframe && afFallback) {
+    afIframe.addEventListener('load', function () {
+      afFallback.style.display = 'none';
+      afIframe.style.position  = 'static';
+      afIframe.style.height    = '650px';
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     12. MATTERPORT VIRTUAL-TOUR LIGHTBOX
+        Opens for any [data-mp] trigger (floor-plan tour buttons, amenities
+        tour button). Modal markup lives in footer.php so it's on every page.
+     ------------------------------------------------------------------ */
+  (function () {
+    var modal = document.getElementById('mp-modal');
+    var frame = document.getElementById('mp-modal-iframe');
+    var title = document.getElementById('mp-modal-title');
+    if (!modal || !frame) return;
+
+    function openTour(url, name) {
+      frame.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'play=1';
+      if (title) title.textContent = name ? name + ' — Virtual Tour' : 'Virtual Tour';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mp-open');
+    }
+    function closeTour() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      frame.src = '';
+      document.body.classList.remove('mp-open');
+    }
+
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest ? e.target.closest('[data-mp]') : null;
+      if (trigger) {
+        e.preventDefault();
+        openTour(trigger.getAttribute('data-mp'), trigger.getAttribute('data-name'));
+        return;
+      }
+      if (e.target.closest && e.target.closest('[data-mp-close]')) { closeTour(); }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTour(); });
+  }());
+
+}());

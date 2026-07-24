@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/neighborhood-explorer",
+	"title": "Rivergate Neighborhood Explorer",
+	"category": "rivergate",
+	"icon": "location-alt",
+	"description": "Filterable points-of-interest list beside a map panel (Google Maps when a key is set).",
+	"keywords": [ "location", "map", "neighborhood", "poi" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {},
+	"render": "file:./render.php"
+}
