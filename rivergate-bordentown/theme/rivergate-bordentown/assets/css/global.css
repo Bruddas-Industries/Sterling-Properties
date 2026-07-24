@@ -2750,31 +2750,32 @@ body.mp-open { overflow: hidden; }
   font-style: normal;
   font-display: swap;
 }
+/* Noyh Geometric Slim (body) — Regular is the base face; Light/Medium/Bold
+   cover the other weights the design uses so nothing is faux-synthesized. */
 @font-face {
   font-family: 'Noyh';
-  src: url('../fonts/Noyh-Light.woff2') format('woff2');
+  src: url('../fonts/Noyh-Light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Noyh';
-  src: url('../fonts/Noyh-Regular.woff2') format('woff2'),
-       url('../fonts/Noyh-Regular.woff')  format('woff');
+  src: url('../fonts/Noyh-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Noyh';
-  src: url('../fonts/Noyh-Medium.woff2') format('woff2');
+  src: url('../fonts/Noyh-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Noyh';
-  src: url('../fonts/Noyh-Bold.woff2') format('woff2');
+  src: url('../fonts/Noyh-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
