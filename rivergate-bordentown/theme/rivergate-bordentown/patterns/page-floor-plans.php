@@ -73,7 +73,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- /wp:group -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-rivergate-primary"} --><div class="wp-block-button is-style-rivergate-primary"><a class="wp-block-button__link wp-element-button" href="/availability/">View Live Availability →</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-rivergate-primary"} --><div class="wp-block-button is-style-rivergate-primary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/availability/' ) ); ?>">View Live Availability →</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 </div>

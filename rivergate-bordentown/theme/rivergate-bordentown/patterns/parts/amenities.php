@@ -22,7 +22,7 @@
 <!-- wp:html -->
 <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;margin-top:var(--space-7);">
 <button type="button" class="btn btn--primary" data-mp="https://my.matterport.com/show/?m=RUxNh5SDzmG" data-name="Rivergate Amenities">Take a Virtual Tour</button>
-<a href="/amenities/" class="btn btn--secondary">View All Amenities</a>
+<a href="<?php echo esc_url( home_url( '/amenities/' ) ); ?>" class="btn btn--secondary">View All Amenities</a>
 </div>
 <!-- /wp:html -->
 </div>

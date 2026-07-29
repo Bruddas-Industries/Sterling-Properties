@@ -49,8 +49,8 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:paragraph --><p>Photos only tell part of the story. Come see the waterfront views, the amenities, and your future home.</p><!-- /wp:paragraph -->
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-rivergate-primary"} --><div class="wp-block-button is-style-rivergate-primary"><a class="wp-block-button__link wp-element-button" href="/contact/">Schedule a Tour</a></div><!-- /wp:button -->
-<!-- wp:button {"className":"is-style-rivergate-ghost"} --><div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="/floor-plans/">View Floor Plans</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-rivergate-primary"} --><div class="wp-block-button is-style-rivergate-primary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Schedule a Tour</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-rivergate-ghost"} --><div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/floor-plans/' ) ); ?>">View Floor Plans</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 </div>

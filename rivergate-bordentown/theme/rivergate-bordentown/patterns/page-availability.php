@@ -58,7 +58,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:buttons {"className":"apply-band__actions","layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons apply-band__actions">
 <!-- wp:button {"className":"is-style-rivergate-primary"} --><div class="wp-block-button is-style-rivergate-primary"><a class="wp-block-button__link wp-element-button" href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" target="_blank" rel="noopener noreferrer">Apply in AppFolio →</a></div><!-- /wp:button -->
-<!-- wp:button {"className":"is-style-rivergate-ghost"} --><div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="/contact/">Schedule a Tour</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-rivergate-ghost"} --><div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Schedule a Tour</a></div><!-- /wp:button -->
 <!-- wp:button {"className":"is-style-rivergate-ghost"} --><div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="tel:6092980303">Call 609.298.0303</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
@@ -79,8 +79,8 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:paragraph --><p>Compare all eight layouts — one and two bedroom — then come back here to check live availability.</p><!-- /wp:paragraph -->
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-rivergate-primary"} --><div class="wp-block-button is-style-rivergate-primary"><a class="wp-block-button__link wp-element-button" href="/floor-plans/">View Floor Plans</a></div><!-- /wp:button -->
-<!-- wp:button {"className":"is-style-rivergate-ghost"} --><div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="/amenities/">See the Amenities</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-rivergate-primary"} --><div class="wp-block-button is-style-rivergate-primary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/floor-plans/' ) ); ?>">View Floor Plans</a></div><!-- /wp:button -->
+<!-- wp:button {"className":"is-style-rivergate-ghost"} --><div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/amenities/' ) ); ?>">See the Amenities</a></div><!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 </div>

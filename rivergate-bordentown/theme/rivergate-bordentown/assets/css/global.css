@@ -2731,23 +2731,24 @@ body.mp-open { overflow: hidden; }
 }
 
 .wp-block-button.is-style-rivergate-primary > .wp-block-button__link {
-  background-color: var(--color-primary);
+  background-color: var(--color-blue);   /* bright blue — buttons only (matches .btn--primary) */
   color: #fff;
 }
 .wp-block-button.is-style-rivergate-primary > .wp-block-button__link:hover {
-  background-color: var(--color-primary-dark);
+  background-color: var(--color-blue-dark);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
 .wp-block-button.is-style-rivergate-secondary > .wp-block-button__link {
   background-color: transparent;
-  color: var(--color-text);
-  border: 1.5px solid var(--color-text);
+  color: inherit;                        /* adaptive: white on blue, navy on white cards */
+  border: 1.5px solid currentColor;
 }
 .wp-block-button.is-style-rivergate-secondary > .wp-block-button__link:hover {
-  background-color: var(--color-text);
-  color: var(--color-bg);
+  background-color: #fff;
+  color: var(--color-navy);
+  border-color: #fff;
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
@@ -2761,6 +2762,65 @@ body.mp-open { overflow: hidden; }
   background-color: rgba(255,255,255,0.12);
   border-color: #fff;
 }
+
+/* CTA closing band — stack the buttons vertically (like the preview) and give
+   the primary "Schedule a Tour" the animated pulse (matches .btn--pulse). */
+.cta-section .wp-block-buttons.is-layout-flex {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+.cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link {
+  position: relative;
+  isolation: isolate;
+  --rg-bd-angle: 0deg;
+  border: none;
+  background-color: var(--color-blue);
+  background-image: linear-gradient(100deg,
+    var(--color-blue-dark) 0%, var(--color-blue) 30%, #4FB0E8 50%,
+    var(--color-blue) 70%, var(--color-blue-dark) 100%);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  animation: rg-btn-pulse 5s ease-in-out infinite alternate;
+}
+.cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--rg-bd-angle),
+    rgba(255,255,255,0)   0deg,
+    rgba(255,255,255,0)   250deg,
+    rgba(191,227,255,0.9) 312deg,
+    #ffffff               335deg,
+    rgba(191,227,255,0.9) 352deg,
+    rgba(255,255,255,0)   360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: rg-btn-border 3.2s linear infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link {
+    animation: none;
+    background-image: none;
+    background-color: var(--color-blue);
+  }
+  .cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link::after {
+    animation: none;
+    display: none;
+  }
+}
+
+/* Community teasers: WP wraps them in a flow-layout group whose sibling margin
+   (> * + *) pushed cards 2 & 3 down and shrank them in the grid — reset it so
+   all three cards are equal size. */
+.communities-teaser > .community-teaser { margin-block: 0; }
+.community-teaser__mark { margin: 0; }
 
 /* Inner-page icon lists rebuilt as core lists — icon drawn via ::before.
    (feature-list / includes-grid already strip list markers via their own rules.) */
