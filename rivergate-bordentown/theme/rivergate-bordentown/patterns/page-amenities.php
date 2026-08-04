@@ -84,7 +84,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <ul class="wp-block-list feature-list">
 <!-- wp:list-item --><li>Quartz countertops</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>Stainless steel appliances</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Luxury vinyl plank flooring</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Hardwood-like flooring</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>Floor-to-ceiling windows</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>Private balcony with river or courtyard views</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>In-unit full-size washer and dryer</li><!-- /wp:list-item -->

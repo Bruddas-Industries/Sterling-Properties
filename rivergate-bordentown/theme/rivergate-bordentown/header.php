@@ -38,12 +38,14 @@
 
 <div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Navigation menu', 'rivergate-bordentown' ); ?>">
     <nav class="nav-overlay__links" aria-label="<?php esc_attr_e( 'Primary navigation', 'rivergate-bordentown' ); ?>">
-        <a href="<?php echo esc_url( home_url( '/amenities/' ) ); ?>"><?php esc_html_e( 'Amenities', 'rivergate-bordentown' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/floor-plans/' ) ); ?>"><?php esc_html_e( 'Floor Plans', 'rivergate-bordentown' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/availability/' ) ); ?>"><?php esc_html_e( 'Availability', 'rivergate-bordentown' ); ?></a>
+        <?php /* Order mirrors the homepage flow (preview-1): the four section
+                 links scroll the homepage; Gallery and Availability are pages. */ ?>
+        <a href="<?php echo esc_url( home_url( '/#amenities' ) ); ?>"><?php esc_html_e( 'Amenities', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/#residences' ) ); ?>"><?php esc_html_e( 'Residences', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/#floor-plans' ) ); ?>"><?php esc_html_e( 'Floor Plans', 'rivergate-bordentown' ); ?></a>
         <a href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>"><?php esc_html_e( 'Gallery', 'rivergate-bordentown' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/location/' ) ); ?>"><?php esc_html_e( 'Location', 'rivergate-bordentown' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/#neighborhood' ) ); ?>"><?php esc_html_e( 'Neighborhood', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/availability/' ) ); ?>"><?php esc_html_e( 'Availability', 'rivergate-bordentown' ); ?></a>
     </nav>
     <div class="nav-overlay__divider"></div>
     <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--primary nav-overlay__cta">

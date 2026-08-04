@@ -19,7 +19,7 @@ $categories = [
 		'label' => 'Transit & Commuting',
 		'color' => '#0472BB',
 		'items' => [
-			[ 'River Line Light Rail',  'Steps from Rivergate · Bordentown Station' ],
+			[ 'River Line Light Rail',  'Near Rivergate · Bordentown Station' ],
 			[ 'Trenton Transit Center', 'NJ Transit + Amtrak · ~10 min via River Line' ],
 			[ 'I-295 On-Ramp',          'Minutes away · North to NYC, South to Philadelphia' ],
 			[ 'New Jersey Turnpike',    'Exit 7 · ~5 minutes' ],

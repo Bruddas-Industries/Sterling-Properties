@@ -15,8 +15,8 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:group {"className":"container"} -->
 <div class="wp-block-group container">
 <!-- wp:group --><div class="wp-block-group">
-<!-- wp:paragraph {"className":"transit-stat__number"} --><p class="transit-stat__number">Steps</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"transit-stat__label"} --><p class="transit-stat__label">to the River Line Light Rail</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"transit-stat__number"} --><p class="transit-stat__number">Nearby</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"transit-stat__label"} --><p class="transit-stat__label">River Line Light Rail station</p><!-- /wp:paragraph -->
 </div><!-- /wp:group -->
 <!-- wp:group --><div class="wp-block-group">
 <!-- wp:paragraph {"className":"transit-stat__number"} --><p class="transit-stat__number">~45 min</p><!-- /wp:paragraph -->
@@ -49,7 +49,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:paragraph {"className":"eyebrow"} --><p class="eyebrow">Transit-Oriented Living</p><!-- /wp:paragraph -->
 <!-- wp:heading --><h2 class="wp-block-heading">The Best-Connected Address in Bordentown</h2><!-- /wp:heading -->
 <!-- wp:separator {"className":"divider"} --><hr class="wp-block-separator has-alpha-channel-opacity divider"/><!-- /wp:separator -->
-<!-- wp:paragraph --><p>Rivergate Bordentown sits directly on the River Line Light Rail corridor — giving you access to Trenton Transit Center (Amtrak + NJ Transit) in under 10 minutes. From there, New York and Philadelphia are less than 90 minutes away.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>The River Line's Bordentown station is nearby — giving you access to Trenton Transit Center (Amtrak + NJ Transit) in about 10 minutes. From there, New York and Philadelphia are less than 90 minutes away.</p><!-- /wp:paragraph -->
 <!-- wp:paragraph --><p>For drivers, I-295, the NJ Turnpike (Exit 7), and I-195 are all within minutes — connecting you to the Shore, Princeton, and beyond.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->

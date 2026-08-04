@@ -1,8 +1,8 @@
 <?php
 /** Pattern part: location section (intro + location-stats block + CTA). */
 ?>
-<!-- wp:group {"tagName":"section","align":"full","anchor":"location","lock":{"move":true,"remove":true}} -->
-<section class="wp-block-group alignfull" id="location">
+<!-- wp:group {"tagName":"section","align":"full","anchor":"neighborhood","lock":{"move":true,"remove":true}} -->
+<section class="wp-block-group alignfull" id="neighborhood">
 <!-- wp:group {"className":"container"} -->
 <div class="wp-block-group container">
 <!-- wp:group {"className":"section-intro"} -->

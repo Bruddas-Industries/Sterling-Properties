@@ -49,12 +49,35 @@
 
   /* ------------------------------------------------------------------
      3. SMOOTH SCROLL — in-page anchor links
+        Covers bare "#section" links AND absolute links that resolve to a
+        section on the page you are already on. The nav uses
+        home_url('/#section'), so on the homepage those must scroll
+        smoothly instead of triggering a full reload.
      ------------------------------------------------------------------ */
-  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+  function samePath(a, b) {
+    return a.replace(/\/+$/, '') === b.replace(/\/+$/, '');
+  }
+
+  document.querySelectorAll('a[href]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
-      var href = this.getAttribute('href');
-      if (href === '#') return;
-      var target = document.querySelector(href);
+      var url;
+      try {
+        url = new URL(this.href, window.location.href);
+      } catch (err) {
+        return;
+      }
+
+      if (!url.hash || url.hash === '#') return;
+      if (url.origin !== window.location.origin) return;
+      if (!samePath(url.pathname, window.location.pathname)) return;
+
+      var target;
+      try {
+        target = document.querySelector(url.hash);
+      } catch (err) {
+        return;                        /* hash isn't a valid selector */
+      }
+
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -106,17 +129,7 @@
   });
 
   /* ------------------------------------------------------------------
-     6. LOCATION STAT TOGGLES (homepage + location page)
-     ------------------------------------------------------------------ */
-  document.querySelectorAll('.loc-stat').forEach(function (stat) {
-    stat.addEventListener('click', function () {
-      var open = stat.classList.toggle('is-revealed');
-      stat.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-
-  /* ------------------------------------------------------------------
-     7. FLOOR PLAN SELECTOR (homepage)
+     6. FLOOR PLAN SELECTOR (homepage)
         PLANS data is injected as an inline <script> by the rivergate/floor-plans
         block (blocks/floor-plans/render.php) via wp_add_inline_script() so it
         reflects the Floor Plan CPT.
@@ -190,7 +203,7 @@
   }
 
   /* ------------------------------------------------------------------
-     8. FLOOR PLANS PAGE — 1BR / 2BR tab switcher
+     7. FLOOR PLANS PAGE — 1BR / 2BR tab switcher
      ------------------------------------------------------------------ */
   var planTabBtns   = document.querySelectorAll('.plan-tab-btn');
   var planPanels    = document.querySelectorAll('.plan-panel');
@@ -209,7 +222,7 @@
   }
 
   /* ------------------------------------------------------------------
-     9. GALLERY — category filter tabs
+     8. GALLERY — category filter tabs
      ------------------------------------------------------------------ */
   var galleryTabs  = document.querySelectorAll('.gallery-tab');
   var galleryItems = document.querySelectorAll('.gallery-item[data-category]');
@@ -233,7 +246,7 @@
   }
 
   /* ------------------------------------------------------------------
-     10. NEIGHBORHOOD EXPLORER — tab filter
+     9. NEIGHBORHOOD EXPLORER — tab filter
      ------------------------------------------------------------------ */
   var explorerEl  = document.getElementById('neighborhood-explorer');
   var explorerTabs = document.querySelectorAll('.tab-btn[data-tab]');
@@ -261,7 +274,7 @@
   }
 
   /* ------------------------------------------------------------------
-     11. APPFOLIO IFRAME — hide fallback if iframe loads
+     10. APPFOLIO IFRAME — hide fallback if iframe loads
      ------------------------------------------------------------------ */
   var afIframe   = document.querySelector('.appfolio-frame iframe');
   var afFallback = document.getElementById('appfolio-fallback');
@@ -275,7 +288,7 @@
   }
 
   /* ------------------------------------------------------------------
-     12. MATTERPORT VIRTUAL-TOUR LIGHTBOX
+     11. MATTERPORT VIRTUAL-TOUR LIGHTBOX
         Opens for any [data-mp] trigger (floor-plan tour buttons, amenities
         tour button). Modal markup lives in footer.php so it's on every page.
      ------------------------------------------------------------------ */

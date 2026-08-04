@@ -23,7 +23,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <hr class="wp-block-separator has-alpha-channel-opacity divider"/>
 <!-- /wp:separator -->
 <!-- wp:paragraph -->
-<p>A transit-oriented waterfront community by Sterling Properties — one and two-bedroom residences on the Delaware River, with the River Line Light Rail at your doorstep.</p>
+<p>A transit-oriented waterfront community by Sterling Properties — one and two-bedroom residences on the Delaware River.</p>
 <!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">

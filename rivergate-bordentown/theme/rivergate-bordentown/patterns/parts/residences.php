@@ -24,18 +24,18 @@
 <!-- /wp:group -->
 <!-- wp:list {"className":"residence-grid"} -->
 <ul class="wp-block-list residence-grid">
-<!-- wp:list-item --><li>Quartz countertops</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Stainless steel appliances</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Luxury vinyl plank flooring</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Floor-to-ceiling windows</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Private balcony</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>In-unit washer &amp; dryer</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Keyless entry</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Smart thermostat</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Walk-in closets</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Spa-inspired bathrooms</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Tile backsplash</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>USB outlets</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>9-Foot Ceilings</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Private Balcony</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>In-Unit Washer/Dryer</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Quartz Countertops</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Stainless Appliances</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Espresso Shaker Cabinetry</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Central Air Conditioning</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Individual Gas Heat</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Walk-In Closets (select plans)</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Hardwood-Like Flooring &amp; Blinds</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Cable &amp; High-Speed Ready</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Ample In-Unit Storage</li><!-- /wp:list-item -->
 </ul>
 <!-- /wp:list -->
 </div>

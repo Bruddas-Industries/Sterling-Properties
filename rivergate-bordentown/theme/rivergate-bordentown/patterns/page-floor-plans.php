@@ -42,7 +42,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <ul class="wp-block-list includes-grid">
 <!-- wp:list-item --><li>Quartz countertops</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>Stainless steel appliances</li><!-- /wp:list-item -->
-<!-- wp:list-item --><li>Luxury vinyl plank flooring</li><!-- /wp:list-item -->
+<!-- wp:list-item --><li>Hardwood-like flooring</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>Floor-to-ceiling windows</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>Private balcony</li><!-- /wp:list-item -->
 <!-- wp:list-item --><li>Full-size in-unit washer/dryer</li><!-- /wp:list-item -->

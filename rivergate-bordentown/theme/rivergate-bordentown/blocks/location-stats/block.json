@@ -5,15 +5,15 @@
 	"title": "Rivergate Location Stats",
 	"category": "rivergate",
 	"icon": "location",
-	"description": "Three tap-to-reveal location stat cards.",
-	"keywords": [ "location", "stats", "transit" ],
+	"description": "Three commute stat cards with an animated highlight.",
+	"keywords": [ "location", "neighborhood", "stats", "transit" ],
 	"supports": {
 		"html": false,
 		"multiple": false
 	},
 	"attributes": {
-		"stat1Num":   { "type": "string", "default": "Steps" },
-		"stat1Label": { "type": "string", "default": "to the River Line Light Rail at your door" },
+		"stat1Num":   { "type": "string", "default": "Nearby" },
+		"stat1Label": { "type": "string", "default": "River Line Light Rail for car-free trips to Trenton, Philadelphia & NYC" },
 		"stat2Num":   { "type": "string", "default": "~45 min" },
 		"stat2Label": { "type": "string", "default": "to Philadelphia by rail" },
 		"stat3Num":   { "type": "string", "default": "~75 min" },

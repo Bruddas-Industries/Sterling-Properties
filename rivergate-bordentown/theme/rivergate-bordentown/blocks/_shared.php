@@ -92,7 +92,6 @@ function rivergate_get_amenities( int $max = 8 ): array {
 		[ 'name' => 'Outdoor BBQ Area',    'icon_key' => 'bbq',       'detail' => 'Dedicated outdoor barbecue and entertaining area — perfect for gatherings in a beautifully landscaped setting.' ],
 		[ 'name' => 'Private Balconies',   'icon_key' => 'balcony',   'detail' => 'Private balconies in every residence — the perfect perch for morning coffee with river and courtyard views.' ],
 		[ 'name' => 'In-Unit Washer/Dryer','icon_key' => 'washer',    'detail' => 'Full-size washer and dryer in every home — the convenience you expect, included.' ],
-		[ 'name' => 'River Line Light Rail','icon_key' => 'transit',  'detail' => 'The River Line stops at nearby Bordentown Station — convenient, car-free access to Trenton and beyond.' ],
 	];
 }
 

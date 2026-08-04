@@ -1,6 +1,7 @@
 <?php
 /**
- * rivergate/location-stats — three tap-to-reveal stat cards (toggled by main.js).
+ * rivergate/location-stats — three commute stat cards. Copy is always visible;
+ * the eye-catch is the travelling border highlight in global.css (no JS).
  *
  * @var array $attributes Block attributes.
  */
@@ -20,10 +21,9 @@ $stats = [
     if ( '' === $s['num'] && '' === $s['label'] ) {
       continue;
     } ?>
-    <button class="loc-stat" type="button" aria-expanded="false">
+    <div class="loc-stat">
       <span class="loc-stat__num"><?php echo esc_html( $s['num'] ); ?></span>
-      <span class="loc-stat__hint">Tap to reveal</span>
-      <span class="loc-stat__label"><span><?php echo esc_html( $s['label'] ); ?></span></span>
-    </button>
+      <span class="loc-stat__label"><?php echo esc_html( $s['label'] ); ?></span>
+    </div>
   <?php endforeach; ?>
 </div>
