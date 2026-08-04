@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/plan-cards",
+	"title": "Rivergate Floor-Plan Cards",
+	"category": "rivergate",
+	"icon": "grid-view",
+	"description": "One / Two bedroom tabbed grid of floor-plan cards (from the Floor Plans post type, with fallback).",
+	"keywords": [ "floor plans", "cards", "units", "tabs" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {},
+	"render": "file:./render.php"
+}

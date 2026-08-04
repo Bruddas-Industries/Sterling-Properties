@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/location-stats",
+	"title": "Rivergate Location Stats",
+	"category": "rivergate",
+	"icon": "location",
+	"description": "Three commute stat cards with an animated highlight.",
+	"keywords": [ "location", "neighborhood", "stats", "transit" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"stat1Num":   { "type": "string", "default": "Nearby" },
+		"stat1Label": { "type": "string", "default": "River Line Light Rail for car-free trips to Trenton, Philadelphia & NYC" },
+		"stat2Num":   { "type": "string", "default": "~45 min" },
+		"stat2Label": { "type": "string", "default": "to Philadelphia by rail" },
+		"stat3Num":   { "type": "string", "default": "~75 min" },
+		"stat3Label": { "type": "string", "default": "to New York Penn Station" }
+	},
+	"render": "file:./render.php"
+}

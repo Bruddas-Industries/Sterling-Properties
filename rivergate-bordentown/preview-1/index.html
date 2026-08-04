@@ -35,7 +35,7 @@
     }
 
     /* Anchor targets clear the sticky/fixed header on smooth-scroll */
-    #amenities, #residences, #floor-plans, #location, #contact {
+    #amenities, #residences, #floor-plans, #neighborhood, #contact {
       scroll-margin-top: var(--nav-height);
     }
 
@@ -243,38 +243,59 @@
       background: rgba(10,37,86,0.55); padding: var(--space-2) var(--space-4);
       border-radius: var(--radius-base);
     }
+    /* Commute stats — copy is always visible (no tap-to-reveal). The eye-catch
+       is a highlight that travels the card outline, the same technique and
+       timing as the animated "Schedule a Tour" button (.btn--pulse::after),
+       tinted to the brand blue so it reads on a white card. */
     .loc-stats {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: var(--space-5); margin-top: var(--space-7);
     }
     .loc-stat {
+      position: relative; isolation: isolate;
       text-align: center; border: 1px solid var(--color-border);
       border-radius: var(--radius-lg); background: var(--color-surface);
-      padding: var(--space-6) var(--space-4); cursor: pointer;
+      padding: var(--space-6) var(--space-5);
+      cursor: default;                /* no longer a button — override global.css */
+      --rg-bd-angle: 0deg;            /* static fallback where @property is unsupported */
       transition: border-color var(--duration) var(--ease-out),
                   box-shadow var(--duration) var(--ease-out);
     }
     .loc-stat:hover { border-color: var(--color-blue); box-shadow: var(--shadow-sm); }
+    .loc-stat::after {
+      content: ''; position: absolute; inset: -1px; z-index: -1;
+      border-radius: inherit; padding: 1.5px;
+      background: conic-gradient(from var(--rg-bd-angle),
+        rgba(4,114,187,0)    0deg,
+        rgba(4,114,187,0)    250deg,
+        rgba(4,114,187,0.40) 312deg,
+        var(--color-blue)    335deg,
+        rgba(4,114,187,0.40) 352deg,
+        rgba(4,114,187,0)    360deg);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+              mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      animation: rg-btn-border 3.2s linear infinite;
+      pointer-events: none;
+    }
+    /* Offset each card so the highlight reads as one sweep across the row */
+    .loc-stat:nth-child(2)::after { animation-delay: -1.07s; }
+    .loc-stat:nth-child(3)::after { animation-delay: -2.13s; }
     .loc-stat__num {
       display: block; font-family: var(--font-heading); font-size: var(--text-3xl);
       font-weight: var(--weight-light); color: var(--color-primary);
       letter-spacing: var(--tracking-tight); line-height: 1;
     }
-    .loc-stat__hint {
-      display: block; font-size: 10px; letter-spacing: var(--tracking-wider);
-      text-transform: uppercase; color: var(--color-text-muted); margin-top: var(--space-3);
-    }
     .loc-stat__label {
-      display: grid; grid-template-rows: 0fr; overflow: hidden;
-      transition: grid-template-rows 320ms var(--ease-out), opacity 320ms var(--ease-out);
-      opacity: 0;
-    }
-    .loc-stat__label > span {
-      min-height: 0; font-size: var(--text-sm); color: var(--color-text);
+      display: block; overflow: visible; opacity: 1;
+      grid-template-rows: none; transition: none;
+      font-size: var(--text-sm); color: var(--color-text);
       margin-top: var(--space-3);
     }
-    .loc-stat.is-revealed .loc-stat__label { grid-template-rows: 1fr; opacity: 1; }
-    .loc-stat.is-revealed .loc-stat__hint { opacity: 0; height: 0; margin: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .loc-stat::after { animation: none; display: none; }
+    }
 
     /* Google Maps InfoWindow overrides — compact modern style */
     .gm-style .gm-style-iw-c { border-radius: 6px !important; padding: 0 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important; min-width: 0 !important; }
@@ -468,10 +489,10 @@
 <div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
   <nav class="nav-overlay__links" aria-label="Primary navigation">
     <a href="#amenities">Amenities</a>
-    <a href="#floor-plans">Floor Plans</a>
     <a href="#residences">Residences</a>
-    <a href="#location">Location</a>
+    <a href="#floor-plans">Floor Plans</a>
     <a href="gallery.html">Gallery</a>
+    <a href="#neighborhood">Neighborhood</a>
     <a href="availability.html">Availability</a>
   </nav>
   <div class="nav-overlay__divider"></div>
@@ -509,7 +530,7 @@
     <span class="eyebrow">Premier Waterfront Community</span>
     <h2>A New Standard for Riverside Living</h2>
     <div class="divider"></div>
-    <p>A transit-oriented waterfront community by Sterling Properties — one and two-bedroom residences on the Delaware River, with the River Line Light Rail at your doorstep.</p>
+    <p>A transit-oriented waterfront community by Sterling Properties — one and two-bedroom residences on the Delaware River.</p>
     <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-5);">
       <a href="#floor-plans" class="btn btn--secondary">View Floor Plans</a>
     </div>
@@ -603,15 +624,6 @@
 
         <div class="amenity" data-animate>
           <button class="amenity__head" type="button" aria-expanded="false">
-            <svg class="amenity__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="20" cy="20" r="12"/><path d="M20 14 L20 20 L26 23"/></svg>
-            <span class="amenity__name">River Line Access</span>
-            <span class="amenity__plus" aria-hidden="true"></span>
-          </button>
-          <div class="amenity__panel"><p class="amenity__detail">Convenient River Line access — reach Trenton, NYC, and Philly without a car.</p></div>
-        </div>
-
-        <div class="amenity" data-animate>
-          <button class="amenity__head" type="button" aria-expanded="false">
             <svg class="amenity__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="16" width="14" height="14" rx="1"/><path d="M22 22 h6 a2 2 0 0 1 2 2 v4 a2 2 0 0 1-2 2 h-6"/><path d="M8 20 h-2 M8 26 h-2"/></svg>
             <span class="amenity__name">Designer Kitchens</span>
             <span class="amenity__plus" aria-hidden="true"></span>
@@ -673,7 +685,7 @@
       <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Central Air Conditioning</li>
       <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Individual Gas Heat</li>
       <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Walk-In Closets (select plans)</li>
-      <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Plush Carpeting &amp; Blinds</li>
+      <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Hardwood-Like Flooring &amp; Blinds</li>
       <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Cable &amp; High-Speed Ready</li>
       <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Ample In-Unit Storage</li>
     </ul>
@@ -730,13 +742,13 @@
 </article>
 
 
-<!-- LOCATION -->
-<section id="location" aria-label="Location and neighborhood">
+<!-- NEIGHBORHOOD -->
+<section id="neighborhood" aria-label="Neighborhood">
   <div class="container">
     <div class="section-intro" data-animate>
       <span class="eyebrow">Bordentown, New Jersey</span>
       <h2>Explore the Neighborhood</h2>
-      <p>Tap a number to see what it means. Then filter the map by category to explore everything close to home.</p>
+      <p>Filter the map by category to explore everything close to home.</p>
     </div>
 
     <!-- Neighborhood photo -->
@@ -745,23 +757,20 @@
       <span class="location-photo__caption">On the Delaware River in Bordentown, New Jersey</span>
     </div>
 
-    <!-- Interactive stat toggles -->
+    <!-- Commute stats — always visible, animated highlight (no tap-to-reveal) -->
     <div class="loc-stats" data-animate>
-      <button class="loc-stat" type="button" aria-expanded="false">
+      <div class="loc-stat">
         <span class="loc-stat__num">Nearby</span>
-        <span class="loc-stat__hint">Tap to reveal</span>
-        <span class="loc-stat__label"><span>River Line Light Rail for car-free trips to Trenton, Philadelphia &amp; NYC</span></span>
-      </button>
-      <button class="loc-stat" type="button" aria-expanded="false">
+        <span class="loc-stat__label">River Line Light Rail for car-free trips to Trenton, Philadelphia &amp; NYC</span>
+      </div>
+      <div class="loc-stat">
         <span class="loc-stat__num">~45 min</span>
-        <span class="loc-stat__hint">Tap to reveal</span>
-        <span class="loc-stat__label"><span>to Philadelphia by rail</span></span>
-      </button>
-      <button class="loc-stat" type="button" aria-expanded="false">
+        <span class="loc-stat__label">to Philadelphia by rail</span>
+      </div>
+      <div class="loc-stat">
         <span class="loc-stat__num">~75 min</span>
-        <span class="loc-stat__hint">Tap to reveal</span>
-        <span class="loc-stat__label"><span>to New York Penn Station</span></span>
-      </button>
+        <span class="loc-stat__label">to New York Penn Station</span>
+      </div>
     </div>
 
     <!-- Neighborhood explorer: list + interactive map -->
@@ -982,10 +991,10 @@
     </a>
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="#amenities">Amenities</a>
-      <a href="#floor-plans">Floor Plans</a>
       <a href="#residences">Residences</a>
-      <a href="#location">Location</a>
+      <a href="#floor-plans">Floor Plans</a>
       <a href="gallery.html">Gallery</a>
+      <a href="#neighborhood">Neighborhood</a>
       <a href="availability.html">Availability</a>
       <a href="#contact">Contact</a>
       <a href="residents.html">Residents</a>
@@ -1091,16 +1100,6 @@
         var open = item.classList.toggle('is-open');
         head.setAttribute('aria-expanded', open ? 'true' : 'false');
         panel.style.maxHeight = open ? (panel.scrollHeight + 'px') : '';
-      });
-    });
-  }());
-
-  /* Location stat toggles — reveal what each number refers to */
-  (function () {
-    document.querySelectorAll('.loc-stat').forEach(function (stat) {
-      stat.addEventListener('click', function () {
-        var open = stat.classList.toggle('is-revealed');
-        stat.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
     });
   }());

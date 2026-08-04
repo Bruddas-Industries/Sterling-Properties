@@ -1,0 +1,63 @@
+{
+  "key": "group_rg_amenity",
+  "title": "Amenity Details",
+  "fields": [
+    {
+      "key": "field_rg_amenity_detail",
+      "label": "Detail Text",
+      "name": "amenity_detail",
+      "type": "textarea",
+      "instructions": "Short description shown when a visitor expands this amenity card.",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "",
+      "maxlength": "",
+      "rows": 3,
+      "new_lines": ""
+    },
+    {
+      "key": "field_rg_amenity_icon_key",
+      "label": "Icon",
+      "name": "amenity_icon_key",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "choices": {
+        "lock":      "Secured Access / Lock",
+        "pool":      "Pool / Water",
+        "fitness":   "Fitness / Barbell",
+        "clubhouse": "Clubhouse / Circle",
+        "bbq":       "BBQ / Grill",
+        "balcony":   "Balcony / Home",
+        "washer":    "Washer / Dryer",
+        "transit":   "Transit / Train",
+        "pet":       "Pet Friendly / Paw",
+        "star":      "Concierge / Star"
+      },
+      "default_value": "",
+      "return_format": "value",
+      "multiple": 0,
+      "allow_null": 0,
+      "ui": 0,
+      "ajax": 0,
+      "placeholder": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "rg_amenity"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

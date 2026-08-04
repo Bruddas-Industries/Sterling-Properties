@@ -1,0 +1,172 @@
+{
+  "key": "group_rg_floor_plan",
+  "title": "Floor Plan Details",
+  "fields": [
+    {
+      "key": "field_rg_plan_slug",
+      "label": "Plan Slug",
+      "name": "plan_slug",
+      "type": "text",
+      "instructions": "Unique machine-readable key — lowercase, no spaces (e.g. \"wright\"). Used as the JS selector ID.",
+      "required": 1,
+      "default_value": "",
+      "placeholder": "e.g. wright",
+      "maxlength": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_rg_plan_code",
+      "label": "Plan Code",
+      "name": "plan_code",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "Plan 1B3",
+      "maxlength": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_rg_plan_type",
+      "label": "Type",
+      "name": "plan_type",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "choices": {
+        "1br": "1 Bedroom",
+        "2br": "2 Bedrooms"
+      },
+      "default_value": "1br",
+      "return_format": "value",
+      "multiple": 0,
+      "allow_null": 0,
+      "ui": 0,
+      "ajax": 0,
+      "placeholder": ""
+    },
+    {
+      "key": "field_rg_plan_beds",
+      "label": "Bedrooms",
+      "name": "plan_beds",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "min": 1,
+      "max": "",
+      "step": ""
+    },
+    {
+      "key": "field_rg_plan_baths",
+      "label": "Bathrooms",
+      "name": "plan_baths",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "min": 1,
+      "max": "",
+      "step": 0.5
+    },
+    {
+      "key": "field_rg_plan_sqft",
+      "label": "Square Feet",
+      "name": "plan_sqft",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "863",
+      "maxlength": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_rg_plan_rent",
+      "label": "Starting Rent",
+      "name": "plan_rent",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "From $2,150/mo",
+      "maxlength": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_rg_plan_tag",
+      "label": "Badge (optional)",
+      "name": "plan_tag",
+      "type": "text",
+      "instructions": "Short label shown on the plan card, e.g. \"Most Popular\".",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "Most Popular",
+      "maxlength": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_rg_plan_pdf",
+      "label": "Floor Plan PDF",
+      "name": "plan_pdf",
+      "type": "file",
+      "instructions": "Optional — shown as a Download PDF button in the detail panel.",
+      "required": 0,
+      "return_format": "url",
+      "library": "all",
+      "min_size": "",
+      "max_size": "",
+      "mime_types": "pdf"
+    },
+    {
+      "key": "field_rg_plan_image",
+      "label": "Floor Plan Image",
+      "name": "plan_image",
+      "type": "image",
+      "instructions": "The floor-plan drawing shown in the detail panel and on the plan card.",
+      "required": 0,
+      "return_format": "id",
+      "preview_size": "medium",
+      "library": "all",
+      "mime_types": "jpg,jpeg,png,webp"
+    },
+    {
+      "key": "field_rg_plan_matterport",
+      "label": "Matterport Tour URL",
+      "name": "plan_matterport",
+      "type": "url",
+      "instructions": "Full Matterport share link (e.g. https://my.matterport.com/show/?m=XXXXXXXX). Leave blank to hide the \"Take a Virtual Tour\" button for this plan.",
+      "required": 0,
+      "default_value": "",
+      "placeholder": "https://my.matterport.com/show/?m="
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "rg_floor_plan"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

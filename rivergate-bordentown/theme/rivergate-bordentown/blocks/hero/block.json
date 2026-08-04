@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rivergate/hero",
+	"title": "Rivergate Hero",
+	"category": "rivergate",
+	"icon": "cover-image",
+	"description": "Full-screen video hero with eyebrow, headline, subheadline and call-to-action buttons.",
+	"keywords": [ "hero", "video", "banner" ],
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false,
+		"align": [ "full" ]
+	},
+	"attributes": {
+		"eyebrow":        { "type": "string", "default": "500 Bluff View Circle · Bordentown, NJ" },
+		"headline":       { "type": "string", "default": "Waterfront Living on the Delaware River" },
+		"subheadline":    { "type": "string", "default": "159 luxury rental residences where resort-style amenities meet unmatched transit access to New York, Philadelphia, and beyond." },
+		"videoUrl":       { "type": "string", "default": "" },
+		"posterId":       { "type": "number", "default": 0 },
+		"posterUrl":      { "type": "string", "default": "" },
+		"primaryLabel":   { "type": "string", "default": "Schedule a Tour" },
+		"primaryUrl":     { "type": "string", "default": "#contact" },
+		"secondaryLabel": { "type": "string", "default": "Apply Now" },
+		"secondaryUrl":   { "type": "string", "default": "" }
+	},
+	"render": "file:./render.php"
+}

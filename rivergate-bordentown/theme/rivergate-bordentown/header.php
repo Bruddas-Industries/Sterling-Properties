@@ -3,6 +3,7 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="rg-avail-url" content="<?php echo esc_url( home_url( '/availability/' ) ); ?>">
     <?php wp_head(); ?>
 </head>
 
@@ -17,46 +18,39 @@
                  alt="<?php bloginfo( 'name' ); ?>" height="40">
         </a>
 
-        <div class="nav-links" id="nav-links" role="list">
-            <?php
-            wp_nav_menu( [
-                'theme_location' => 'primary',
-                'container'      => false,
-                'items_wrap'     => '%3$s',
-                'walker'         => new Rivergate_Nav_Walker(),
-                'fallback_cb'    => 'rivergate_nav_fallback',
-            ] );
-            ?>
-            <a href="#contact"
-               class="btn btn--nav"
-               aria-label="<?php esc_attr_e( 'Schedule a tour', 'rivergate-bordentown' ); ?>">
+        <div class="nav-actions">
+            <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--nav">
                 <?php esc_html_e( 'Schedule a Tour', 'rivergate-bordentown' ); ?>
             </a>
+            <button class="nav-toggle"
+                    id="nav-toggle"
+                    aria-controls="nav-overlay"
+                    aria-expanded="false"
+                    aria-label="<?php esc_attr_e( 'Toggle navigation menu', 'rivergate-bordentown' ); ?>">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-
-        <button class="nav-toggle"
-                id="nav-toggle"
-                aria-controls="nav-links"
-                aria-expanded="false"
-                aria-label="<?php esc_attr_e( 'Toggle navigation menu', 'rivergate-bordentown' ); ?>">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
 
     </nav>
 </header>
 
-<script>
-(function () {
-    var toggle = document.getElementById('nav-toggle');
-    var links  = document.getElementById('nav-links');
-    if (!toggle || !links) return;
-    toggle.addEventListener('click', function () {
-        var isOpen = links.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-}());
-</script>
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Navigation menu', 'rivergate-bordentown' ); ?>">
+    <nav class="nav-overlay__links" aria-label="<?php esc_attr_e( 'Primary navigation', 'rivergate-bordentown' ); ?>">
+        <?php /* Order mirrors the homepage flow (preview-1): the four section
+                 links scroll the homepage; Gallery and Availability are pages. */ ?>
+        <a href="<?php echo esc_url( home_url( '/#amenities' ) ); ?>"><?php esc_html_e( 'Amenities', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/#residences' ) ); ?>"><?php esc_html_e( 'Residences', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/#floor-plans' ) ); ?>"><?php esc_html_e( 'Floor Plans', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>"><?php esc_html_e( 'Gallery', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/#neighborhood' ) ); ?>"><?php esc_html_e( 'Neighborhood', 'rivergate-bordentown' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/availability/' ) ); ?>"><?php esc_html_e( 'Availability', 'rivergate-bordentown' ); ?></a>
+    </nav>
+    <div class="nav-overlay__divider"></div>
+    <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--primary nav-overlay__cta">
+        <?php esc_html_e( 'Schedule a Tour', 'rivergate-bordentown' ); ?>
+    </a>
+</div>
 
 <main id="main-content" role="main">
