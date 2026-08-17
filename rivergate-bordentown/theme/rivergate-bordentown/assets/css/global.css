@@ -479,6 +479,15 @@ body.nav-is-open { overflow: hidden; }
 
 .nav-overlay__links a:hover { color: #fff; }
 
+/* Overlay CTA row — See Availability / Schedule a Tour / Apply Now.
+   The header .btn--nav is hidden below 640px, so the overlay carries all three. */
+.nav-overlay__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
 .nav-overlay__cta {
   opacity: 0;
   transform: translateY(14px);
@@ -513,6 +522,9 @@ body.nav-is-open { overflow: hidden; }
 
   /* Hide header CTA on small mobile — it's in the overlay */
   .nav-actions .btn--nav { display: none; }
+
+  /* Stack the overlay CTAs rather than wrapping them raggedly */
+  .nav-overlay__ctas { flex-direction: column; align-items: stretch; width: min(100%, 320px); }
 }
 
 
@@ -2151,12 +2163,16 @@ body.mp-open { overflow: hidden; }
 .tab-btn:hover { color: var(--color-text); }
 .tab-btn.is-active { color: var(--color-text); border-bottom-color: var(--color-primary); }
 
+/* Monotone category ladder — style-guide blues plus neutrals, darkest to lightest.
+   Keep in sync with the $categories colours in blocks/neighborhood-explorer/render.php.
+   NOTE: the #C62828 further down in .emergency-card--urgent is an error state, not a
+   category colour — leave it red. */
 .tab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.tab-dot--transit   { background: #0472BB; }
-.tab-dot--shopping  { background: #2E7D32; }
-.tab-dot--dining    { background: #C62828; }
-.tab-dot--rec       { background: #6A1B9A; }
-.tab-dot--education { background: #E65100; }
+.tab-dot--transit   { background: #0472BB; }  /* bright blue  */
+.tab-dot--dining    { background: #0A2556; }  /* navy         */
+.tab-dot--shopping  { background: #3C6992; }  /* dusty blue   */
+.tab-dot--rec       { background: #5C6B7A; }  /* slate grey   */
+.tab-dot--education { background: #8FA3B8; }  /* light blue-grey (navy numerals) */
 
 .explorer__list {
   overflow-y: auto;
@@ -2651,6 +2667,7 @@ body.mp-open { overflow: hidden; }
   .explorer__list-panel   { order: 1; }
   .explorer-map           { height: 360px; min-height: 300px; }
   .explorer__list         { max-height: 460px; }
+  .communities-teaser     { grid-template-columns: repeat(2, 1fr); }
   .gallery-grid           { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
   .gallery-item--wide     { grid-column: span 2; }
   .gallery-item--tall     { grid-row: span 1; }

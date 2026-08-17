@@ -7,7 +7,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:group {"className":"feature__image"} -->
 <div class="wp-block-group feature__image">
 <!-- wp:image {"linkDestination":"none"} -->
-<figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/exterior/exterior-3.jpg" alt="Rivergate Bordentown building exterior"/></figure>
+<figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/exterior/exterior-entrance-sunset.jpg" alt="The tree-lined entrance drive into Rivergate Bordentown at sunset"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:group -->

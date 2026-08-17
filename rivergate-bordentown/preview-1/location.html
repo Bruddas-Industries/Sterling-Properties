@@ -141,10 +141,10 @@
       width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
     }
     .tab-dot--transit   { background: #0472BB; }
-    .tab-dot--shopping  { background: #2E7D32; }
-    .tab-dot--dining    { background: #C62828; }
-    .tab-dot--rec       { background: #6A1B9A; }
-    .tab-dot--education { background: #E65100; }
+    .tab-dot--shopping  { background: #3C6992; }
+    .tab-dot--dining    { background: #0A2556; }
+    .tab-dot--rec       { background: #5C6B7A; }
+    .tab-dot--education { background: #8FA3B8; }
 
     /* POI lists */
     .explorer__list {
@@ -282,7 +282,7 @@
       <img src="../theme/rivergate-bordentown/assets/images/logos/rivergate-logo-blue.png" alt="Rivergate Bordentown" height="40">
     </a>
     <div class="nav-actions">
-      <a href="contact.html" class="btn btn--nav">Schedule a Tour</a>
+      <a href="availability.html" class="btn btn--nav">See Availability</a>
       <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
         <span></span><span></span><span></span>
       </button>
@@ -292,15 +292,19 @@
 
 <div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
   <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="availability.html">Availability</a>
     <a href="amenities.html">Amenities</a>
     <a href="floor-plans.html">Floor Plans</a>
     <a href="gallery.html">Gallery</a>
     <a href="location.html">Neighborhood</a>
-    <a href="availability.html">Availability</a>
     <a href="contact.html">Contact</a>
   </nav>
   <div class="nav-overlay__divider"></div>
-  <a href="contact.html" class="btn btn--primary nav-overlay__cta">Schedule a Tour</a>
+  <div class="nav-overlay__ctas">
+    <a href="availability.html" class="btn btn--primary nav-overlay__cta">See Availability</a>
+    <a href="contact.html" class="btn btn--ghost nav-overlay__cta">Schedule a Tour</a>
+    <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" class="btn btn--ghost nav-overlay__cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
+  </div>
 </div>
 
 
@@ -418,25 +422,25 @@
         <!-- Dining -->
         <div class="poi-category-list" data-category="dining">
           <div class="poi-cat-heading">
-            <span class="poi-cat-dot" style="background:#C62828"></span>
+            <span class="poi-cat-dot" style="background:#0A2556"></span>
             Dining &amp; Entertainment
           </div>
           <div class="explorer-poi-item" data-poi="Bordentown City Dining">
-            <span class="poi-num-badge" style="background:#C62828">1</span>
+            <span class="poi-num-badge" style="background:#0A2556">1</span>
             <span>
               <span class="explorer-poi-name">Bordentown City Dining</span>
               <span class="explorer-poi-detail">Local restaurants, cafes, and bars along Farnsworth Ave</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Trenton Restaurant Scene">
-            <span class="poi-num-badge" style="background:#C62828">2</span>
+            <span class="poi-num-badge" style="background:#0A2556">2</span>
             <span>
               <span class="explorer-poi-name">Trenton Restaurant Scene</span>
               <span class="explorer-poi-detail">Diverse dining options · ~15 min</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Hamilton Area Dining">
-            <span class="poi-num-badge" style="background:#C62828">3</span>
+            <span class="poi-num-badge" style="background:#0A2556">3</span>
             <span>
               <span class="explorer-poi-name">Hamilton Area Dining</span>
               <span class="explorer-poi-detail">Chain and local restaurants near Hamilton Marketplace</span>
@@ -447,32 +451,32 @@
         <!-- Shopping -->
         <div class="poi-category-list" data-category="shopping">
           <div class="poi-cat-heading">
-            <span class="poi-cat-dot" style="background:#2E7D32"></span>
+            <span class="poi-cat-dot" style="background:#3C6992"></span>
             Shopping &amp; Retail
           </div>
           <div class="explorer-poi-item" data-poi="Bordentown City">
-            <span class="poi-num-badge" style="background:#2E7D32">1</span>
+            <span class="poi-num-badge" style="background:#3C6992">1</span>
             <span>
               <span class="explorer-poi-name">Bordentown City</span>
               <span class="explorer-poi-detail">Boutique shops, galleries, and local markets · ~1 mile</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Hamilton Marketplace">
-            <span class="poi-num-badge" style="background:#2E7D32">2</span>
+            <span class="poi-num-badge" style="background:#3C6992">2</span>
             <span>
               <span class="explorer-poi-name">Hamilton Marketplace</span>
               <span class="explorer-poi-detail">Target, Best Buy, major retail chains · ~10 min</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="MarketFair">
-            <span class="poi-num-badge" style="background:#2E7D32">3</span>
+            <span class="poi-num-badge" style="background:#3C6992">3</span>
             <span>
               <span class="explorer-poi-name">MarketFair</span>
               <span class="explorer-poi-detail">Upscale shops, dining &amp; cinema · ~25 min · Princeton, NJ</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Quaker Bridge Mall">
-            <span class="poi-num-badge" style="background:#2E7D32">4</span>
+            <span class="poi-num-badge" style="background:#3C6992">4</span>
             <span>
               <span class="explorer-poi-name">Quaker Bridge Mall</span>
               <span class="explorer-poi-detail">Full regional mall · ~20 min</span>
@@ -483,53 +487,53 @@
         <!-- Recreation -->
         <div class="poi-category-list" data-category="rec">
           <div class="poi-cat-heading">
-            <span class="poi-cat-dot" style="background:#6A1B9A"></span>
+            <span class="poi-cat-dot" style="background:#5C6B7A"></span>
             Recreation &amp; Outdoors
           </div>
           <div class="explorer-poi-item" data-poi="Crystal Lake Park">
-            <span class="poi-num-badge" style="background:#6A1B9A">1</span>
+            <span class="poi-num-badge" style="background:#5C6B7A">1</span>
             <span>
               <span class="explorer-poi-name">Crystal Lake Park</span>
               <span class="explorer-poi-detail">Walking trails, fishing, and open green space · ~5 min</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Kuser Farm Park">
-            <span class="poi-num-badge" style="background:#6A1B9A">2</span>
+            <span class="poi-num-badge" style="background:#5C6B7A">2</span>
             <span>
               <span class="explorer-poi-name">Kuser Farm Park</span>
               <span class="explorer-poi-detail">Historic park with trails and community events · ~15 min</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Grounds For Sculpture">
-            <span class="poi-num-badge" style="background:#6A1B9A">3</span>
+            <span class="poi-num-badge" style="background:#5C6B7A">3</span>
             <span>
               <span class="explorer-poi-name">Grounds For Sculpture</span>
               <span class="explorer-poi-detail">World-class sculpture park · ~20 min · Hamilton, NJ</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Cream Ridge Golf Course">
-            <span class="poi-num-badge" style="background:#6A1B9A">4</span>
+            <span class="poi-num-badge" style="background:#5C6B7A">4</span>
             <span>
               <span class="explorer-poi-name">Cream Ridge Golf Course</span>
               <span class="explorer-poi-detail">Golf · ~20 min · Cream Ridge, NJ</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Rancocas Golf Club">
-            <span class="poi-num-badge" style="background:#6A1B9A">5</span>
+            <span class="poi-num-badge" style="background:#5C6B7A">5</span>
             <span>
               <span class="explorer-poi-name">Rancocas Golf Club</span>
               <span class="explorer-poi-detail">Golf · ~15 min · Mount Holly, NJ</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="The Jersey Shore">
-            <span class="poi-num-badge" style="background:#6A1B9A">6</span>
+            <span class="poi-num-badge" style="background:#5C6B7A">6</span>
             <span>
               <span class="explorer-poi-name">The Jersey Shore</span>
               <span class="explorer-poi-detail">Point Pleasant, Asbury Park, Long Beach Island · ~60 min</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Delaware River Waterfront">
-            <span class="poi-num-badge" style="background:#6A1B9A">7</span>
+            <span class="poi-num-badge" style="background:#5C6B7A">7</span>
             <span>
               <span class="explorer-poi-name">Delaware River Waterfront</span>
               <span class="explorer-poi-detail">Walking and cycling paths · At your doorstep</span>
@@ -540,32 +544,32 @@
         <!-- Education -->
         <div class="poi-category-list" data-category="education">
           <div class="poi-cat-heading">
-            <span class="poi-cat-dot" style="background:#E65100"></span>
+            <span class="poi-cat-dot" style="background:#8FA3B8"></span>
             Education &amp; Healthcare
           </div>
           <div class="explorer-poi-item" data-poi="Bordentown Regional School District">
-            <span class="poi-num-badge" style="background:#E65100">1</span>
+            <span class="poi-num-badge" style="background:#8FA3B8;color:#0A2556">1</span>
             <span>
               <span class="explorer-poi-name">Bordentown Regional School District</span>
               <span class="explorer-poi-detail">K–12 schools serving the Bordentown community</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Princeton University">
-            <span class="poi-num-badge" style="background:#E65100">2</span>
+            <span class="poi-num-badge" style="background:#8FA3B8;color:#0A2556">2</span>
             <span>
               <span class="explorer-poi-name">Princeton University</span>
               <span class="explorer-poi-detail">~20 min north via Route 206</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Rider University">
-            <span class="poi-num-badge" style="background:#E65100">3</span>
+            <span class="poi-num-badge" style="background:#8FA3B8;color:#0A2556">3</span>
             <span>
               <span class="explorer-poi-name">Rider University</span>
               <span class="explorer-poi-detail">Lawrenceville, NJ · ~20 min</span>
             </span>
           </div>
           <div class="explorer-poi-item" data-poi="Capital Health Medical Center">
-            <span class="poi-num-badge" style="background:#E65100">4</span>
+            <span class="poi-num-badge" style="background:#8FA3B8;color:#0A2556">4</span>
             <span>
               <span class="explorer-poi-name">Capital Health Medical Center</span>
               <span class="explorer-poi-detail">Hopewell, NJ · ~20 min</span>
@@ -646,11 +650,11 @@
       <img src="../theme/rivergate-bordentown/assets/images/logos/rivergate-logo-white.png" alt="Rivergate Bordentown" height="44" style="opacity: 0.85;">
     </a>
     <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="availability.html">Availability</a>
       <a href="amenities.html">Amenities</a>
       <a href="floor-plans.html">Floor Plans</a>
       <a href="gallery.html">Gallery</a>
       <a href="location.html">Neighborhood</a>
-      <a href="availability.html">Availability</a>
       <a href="contact.html">Contact</a>
       <a href="residents.html">Residents</a>
       <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer">Pay Rent</a>
@@ -669,7 +673,6 @@
       <img class="footer-sterling-logo" src="../theme/rivergate-bordentown/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties">
     </a>
     <div class="footer-bottom__links">
-      <a href="#">Privacy Policy</a>
       <a href="../theme/rivergate-bordentown/assets/pdf/RivergateBrochure.pdf" target="_blank" rel="noopener noreferrer">Brochure</a>
       <a href="../theme/rivergate-bordentown/assets/pdf/Rivergate-Rental-Application.pdf" target="_blank" rel="noopener noreferrer">Rental Application</a>
     </div>
@@ -737,17 +740,20 @@ function initMap() {
 
   var categoryColors = {
     transit:   '#0472BB',
-    shopping:  '#2E7D32',
-    dining:    '#C62828',
-    rec:       '#6A1B9A',
-    education: '#E65100'
+    shopping:  '#3C6992',
+    dining:    '#0A2556',
+    rec:       '#5C6B7A',
+    education: '#8FA3B8'
   };
 
+  /* Numeral ink — the light step needs navy to stay legible */
+  var categoryInk = { education: '#0A2556' };
+
   /* Build a numbered SVG marker data-URL */
-  function makeSvgMarker(num, color) {
+  function makeSvgMarker(num, color, ink) {
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">'
       + '<circle cx="14" cy="14" r="13" fill="' + color + '" stroke="#ffffff" stroke-width="2.5"/>'
-      + '<text x="14" y="19" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#ffffff">' + num + '</text>'
+      + '<text x="14" y="19" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="' + (ink || '#ffffff') + '">' + num + '</text>'
       + '</svg>';
     return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
   }
@@ -820,12 +826,13 @@ function initMap() {
   /* POI markers */
   pois.forEach(function (poi) {
     var color  = categoryColors[poi.category];
+    var ink    = categoryInk[poi.category] || '#ffffff';
     var marker = new google.maps.Marker({
       position: { lat: poi.lat, lng: poi.lng },
       map: map,
       title: poi.name,
       icon: {
-        url: makeSvgMarker(poi.num, color),
+        url: makeSvgMarker(poi.num, color, ink),
         scaledSize: new google.maps.Size(28, 28),
         anchor: new google.maps.Point(14, 14)
       },
@@ -833,7 +840,7 @@ function initMap() {
     });
     var infoWindow = new google.maps.InfoWindow({
       content: '<div style="font-family:Inter,sans-serif;padding:8px 12px;line-height:1;display:flex;align-items:center;gap:8px">'
-        + '<span style="flex-shrink:0;width:20px;height:20px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">' + poi.num + '</span>'
+        + '<span style="flex-shrink:0;width:20px;height:20px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:' + ink + '">' + poi.num + '</span>'
         + '<span style="font-size:12px;font-weight:600;color:#1C2B3A;letter-spacing:0.02em;white-space:nowrap">' + poi.name + '</span></div>'
     });
     marker.addListener('mouseover', function () { infoWindow.open(map, marker); });

@@ -28,7 +28,7 @@ $categories = [
 	],
 	'dining' => [
 		'label' => 'Dining & Entertainment',
-		'color' => '#C62828',
+		'color' => '#0A2556',
 		'items' => [
 			[ 'Bordentown City Dining',   'Restaurants, cafes, and bars on Farnsworth Ave' ],
 			[ 'Trenton Restaurant Scene', 'Diverse dining · ~15 min' ],
@@ -37,7 +37,7 @@ $categories = [
 	],
 	'shopping' => [
 		'label' => 'Shopping & Retail',
-		'color' => '#2E7D32',
+		'color' => '#3C6992',
 		'items' => [
 			[ 'Bordentown City',     'Boutiques, galleries, and markets · ~1 mile' ],
 			[ 'Hamilton Marketplace','Target, Best Buy, major retail · ~10 min' ],
@@ -47,7 +47,7 @@ $categories = [
 	],
 	'rec' => [
 		'label' => 'Recreation & Outdoors',
-		'color' => '#6A1B9A',
+		'color' => '#5C6B7A',
 		'items' => [
 			[ 'Crystal Lake Park',         'Trails, fishing, open green space · ~5 min' ],
 			[ 'Kuser Farm Park',           'Historic park with trails and events · ~15 min' ],
@@ -58,7 +58,8 @@ $categories = [
 	],
 	'education' => [
 		'label' => 'Education & Healthcare',
-		'color' => '#E65100',
+		'color' => '#8FA3B8',
+		'ink'   => '#0A2556',
 		'items' => [
 			[ 'Bordentown Regional School District', 'K–12 schools serving the community' ],
 			[ 'Princeton University',                '~20 min north via Route 206' ],
@@ -80,11 +81,18 @@ $categories = [
     </div>
 
     <div class="explorer__list" id="explorer-list" role="tabpanel">
-      <?php foreach ( $categories as $cat => $data ) : ?>
+      <?php
+      foreach ( $categories as $cat => $data ) :
+          // Badges default to white numerals; the light step overrides with navy.
+          $badge_style = 'background:' . $data['color'];
+          if ( ! empty( $data['ink'] ) ) {
+              $badge_style .= ';color:' . $data['ink'];
+          }
+      ?>
         <div class="poi-category-list" data-category="<?php echo esc_attr( $cat ); ?>">
           <div class="poi-cat-heading"><span class="poi-cat-dot" style="background:<?php echo esc_attr( $data['color'] ); ?>"></span><?php echo esc_html( $data['label'] ); ?></div>
           <?php foreach ( $data['items'] as $i => $item ) : ?>
-            <div class="explorer-poi-item" data-poi="<?php echo esc_attr( $item[0] ); ?>"><span class="poi-num-badge" style="background:<?php echo esc_attr( $data['color'] ); ?>"><?php echo (int) $i + 1; ?></span><span><span class="explorer-poi-name"><?php echo esc_html( $item[0] ); ?></span><span class="explorer-poi-detail"><?php echo esc_html( $item[1] ); ?></span></span></div>
+            <div class="explorer-poi-item" data-poi="<?php echo esc_attr( $item[0] ); ?>"><span class="poi-num-badge" style="<?php echo esc_attr( $badge_style ); ?>"><?php echo (int) $i + 1; ?></span><span><span class="explorer-poi-name"><?php echo esc_html( $item[0] ); ?></span><span class="explorer-poi-detail"><?php echo esc_html( $item[1] ); ?></span></span></div>
           <?php endforeach; ?>
         </div>
       <?php endforeach; ?>
