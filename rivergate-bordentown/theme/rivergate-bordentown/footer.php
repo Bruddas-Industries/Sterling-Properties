@@ -18,12 +18,12 @@
         </a>
 
         <nav class="footer-nav" aria-label="<?php esc_attr_e( 'Footer navigation', 'rivergate-bordentown' ); ?>">
+            <a href="<?php echo esc_url( home_url( '/availability/' ) ); ?>"><?php esc_html_e( 'Availability', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/#amenities' ) ); ?>"><?php esc_html_e( 'Amenities', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/#residences' ) ); ?>"><?php esc_html_e( 'Residences', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/#floor-plans' ) ); ?>"><?php esc_html_e( 'Floor Plans', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>"><?php esc_html_e( 'Gallery', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/#neighborhood' ) ); ?>"><?php esc_html_e( 'Neighborhood', 'rivergate-bordentown' ); ?></a>
-            <a href="<?php echo esc_url( home_url( '/availability/' ) ); ?>"><?php esc_html_e( 'Availability', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/residents/' ) ); ?>"><?php esc_html_e( 'Residents', 'rivergate-bordentown' ); ?></a>
             <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Pay Rent', 'rivergate-bordentown' ); ?></a>
@@ -54,7 +54,8 @@
                  alt="Sterling Properties">
         </a>
         <div class="footer-bottom__links">
-            <a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'rivergate-bordentown' ); ?></a>
+            <?php /* No Privacy Policy link: Sterling has no published policy to point at.
+                     Add one back here if/when they publish one. */ ?>
             <a href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/pdf/RivergateBrochure.pdf" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Brochure', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/pdf/Rivergate-Rental-Application.pdf" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Rental Application', 'rivergate-bordentown' ); ?></a>
         </div>

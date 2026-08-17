@@ -29,7 +29,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:image {"linkDestination":"none"} --><figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-1.jpg" alt="Rivergate resort-style pool"/></figure><!-- /wp:image -->
 <!-- wp:image {"linkDestination":"none"} --><figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/units/living-room-1.jpg" alt="Rivergate residence living room"/></figure><!-- /wp:image -->
 <!-- wp:image {"linkDestination":"none"} --><figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/units/bedroom-1.jpg" alt="Rivergate residence bedroom"/></figure><!-- /wp:image -->
-<!-- wp:image {"linkDestination":"none"} --><figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/exterior/exterior-3.jpg" alt="Rivergate building from the waterfront"/></figure><!-- /wp:image -->
+<!-- wp:image {"linkDestination":"none"} --><figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/exterior/exterior-4.jpg" alt="Rivergate building and landscaped entrance"/></figure><!-- /wp:image -->
 <!-- wp:image {"linkDestination":"none"} --><figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/aerials/aerial-2.jpg" alt="Rivergate aerial showing the Delaware River"/></figure><!-- /wp:image -->
 <!-- wp:image {"linkDestination":"none"} --><figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/units/dining-room-1.jpg" alt="Rivergate residence dining area"/></figure><!-- /wp:image -->
 </figure>

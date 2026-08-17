@@ -19,36 +19,66 @@
 <div class="wp-block-group communities-teaser">
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">R</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">E</p><!-- /wp:paragraph -->
 <!-- wp:group {"className":"community-teaser__info"} -->
 <div class="wp-block-group community-teaser__info">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">The Reserve at Hamilton</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Hamilton Township, NJ</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"badge--soon"} --><p class="badge--soon">Coming Soon</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">Eggert's Crossing</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Crossings at Ewing · Ewing, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">R</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">E</p><!-- /wp:paragraph -->
 <!-- wp:group {"className":"community-teaser__info"} -->
 <div class="wp-block-group community-teaser__info">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">Riverside Commons</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Burlington City, NJ</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"badge--soon"} --><p class="badge--soon">Coming Soon</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">Evan's Mill</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Cherry Hill, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">B</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">S</p><!-- /wp:paragraph -->
 <!-- wp:group {"className":"community-teaser__info"} -->
 <div class="wp-block-group community-teaser__info">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">The Bluffs at Lawrence</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Lawrence Township, NJ</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"badge--soon"} --><p class="badge--soon">Coming Soon</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">Station Place</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Lawnside, NJ</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"community-teaser"} -->
+<div class="wp-block-group community-teaser">
+<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">M</p><!-- /wp:paragraph -->
+<!-- wp:group {"className":"community-teaser__info"} -->
+<div class="wp-block-group community-teaser__info">
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">Metro Woodbridge</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Woodbridge, NJ</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"community-teaser"} -->
+<div class="wp-block-group community-teaser">
+<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">W</p><!-- /wp:paragraph -->
+<!-- wp:group {"className":"community-teaser__info"} -->
+<div class="wp-block-group community-teaser__info">
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">Wellsbrook at Neptune</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Neptune, NJ</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"community-teaser"} -->
+<div class="wp-block-group community-teaser">
+<!-- wp:paragraph {"className":"community-teaser__mark"} --><p class="community-teaser__mark">W</p><!-- /wp:paragraph -->
+<!-- wp:group {"className":"community-teaser__info"} -->
+<div class="wp-block-group community-teaser__info">
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name">The Woods East Windsor</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">East Windsor, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 </div>

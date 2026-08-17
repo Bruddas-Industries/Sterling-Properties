@@ -91,9 +91,24 @@ $pdf = get_template_directory_uri() . '/assets/pdf';
     <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
   </a>
   <a href="https://sterlingproperties.appfolio.com/connect" class="resource-item" target="_blank" rel="noopener noreferrer">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    <div class="resource-item__text"><span class="resource-item__name">AppFolio Resident Portal</span><span class="resource-item__desc">Pay rent, submit maintenance, view documents</span></div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <div class="resource-item__text"><span class="resource-item__name">Move-In / Move-Out Checklist</span><span class="resource-item__desc">Document your residence condition — available in the resident portal</span></div>
     <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+  </a>
+  <a href="https://sterlingproperties.appfolio.com/connect" class="resource-item" target="_blank" rel="noopener noreferrer">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <div class="resource-item__text"><span class="resource-item__name">Community Rules &amp; Regulations</span><span class="resource-item__desc">Parking, noise, pet, and community policy guidelines — filed with your lease in the resident portal</span></div>
+    <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="resource-item">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    <div class="resource-item__text"><span class="resource-item__name">Lease Renewal Information</span><span class="resource-item__desc">Questions about renewing your lease? Contact the leasing office early.</span></div>
+    <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="resource-item">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    <div class="resource-item__text"><span class="resource-item__name">Renter's Insurance Information</span><span class="resource-item__desc">Requirements and recommendations — ask the leasing office</span></div>
+    <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
   </a>
 </div>
 <!-- /wp:html -->
