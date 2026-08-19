@@ -23,7 +23,7 @@
 <!-- wp:paragraph {"className":"contact-label"} --><p class="contact-label">Phone</p><!-- /wp:paragraph -->
 <!-- wp:paragraph --><p><a href="tel:6092980303">609.298.0303</a></p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"contact-label"} --><p class="contact-label">Email</p><!-- /wp:paragraph -->
-<!-- wp:paragraph --><p><a href="mailto:rivergate@sterlingpropertiesnj.com">rivergate@sterlingpropertiesnj.com</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p><a href="mailto:rivergate@spgnj.com">rivergate@spgnj.com</a></p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"contact-label"} --><p class="contact-label">Leasing Office Hours</p><!-- /wp:paragraph -->
 <!-- wp:paragraph --><p>Tuesday – Friday: 10:00 AM – 6:00 PM<br>Saturday: 10:00 AM – 5:00 PM<br>Sunday &amp; Monday: Closed</p><!-- /wp:paragraph -->
 </div>

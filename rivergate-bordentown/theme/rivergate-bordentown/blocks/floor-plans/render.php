@@ -33,7 +33,7 @@ if ( ! rivergate_in_editor() && wp_script_is( 'rivergate-main', 'registered' ) )
 }
 ?>
 <div class="fp-selector">
-  <div class="fp-list" role="listbox" aria-label="Floor plans">
+  <div class="fp-list" id="fp-list" role="listbox" aria-label="Floor plans">
     <?php foreach ( $slugs as $slug ) :
       $is_active = ( $slug === $default ); ?>
       <button class="fp-option<?php echo $is_active ? ' is-active' : ''; ?>"

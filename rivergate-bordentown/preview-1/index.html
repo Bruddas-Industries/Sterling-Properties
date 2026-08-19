@@ -179,7 +179,7 @@
       border-top: 1.5px solid var(--color-primary); border-right: 1.5px solid var(--color-primary);
       transform: translateY(-50%) rotate(45deg); display: none;
     }
-    @media (min-width: 861px) { .fp-option.is-active::after { display: block; } }
+    @media (min-width: 901px) { .fp-option.is-active::after { display: block; } }
 
     .fp-detail {
       border: 1.5px solid var(--color-border); border-radius: var(--radius-lg);
@@ -414,20 +414,7 @@
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: var(--space-5); margin-top: var(--space-8);
     }
-    .community-teaser {
-      display: flex; align-items: center; gap: var(--space-4);
-      border: 1px solid var(--color-border); border-radius: var(--radius-lg);
-      background: var(--color-surface); padding: var(--space-5);
-      transition: box-shadow var(--duration) var(--ease-out), transform var(--duration) var(--ease-out);
-    }
-    .community-teaser:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .community-teaser__mark {
-      flex-shrink: 0; width: 48px; height: 48px; border-radius: var(--radius-base);
-      background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-border) 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-text-muted); opacity: 0.7;
-    }
-    .community-teaser__name { font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-text); margin: 0; line-height: 1.15; }
+    /* .community-teaser now lives entirely in global.css section 25 (shared with the theme) */
     .community-teaser__loc { font-size: var(--text-xs); color: var(--color-text-muted); margin: 2px 0 0; }
     .badge--soon {
       display: inline-block; font-size: 10px; letter-spacing: var(--tracking-wider);
@@ -450,10 +437,12 @@
     .sterling-banner__logo { height: 34px; width: auto; opacity: 0.95; }
     .sterling-banner__text { font-size: var(--text-base); color: rgba(255,255,255,0.85); max-width: 42ch; margin: 0; }
 
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {   /* mirrors global.css section 27 + the floor-plan JS breakpoint */
       .amenities-split { grid-template-columns: 1fr; }
       .fp-selector { grid-template-columns: 1fr; }
       .fp-detail { position: static; }
+      /* .fp-detail--inline (the panel re-parented under the tapped plan) is styled in
+         global.css section 17, shared with the theme. */
       .neighborhood-explorer { grid-template-columns: 1fr; }
       .explorer__map-panel { position: static; order: 2; }
       .explorer__list-panel { order: 1; }
@@ -602,6 +591,15 @@
 
         <div class="amenity" data-animate>
           <button class="amenity__head" type="button" aria-expanded="false">
+            <svg class="amenity__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12.5" cy="16" rx="2.6" ry="3.6"/><ellipse cx="18" cy="12.5" rx="2.6" ry="3.9"/><ellipse cx="24" cy="12.5" rx="2.6" ry="3.9"/><ellipse cx="29" cy="16" rx="2.6" ry="3.6"/><path d="M20.5 21.5c-4.2 0-7.6 2.7-7.6 6 0 2.4 2 3.9 4.4 3.9 1.4 0 2.2-.5 3.2-.5s1.8.5 3.2.5c2.4 0 4.4-1.5 4.4-3.9 0-3.3-3.4-6-7.6-6Z"/></svg>
+            <span class="amenity__name">Dog Run</span>
+            <span class="amenity__plus" aria-hidden="true"></span>
+          </button>
+          <div class="amenity__panel"><p class="amenity__detail">An on-site dog run — a dedicated space for your dog to stretch out and play.</p></div>
+        </div>
+
+        <div class="amenity" data-animate>
+          <button class="amenity__head" type="button" aria-expanded="false">
             <svg class="amenity__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 32 L20 8 L32 32 Z"/><path d="M14 32 V22 h12 v10"/></svg>
             <span class="amenity__name">Private Balconies</span>
             <span class="amenity__plus" aria-hidden="true"></span>
@@ -715,13 +713,14 @@
     <div class="fp-selector">
       <!-- Left: stacked, selectable plans -->
       <div class="fp-list" id="fp-list" role="tablist" aria-label="Choose a floor plan">
-        <button class="fp-option" type="button" role="tab" data-plan="wright"></button>
-        <button class="fp-option" type="button" role="tab" data-plan="borden"></button>
+        <!-- Ordered smallest → largest by square footage -->
         <button class="fp-option" type="button" role="tab" data-plan="rivergate"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="borden"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="wright"></button>
         <button class="fp-option" type="button" role="tab" data-plan="chester"></button>
         <button class="fp-option" type="button" role="tab" data-plan="burlington"></button>
-        <button class="fp-option" type="button" role="tab" data-plan="dayton"></button>
         <button class="fp-option" type="button" role="tab" data-plan="farnsworth"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="dayton"></button>
         <button class="fp-option" type="button" role="tab" data-plan="edison"></button>
         <button class="fp-option" type="button" role="tab" data-plan="hamilton"></button>
       </div>
@@ -871,49 +870,43 @@
       <span class="eyebrow">Sterling Properties</span>
       <h2>More Communities You May Like</h2>
     </div>
+    <!-- Each card links to that community's feature page in the Sterling Portfolio -->
     <div class="communities-teaser">
-      <div class="community-teaser" data-animate>
-        <span class="community-teaser__mark">E</span>
-        <div>
-          <p class="community-teaser__name">Eggert's Crossing</p>
-          <p class="community-teaser__loc">Crossings at Ewing · Ewing, NJ</p>
-        </div>
-      </div>
-      <div class="community-teaser" data-animate>
-        <span class="community-teaser__mark">E</span>
-        <div>
-          <p class="community-teaser__name">Evan's Mill</p>
-          <p class="community-teaser__loc">Cherry Hill, NJ</p>
-        </div>
-      </div>
-      <div class="community-teaser" data-animate>
-        <span class="community-teaser__mark">S</span>
-        <div>
-          <p class="community-teaser__name">Station Place</p>
-          <p class="community-teaser__loc">Lawnside, NJ</p>
-        </div>
-      </div>
-      <div class="community-teaser" data-animate>
-        <span class="community-teaser__mark">M</span>
-        <div>
-          <p class="community-teaser__name">Metro Woodbridge</p>
-          <p class="community-teaser__loc">Woodbridge, NJ</p>
-        </div>
-      </div>
-      <div class="community-teaser" data-animate>
-        <span class="community-teaser__mark">W</span>
-        <div>
-          <p class="community-teaser__name">Wellsbrook at Neptune</p>
-          <p class="community-teaser__loc">Neptune, NJ</p>
-        </div>
-      </div>
-      <div class="community-teaser" data-animate>
-        <span class="community-teaser__mark">W</span>
-        <div>
-          <p class="community-teaser__name">The Woods East Windsor</p>
-          <p class="community-teaser__loc">East Windsor, NJ</p>
-        </div>
-      </div>
+      <a class="community-teaser" data-animate
+         href="https://sterlingpropertiesnj.com/sterling-portfolio/the-crossings-at-ewing/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Eggert's Crossing</p>
+        <p class="community-teaser__loc">Crossings at Ewing &middot; Ewing, NJ</p>
+      </a>
+
+      <a class="community-teaser" data-animate
+         href="https://sterlingpropertiesnj.com/sterling-portfolio/evans-mill/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Evan's Mill</p>
+        <p class="community-teaser__loc">Cherry Hill, NJ</p>
+      </a>
+
+      <a class="community-teaser" data-animate
+         href="https://sterlingpropertiesnj.com/sterling-portfolio/station-place/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Station Place</p>
+        <p class="community-teaser__loc">Lawnside, NJ</p>
+      </a>
+
+      <a class="community-teaser" data-animate
+         href="https://sterlingpropertiesnj.com/sterling-portfolio/metro-at-woodbridge/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Metro Woodbridge</p>
+        <p class="community-teaser__loc">Woodbridge, NJ</p>
+      </a>
+
+      <a class="community-teaser" data-animate
+         href="https://sterlingpropertiesnj.com/sterling-portfolio/wellsbrook-at-neptune/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Wellsbrook at Neptune</p>
+        <p class="community-teaser__loc">Neptune, NJ</p>
+      </a>
+
+      <a class="community-teaser" data-animate
+         href="https://sterlingpropertiesnj.com/sterling-portfolio/the-woods-east-windsor/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">The Woods East Windsor</p>
+        <p class="community-teaser__loc">East Windsor, NJ</p>
+      </a>
     </div>
   </div>
 </section>
@@ -949,7 +942,7 @@
         </div>
         <div style="margin-bottom: var(--space-6);">
           <p class="contact-label">Email</p>
-          <p><a href="mailto:rivergate@sterlingpropertiesnj.com">rivergate@sterlingpropertiesnj.com</a></p>
+          <p><a href="mailto:rivergate@spgnj.com">rivergate@spgnj.com</a></p>
         </div>
         <div>
           <p class="contact-label">Leasing Office Hours</p>
@@ -980,14 +973,14 @@
           <label for="unit-type">Interested In</label>
           <select id="unit-type" name="unit_type">
             <option value="">Select a floor plan...</option>
-            <option value="1br-borden">One Bedroom — The Borden (773 sq ft)</option>
             <option value="1br-rivergate">One Bedroom — The Rivergate (737 sq ft)</option>
+            <option value="1br-borden">One Bedroom — The Borden (773 sq ft)</option>
             <option value="1br-wright">One Bedroom — The Wright (863 sq ft)</option>
             <option value="2br-chester">Two Bedroom — The Chester (1,033 sq ft)</option>
             <option value="2br-burlington">Two Bedroom — The Burlington (1,043 sq ft)</option>
+            <option value="2br-farnsworth">Two Bedroom — The Farnsworth (1,149 sq ft)</option>
             <option value="2br-dayton">Two Bedroom — The Dayton (1,160 sq ft)</option>
             <option value="2br-edison">Two Bedroom — The Edison (1,287 sq ft)</option>
-            <option value="2br-farnsworth">Two Bedroom — The Farnsworth (1,149 sq ft)</option>
             <option value="2br-hamilton">Two Bedroom — The Hamilton (1,342 sq ft)</option>
             <option value="unsure">Not Sure Yet</option>
           </select>
@@ -1132,21 +1125,24 @@
     var MP = 'https://my.matterport.com/show/?m=';
     /* mp: Matterport tour URL, or null where no tour exists yet
        (Borden, Chester, Burlington, Hamilton — tour button is disabled). */
+    /* Listed smallest -> largest by square footage; .fp-list buttons follow the same order. */
     var PLANS = {
-      wright:     { name: 'The Wright',     code: 'Plan 1B3', bed: 1, bath: 1, sqft: '863',   tag: '',             img: 'wright.jpg',     mp: MP + 'ZJFssUi1zKd' },
-      borden:     { name: 'The Borden',     code: 'Plan 1B',  bed: 1, bath: 1, sqft: '773',   tag: '',             img: 'borden.jpg',     mp: null },
       rivergate:  { name: 'The Rivergate',  code: 'Plan 1B2', bed: 1, bath: 1, sqft: '737',   tag: '',             img: 'rivergate.jpg',  mp: MP + '18Ngo5NtdyU' },
+      borden:     { name: 'The Borden',     code: 'Plan 1B',  bed: 1, bath: 1, sqft: '773',   tag: '',             img: 'borden.jpg',     mp: null },
+      wright:     { name: 'The Wright',     code: 'Plan 1B3', bed: 1, bath: 1, sqft: '863',   tag: '',             img: 'wright.jpg',     mp: MP + 'ZJFssUi1zKd' },
       chester:    { name: 'The Chester',    code: 'Plan 2B',  bed: 2, bath: 2, sqft: '1,033', tag: '',             img: 'chester.jpg',    mp: null },
       burlington: { name: 'The Burlington', code: 'Plan 2B4', bed: 2, bath: 2, sqft: '1,043', tag: '',             img: 'burlington.jpg', mp: null },
-      dayton:     { name: 'The Dayton',     code: 'Plan 2B2', bed: 2, bath: 2, sqft: '1,160', tag: 'Most Popular', img: 'dayton.jpg',     mp: MP + 'FURMkxr2zpm' },
       farnsworth: { name: 'The Farnsworth', code: 'Plan 2B5', bed: 2, bath: 2, sqft: '1,149', tag: '',             img: 'farnsworth.jpg', mp: MP + 'AHnca1wS9bX' },
+      dayton:     { name: 'The Dayton',     code: 'Plan 2B2', bed: 2, bath: 2, sqft: '1,160', tag: 'Most Popular', img: 'dayton.jpg',     mp: MP + 'FURMkxr2zpm' },
       edison:     { name: 'The Edison',     code: 'Plan 2B3', bed: 2, bath: 2, sqft: '1,287', tag: '',             img: 'edison.jpg',     mp: MP + 'ghub4RNmR3A' },
       hamilton:   { name: 'The Hamilton',   code: 'Plan 2B6', bed: 2, bath: 2, sqft: '1,342', tag: '',             img: 'hamilton.jpg',   mp: null }
     };
     var APPLY_URL = 'https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN';
     var options = document.querySelectorAll('.fp-option');
     var detail = document.getElementById('fp-detail');
-    if (!options.length || !detail) return;
+    var list = document.getElementById('fp-list');
+    var selector = document.querySelector('.fp-selector');
+    if (!options.length || !detail || !list || !selector) return;
 
     /* Fill the left-column option labels from data */
     options.forEach(function (opt) {
@@ -1183,20 +1179,82 @@
         '</div>';
     }
 
+    var mq = window.matchMedia('(max-width: 900px)');  /* where .fp-selector stacks (global.css) */
+    var current = null;
+
+    /* Mobile: move the detail panel into the list, right under the tapped plan, so it
+       opens in place instead of stacking below every other plan. Desktop: it lives in
+       the selector's second grid column. */
+    function placeDetail(opt) {
+      if (mq.matches) {
+        detail.classList.add('fp-detail--inline');
+        if (detail.previousElementSibling !== opt) opt.insertAdjacentElement('afterend', detail);
+      } else {
+        detail.classList.remove('fp-detail--inline');
+        if (detail.parentNode !== selector) selector.appendChild(detail);
+      }
+    }
+
+    /* The two layouts are different widgets: tabs + tabpanel side by side on desktop,
+       a disclosure accordion on mobile (where the panel sits inside the list, which a
+       tablist may not contain). Swap the ARIA to match whichever is on screen. */
+    function syncAria() {
+      var mobile = mq.matches;
+      list.setAttribute('role', mobile ? 'group' : 'tablist');
+      detail.setAttribute('role', mobile ? 'region' : 'tabpanel');
+      options.forEach(function (o) {
+        var on = o.classList.contains('is-active');
+        if (mobile) {
+          o.removeAttribute('role');            /* native <button> role is correct here */
+          o.removeAttribute('aria-selected');
+          o.setAttribute('aria-controls', 'fp-detail');
+          o.setAttribute('aria-expanded', on ? 'true' : 'false');
+        } else {
+          o.setAttribute('role', 'tab');
+          o.removeAttribute('aria-expanded');
+          o.removeAttribute('aria-controls');
+          o.setAttribute('aria-selected', on ? 'true' : 'false');
+        }
+      });
+    }
+
+    function closeDetail() {
+      options.forEach(function (o) { o.classList.remove('is-active'); });
+      current = null;
+      detail.hidden = true;
+      detail.innerHTML = '';
+      syncAria();
+    }
+
     function select(opt) {
-      options.forEach(function (o) { o.classList.remove('is-active'); o.setAttribute('aria-selected', 'false'); });
+      options.forEach(function (o) { o.classList.remove('is-active'); });
       opt.classList.add('is-active');
-      opt.setAttribute('aria-selected', 'true');
+      current = opt;
+      detail.hidden = false;
       renderDetail(opt.getAttribute('data-plan'));
+      placeDetail(opt);
+      syncAria();
     }
 
     options.forEach(function (opt) {
-      opt.addEventListener('click', function () { select(opt); });
+      opt.addEventListener('click', function () {
+        /* On mobile the list acts as an accordion — tapping the open plan closes it */
+        if (mq.matches && current === opt) { closeDetail(); return; }
+        select(opt);
+        if (mq.matches) opt.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
     });
 
-    /* Default-select The Wright so the panel is never blank */
-    var first = document.querySelector('.fp-option[data-plan="wright"]') || options[0];
-    select(first);
+    /* Desktop opens on The Wright so the panel is never blank. Mobile starts collapsed
+       so the list stays short and the detail appears under whichever plan is tapped. */
+    function applyBreakpoint() {
+      if (current) { placeDetail(current); syncAria(); return; }
+      if (mq.matches) closeDetail();
+      else select(document.querySelector('.fp-option[data-plan="wright"]') || options[0]);
+    }
+    applyBreakpoint();
+    if (mq.addEventListener) mq.addEventListener('change', applyBreakpoint);
+    else if (mq.addListener) mq.addListener(applyBreakpoint);
   }());
 
   /* Matterport virtual-tour lightbox — opens for any [data-mp] trigger */
@@ -1400,5 +1458,7 @@ function initMap() {
 }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE&callback=initMap"></script>
+<!-- General inquiry pop-up (shared across pages; styles in theme global.css section 26) -->
+<script src="inquiry-popup.js" defer></script>
 </body>
 </html>

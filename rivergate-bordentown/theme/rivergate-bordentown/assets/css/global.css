@@ -251,7 +251,7 @@ section {
 .amenity, .fp-option, .fp-detail, .plan-card, .loc-stat, .resource-item,
 .emergency-card, .community-teaser, .how-step, .portal-card--border,
 .portal-card--alt, .appfolio-frame, .qc-item, .contact-form, .site-header,
-.neighborhood-explorer,
+.neighborhood-explorer, .inq-popup__dialog,
 [style*="var(--color-surface)"], [style*="var(--color-bg-alt)"] {
   color: var(--color-text);
   --color-text-muted: #51678A;
@@ -261,7 +261,7 @@ section {
 :is(.amenity, .fp-option, .fp-detail, .plan-card, .loc-stat, .resource-item,
     .emergency-card, .community-teaser, .how-step, .portal-card--border,
     .portal-card--alt, .qc-item, .contact-form, .site-header,
-    .neighborhood-explorer,
+    .neighborhood-explorer, .inq-popup__dialog,
     [style*="var(--color-surface)"], [style*="var(--color-bg-alt)"])
     :is(h1, h2, h3, h4, h5, h6) { color: var(--color-text); }
 
@@ -1689,7 +1689,7 @@ body.mp-open { overflow: hidden; }
   display: none;
 }
 
-@media (min-width: 861px) { .fp-option.is-active::after { display: block; } }
+@media (min-width: 901px) { .fp-option.is-active::after { display: block; } }
 
 .fp-detail {
   border: 1.5px solid var(--color-border);
@@ -1698,6 +1698,34 @@ body.mp-open { overflow: hidden; }
   padding: var(--space-7);
   position: sticky;
   top: calc(var(--nav-height) + var(--space-4));
+}
+
+/* Below 900px the selector stacks, so main.js re-parents #fp-detail into .fp-list
+   directly beneath the tapped plan (accordion) instead of leaving it below the
+   whole list. It borrows the active option's colours so the two read as one
+   block. Class is added/removed by JS — inert on desktop. */
+@media (max-width: 900px) {
+  .fp-detail--inline {
+    border-color: var(--color-primary);
+    background: var(--color-bg-alt);
+    padding: var(--space-5);
+    animation: fpDetailIn 260ms var(--ease-out) both;
+  }
+  /* 2x2 rather than a 3-then-1 wrap, so the inline panel stays short */
+  .fp-detail--inline .fp-detail__specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@keyframes fpDetailIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-detail--inline { animation: none; }
 }
 
 .fp-detail__eyebrow {
@@ -2593,35 +2621,46 @@ body.mp-open { overflow: hidden; }
   margin-top: var(--space-8);
 }
 
+/* Card links to the community's Sterling Portfolio page. The leading letter-mark
+   icon was dropped at the client's request (2026-08-18). The theme pattern puts a
+   real link on the name and stretches it over the card via ::after; the static
+   preview makes the whole card an <a>. Both share these styles. */
 .community-teaser {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: var(--space-4);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   padding: var(--space-5);
-  transition: box-shadow var(--duration) var(--ease-out), transform var(--duration) var(--ease-out);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow var(--duration) var(--ease-out), transform var(--duration) var(--ease-out),
+              border-color var(--duration) var(--ease-out);
 }
 
-.community-teaser:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.community-teaser:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
 
-.community-teaser__mark {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-base);
-  background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-border) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.community-teaser:hover .community-teaser__name { color: var(--color-primary); }
+
+.community-teaser__name {
   font-family: var(--font-heading);
   font-size: var(--text-lg);
-  color: var(--color-text-muted);
-  opacity: 0.7;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.15;
+  transition: color var(--duration) var(--ease-out);
 }
 
-.community-teaser__name { font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-text); margin: 0; line-height: 1.15; }
+/* Stretched link — makes the whole card clickable from the name's anchor */
+.community-teaser__name a::after { content: ''; position: absolute; inset: 0; }
 .community-teaser__loc  { font-size: var(--text-xs); color: var(--color-text-muted); margin: 2px 0 0; }
 
 .badge--soon {
@@ -2655,7 +2694,107 @@ body.mp-open { overflow: hidden; }
 
 
 /* --------------------------------------------------------------------------
-   26. RESPONSIVE OVERRIDES
+   26. INQUIRY POP-UP (site-wide lead capture)
+   --------------------------------------------------------------------------
+   Opens shortly after page load, once per browser session. In the static
+   preview the markup is injected by preview-1/inquiry-popup.js; in the theme
+   the same markup is emitted server-side. Sits above .mp-modal's z-index so a
+   stray overlap can never bury it.
+   -------------------------------------------------------------------------- */
+
+.inq-popup { position: fixed; inset: 0; z-index: 10001; display: none; }
+.inq-popup.is-open { display: block; }
+
+.inq-popup__backdrop {
+  position: absolute; inset: 0; background: rgba(10,37,86,0.72);
+  animation: inqFade 260ms var(--ease-out) both;
+}
+
+.inq-popup__dialog {
+  position: relative; z-index: 1;
+  width: min(900px, 92vw); max-height: 90vh;
+  margin: max(5vh, 16px) auto;
+  display: grid; grid-template-columns: 0.8fr 1fr;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: inqRise 340ms var(--ease-out) both;
+}
+
+.inq-popup__media { position: relative; min-height: 100%; background: var(--color-bg-alt); }
+.inq-popup__media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: center 60%;
+}
+
+.inq-popup__body {
+  padding: var(--space-7); overflow-y: auto; min-height: 0;  /* grid items default to min-height:auto */
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+.inq-popup__title { font-size: var(--text-2xl); margin: 0; }
+.inq-popup__text { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+.inq-popup__form { display: flex; flex-direction: column; gap: var(--space-4); }
+.inq-popup__form .btn { width: 100%; justify-content: center; }
+.inq-popup__fineprint {
+  font-size: var(--text-xs); color: var(--color-text-muted); margin: 0;
+}
+.inq-popup__fineprint a { color: var(--color-primary); }
+
+.inq-popup__close {
+  position: absolute; top: 10px; right: 12px; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: 26px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background-color var(--duration) var(--ease-out),
+              border-color var(--duration) var(--ease-out);
+}
+.inq-popup__close:hover { background: #fff; border-color: var(--color-primary); }
+
+/* Submission failed (theme only — the static preview never posts) */
+.inq-popup__error {
+  font-size: var(--text-sm); margin: 0;
+  color: #C62828; background: #FFF5F5;
+  border: 1px solid #C62828; border-radius: var(--radius-base);
+  padding: var(--space-4);
+}
+.inq-popup__error a { color: #C62828; text-decoration: underline; }
+
+/* Post-submit confirmation state */
+.inq-popup__thanks { text-align: left; display: flex; flex-direction: column; gap: var(--space-3); }
+.inq-popup__thanks h3 { font-size: var(--text-xl); margin: 0; }
+.inq-popup__thanks p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+.inq-popup__thanks p a { color: var(--color-primary); }
+
+body.inq-open { overflow: hidden; }
+
+@keyframes inqFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes inqRise {
+  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 720px) {
+  /* Stack: short banner image on top, form below; the dialog itself scrolls.
+     Trimmed tight so the submit button lands above the fold on a phone. */
+  .inq-popup__dialog {
+    grid-template-columns: 1fr; width: min(460px, 94vw);
+    margin: max(3vh, 12px) auto; overflow-y: auto;
+  }
+  .inq-popup__media { min-height: 104px; height: 104px; }
+  .inq-popup__body { padding: var(--space-6); overflow: visible; gap: var(--space-3); }
+  .inq-popup__title { font-size: var(--text-xl); }
+  .inq-popup__form { gap: var(--space-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inq-popup__backdrop, .inq-popup__dialog { animation: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   27. RESPONSIVE OVERRIDES
    -------------------------------------------------------------------------- */
 
 @media (max-width: 900px) {
@@ -2688,7 +2827,7 @@ body.mp-open { overflow: hidden; }
 
 
 /* --------------------------------------------------------------------------
-   27. BLOCK PATTERN BRIDGES
+   28. BLOCK PATTERN BRIDGES
    --------------------------------------------------------------------------
    Maps native block editor output (patterns in /patterns + theme.json presets)
    onto the component styles above. Added when the homepage was rebuilt for
@@ -2861,11 +3000,11 @@ body.mp-open { overflow: hidden; }
   }
 }
 
-/* Community teasers: WP wraps them in a flow-layout group whose sibling margin
-   (> * + *) pushed cards 2 & 3 down and shrank them in the grid — reset it so
-   all three cards are equal size. */
-.communities-teaser > .community-teaser { margin-block: 0; }
-.community-teaser__mark { margin: 0; }
+/* Community teasers: WP wraps each card in a flow-layout group, which inherits
+   the generic `.wp-block-group { margin-inline: auto }` above. On a grid item an
+   auto inline margin means shrink-to-fit, so the cards sized to their text
+   instead of filling the column — reset both axes so all six are equal size. */
+.communities-teaser > .community-teaser { margin-block: 0; margin-inline: 0; }
 
 /* Inner-page icon lists rebuilt as core lists — icon drawn via ::before.
    (feature-list / includes-grid already strip list markers via their own rules.) */

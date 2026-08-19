@@ -49,6 +49,7 @@ function rivergate_amenity_icon_map(): array {
 		'washer'    => '<rect x="8" y="12" width="24" height="16" rx="2"/><path d="M14 28 v4 M26 28 v4 M12 32 h16"/><path d="M14 18 h4 M14 22 h12"/>',
 		'transit'   => '<rect x="6" y="10" width="28" height="18" rx="3"/><path d="M6 20 h28"/><circle cx="13" cy="32" r="2"/><circle cx="27" cy="32" r="2"/><path d="M13 28 v2 M27 28 v2"/>',
 		'pet'       => '<path d="M12 10 C12 6 8 4 6 8 C4 12 8 14 12 10 Z"/><path d="M28 10 C28 6 32 4 34 8 C36 12 32 14 28 10 Z"/><ellipse cx="20" cy="22" rx="10" ry="8"/><circle cx="16" cy="21" r="2"/><circle cx="24" cy="21" r="2"/>',
+		'dogrun'    => '<ellipse cx="12.5" cy="16" rx="2.6" ry="3.6"/><ellipse cx="18" cy="12.5" rx="2.6" ry="3.9"/><ellipse cx="24" cy="12.5" rx="2.6" ry="3.9"/><ellipse cx="29" cy="16" rx="2.6" ry="3.6"/><path d="M20.5 21.5c-4.2 0-7.6 2.7-7.6 6 0 2.4 2 3.9 4.4 3.9 1.4 0 2.2-.5 3.2-.5s1.8.5 3.2.5c2.4 0 4.4-1.5 4.4-3.9 0-3.3-3.4-6-7.6-6Z"/>',
 		'star'      => '<path d="M20 6 L22 14 L30 12 L24 18 L28 26 L20 22 L12 26 L16 18 L10 12 L18 14 Z"/>',
 	];
 }
@@ -90,9 +91,33 @@ function rivergate_get_amenities( int $max = 8 ): array {
 		[ 'name' => 'Fitness Studio',      'icon_key' => 'fitness',   'detail' => 'State-of-the-art fitness center with modern equipment — no gym membership required.' ],
 		[ 'name' => 'Rivergate Clubhouse', 'icon_key' => 'clubhouse', 'detail' => 'An exclusive community clubhouse — social hub for residents, ideal for private events and everyday gathering.' ],
 		[ 'name' => 'Outdoor BBQ Area',    'icon_key' => 'bbq',       'detail' => 'Dedicated outdoor barbecue and entertaining area — perfect for gatherings in a beautifully landscaped setting.' ],
+		[ 'name' => 'Dog Run',             'icon_key' => 'dogrun',    'detail' => 'An on-site dog run for our four-legged residents — a dedicated space to stretch out and play without leaving the community.' ],
 		[ 'name' => 'Private Balconies',   'icon_key' => 'balcony',   'detail' => 'Private balconies in every residence — the perfect perch for morning coffee with river and courtyard views.' ],
 		[ 'name' => 'In-Unit Washer/Dryer','icon_key' => 'washer',    'detail' => 'Full-size washer and dryer in every home — the convenience you expect, included.' ],
 	];
+}
+
+/**
+ * Order plans smallest -> largest by square footage.
+ *
+ * Client-requested ordering (2026-08-18), applied to both the CPT results and
+ * the fallback list so the sequence is the same however the data arrives.
+ * Remove this call in rivergate_get_plans() to hand ordering back to the
+ * drag-to-reorder menu_order in wp-admin.
+ *
+ * @param array<string,array<string,mixed>> $plans Keyed by plan slug.
+ * @return array<string,array<string,mixed>>
+ */
+function rivergate_sort_plans_by_sqft( array $plans ): array {
+	uasort(
+		$plans,
+		static function ( array $a, array $b ): int {
+			$sa = (int) preg_replace( '/[^0-9]/', '', (string) ( $a['sqft'] ?? '' ) );
+			$sb = (int) preg_replace( '/[^0-9]/', '', (string) ( $b['sqft'] ?? '' ) );
+			return $sa <=> $sb;
+		}
+	);
+	return $plans;
 }
 
 /**
@@ -130,21 +155,22 @@ function rivergate_get_plans(): array {
 			];
 		}
 		wp_reset_postdata();
-		return $plans;
+		return rivergate_sort_plans_by_sqft( $plans );
 	}
 
 	// Fallback until the client adds Floor Plan entries — mirrors the preview:
 	// real plan images from the theme + Matterport tours where they exist.
 	$fp = get_template_directory_uri() . '/assets/images/floorplans/';
 	$mp = 'https://my.matterport.com/show/?m=';
+	// Listed smallest -> largest by square footage (see rivergate_sort_plans_by_sqft).
 	return [
-		'wright'     => [ 'name' => 'The Wright',     'code' => 'Plan 1B3', 'bed' => 1, 'bath' => 1, 'sqft' => '863',   'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'wright.jpg',     'mp' => $mp . 'ZJFssUi1zKd' ],
-		'borden'     => [ 'name' => 'The Borden',     'code' => 'Plan 1B',  'bed' => 1, 'bath' => 1, 'sqft' => '773',   'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'borden.jpg',     'mp' => '' ],
 		'rivergate'  => [ 'name' => 'The Rivergate',  'code' => 'Plan 1B2', 'bed' => 1, 'bath' => 1, 'sqft' => '737',   'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'rivergate.jpg',  'mp' => $mp . '18Ngo5NtdyU' ],
+		'borden'     => [ 'name' => 'The Borden',     'code' => 'Plan 1B',  'bed' => 1, 'bath' => 1, 'sqft' => '773',   'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'borden.jpg',     'mp' => '' ],
+		'wright'     => [ 'name' => 'The Wright',     'code' => 'Plan 1B3', 'bed' => 1, 'bath' => 1, 'sqft' => '863',   'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'wright.jpg',     'mp' => $mp . 'ZJFssUi1zKd' ],
 		'chester'    => [ 'name' => 'The Chester',    'code' => 'Plan 2B',  'bed' => 2, 'bath' => 2, 'sqft' => '1,033', 'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'chester.jpg',    'mp' => '' ],
 		'burlington' => [ 'name' => 'The Burlington', 'code' => 'Plan 2B4', 'bed' => 2, 'bath' => 2, 'sqft' => '1,043', 'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'burlington.jpg', 'mp' => '' ],
-		'dayton'     => [ 'name' => 'The Dayton',     'code' => 'Plan 2B2', 'bed' => 2, 'bath' => 2, 'sqft' => '1,160', 'rent' => '', 'tag' => 'Most Popular', 'pdf' => '', 'image' => $fp . 'dayton.jpg',     'mp' => $mp . 'FURMkxr2zpm' ],
 		'farnsworth' => [ 'name' => 'The Farnsworth', 'code' => 'Plan 2B5', 'bed' => 2, 'bath' => 2, 'sqft' => '1,149', 'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'farnsworth.jpg', 'mp' => $mp . 'AHnca1wS9bX' ],
+		'dayton'     => [ 'name' => 'The Dayton',     'code' => 'Plan 2B2', 'bed' => 2, 'bath' => 2, 'sqft' => '1,160', 'rent' => '', 'tag' => 'Most Popular', 'pdf' => '', 'image' => $fp . 'dayton.jpg',     'mp' => $mp . 'FURMkxr2zpm' ],
 		'edison'     => [ 'name' => 'The Edison',     'code' => 'Plan 2B3', 'bed' => 2, 'bath' => 2, 'sqft' => '1,287', 'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'edison.jpg',     'mp' => $mp . 'ghub4RNmR3A' ],
 		'hamilton'   => [ 'name' => 'The Hamilton',   'code' => 'Plan 2B6', 'bed' => 2, 'bath' => 2, 'sqft' => '1,342', 'rent' => '', 'tag' => '',             'pdf' => '', 'image' => $fp . 'hamilton.jpg',   'mp' => '' ],
 	];

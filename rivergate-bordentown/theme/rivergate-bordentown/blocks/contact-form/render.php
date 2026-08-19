@@ -9,6 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Floor-plan options come from the same source as the plan blocks, so the list
+// stays in sync (and stays ordered smallest -> largest by square footage).
+$fp_plans = rivergate_get_plans();
+$fp_one   = array_filter( $fp_plans, static fn( $p ) => (int) $p['bed'] === 1 );
+$fp_two   = array_filter( $fp_plans, static fn( $p ) => (int) $p['bed'] >= 2 );
+
 $recipient = ! empty( $attributes['recipientEmail'] ) && is_email( $attributes['recipientEmail'] )
 	? $attributes['recipientEmail']
 	: get_option( 'admin_email' );
@@ -73,14 +79,20 @@ if ( ! rivergate_in_editor()
     <label for="unit-type">Interested In</label>
     <select id="unit-type" name="unit_type">
       <option value="">Select a floor plan...</option>
-      <option value="1br-borden">One Bedroom — The Borden (773 sq ft)</option>
-      <option value="1br-rivergate">One Bedroom — The Rivergate (737 sq ft)</option>
-      <option value="1br-wright">One Bedroom — The Wright (863 sq ft)</option>
-      <option value="2br-chester">Two Bedroom — The Chester (1,033 sq ft)</option>
-      <option value="2br-dayton">Two Bedroom — The Dayton (1,160 sq ft)</option>
-      <option value="2br-edison">Two Bedroom — The Edison (1,287 sq ft)</option>
-      <option value="2br-farnsworth">Two Bedroom — The Farnsworth (1,149 sq ft)</option>
-      <option value="2br-hamilton">Two Bedroom — The Hamilton (1,342 sq ft)</option>
+      <?php if ( $fp_one ) : ?>
+        <optgroup label="One Bedroom">
+          <?php foreach ( $fp_one as $slug => $p ) : ?>
+            <option value="<?php echo esc_attr( '1br-' . $slug ); ?>"><?php echo esc_html( $p['name'] . ' — ' . $p['sqft'] . ' sq ft' ); ?></option>
+          <?php endforeach; ?>
+        </optgroup>
+      <?php endif; ?>
+      <?php if ( $fp_two ) : ?>
+        <optgroup label="Two Bedroom">
+          <?php foreach ( $fp_two as $slug => $p ) : ?>
+            <option value="<?php echo esc_attr( '2br-' . $slug ); ?>"><?php echo esc_html( $p['name'] . ' — ' . $p['sqft'] . ' sq ft' ); ?></option>
+          <?php endforeach; ?>
+        </optgroup>
+      <?php endif; ?>
       <option value="unsure">Not Sure Yet</option>
     </select>
   </div>
