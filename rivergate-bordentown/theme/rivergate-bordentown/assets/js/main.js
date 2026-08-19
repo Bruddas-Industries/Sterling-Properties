@@ -186,20 +186,90 @@
         '</div>';
     }
 
+    /* Below 900px .fp-selector stacks, so the detail panel is moved into .fp-list
+       directly under the tapped plan (accordion) rather than being left below the
+       whole list, which forced a long scroll back up. */
+    var fpList     = document.getElementById('fp-list') || fpDetail.parentNode.querySelector('.fp-list');
+    var fpSelector = fpDetail.closest('.fp-selector');
+    var fpMq       = window.matchMedia('(max-width: 900px)');
+    var fpCurrent  = null;
+
+    function placeDetail(opt) {
+      if (!fpSelector) return;
+      if (fpMq.matches) {
+        fpDetail.classList.add('fp-detail--inline');
+        if (fpDetail.previousElementSibling !== opt) opt.insertAdjacentElement('afterend', fpDetail);
+      } else {
+        fpDetail.classList.remove('fp-detail--inline');
+        if (fpDetail.parentNode !== fpSelector) fpSelector.appendChild(fpDetail);
+      }
+    }
+
+    /* Two different widgets: a listbox + side panel on desktop, a disclosure
+       accordion on mobile (where the panel sits inside the list, which a listbox
+       may not contain). Keep the ARIA in step with whichever is on screen. */
+    function syncFpAria() {
+      var mobile = fpMq.matches;
+      if (fpList) fpList.setAttribute('role', mobile ? 'group' : 'listbox');
+      fpDetail.setAttribute('role', 'region');
+      fpOptions.forEach(function (o) {
+        var on = o.classList.contains('is-active');
+        if (mobile) {
+          o.removeAttribute('role');            /* native <button> role is correct here */
+          o.removeAttribute('aria-selected');
+          o.setAttribute('aria-controls', 'fp-detail');
+          o.setAttribute('aria-expanded', on ? 'true' : 'false');
+        } else {
+          o.setAttribute('role', 'option');
+          o.removeAttribute('aria-expanded');
+          o.removeAttribute('aria-controls');
+          o.setAttribute('aria-selected', on ? 'true' : 'false');
+        }
+      });
+    }
+
+    function closePlan() {
+      fpOptions.forEach(function (o) { o.classList.remove('is-active'); });
+      fpCurrent = null;
+      fpDetail.hidden = true;
+      fpDetail.innerHTML = '';
+      syncFpAria();
+    }
+
     function selectPlan(opt) {
-      fpOptions.forEach(function (o) { o.classList.remove('is-active'); o.setAttribute('aria-selected', 'false'); });
+      fpOptions.forEach(function (o) { o.classList.remove('is-active'); });
       opt.classList.add('is-active');
-      opt.setAttribute('aria-selected', 'true');
+      fpCurrent = opt;
+      fpDetail.hidden = false;
       renderDetail(opt.getAttribute('data-plan'));
+      placeDetail(opt);
+      syncFpAria();
     }
 
     fpOptions.forEach(function (opt) {
-      opt.addEventListener('click', function () { selectPlan(opt); });
+      opt.addEventListener('click', function () {
+        /* On mobile the list acts as an accordion — tapping the open plan closes it */
+        if (fpMq.matches && fpCurrent === opt) { closePlan(); return; }
+        selectPlan(opt);
+        if (fpMq.matches) opt.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
     });
 
-    /* Default: The Wright */
-    var defaultOpt = document.querySelector('.fp-option[data-plan="wright"]') || fpOptions[0];
-    if (defaultOpt) selectPlan(defaultOpt);
+    /* Desktop opens on The Wright so the panel is never blank. Mobile starts
+       collapsed so the list stays short and the detail opens under whichever plan
+       the visitor taps. */
+    function applyFpBreakpoint() {
+      if (fpCurrent) { placeDetail(fpCurrent); syncFpAria(); return; }
+      if (fpMq.matches) {
+        closePlan();
+      } else {
+        var defaultOpt = document.querySelector('.fp-option[data-plan="wright"]') || fpOptions[0];
+        if (defaultOpt) selectPlan(defaultOpt);
+      }
+    }
+    applyFpBreakpoint();
+    if (fpMq.addEventListener) fpMq.addEventListener('change', applyFpBreakpoint);
+    else if (fpMq.addListener) fpMq.addListener(applyFpBreakpoint);
   }
 
   /* ------------------------------------------------------------------
@@ -322,6 +392,88 @@
       if (e.target.closest && e.target.closest('[data-mp-close]')) { closeTour(); }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTour(); });
+  }());
+
+  /* ------------------------------------------------------------------
+     10. GENERAL INQUIRY POP-UP
+         Markup is rendered server-side by inc/inquiry-popup.php on wp_footer;
+         this only handles when it opens and how it closes. Shown once per
+         browser session; ?popup=1 forces it for review. Styles: global.css
+         section 26.
+     ------------------------------------------------------------------ */
+  (function () {
+    var popup = document.getElementById('inq-popup');
+    if (!popup) return;
+
+    var SEEN_KEY   = 'rg-inquiry-popup-seen';
+    var OPEN_DELAY = 1400;
+    var dialog     = popup.querySelector('.inq-popup__dialog');
+    var forced     = popup.hasAttribute('data-inq-forced') ||
+                     /[?&]popup=1(&|$)/.test(window.location.search);
+    var lastFocused = null;
+
+    function markSeen() {
+      try { window.sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
+    }
+
+    function alreadySeen() {
+      if (forced) return false;
+      try { return window.sessionStorage.getItem(SEEN_KEY) === '1'; }
+      catch (e) { return false; }   /* storage disabled — just show it */
+    }
+
+    function focusable() {
+      return Array.prototype.filter.call(
+        dialog.querySelectorAll('a[href], button, input, select, textarea'),
+        function (el) { return !el.disabled && el.offsetParent !== null; }
+      );
+    }
+
+    function open() {
+      lastFocused = document.activeElement;
+      popup.classList.add('is-open');
+      popup.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('inq-open');
+      var first = dialog.querySelector('input, select, button');
+      if (first) first.focus();
+    }
+
+    function close() {
+      markSeen();
+      popup.classList.remove('is-open');
+      popup.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('inq-open');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    popup.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('[data-inq-close]')) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!popup.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { close(); return; }
+
+      /* Keep tabbing inside the dialog while it's open */
+      if (e.key === 'Tab') {
+        var items = focusable();
+        if (!items.length) return;
+        var first = items[0];
+        var last  = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    /* A submission re-renders the page with the pop-up already open (PHP adds
+       .is-open + data-inq-forced), so only the idle case needs the timer. */
+    if (popup.classList.contains('is-open')) {
+      markSeen();
+      document.body.classList.add('inq-open');
+      return;
+    }
+    if (alreadySeen()) return;
+    window.setTimeout(open, OPEN_DELAY);
   }());
 
 }());

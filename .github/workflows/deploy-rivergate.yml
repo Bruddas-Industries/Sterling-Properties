@@ -1,0 +1,114 @@
+name: Deploy Rivergate theme
+
+# Ships rivergate-bordentown/theme/rivergate-bordentown/ to the Cloudways
+# WordPress multisite. Only the theme directory is deployed — preview-1/,
+# sterling-properties/ and the repo docs stay out of the web root.
+#
+# Deliberately NOT deployed: acf-json/. ACF writes field-group definitions
+# into the theme directory when they are edited in wp-admin, so overwriting it
+# from git would silently revert the client's work. That means field groups are
+# owned by production, not by this repo — see the note at the bottom.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'rivergate-bordentown/theme/rivergate-bordentown/**'
+      - '.github/workflows/deploy-rivergate.yml'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'List what would change without writing anything'
+        type: boolean
+        default: false
+
+concurrency:
+  group: deploy-rivergate
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: rsync theme to Cloudways
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      SRC: rivergate-bordentown/theme/rivergate-bordentown/
+
+    steps:
+      - name: Check out the commit being deployed
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Warn if the cache-busting version was not bumped
+        continue-on-error: true
+        run: |
+          # CLAUDE.md convention: bump RIVERGATE_VERSION on every deploy, or
+          # browsers keep serving the old CSS/JS.
+          FUNCS="$SRC/functions.php"
+          VERSION=$(grep -oP "RIVERGATE_VERSION',\s*'\K[^']+" "$FUNCS" || echo "unknown")
+          echo "Deploying theme version: $VERSION"
+          if git rev-parse HEAD~1 >/dev/null 2>&1; then
+            if git diff --quiet HEAD~1 HEAD -- "$FUNCS"; then
+              if ! git diff --quiet HEAD~1 HEAD -- "$SRC"; then
+                echo "::warning::Theme files changed but RIVERGATE_VERSION is still $VERSION — cached CSS/JS may not refresh."
+              fi
+            fi
+          fi
+
+      - name: Load the deploy key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.CLOUDWAYS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.CLOUDWAYS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Deploy
+        env:
+          DEST: ${{ secrets.CLOUDWAYS_USER }}@${{ secrets.CLOUDWAYS_HOST }}:${{ secrets.CLOUDWAYS_THEME_PATH }}
+          DRY: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
+        run: |
+          # --chmod keeps dirs 775 / files 664 so the app user (also in the
+          #   www-data group) retains write access after we deploy as master.
+          # --omit-dir-times avoids the utime errors that come from directories
+          #   owned by the app user.
+          # No -o/-g: we are not root and cannot chown.
+          rsync -rlptzv $DRY --delete \
+            --omit-dir-times \
+            --chmod=D775,F664 \
+            --exclude '.git*' \
+            --exclude 'acf-json/' \
+            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+            "$SRC" "$DEST"
+
+      - name: Verify the site still serves
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+        run: |
+          BASE="${{ secrets.SITE_BASE_URL }}"
+          fail=0
+          for path in "" "amenities/" "floor-plans/" "contact/"; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L --max-time 30 "$BASE/$path")
+            echo "/$path -> $code"
+            [ "$code" = "200" ] || fail=1
+          done
+          if [ "$fail" = "1" ]; then
+            echo "::error::A page stopped returning 200 after deploy."
+            exit 1
+          fi
+
+      - name: Revoke the key from the runner
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+# ---------------------------------------------------------------------------
+# Two things this pipeline deliberately does NOT do:
+#
+# 1. Content. Pages, menus, media and the amenity/floor-plan CPT entries live
+#    in the database. Nothing here touches them, and no git workflow will keep
+#    two environments' content in sync — that stays a manual, deliberate act.
+#
+# 2. Varnish. Cloudways caches at the server level, so a deploy can look like
+#    it did nothing. Purge from the panel (Application Settings -> Purge), or
+#    disable Varnish while iterating.
+# ---------------------------------------------------------------------------

@@ -32,6 +32,7 @@
         "washer":    "Washer / Dryer",
         "transit":   "Transit / Train",
         "pet":       "Pet Friendly / Paw",
+        "dogrun":    "Dog Run / Paw Print",
         "star":      "Concierge / Star"
       },
       "default_value": "",
