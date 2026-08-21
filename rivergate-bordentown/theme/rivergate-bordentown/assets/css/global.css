@@ -2845,6 +2845,24 @@ body.inq-open { overflow: hidden; }
 .wp-block-group.container     { max-width: var(--container-max); }
 .wp-block-group.section-intro { max-width: 640px; margin-inline: 0; }
 
+/* Block groups used as grid or flex items must not keep the generic
+   `.wp-block-group { margin-inline: auto }` from section 13. On a grid item an
+   auto inline margin beats `justify-self: stretch`, so the item collapses to
+   its fit-content width instead of filling the track. For .feature__image,
+   whose only child is an absolutely positioned <img>, fit-content is 0 — the
+   photo vanishes entirely. Elsewhere it just renders cards narrower than their
+   cell. Every layout container the patterns place groups inside is listed here. */
+.feature > .wp-block-group,
+.policy-grid > .wp-block-group,
+.emergency-grid > .wp-block-group,
+.communities-teaser > .wp-block-group,
+.quick-contact-strip .container > .wp-block-group,
+.transit-strip .container > .wp-block-group,
+.sterling-banner .container > .wp-block-group {
+  margin-inline: 0;
+  max-width: none;
+}
+
 /* Feature image fills its grid cell (reset default figure margin + radius). */
 .feature__image .wp-block-image      { margin: 0; height: 100%; }
 .feature__image .wp-block-image img  { border-radius: 0; }

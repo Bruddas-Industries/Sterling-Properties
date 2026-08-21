@@ -7,7 +7,7 @@
 
 // Brand fonts (Logam + Noyh Geometric Slim) load via @font-face in global.css —
 // the .otf files live in assets/fonts/. No external font request needed.
-define( 'RIVERGATE_VERSION', '1.9.0' );
+define( 'RIVERGATE_VERSION', '1.9.1' );
 define( 'RIVERGATE_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' ); // Add your Google Maps API key here
 
 // Block editor integration: dynamic blocks, block styles, patterns, body class.
