@@ -53,7 +53,7 @@
         <a href="<?php echo esc_url( home_url( '/availability/' ) ); ?>" class="btn btn--primary nav-overlay__cta">
             <?php esc_html_e( 'See Availability', 'rivergate-bordentown' ); ?>
         </a>
-        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn--ghost nav-overlay__cta">
+        <a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>" class="btn btn--ghost nav-overlay__cta">
             <?php esc_html_e( 'Schedule a Tour', 'rivergate-bordentown' ); ?>
         </a>
         <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" class="btn btn--ghost nav-overlay__cta" target="_blank" rel="noopener noreferrer">

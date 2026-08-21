@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $maps_key = defined( 'RIVERGATE_MAPS_API_KEY' ) ? RIVERGATE_MAPS_API_KEY : '';
-$contact  = home_url( '/contact/' );
+$contact  = home_url( '/#contact' );
 
 // Each item is [ name, detail, lat, lng ]. The coordinates drive the numbered
 // map markers, so the badge number in the list always matches the marker.
