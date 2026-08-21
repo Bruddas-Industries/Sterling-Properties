@@ -7,7 +7,7 @@
 
 // Brand fonts (Logam + Noyh Geometric Slim) load via @font-face in global.css —
 // the .otf files live in assets/fonts/. No external font request needed.
-define( 'RIVERGATE_VERSION', '1.10.0' );
+define( 'RIVERGATE_VERSION', '1.11.0' );
 define( 'RIVERGATE_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' ); // Add your Google Maps API key here
 
 // Block editor integration: dynamic blocks, block styles, patterns, body class.
@@ -224,3 +224,39 @@ add_filter( 'acf/settings/load_json', function ( array $paths ): array {
 add_filter( 'acf/settings/save_json', function (): string {
     return get_stylesheet_directory() . '/acf-json';
 } );
+
+
+// ---------------------------------------------------------------------------
+// 10. LEGACY PAGE REDIRECTS
+//     The standalone Contact and Location pages were folded into the homepage
+//     (#contact and #neighborhood). Nothing links to them any more, but the
+//     URLs stay valid so old links and search results still land somewhere
+//     sensible instead of 404ing.
+//
+//     NOTE: 301 is cached hard by browsers. While iterating pre-launch you can
+//     drop this to 302 with:
+//         add_filter( 'rivergate_legacy_redirect_status', fn() => 302 );
+// ---------------------------------------------------------------------------
+
+function rivergate_legacy_page_redirects(): void {
+    if ( is_admin() || wp_doing_ajax() || ! is_page() ) {
+        return;
+    }
+
+    $map = apply_filters(
+        'rivergate_legacy_redirects',
+        [
+            'contact'  => '/#contact',
+            'location' => '/#neighborhood',
+        ]
+    );
+
+    foreach ( $map as $slug => $target ) {
+        if ( is_page( $slug ) ) {
+            $status = (int) apply_filters( 'rivergate_legacy_redirect_status', 301 );
+            wp_safe_redirect( home_url( $target ), $status );
+            exit;
+        }
+    }
+}
+add_action( 'template_redirect', 'rivergate_legacy_page_redirects' );
