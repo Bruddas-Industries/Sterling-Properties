@@ -2868,6 +2868,8 @@ body.inq-open { overflow: hidden; }
    wants flush tiles and the caption as a bottom-left overlay. */
 .gallery-grid > .wp-block-image {
   margin: 0;
+  height: 100%;          /* a <figure> grid item wraps its image instead of
+                            filling the row the way the preview's <div> did */
   border-radius: var(--radius-lg);
 }
 .gallery-grid .wp-block-image img { border-radius: 0; }
