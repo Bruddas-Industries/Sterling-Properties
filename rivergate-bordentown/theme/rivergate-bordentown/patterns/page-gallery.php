@@ -77,6 +77,12 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:image {"className":"gallery-item","linkDestination":"none"} -->
 <figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-1.jpg" alt="Pool and outdoor living at Rivergate"/><figcaption class="gallery-item__caption">Pool Deck</figcaption></figure>
 <!-- /wp:image -->
+<!-- wp:image {"className":"gallery-item","linkDestination":"none"} -->
+<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/clubhouse/clubhouse-2.jpg" alt="Rivergate clubhouse lounge with seating and coffee bar"/><figcaption class="gallery-item__caption">Clubhouse Lounge</figcaption></figure>
+<!-- /wp:image -->
+<!-- wp:image {"className":"gallery-item","linkDestination":"none"} -->
+<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-2.jpg" alt="Fire pit and pergola with grill at Rivergate"/><figcaption class="gallery-item__caption">Fire Pit &amp; Pergola</figcaption></figure>
+<!-- /wp:image -->
 </div>
 <!-- /wp:group -->
 </div>
