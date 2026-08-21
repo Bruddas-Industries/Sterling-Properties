@@ -2863,6 +2863,20 @@ body.inq-open { overflow: hidden; }
   max-width: none;
 }
 
+/* Gallery mosaic (section 19) built from core Image blocks. Core adds a bottom
+   margin, rounded corners and a centred caption to .wp-block-image; the mosaic
+   wants flush tiles and the caption as a bottom-left overlay. */
+.gallery-grid > .wp-block-image {
+  margin: 0;
+  border-radius: var(--radius-lg);
+}
+.gallery-grid .wp-block-image img { border-radius: 0; }
+.gallery-grid .wp-block-image figcaption.gallery-item__caption {
+  margin: 0;
+  text-align: left;
+  font-size: var(--text-xs);
+}
+
 /* Feature image fills its grid cell (reset default figure margin + radius). */
 .feature__image .wp-block-image      { margin: 0; height: 100%; }
 .feature__image .wp-block-image img  { border-radius: 0; }
