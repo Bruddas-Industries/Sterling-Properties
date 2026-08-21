@@ -25,13 +25,9 @@
 </div>
 <!-- /wp:html -->
 <!-- wp:rivergate/location-stats {"lock":{"move":true,"remove":true}} /-->
-<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-<div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-rivergate-secondary"} -->
-<div class="wp-block-button is-style-rivergate-secondary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/location/' ) ); ?>">Explore the Neighborhood</a></div>
-<!-- /wp:button -->
-</div>
-<!-- /wp:buttons -->
+<?php // The explorer carries its own Get Directions / Contact actions, so the
+      // old "Explore the Neighborhood" button below it would be redundant. ?>
+<!-- wp:rivergate/neighborhood-explorer {"lock":{"move":true,"remove":true}} /-->
 </div>
 <!-- /wp:group -->
 </section>

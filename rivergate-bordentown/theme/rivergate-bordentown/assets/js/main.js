@@ -344,6 +344,169 @@
   }
 
   /* ------------------------------------------------------------------
+     11. NEIGHBORHOOD MAP — numbered POI markers, list/tab wiring
+         Data comes from window.RG_MAP, injected by the
+         rivergate/neighborhood-explorer block (blocks/neighborhood-explorer/
+         render.php) so the markers always match the rendered list.
+         The Maps API calls initRivergateMap when it finishes loading; it is
+         enqueued with a dependency on this file so this runs first.
+         Section 9 above owns the tab/row UI state — this only adds the map
+         behaviour on top, so the list still works if the API fails to load.
+     ------------------------------------------------------------------ */
+  window.initRivergateMap = function () {
+    var cfg   = window.RG_MAP;
+    var mapEl = document.getElementById('poi-map');
+    if (!cfg || !mapEl || !window.google || !google.maps) return;
+
+    var mapStyles = [
+      { elementType: 'geometry', stylers: [{ color: '#f0f0f0' }] },
+      { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+      { elementType: 'labels.text.fill', stylers: [{ color: '#6b6b6b' }] },
+      { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f5f5' }] },
+      { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#0472BB' }] },
+      { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#a8c5d8' }] },
+      { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#ffffff' }] },
+      { featureType: 'road.arterial', elementType: 'geometry', stylers: [{ color: '#e8e8e8' }] },
+      { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#d8d8d8' }] },
+      { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#e8ede8' }] },
+      { featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#e8e8e8' }] },
+      { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: '#c0c0c0' }] },
+      { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#f0f0f0' }] }
+    ];
+
+    var map = new google.maps.Map(mapEl, {
+      center: cfg.center,
+      zoom: cfg.zoom,
+      styles: mapStyles,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true,
+      zoomControl: true
+    });
+
+    function svgMarker(num, color, ink) {
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">'
+        + '<circle cx="14" cy="14" r="13" fill="' + color + '" stroke="#ffffff" stroke-width="2.5"/>'
+        + '<text x="14" y="19" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="' + (ink || '#ffffff') + '">' + num + '</text>'
+        + '</svg>';
+      return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    }
+
+    var homeSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">'
+      + '<circle cx="18" cy="18" r="17" fill="#0472BB" stroke="#ffffff" stroke-width="3"/>'
+      + '<path d="M18 10 L26 17 L24 17 L24 26 L20 26 L20 21 L16 21 L16 26 L12 26 L12 17 L10 17 Z" fill="#ffffff"/>'
+      + '</svg>';
+
+    var activeInfo    = null;
+    var byName        = {};
+    var byCategory    = {};
+
+    var propertyMarker = new google.maps.Marker({
+      position: { lat: cfg.property.lat, lng: cfg.property.lng },
+      map: map,
+      title: cfg.property.title,
+      zIndex: 200,
+      icon: {
+        url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(homeSvg),
+        scaledSize: new google.maps.Size(36, 36),
+        anchor: new google.maps.Point(18, 18)
+      }
+    });
+    var propertyInfo = new google.maps.InfoWindow({
+      content: '<div style="font-family:Inter,sans-serif;padding:10px 14px;line-height:1.3">'
+        + '<strong style="font-size:12px;color:#1C2B3A;display:block;letter-spacing:0.02em">' + cfg.property.title + '</strong>'
+        + '<span style="font-size:11px;color:#888;margin-top:2px;display:block">' + cfg.property.address + '</span></div>'
+    });
+    propertyMarker.addListener('mouseover', function () { propertyInfo.open(map, propertyMarker); });
+    propertyMarker.addListener('mouseout', function () { if (activeInfo !== propertyInfo) propertyInfo.close(); });
+    propertyMarker.addListener('click', function () {
+      if (activeInfo) activeInfo.close();
+      propertyInfo.open(map, propertyMarker);
+      activeInfo = propertyInfo;
+    });
+
+    cfg.pois.forEach(function (poi) {
+      var marker = new google.maps.Marker({
+        position: { lat: poi.lat, lng: poi.lng },
+        map: map,
+        title: poi.name,
+        zIndex: 100,
+        icon: {
+          url: svgMarker(poi.num, poi.color, poi.ink),
+          scaledSize: new google.maps.Size(28, 28),
+          anchor: new google.maps.Point(14, 14)
+        }
+      });
+      var info = new google.maps.InfoWindow({
+        content: '<div style="font-family:Inter,sans-serif;padding:8px 12px;line-height:1;display:flex;align-items:center;gap:8px">'
+          + '<span style="flex-shrink:0;width:20px;height:20px;border-radius:50%;background:' + poi.color + ';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:' + poi.ink + '">' + poi.num + '</span>'
+          + '<span style="font-size:12px;font-weight:600;color:#1C2B3A;letter-spacing:0.02em;white-space:nowrap">' + poi.name + '</span></div>'
+      });
+      marker.addListener('mouseover', function () { info.open(map, marker); });
+      marker.addListener('mouseout', function () { if (activeInfo !== info) info.close(); });
+      marker.addListener('click', function () {
+        if (activeInfo === info) { info.close(); activeInfo = null; return; }
+        if (activeInfo) activeInfo.close();
+        info.open(map, marker);
+        activeInfo = info;
+        highlightRow(poi.name);
+      });
+
+      byName[poi.name] = { marker: marker, info: info, category: poi.category };
+      if (!byCategory[poi.category]) byCategory[poi.category] = [];
+      byCategory[poi.category].push(marker);
+    });
+
+    map.addListener('click', function () {
+      if (activeInfo) { activeInfo.close(); activeInfo = null; }
+    });
+
+    function highlightRow(name) {
+      var row = document.querySelector('.explorer-poi-item[data-poi="' + name + '"]');
+      if (!row) return;
+      document.querySelectorAll('.explorer-poi-item.is-active').forEach(function (el) { el.classList.remove('is-active'); });
+      row.classList.add('is-active');
+      row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    /* Clicking a list row pans the map to its marker */
+    document.querySelectorAll('.explorer-poi-item[data-poi]').forEach(function (item) {
+      var entry = byName[item.getAttribute('data-poi')];
+      if (!entry) return;
+      item.addEventListener('click', function () {
+        map.panTo(entry.marker.getPosition());
+        map.setZoom(14);
+        if (activeInfo) activeInfo.close();
+        entry.info.open(map, entry.marker);
+        activeInfo = entry.info;
+        mapEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+
+    /* Tabs additionally filter markers and refit the viewport */
+    document.querySelectorAll('.tab-btn[data-tab]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var tab = btn.getAttribute('data-tab');
+        Object.keys(byName).forEach(function (name) {
+          var entry = byName[name];
+          var show  = (tab === 'all') || (entry.category === tab);
+          entry.marker.setVisible(show);
+          if (!show && activeInfo === entry.info) { entry.info.close(); activeInfo = null; }
+        });
+        if (tab === 'all') {
+          map.setCenter(cfg.center);
+          map.setZoom(cfg.zoom);
+        } else if (byCategory[tab]) {
+          var bounds = new google.maps.LatLngBounds();
+          byCategory[tab].forEach(function (m) { bounds.extend(m.getPosition()); });
+          bounds.extend(propertyMarker.getPosition());
+          map.fitBounds(bounds, { top: 60, right: 40, bottom: 60, left: 40 });
+        }
+      });
+    });
+  };
+
+  /* ------------------------------------------------------------------
      10. APPFOLIO IFRAME — hide fallback if iframe loads
      ------------------------------------------------------------------ */
   var afIframe   = document.querySelector('.appfolio-frame iframe');
