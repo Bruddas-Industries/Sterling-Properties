@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $plans     = rivergate_get_plans();
 $apply_url = rivergate_apply_url();
-$contact   = home_url( '/contact/' );
+$contact   = home_url( '/#contact' );
 
 $one = array_filter( $plans, static fn( $p ) => (int) $p['bed'] === 1 );
 $two = array_filter( $plans, static fn( $p ) => (int) $p['bed'] >= 2 );

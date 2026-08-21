@@ -100,12 +100,12 @@ $pdf = get_template_directory_uri() . '/assets/pdf';
     <div class="resource-item__text"><span class="resource-item__name">Community Rules &amp; Regulations</span><span class="resource-item__desc">Parking, noise, pet, and community policy guidelines — filed with your lease in the resident portal</span></div>
     <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
   </a>
-  <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="resource-item">
+  <a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>" class="resource-item">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
     <div class="resource-item__text"><span class="resource-item__name">Lease Renewal Information</span><span class="resource-item__desc">Questions about renewing your lease? Contact the leasing office early.</span></div>
     <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
   </a>
-  <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="resource-item">
+  <a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>" class="resource-item">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     <div class="resource-item__text"><span class="resource-item__name">Renter's Insurance Information</span><span class="resource-item__desc">Requirements and recommendations — ask the leasing office</span></div>
     <svg class="resource-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>

@@ -24,7 +24,7 @@
             <a href="<?php echo esc_url( home_url( '/#floor-plans' ) ); ?>"><?php esc_html_e( 'Floor Plans', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>"><?php esc_html_e( 'Gallery', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/#neighborhood' ) ); ?>"><?php esc_html_e( 'Neighborhood', 'rivergate-bordentown' ); ?></a>
-            <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'rivergate-bordentown' ); ?></a>
+            <a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>"><?php esc_html_e( 'Contact', 'rivergate-bordentown' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/residents/' ) ); ?>"><?php esc_html_e( 'Residents', 'rivergate-bordentown' ); ?></a>
             <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Pay Rent', 'rivergate-bordentown' ); ?></a>
             <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=RIVERGATE+BORDENTOWN" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Apply Now', 'rivergate-bordentown' ); ?></a>
