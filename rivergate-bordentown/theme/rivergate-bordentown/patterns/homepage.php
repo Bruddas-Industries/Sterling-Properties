@@ -12,6 +12,7 @@ include $parts . 'about.php';
 include $parts . 'amenities.php';
 include $parts . 'residences.php';
 include $parts . 'floor-plans.php';
+include $parts . 'gallery-teaser.php';
 include $parts . 'location.php';
 include $parts . 'cta.php';
 include $parts . 'communities.php';
