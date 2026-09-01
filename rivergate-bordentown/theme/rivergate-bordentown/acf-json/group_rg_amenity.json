@@ -33,6 +33,9 @@
         "transit":   "Transit / Train",
         "pet":       "Pet Friendly / Paw",
         "dogrun":    "Dog Run / Paw Print",
+        "garage":    "Private Garage",
+        "ev":        "EV Charger",
+        "maintenance": "Onsite Maintenance / Wrench",
         "star":      "Concierge / Star"
       },
       "default_value": "",

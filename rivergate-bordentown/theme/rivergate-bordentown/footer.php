@@ -45,7 +45,7 @@
             Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.
         </p>
         <a class="footer-bottom__brand"
-           href="https://sterlingpropertiesnj.com"
+           href="https://sterlingpropertiesnj.com/sterling-portfolio/"
            target="_blank"
            rel="noopener noreferrer"
            aria-label="<?php esc_attr_e( 'A Sterling Properties community', 'rivergate-bordentown' ); ?>">
@@ -72,6 +72,15 @@
         <div class="mp-modal__frame">
             <iframe id="mp-modal-iframe" title="<?php esc_attr_e( 'Matterport 3D virtual tour', 'rivergate-bordentown' ); ?>" allow="fullscreen; vr" allowfullscreen loading="lazy"></iframe>
         </div>
+    </div>
+</div>
+
+<!-- Full-screen floor-plan viewer (Andrew, 8/26) -->
+<div class="fp-lightbox" id="fp-lightbox" aria-hidden="true">
+    <div class="fp-lightbox__backdrop" data-fpl-close></div>
+    <div class="fp-lightbox__dialog" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Floor plan', 'rivergate-bordentown' ); ?>">
+        <button class="fp-lightbox__close" type="button" data-fpl-close aria-label="<?php esc_attr_e( 'Close floor plan', 'rivergate-bordentown' ); ?>">&times;</button>
+        <img id="fp-lightbox-img" src="" alt="">
     </div>
 </div>
 

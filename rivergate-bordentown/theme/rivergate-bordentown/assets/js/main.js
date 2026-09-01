@@ -344,6 +344,80 @@
   }
 
   /* ------------------------------------------------------------------
+     13. FLOOR-PLAN LIGHTBOX — click a plan image to view it full screen
+         (Andrew, 8/26). Delegated, so it covers the homepage selector's
+         JS-rendered image and the floor-plans page cards alike.
+     ------------------------------------------------------------------ */
+  (function () {
+    var box = document.getElementById('fp-lightbox');
+    var img = document.getElementById('fp-lightbox-img');
+    if (!box || !img) return;
+    var lastFocused = null;
+
+    function open(src, alt) {
+      lastFocused = document.activeElement;
+      img.setAttribute('src', src);
+      img.setAttribute('alt', alt || '');
+      box.classList.add('is-open');
+      box.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mp-open');      /* reuse the scroll lock */
+      var btn = box.querySelector('.fp-lightbox__close');
+      if (btn) btn.focus();
+    }
+
+    function close() {
+      box.classList.remove('is-open');
+      box.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('mp-open');
+      img.setAttribute('src', '');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest) return;
+      if (e.target.closest('[data-fpl-close]')) { close(); return; }
+      var plan = e.target.closest('.fp-plan-img, .plan-card__img');
+      if (plan) { open(plan.getAttribute('src'), plan.getAttribute('alt')); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && box.classList.contains('is-open')) close();
+    });
+  }());
+
+  /* ------------------------------------------------------------------
+     12. AMENITY PHOTO — follows the selected amenity (Andrew, 8/26)
+         Each .amenity carries data-amenity-photo; opening one swaps the
+         right-hand photo. Amenities without their own photo leave the
+         default in place rather than showing something unrelated.
+     ------------------------------------------------------------------ */
+  (function () {
+    var photo = document.querySelector('.amenities-photo img');
+    var items = document.querySelectorAll('.amenity[data-amenity-photo]');
+    if (!photo || !items.length) return;
+
+    var defaultSrc = photo.getAttribute('src');
+    var defaultAlt = photo.getAttribute('alt');
+
+    items.forEach(function (item) {
+      var head = item.querySelector('.amenity__head');
+      if (!head) return;
+      head.addEventListener('click', function () {
+        /* section 5 toggles .is-open; only follow an amenity being opened */
+        if (!item.classList.contains('is-open')) {
+          photo.setAttribute('src', defaultSrc);
+          photo.setAttribute('alt', defaultAlt);
+          return;
+        }
+        var src = item.getAttribute('data-amenity-photo');
+        if (!src) return;                       /* no photo yet — keep the default */
+        photo.setAttribute('src', src);
+        photo.setAttribute('alt', item.getAttribute('data-amenity-name') || defaultAlt);
+      });
+    });
+  }());
+
+  /* ------------------------------------------------------------------
      11. NEIGHBORHOOD MAP — numbered POI markers, list/tab wiring
          Data comes from window.RG_MAP, injected by the
          rivergate/neighborhood-explorer block (blocks/neighborhood-explorer/
@@ -450,6 +524,7 @@
         info.open(map, marker);
         activeInfo = info;
         highlightRow(poi.name);
+        setDirections(poi.name, poi.lat, poi.lng);
       });
 
       byName[poi.name] = { marker: marker, info: info, category: poi.category };
@@ -460,6 +535,21 @@
     map.addListener('click', function () {
       if (activeInfo) { activeInfo.close(); activeInfo = null; }
     });
+
+    /* Get Directions routes FROM the property TO whichever place is selected,
+       rather than just dropping a pin on the property's own address. */
+    var ORIGIN = '500 Bluff View Circle, Bordentown, NJ 08505';
+    var dirBtn = document.getElementById('explorer-directions');
+
+    function setDirections(name, lat, lng) {
+      if (!dirBtn) return;
+      var dest = (lat && lng) ? (lat + ',' + lng) : name;
+      dirBtn.href = 'https://www.google.com/maps/dir/?api=1'
+        + '&origin=' + encodeURIComponent(ORIGIN)
+        + '&destination=' + encodeURIComponent(dest)
+        + '&travelmode=driving';
+      dirBtn.textContent = 'Directions to ' + name;
+    }
 
     function highlightRow(name) {
       var row = document.querySelector('.explorer-poi-item[data-poi="' + name + '"]');
@@ -479,6 +569,8 @@
         if (activeInfo) activeInfo.close();
         entry.info.open(map, entry.marker);
         activeInfo = entry.info;
+        setDirections(item.getAttribute('data-poi'),
+                      item.getAttribute('data-lat'), item.getAttribute('data-lng'));
         mapEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
     });
