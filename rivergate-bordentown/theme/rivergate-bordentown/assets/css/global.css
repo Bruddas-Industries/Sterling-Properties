@@ -1002,6 +1002,37 @@ body.has-video-hero.nav-is-open .site-header {
   transition: background-color var(--duration) var(--ease-out);
 }
 .mp-modal__close:hover { background: #fff; }
+/* Full-screen floor-plan viewer. Plan images are detailed line drawings, so
+   the point is to see them large — the dialog is sized to the viewport and the
+   image scales to fit inside it. */
+.fp-lightbox { position: fixed; inset: 0; z-index: 10002; display: none; }
+.fp-lightbox.is-open { display: block; }
+.fp-lightbox__backdrop { position: absolute; inset: 0; background: rgba(10,37,86,0.88); }
+.fp-lightbox__dialog {
+  position: relative; z-index: 1;
+  width: min(1400px, 96vw); height: 92vh; margin: 4vh auto 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.fp-lightbox__dialog img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  background: #fff; border-radius: var(--radius-base);
+  box-shadow: var(--shadow-lg);
+}
+.fp-lightbox__close {
+  position: absolute; top: -2px; right: 0; z-index: 2;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: 28px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background-color var(--duration) var(--ease-out);
+}
+.fp-lightbox__close:hover { background: #fff; }
+
+/* The plan images are the click target, so say so */
+.fp-plan-img, .plan-card__img { cursor: zoom-in; }
+
 body.mp-open { overflow: hidden; }
 @media (max-width: 640px) { .mp-modal__dialog { width: 96vw; margin-top: 3vh; } }
 
@@ -2285,6 +2316,16 @@ body.mp-open { overflow: hidden; }
   margin-top: 2px;
 }
 
+/* Drive time from the property, shown under each place (Andrew, 8/26). */
+.explorer-poi-drive {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-primary);
+}
+
 .explorer-actions {
   display: flex;
   gap: var(--space-4);
@@ -2381,6 +2422,13 @@ body.mp-open { overflow: hidden; }
 .form-group textarea:focus { border-color: var(--color-primary); }
 
 .form-group textarea { resize: vertical; min-height: 120px; }
+
+/* .contact-form is registered as a white surface so its inputs get dark text on
+   white. But the form itself is transparent and sits on the blue field, so its
+   labels inherited the dark muted token (#51678A) and disappeared against the
+   background. The inputs keep --color-text, which the white-surface rule does
+   not touch, so only the labels need correcting. */
+.contact-form .form-group label { color: rgba(255, 255, 255, 0.82); }
 
 /* Quick contact strip */
 .quick-contact-strip {

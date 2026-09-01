@@ -50,6 +50,9 @@ function rivergate_amenity_icon_map(): array {
 		'transit'   => '<rect x="6" y="10" width="28" height="18" rx="3"/><path d="M6 20 h28"/><circle cx="13" cy="32" r="2"/><circle cx="27" cy="32" r="2"/><path d="M13 28 v2 M27 28 v2"/>',
 		'pet'       => '<path d="M12 10 C12 6 8 4 6 8 C4 12 8 14 12 10 Z"/><path d="M28 10 C28 6 32 4 34 8 C36 12 32 14 28 10 Z"/><ellipse cx="20" cy="22" rx="10" ry="8"/><circle cx="16" cy="21" r="2"/><circle cx="24" cy="21" r="2"/>',
 		'dogrun'    => '<ellipse cx="12.5" cy="16" rx="2.6" ry="3.6"/><ellipse cx="18" cy="12.5" rx="2.6" ry="3.9"/><ellipse cx="24" cy="12.5" rx="2.6" ry="3.9"/><ellipse cx="29" cy="16" rx="2.6" ry="3.6"/><path d="M20.5 21.5c-4.2 0-7.6 2.7-7.6 6 0 2.4 2 3.9 4.4 3.9 1.4 0 2.2-.5 3.2-.5s1.8.5 3.2.5c2.4 0 4.4-1.5 4.4-3.9 0-3.3-3.4-6-7.6-6Z"/>',
+		'garage'    => '<path d="M6 32 V17 L20 9 L34 17 V32"/><rect x="12" y="21" width="16" height="11" rx="1"/><path d="M12 25 h16 M12 29 h16"/>',
+		'ev'        => '<rect x="9" y="9" width="16" height="25" rx="2"/><path d="M25 15 h4 a2 2 0 0 1 2 2 v9 a2 2 0 0 0 2 2"/><path d="M18 14 l-5 8 h5 l-3 7"/>',
+		'maintenance' => '<path d="M27 8 a6 6 0 0 0-7.8 7.8 L8 27 a2.8 2.8 0 0 0 4 4 L23.2 19.8 A6 6 0 0 0 31 12 l-3.6 3.6 -3.5-.9 -.9-3.5 Z"/>',
 		'star'      => '<path d="M20 6 L22 14 L30 12 L24 18 L28 26 L20 22 L12 26 L16 18 L10 12 L18 14 Z"/>',
 	];
 }
@@ -78,6 +81,9 @@ function rivergate_get_amenities( int $max = 8 ): array {
 			$items[] = [
 				'name'     => get_the_title(),
 				'icon_key' => rivergate_field( 'amenity_icon_key', $aid, 'star' ),
+				'group'    => rivergate_field( 'amenity_group', $aid, 'property' ),
+				'image'    => ( $iid = (int) rivergate_field( 'amenity_image', $aid, 0 ) )
+					? (string) wp_get_attachment_image_url( $iid, 'large' ) : '',
 				'detail'   => rivergate_field( 'amenity_detail', $aid, '' ),
 			];
 		}
@@ -86,14 +92,15 @@ function rivergate_get_amenities( int $max = 8 ): array {
 	}
 
 	return [
-		[ 'name' => 'Secured Access',      'icon_key' => 'lock',      'detail' => 'Controlled building entrances and secured garage parking for residents\' peace of mind around the clock.' ],
-		[ 'name' => 'Heated Pool',         'icon_key' => 'pool',      'detail' => 'Resort-style heated outdoor swimming pool with sun deck — a private retreat right outside your door, all season long.' ],
-		[ 'name' => 'Fitness Studio',      'icon_key' => 'fitness',   'detail' => 'State-of-the-art fitness center with modern equipment — no gym membership required.' ],
-		[ 'name' => 'Rivergate Clubhouse', 'icon_key' => 'clubhouse', 'detail' => 'An exclusive community clubhouse — social hub for residents, ideal for private events and everyday gathering.' ],
-		[ 'name' => 'Outdoor BBQ Area',    'icon_key' => 'bbq',       'detail' => 'Dedicated outdoor barbecue and entertaining area — perfect for gatherings in a beautifully landscaped setting.' ],
-		[ 'name' => 'Dog Run',             'icon_key' => 'dogrun',    'detail' => 'An on-site dog run for our four-legged residents — a dedicated space to stretch out and play without leaving the community.' ],
-		[ 'name' => 'Private Balconies',   'icon_key' => 'balcony',   'detail' => 'Private balconies in every residence — the perfect perch for morning coffee with river and courtyard views.' ],
-		[ 'name' => 'In-Unit Washer/Dryer','icon_key' => 'washer',    'detail' => 'Full-size washer and dryer in every home — the convenience you expect, included.' ],
+		[ 'name' => 'Secured Access',                 'icon_key' => 'lock',        'group' => 'property', 'image' => '', 'detail' => 'Controlled building entrances and secured garage parking for residents\' peace of mind around the clock.' ],
+		[ 'name' => 'Heated Pool',                    'icon_key' => 'pool',        'group' => 'property', 'image' => 'amenities/amenity-5.jpg', 'detail' => 'Resort-style heated outdoor swimming pool with sun deck — a private retreat right outside your door, all season long.' ],
+		[ 'name' => 'Fitness Studio',                 'icon_key' => 'fitness',     'group' => 'property', 'image' => 'amenities/amenity-4.jpg', 'detail' => 'State-of-the-art fitness center with modern equipment — no gym membership required.' ],
+		[ 'name' => 'Dog Run',                        'icon_key' => 'dogrun',      'group' => 'property', 'image' => '', 'detail' => 'An on-site dog run for our four-legged residents — a dedicated space to stretch out and play without leaving the community.' ],
+		[ 'name' => 'Outdoor BBQ Area',               'icon_key' => 'bbq',         'group' => 'property', 'image' => 'amenities/amenity-2.jpg', 'detail' => 'Dedicated outdoor barbecue and fire pit area — perfect for gatherings in a beautifully landscaped setting.' ],
+		[ 'name' => 'Rivergate Clubhouse',            'icon_key' => 'clubhouse',   'group' => 'property', 'image' => 'clubhouse/clubhouse-2.jpg', 'detail' => 'An exclusive community clubhouse — social hub for residents, ideal for private events and everyday gathering.' ],
+		[ 'name' => 'Private Garage Spaces',          'icon_key' => 'garage',      'group' => 'property', 'image' => '', 'detail' => 'Free-standing private garages available at select locations, with additional surface parking on-site.' ],
+		[ 'name' => 'EV Chargers',                    'icon_key' => 'ev',          'group' => 'property', 'image' => 'amenities/amenity-1.jpg', 'detail' => 'On-site electric vehicle charging stations, reserved for residents while charging.' ],
+		[ 'name' => 'Full-Time Onsite Maintenance',   'icon_key' => 'maintenance', 'group' => 'property', 'image' => '', 'detail' => 'A full-time maintenance team based on site, so requests are handled quickly by people who know the community.' ],
 	];
 }
 
