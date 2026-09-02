@@ -1425,6 +1425,9 @@ body.mp-open { overflow: hidden; }
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-4);
   align-content: start;
+  /* Without this a grid item stretches to its row height, so opening one
+     accordion inflated the closed tile beside it into a tall white box. */
+  align-items: start;
 }
 
 .amenity {
@@ -1463,6 +1466,11 @@ body.mp-open { overflow: hidden; }
   letter-spacing: var(--tracking-tight);
   color: var(--color-text);
   flex: 1;
+  /* Reserve two lines so a name that wraps and one that does not produce the
+     same tile height, keeping rows level however the labels fall. */
+  min-height: 2.3em;
+  display: flex;
+  align-items: center;
 }
 
 .amenity__plus {

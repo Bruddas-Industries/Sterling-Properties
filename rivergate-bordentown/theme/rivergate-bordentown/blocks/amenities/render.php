@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $img       = get_template_directory_uri() . '/assets/images';
-$max       = (int) ( $attributes['maxItems'] ?? 8 );
+$max       = (int) ( $attributes['maxItems'] ?? 12 );
 $photo     = ! empty( $attributes['photoUrl'] ) ? $attributes['photoUrl'] : $img . '/clubhouse/clubhouse-1.jpg';
 $caption   = (string) ( $attributes['photoCaption'] ?? '' );
 $icon_map  = rivergate_amenity_icon_map();
@@ -43,12 +43,12 @@ $amenities = array_values( array_filter( $amenities, static function ( $a ) {
 
   <div class="amenities-photo">
     <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $caption ); ?>" loading="lazy">
-    <?php if ( $caption ) : ?>
-      <div class="amenities-photo__overlay">
-        <p style="color:rgba(248,249,251,0.85);font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;margin:0;">
-          <?php echo esc_html( $caption ); ?>
-        </p>
+    <?php // Preview parity (Jephsenn 9/1): tour + gallery actions, no caption strip. ?>
+    <div class="amenities-photo__overlay">
+      <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+        <button type="button" class="btn btn--primary" data-mp="https://my.matterport.com/show/?m=RUxNh5SDzmG" data-name="Rivergate Amenities">Take a Virtual Tour</button>
+        <a href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>" class="btn btn--ghost">View Gallery</a>
       </div>
-    <?php endif; ?>
+    </div>
   </div>
 </div>

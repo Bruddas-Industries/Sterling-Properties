@@ -28,6 +28,8 @@ $categories = [
 			[ 'I-295 On-Ramp',          'Minutes away · North to NYC, South to Philadelphia', 40.1563, -74.7183, 15 ],
 			[ 'New Jersey Turnpike',    'Exit 7 · ~5 minutes',                              40.1541, -74.7010, 8 ],
 			[ 'I-195 & Route 206',      'Access to Shore points and the Princeton corridor', 40.1450, -74.6850, 7 ],
+			[ 'Hamilton Rail Station', 'NJ Transit Northeast Corridor · direct trains to NYC and Philadelphia', 40.25482, -74.70454, 16 ],
+			[ 'Florence River Line Station', 'River Line stop just south of Bordentown', 40.09989, -74.80481, 8 ],
 		],
 	],
 	'dining' => [
@@ -47,6 +49,8 @@ $categories = [
 			[ 'Hamilton Marketplace', 'Target, Best Buy, major retail · ~10 min',      40.1939, -74.6393, 14 ],
 			[ 'MarketFair',           'Upscale shops, dining & cinema · ~25 min',      40.3148, -74.6610, 23 ],
 			[ 'Quaker Bridge Mall',   'Full regional mall · ~20 min',                  40.2911, -74.6830, 19 ],
+			[ 'Independence Plaza', 'Everyday shopping and services in Hamilton', 40.19227, -74.72074, 12 ],
+			[ 'Aldi Bordentown', 'Grocery shopping minutes from home', 40.13924, -74.70872, 4 ],
 		],
 	],
 	'rec' => [
@@ -57,6 +61,8 @@ $categories = [
 			[ 'Kuser Farm Park',           'Historic park with trails and events · ~15 min', 40.2149, -74.7195, 13 ],
 			[ 'Grounds For Sculpture',     'World-class sculpture park · ~20 min',           40.2368, -74.7189, 18 ],
 			[ 'Delaware River Waterfront', 'Walking and cycling paths · At your doorstep',   40.1280, -74.7450, 2 ],
+			[ 'Northern Community Park', 'Ball fields, playground and open space in Bordentown', 40.17187, -74.69138, 8 ],
+			[ 'Veterans Park', 'Large Hamilton park with trails and sports fields', 40.20925, -74.67325, 15 ],
 		],
 	],
 	'education' => [
@@ -68,6 +74,10 @@ $categories = [
 			[ 'Princeton University',                '~20 min north via Route 206',        40.3431, -74.6551, 27 ],
 			[ 'Rider University',                    'Lawrenceville, NJ · ~20 min',        40.2812, -74.7408, 24 ],
 			[ 'Capital Health Medical Center',       'Hopewell, NJ · ~20 min',             40.2919, -74.8031, 30 ],
+			[ 'Bordentown Regional High School', 'Serving Bordentown City, Township and Fieldsboro', 40.15386, -74.68544, 7 ],
+			[ 'Clara Barton Elementary School', 'Elementary school in Bordentown', 40.14573, -74.70744, 5 ],
+			[ 'RWJ University Hospital Hamilton', 'Full-service hospital and emergency care', 40.2168, -74.67193, 15 ],
+			[ 'St Francis Medical Center', 'Trenton hospital and emergency department', 40.21763, -74.74194, 13 ],
 		],
 	],
 ];
@@ -158,7 +168,7 @@ if ( $maps_key && ! rivergate_in_editor() ) {
     </div>
 
     <div class="explorer-actions">
-      <a href="https://www.google.com/maps/dir/?api=1&amp;origin=500+Bluff+View+Circle,+Bordentown,+NJ+08505&amp;destination=500+Bluff+View+Circle,+Bordentown,+NJ+08505&amp;travelmode=driving" id="explorer-directions" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
+      <a href="https://www.google.com/maps/place/Rivergate/@40.1277632,-74.7405702,17z/data=!4m6!3m5!1s0x89c15ae16ae28bb3:0xbe9f068de1a84aad!8m2!3d40.1277866!4d-74.7379589!16s%2Fg%2F11b75h1x74" id="explorer-directions" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
       <a href="<?php echo esc_url( $contact ); ?>" class="btn btn--secondary">Contact Leasing Office</a>
     </div>
   </div>

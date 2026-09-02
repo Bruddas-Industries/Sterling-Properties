@@ -45,7 +45,7 @@
             Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.
         </p>
         <a class="footer-bottom__brand"
-           href="https://sterlingpropertiesnj.com/sterling-portfolio/"
+           href="https://sterlingpropertiesnj.com/portfolio/"
            target="_blank"
            rel="noopener noreferrer"
            aria-label="<?php esc_attr_e( 'A Sterling Properties community', 'rivergate-bordentown' ); ?>">

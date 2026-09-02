@@ -44,7 +44,7 @@ function rivergate_amenity_icon_map(): array {
 		'pool'      => '<path d="M8 28 C8 20 32 20 32 28"/><ellipse cx="20" cy="28" rx="12" ry="4"/><path d="M20 24 V12"/><circle cx="20" cy="10" r="3"/>',
 		'fitness'   => '<rect x="6" y="18" width="10" height="14" rx="1"/><rect x="24" y="10" width="10" height="22" rx="1"/><path d="M16 24 h8"/>',
 		'clubhouse' => '<circle cx="20" cy="20" r="12"/><path d="M20 8 v4 M20 28 v4 M8 20 h4 M28 20 h4"/><circle cx="20" cy="20" r="4"/>',
-		'bbq'       => '<path d="M10 20 h20"/><path d="M14 20 V14 M26 20 V14"/><ellipse cx="20" cy="20" rx="10" ry="3"/><path d="M17 26 l-2 6 M23 26 l2 6 M20 26 v6"/><path d="M15 14 q2-4 5-4 q3 0 5 4"/>',
+		'bbq'       => '<rect x="7" y="16" width="26" height="9" rx="1.5"/><path d="M11 20.5 h18"/><path d="M12 25 v7 M28 25 v7"/><path d="M12 32 h16"/><path d="M14 13 c0-2 2-2 2-4 M20 12 c0-2 2-2 2-4 M26 13 c0-2 2-2 2-4"/>',
 		'balcony'   => '<path d="M8 32 L20 8 L32 32 Z"/><path d="M14 32 V22 h12 v10"/>',
 		'washer'    => '<rect x="8" y="12" width="24" height="16" rx="2"/><path d="M14 28 v4 M26 28 v4 M12 32 h16"/><path d="M14 18 h4 M14 22 h12"/>',
 		'transit'   => '<rect x="6" y="10" width="28" height="18" rx="3"/><path d="M6 20 h28"/><circle cx="13" cy="32" r="2"/><circle cx="27" cy="32" r="2"/><path d="M13 28 v2 M27 28 v2"/>',
@@ -100,6 +100,7 @@ function rivergate_get_amenities( int $max = 8 ): array {
 		[ 'name' => 'Rivergate Clubhouse',            'icon_key' => 'clubhouse',   'group' => 'property', 'image' => 'clubhouse/clubhouse-2.jpg', 'detail' => 'An exclusive community clubhouse — social hub for residents, ideal for private events and everyday gathering.' ],
 		[ 'name' => 'Private Garage Spaces',          'icon_key' => 'garage',      'group' => 'property', 'image' => '', 'detail' => 'Free-standing private garages available at select locations, with additional surface parking on-site.' ],
 		[ 'name' => 'EV Chargers',                    'icon_key' => 'ev',          'group' => 'property', 'image' => 'amenities/amenity-1.jpg', 'detail' => 'On-site electric vehicle charging stations, reserved for residents while charging.' ],
+		[ 'name' => 'Elevator Access',                'icon_key' => 'star',        'group' => 'property', 'image' => '', 'detail' => 'Elevator service in select buildings for added convenience and accessibility.' ],
 		[ 'name' => 'Full-Time Onsite Maintenance',   'icon_key' => 'maintenance', 'group' => 'property', 'image' => '', 'detail' => 'A full-time maintenance team based on site, so requests are handled quickly by people who know the community.' ],
 	];
 }

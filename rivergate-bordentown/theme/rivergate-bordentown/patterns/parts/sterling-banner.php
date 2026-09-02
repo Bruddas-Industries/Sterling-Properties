@@ -19,7 +19,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
 <!-- wp:button {"className":"is-style-rivergate-ghost"} -->
-<div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="https://sterlingpropertiesnj.com/sterling-portfolio/" target="_blank" rel="noopener noreferrer">View the Whole Sterling Portfolio</a></div>
+<div class="wp-block-button is-style-rivergate-ghost"><a class="wp-block-button__link wp-element-button" href="https://sterlingpropertiesnj.com/portfolio/" target="_blank" rel="noopener noreferrer">View the Whole Sterling Portfolio</a></div>
 <!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
