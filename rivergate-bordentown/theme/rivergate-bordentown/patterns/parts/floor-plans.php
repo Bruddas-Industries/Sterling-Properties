@@ -19,13 +19,6 @@
 </div>
 <!-- /wp:group -->
 <!-- wp:rivergate/floor-plans {"lock":{"move":true,"remove":true}} /-->
-<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-<div class="wp-block-buttons">
-<!-- wp:button {"className":"is-style-rivergate-secondary"} -->
-<div class="wp-block-button is-style-rivergate-secondary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/floor-plans/' ) ); ?>">View All Floor Plans</a></div>
-<!-- /wp:button -->
-</div>
-<!-- /wp:buttons -->
 </div>
 <!-- /wp:group -->
 </section>

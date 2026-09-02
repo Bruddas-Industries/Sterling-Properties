@@ -36,6 +36,7 @@
         "garage":    "Private Garage",
         "ev":        "EV Charger",
         "maintenance": "Onsite Maintenance / Wrench",
+        "elevator":  "Elevator",
         "star":      "Concierge / Star"
       },
       "default_value": "",
