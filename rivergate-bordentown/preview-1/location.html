@@ -426,7 +426,7 @@
 
       <!-- Directions actions -->
       <div class="explorer-actions">
-        <a href="https://maps.google.com/?q=500+Bluff+View+Circle+Bordentown+NJ+08505" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
+        <a href="https://www.google.com/maps/place/Rivergate/@40.1277632,-74.7405702,17z/data=!4m6!3m5!1s0x89c15ae16ae28bb3:0xbe9f068de1a84aad!8m2!3d40.1277866!4d-74.7379589!16s%2Fg%2F11b75h1x74" id="explorer-directions"="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
         <a href="index.html#contact" class="btn btn--secondary">Contact Leasing Office</a>
       </div>
 
@@ -583,6 +583,27 @@ function initMap() {
     zoomControl: true
   });
 
+  /* Get Directions routes from the property to whichever place is selected.
+     Mirrors main.js section 11 in the theme so preview and site behave alike. */
+  var ORIGIN = 'Rivergate, 500 Bluff View Cir, Bordentown, NJ 08505';
+  var dirBtn = document.getElementById('explorer-directions');
+  var PLACE_URL = dirBtn ? dirBtn.getAttribute('href') : '';
+  function setDirections(name, lat, lng) {
+    if (!dirBtn) return;
+    var dest = (lat && lng) ? (lat + ',' + lng) : name;
+    dirBtn.href = 'https://www.google.com/maps/dir/?api=1'
+      + '&origin=' + encodeURIComponent(ORIGIN)
+      + '&destination=' + encodeURIComponent(dest)
+      + '&travelmode=driving';
+    dirBtn.textContent = 'Directions to ' + name;
+  }
+  function resetDirections() {
+    if (!dirBtn || !PLACE_URL) return;
+    dirBtn.href = PLACE_URL;
+    dirBtn.textContent = 'Get Directions';
+  }
+
+
   var categoryColors = {
     transit:   '#0472BB',
     shopping:  '#3C6992',
@@ -703,6 +724,7 @@ function initMap() {
       infoWindow.open(map, marker);
       activeInfoWindow = infoWindow;
       highlightListItem(poi.name);
+      setDirections(poi.name, poi.lat, poi.lng);
     });
     markersByName[poi.name] = { marker: marker, infoWindow: infoWindow, category: poi.category };
     if (!markersByCategory[poi.category]) markersByCategory[poi.category] = [];
@@ -737,6 +759,7 @@ function initMap() {
     if (!entry) return;
     item.addEventListener('click', function () {
       map.panTo(entry.marker.getPosition());
+      setDirections(name, entry.marker.getPosition().lat(), entry.marker.getPosition().lng());
       map.setZoom(14);
       if (activeInfoWindow) activeInfoWindow.close();
       entry.infoWindow.open(map, entry.marker);
@@ -761,6 +784,7 @@ function initMap() {
       btn.setAttribute('aria-selected', 'true');
       /* Update data attribute (drives CSS visibility) */
       explorer.setAttribute('data-active-tab', tab);
+      resetDirections();
       /* Toggle marker visibility */
       Object.keys(markersByName).forEach(function (name) {
         var entry = markersByName[name];

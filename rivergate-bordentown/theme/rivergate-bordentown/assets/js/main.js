@@ -557,7 +557,10 @@
     /* Coordinates of the Rivergate place itself, taken from its Google Maps
        entry. Routing from a raw address string can resolve to the wrong side
        of the road or a nearby parcel; the place coordinates cannot. */
-    var ORIGIN = '40.1277866,-74.7379589';
+    /* Google accepts a place label with coordinates appended, so the "from"
+       field reads as the property rather than a bare lat/lng pair while still
+       resolving to the exact spot. */
+    var ORIGIN = 'Rivergate, 500 Bluff View Cir, Bordentown, NJ 08505';
     var PLACE_URL = document.getElementById('explorer-directions')
       ? document.getElementById('explorer-directions').getAttribute('href') : '';
     var dirBtn = document.getElementById('explorer-directions');
