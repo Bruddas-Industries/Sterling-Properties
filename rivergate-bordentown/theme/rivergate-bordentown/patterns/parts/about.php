@@ -28,7 +28,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
 <!-- wp:button {"className":"is-style-rivergate-secondary"} -->
-<div class="wp-block-button is-style-rivergate-secondary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/floor-plans/' ) ); ?>">View Floor Plans</a></div>
+<div class="wp-block-button is-style-rivergate-secondary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/#floor-plans' ) ); ?>">View Floor Plans</a></div>
 <!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->

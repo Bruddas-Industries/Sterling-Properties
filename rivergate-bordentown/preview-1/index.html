@@ -307,7 +307,7 @@
 
     /* Neighborhood explorer — split-panel list + sticky map */
     .neighborhood-explorer {
-      display: grid; grid-template-columns: 2fr 3fr; align-items: start;
+      display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: start;
       gap: var(--space-8); margin-top: var(--space-8);
     }
     .explorer__list-panel { display: flex; flex-direction: column; }
