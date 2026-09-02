@@ -122,7 +122,23 @@
     if (!head || !panel) return;
 
     head.addEventListener('click', function () {
-      var open = item.classList.toggle('is-open');
+      var open = !item.classList.contains('is-open');
+
+      /* Only one amenity open at a time within a grid, so a neighbouring tile
+         never sits expanded alongside the one being read. */
+      if (open) {
+        var grid = item.closest('.amenity-grid') || document;
+        grid.querySelectorAll('.amenity.is-open').forEach(function (other) {
+          if (other === item) return;
+          other.classList.remove('is-open');
+          var oh = other.querySelector('.amenity__head');
+          var op = other.querySelector('.amenity__panel');
+          if (oh) oh.setAttribute('aria-expanded', 'false');
+          if (op) op.style.maxHeight = '';
+        });
+      }
+
+      item.classList.toggle('is-open', open);
       head.setAttribute('aria-expanded', open ? 'true' : 'false');
       panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '';
     });
@@ -538,7 +554,12 @@
 
     /* Get Directions routes FROM the property TO whichever place is selected,
        rather than just dropping a pin on the property's own address. */
-    var ORIGIN = '500 Bluff View Circle, Bordentown, NJ 08505';
+    /* Coordinates of the Rivergate place itself, taken from its Google Maps
+       entry. Routing from a raw address string can resolve to the wrong side
+       of the road or a nearby parcel; the place coordinates cannot. */
+    var ORIGIN = '40.1277866,-74.7379589';
+    var PLACE_URL = document.getElementById('explorer-directions')
+      ? document.getElementById('explorer-directions').getAttribute('href') : '';
     var dirBtn = document.getElementById('explorer-directions');
 
     function setDirections(name, lat, lng) {
@@ -549,6 +570,13 @@
         + '&destination=' + encodeURIComponent(dest)
         + '&travelmode=driving';
       dirBtn.textContent = 'Directions to ' + name;
+    }
+
+    /* Nothing selected: the button just opens the property's own map entry. */
+    function resetDirections() {
+      if (!dirBtn || !PLACE_URL) return;
+      dirBtn.href = PLACE_URL;
+      dirBtn.textContent = 'Get Directions';
     }
 
     function highlightRow(name) {
@@ -585,6 +613,7 @@
           entry.marker.setVisible(show);
           if (!show && activeInfo === entry.info) { entry.info.close(); activeInfo = null; }
         });
+        resetDirections();
         if (tab === 'all') {
           map.setCenter(cfg.center);
           map.setZoom(cfg.zoom);

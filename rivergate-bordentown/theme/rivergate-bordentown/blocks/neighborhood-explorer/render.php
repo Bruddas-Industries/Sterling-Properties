@@ -158,7 +158,7 @@ if ( $maps_key && ! rivergate_in_editor() ) {
     </div>
 
     <div class="explorer-actions">
-      <a href="https://www.google.com/maps/dir/?api=1&amp;origin=500+Bluff+View+Circle,+Bordentown,+NJ+08505&amp;destination=500+Bluff+View+Circle,+Bordentown,+NJ+08505&amp;travelmode=driving" id="explorer-directions" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
+      <a href="https://www.google.com/maps/place/Rivergate/@40.1277632,-74.7405702,17z/data=!4m6!3m5!1s0x89c15ae16ae28bb3:0xbe9f068de1a84aad!8m2!3d40.1277866!4d-74.7379589!16s%2Fg%2F11b75h1x74" id="explorer-directions" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
       <a href="<?php echo esc_url( $contact ); ?>" class="btn btn--secondary">Contact Leasing Office</a>
     </div>
   </div>
