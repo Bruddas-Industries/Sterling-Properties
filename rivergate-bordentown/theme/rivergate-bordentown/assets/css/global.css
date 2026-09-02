@@ -2194,7 +2194,10 @@ body.mp-open { overflow: hidden; }
 
 .neighborhood-explorer {
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  /* minmax(0,...) removes the automatic min-content floor on an fr track.
+     Without it a long, non-wrapping button in the list panel forced that
+     column wider and stole width from the map beside it. */
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   align-items: start;
   gap: var(--space-8);
   margin-top: var(--space-8);
@@ -2338,9 +2341,12 @@ body.mp-open { overflow: hidden; }
 }
 
 /* The directions label grows with the place name, which was resizing the map
-   column beside it. Fix the button's width and clip long names instead. */
+   column beside it. .explorer-actions is a full-width column child of
+   .explorer__list-panel, so 100% caps the button at the panel's own width -
+   long names clip rather than pushing the map. */
 #explorer-directions {
-  max-width: 15rem;
+  max-width: 100%;
+  min-width: 0;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
