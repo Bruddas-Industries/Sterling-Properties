@@ -46,6 +46,37 @@
       "ui": 0,
       "ajax": 0,
       "placeholder": ""
+    },
+    {
+      "key": "field_rg_amenity_group",
+      "label": "Amenity Type",
+      "name": "amenity_group",
+      "type": "select",
+      "instructions": "Community amenities appear in the homepage \"Resort-Style Living\" section. In-unit features are hidden from it — they belong in the Residence Features section further down the page.",
+      "required": 0,
+      "choices": {
+        "property": "Community Amenity — shown on the homepage",
+        "in-unit":  "In-Unit Feature — hidden from the homepage"
+      },
+      "default_value": "property",
+      "return_format": "value",
+      "multiple": 0,
+      "allow_null": 0,
+      "ui": 0,
+      "ajax": 0,
+      "placeholder": ""
+    },
+    {
+      "key": "field_rg_amenity_image",
+      "label": "Amenity Photo",
+      "name": "amenity_image",
+      "type": "image",
+      "instructions": "Shown in the large photo panel beside the list when a visitor opens this amenity. Leave empty to keep the section's default photo.",
+      "required": 0,
+      "return_format": "id",
+      "preview_size": "medium",
+      "library": "all",
+      "mime_types": "jpg,jpeg,png,webp"
     }
   ],
   "location": [
