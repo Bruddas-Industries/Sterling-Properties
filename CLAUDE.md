@@ -1,5 +1,28 @@
 # CLAUDE.md — Sterling Properties
 
+## Start Here
+
+This file covers **architecture and conventions** — how the themes are built and how to build the
+next one. Two companion documents carry everything that changes over time, and both should be read
+before doing production work or picking the project back up:
+
+| Document | What's in it |
+|----------|--------------|
+| **[`docs/STATUS.md`](docs/STATUS.md)** | Where each property stands, open work, decisions already made, client-verified copy constraints, and the changes applied directly to the database that no deploy reproduces. **Read this first.** |
+| **[`docs/OPERATIONS.md`](docs/OPERATIONS.md)** | Hosting and SSH coordinates, the deploy pipeline, the ACF field-group exception, caching, mail routing, and the eight traps that have each cost real time here. |
+
+Two things from those documents are worth knowing before touching anything, because they are
+counter-intuitive and have caused repeated mistakes:
+
+1. **Block patterns are copy-on-insert.** Editing a file in `patterns/` does **not** change a page
+   that already exists — that markup was copied into the database on first insert. Pattern edits
+   need a matching change in wp-admin or a scoped `wp search-replace`.
+2. **Varnish serves logged-out visitors stale pages.** A change that "did not deploy" is usually
+   the cache. Check `x-cache` and `age` before concluding anything is broken.
+
+Keep `docs/STATUS.md` current as work lands — it is the project's memory, and it travels with the
+repo when the work moves to another machine.
+
 ## What This Project Is
 
 This repo is the master development directory for **10 luxury property marketing websites** built by [Brudda's Industries](https://bruddaindustries.com) for Sterling Properties. All 10 sites run as a **WordPress Multisite** network. Each property gets its own subdirectory in this repo with its own theme (forked from `rivergate-bordentown`) and its own static HTML previews.
