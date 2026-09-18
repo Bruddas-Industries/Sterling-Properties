@@ -193,3 +193,38 @@ billable by anyone who finds it.
 hardcoded list only while the `rg_amenity` CPT is empty. Publishing a single entry drops the
 homepage from ten amenities to one, so all of them must be created in a single pass. The same is
 true of `rg_floor_plan`.
+
+**9. Never rename or delete a theme image that pages already reference.** Patterns bake
+*absolute* URLs into page content at insert time, so the database points at
+`/wp-content/themes/<property>/assets/images/…` — every image on the Rivergate homepage is
+referenced this way. Because the deploy runs `--delete`, renaming or removing one of those files
+takes it off the server while the database keeps pointing at the old path, and the live page shows
+a broken image. Adding a new file is always safe. Replacing one *in place* (same filename, new
+photo) is not only safe but the cleanest way to swap a photo everywhere it appears at once.
+
+---
+
+## Content vs code: what a deploy can and cannot reach
+
+The deploy touches exactly one directory — `wp-content/themes/<property>/` — so everything the
+client does is structurally safe. Copy edited in the block editor, Media Library uploads, menus,
+settings, CPT entries and block attributes all live in the database or `wp-content/uploads/`, and
+no deploy has ever touched them.
+
+The seam that *does* carry repo changes to live pages is **dynamic blocks**. `rivergate/amenities`,
+`neighborhood-explorer`, `floor-plans`, `contact-form` and `hero` render from PHP at request time,
+so editing a render file changes every page using it on the next deploy. Patterns are the opposite
+— see trap 1 — and once the client starts editing, a pattern describes how a *new* page would be
+built rather than what is published.
+
+Three habits follow:
+
+- Never re-insert a pattern over a page the client has edited; it replaces their copy wholesale.
+- To change live copy, edit the page. Change the pattern too, so the next property fork inherits
+  the fix — but do not expect the pattern edit to do anything on its own.
+- QA against the live site, not the repo.
+
+**One silent behaviour worth knowing.** If the client replaces a theme-asset photo through the
+block editor, that block's `src` becomes an uploads URL and the theme file stops driving that slot
+— it is still deployed and completely ignored. So when a swapped theme image does not show up,
+check the block's actual `src` before assuming the deploy failed or that Varnish is stale.
