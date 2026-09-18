@@ -198,7 +198,7 @@ $pdf = get_template_directory_uri() . '/assets/pdf';
 <div class="wp-block-group emergency-card">
 <!-- wp:paragraph {"className":"emergency-card__label"} --><p class="emergency-card__label">Property Management</p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"emergency-card__name"} --><p class="emergency-card__name">Sterling Properties</p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"emergency-card__contact"} --><p class="emergency-card__contact"><a href="mailto:info@sterlingpropertiesnj.com">Email Us</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"emergency-card__contact"} --><p class="emergency-card__contact"><a href="mailto:rivergate@spgnj.com">Email Us</a></p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 </div>
