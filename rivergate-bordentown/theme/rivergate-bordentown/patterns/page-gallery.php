@@ -63,19 +63,19 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:group {"className":"gallery-grid"} -->
 <div class="wp-block-group gallery-grid">
 <!-- wp:image {"className":"gallery-item gallery-item\u002d\u002dtall","linkDestination":"none"} -->
-<figure class="wp-block-image gallery-item gallery-item--tall"><img src="<?php echo esc_url( $img ); ?>/clubhouse/clubhouse-1.jpg" alt="Rivergate clubhouse and pool"/><figcaption class="gallery-item__caption">Clubhouse &amp; Pool</figcaption></figure>
+<figure class="wp-block-image gallery-item gallery-item--tall"><img src="<?php echo esc_url( $img ); ?>/clubhouse/clubhouse-1.jpg" alt="Rivergate clubhouse lounge with fireplace"/><figcaption class="gallery-item__caption">Clubhouse Lounge</figcaption></figure>
 <!-- /wp:image -->
 <!-- wp:image {"className":"gallery-item gallery-item\u002d\u002dwide","linkDestination":"none"} -->
 <figure class="wp-block-image gallery-item gallery-item--wide"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-3.jpg" alt="Outdoor BBQ entertaining area"/><figcaption class="gallery-item__caption">Outdoor BBQ Area</figcaption></figure>
 <!-- /wp:image -->
 <!-- wp:image {"className":"gallery-item","linkDestination":"none"} -->
-<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-4.jpg" alt="Rivergate amenity space"/><figcaption class="gallery-item__caption">Amenity Space</figcaption></figure>
+<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-4.jpg" alt="Rivergate fitness studio"/><figcaption class="gallery-item__caption">Fitness Studio</figcaption></figure>
 <!-- /wp:image -->
 <!-- wp:image {"className":"gallery-item","linkDestination":"none"} -->
-<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-5.jpg" alt="Rivergate amenity detail"/><figcaption class="gallery-item__caption">Amenity Detail</figcaption></figure>
+<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-5.jpg" alt="Rivergate's resort-style heated pool and clubhouse"/><figcaption class="gallery-item__caption">Resort-Style Pool</figcaption></figure>
 <!-- /wp:image -->
 <!-- wp:image {"className":"gallery-item","linkDestination":"none"} -->
-<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-1.jpg" alt="Pool and outdoor living at Rivergate"/><figcaption class="gallery-item__caption">Pool Deck</figcaption></figure>
+<figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-1.jpg" alt="Resident EV charging stations at Rivergate"/><figcaption class="gallery-item__caption">EV Charging</figcaption></figure>
 <!-- /wp:image -->
 <!-- wp:image {"className":"gallery-item","linkDestination":"none"} -->
 <figure class="wp-block-image gallery-item"><img src="<?php echo esc_url( $img ); ?>/clubhouse/clubhouse-2.jpg" alt="Rivergate clubhouse lounge with seating and coffee bar"/><figcaption class="gallery-item__caption">Clubhouse Lounge</figcaption></figure>

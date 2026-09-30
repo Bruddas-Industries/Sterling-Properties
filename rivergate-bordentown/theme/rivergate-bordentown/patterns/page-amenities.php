@@ -36,7 +36,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:group {"className":"feature__image"} -->
 <div class="wp-block-group feature__image">
 <!-- wp:image {"linkDestination":"none"} -->
-<figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-1.jpg" alt="Rivergate resort-style heated pool"/></figure>
+<figure class="wp-block-image"><img src="<?php echo esc_url( $img ); ?>/amenities/amenity-5.jpg" alt="Rivergate's resort-style heated pool and clubhouse"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:group -->

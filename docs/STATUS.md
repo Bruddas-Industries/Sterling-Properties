@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-09-18.** Update this file when something here changes — it is the first
+**Last updated: 2026-09-30.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -12,7 +12,7 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 
 Property #1 of 10. Pre-launch, not yet on its own domain.
 
-- Theme **1.16.3** on `main` and deployed to production
+- Theme **1.16.4** (photo refresh, pending merge); 1.16.3 is on `main` and deployed to production
 - All **16 client edits** requested by Andrew Zuckerman (8/26) and Nina Chichelo (8/18) are
   implemented and live — verified against the rendered page, not just the commits
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built
@@ -49,11 +49,29 @@ numbers for the same trip. Worst: Princeton "~20 min" above "27 min drive"; Ride
 strip the `~N min` fragments from the `$categories` array in
 `blocks/neighborhood-explorer/render.php`.
 
-**Five amenities have no photo.** Secured Access, Dog Run, Private Garage Spaces, Elevator Access
-and Full-Time Onsite Maintenance ship an empty image, so selecting them snaps the panel back to
-the default clubhouse shot. Clicking "Dog Run" and being shown the clubhouse reads as a bug.
-Needs photos chosen — note that creating real `rg_amenity` entries is all-or-nothing (trap 8 in
-`OPERATIONS.md`).
+**Photo refresh in progress (Nina's 9/14/26 Pailas Media set).** Theme 1.16.4 replaces
+`amenities/amenity-5.jpg` in place with the new pool shot (homepage Heated Pool card) and adds
+`amenities/dog-run.jpg`. The page-content swaps go in through the **Media Library**, not the theme:
+- Home CTA photo → building with the monument sign
+- Amenities hero → pool; its "Resort-Style Pool" section, which was showing the EV-charger
+  photo, → a second pool shot
+- Residents hero → entrance drive. The old one showed a "Future Resident Parking" sign.
+- Gallery: new hero; duplicate sunset and hazy drone tiles replaced; expanded pool tiles; plus
+  new **Residences** and **Neighborhood** rows. The Residences row replaces the "interiors are
+  best experienced in person" section.
+
+2400px exports are in `D:\Downloads\Rivergate New Photos\web-2400\`, filenames prefixed with
+Nina's frame number. Once swapped, those slots point at uploads URLs, so the theme files and
+patterns no longer describe them (see "one silent behaviour" in `OPERATIONS.md`). Staged
+living-room shots deliberately stay in the Floor Plans hero and homepage Residences section.
+
+**Four amenities have no photo.** Secured Access, Private Garage Spaces, Elevator Access and
+Full-Time Onsite Maintenance ship an empty image, so selecting them snaps the panel back to the
+default clubhouse shot. None of the 66 photos in the 9/14 set shows any of them. Ask Nina for a
+fob reader or controlled entry, the detached garages with doors in view, the elevator lobby, and
+the maintenance team, shop or vehicle. Note that creating real `rg_amenity` entries is
+all-or-nothing (trap 8 in `OPERATIONS.md`), so add them to the `_shared.php` fallback list
+instead.
 
 **Sister-property links unverified.** All six point at distinct
 `sterlingpropertiesnj.com/sterling-portfolio/<slug>/` pages, but one looks wrong: the card
