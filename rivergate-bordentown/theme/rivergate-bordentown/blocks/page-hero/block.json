@@ -17,7 +17,8 @@
 		"eyebrow":  { "type": "string", "default": "" },
 		"heading":  { "type": "string", "default": "Page Title" },
 		"imageId":  { "type": "number", "default": 0 },
-		"imageUrl": { "type": "string", "default": "" }
+		"imageUrl": { "type": "string", "default": "" },
+		"imageFocus": { "type": "string", "default": "" }
 	},
 	"render": "file:./render.php"
 }

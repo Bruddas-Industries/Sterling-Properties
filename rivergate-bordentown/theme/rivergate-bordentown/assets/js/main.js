@@ -360,20 +360,67 @@
   }
 
   /* ------------------------------------------------------------------
-     13. FLOOR-PLAN LIGHTBOX — click a plan image to view it full screen
-         (Andrew, 8/26). Delegated, so it covers the homepage selector's
-         JS-rendered image and the floor-plans page cards alike.
+     13. LIGHTBOX — click a floor plan (Andrew, 8/26) or a gallery photo to
+         view it full screen. Delegated, so it covers the homepage selector's
+         JS-rendered plan image and the page-level cards/tiles alike.
+         Gallery photos add a caption, prev/next, arrow keys and swipe,
+         stepping through every visible tile on the page in order.
      ------------------------------------------------------------------ */
   (function () {
     var box = document.getElementById('fp-lightbox');
     var img = document.getElementById('fp-lightbox-img');
     if (!box || !img) return;
+    var dialog  = box.querySelector('.fp-lightbox__dialog');
+    var caption = document.getElementById('fp-lightbox-caption');
     var lastFocused = null;
+    var photos = [];   /* gallery tiles in page order, while in gallery mode */
+    var index  = -1;
 
-    function open(src, alt) {
-      lastFocused = document.activeElement;
+    /* Tiles are plain <figure>s — make them reachable and operable by keyboard. */
+    document.querySelectorAll('.gallery-item').forEach(function (tile) {
+      var t = tile.querySelector('img');
+      if (!t) return;
+      tile.setAttribute('tabindex', '0');
+      tile.setAttribute('role', 'button');
+      tile.setAttribute('aria-label', 'View larger: ' + (t.getAttribute('alt') || 'photo'));
+    });
+
+    function show(src, alt, srcset, text, ratio) {
+      /* srcset lets the browser fetch a size that fits the screen rather than
+         the full original; floor plans have none, so clear any left over.
+         sizes = the width the photo will actually display at: the dialog is
+         min(96vw, 1400px) wide and 92vh minus the caption tall, so a portrait
+         photo is height-limited and needs a much narrower file. */
+      if (srcset) {
+        var w = Math.min(window.innerWidth * 0.96, 1400, (window.innerHeight * 0.92 - 48) * (ratio || 1.5));
+        img.setAttribute('srcset', srcset);
+        img.setAttribute('sizes', Math.round(w) + 'px');
+      } else {
+        img.removeAttribute('srcset');
+        img.removeAttribute('sizes');
+      }
       img.setAttribute('src', src);
       img.setAttribute('alt', alt || '');
+      if (caption) caption.textContent = text || '';
+    }
+
+    function showPhoto(i) {
+      var n = photos.length;
+      index = ((i % n) + n) % n;
+      var tile = photos[index];
+      var t = tile.querySelector('img');
+      var cap = tile.querySelector('figcaption');
+      var tw = +t.getAttribute('width') || t.naturalWidth;
+      var th = +t.getAttribute('height') || t.naturalHeight;
+      show(t.getAttribute('src'), t.getAttribute('alt'), t.getAttribute('srcset'),
+           (cap ? cap.textContent.trim() : '') + '  ·  ' + (index + 1) + ' / ' + n,
+           tw && th ? tw / th : 0);
+    }
+
+    function open(gallery) {
+      lastFocused = document.activeElement;
+      box.classList.toggle('is-gallery', gallery);
+      if (dialog) dialog.setAttribute('aria-label', gallery ? 'Photo gallery' : 'Floor plan');
       box.classList.add('is-open');
       box.setAttribute('aria-hidden', 'false');
       document.body.classList.add('mp-open');      /* reuse the scroll lock */
@@ -381,23 +428,67 @@
       if (btn) btn.focus();
     }
 
+    function openTile(tile) {
+      /* offsetParent is null for tiles hidden by a gallery filter */
+      photos = Array.prototype.filter.call(document.querySelectorAll('.gallery-item'), function (el) {
+        return el.querySelector('img') && el.offsetParent !== null;
+      });
+      showPhoto(photos.indexOf(tile));
+      open(true);
+    }
+
     function close() {
-      box.classList.remove('is-open');
+      box.classList.remove('is-open', 'is-gallery');
       box.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('mp-open');
+      img.removeAttribute('srcset');
       img.setAttribute('src', '');
+      photos = [];
       if (lastFocused && lastFocused.focus) lastFocused.focus();
     }
 
+    function step(d) { if (photos.length) showPhoto(index + d); }
+
     document.addEventListener('click', function (e) {
       if (!e.target.closest) return;
-      if (e.target.closest('[data-fpl-close]')) { close(); return; }
+      /* The dialog fills most of the screen, so a click in the empty space
+         beside the image lands on it rather than the backdrop — close on both. */
+      if (e.target.closest('[data-fpl-close]') || e.target === dialog) { close(); return; }
+      if (e.target.closest('[data-fpl-prev]')) { step(-1); return; }
+      if (e.target.closest('[data-fpl-next]')) { step(1); return; }
       var plan = e.target.closest('.fp-plan-img, .plan-card__img');
-      if (plan) { open(plan.getAttribute('src'), plan.getAttribute('alt')); }
+      if (plan) {
+        photos = [];
+        show(plan.getAttribute('src'), plan.getAttribute('alt'));
+        open(false);
+        return;
+      }
+      var tile = e.target.closest('.gallery-item');
+      if (tile && tile.querySelector('img') && !box.contains(tile)) openTile(tile);
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && box.classList.contains('is-open')) close();
+      if (box.classList.contains('is-open')) {
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft') step(-1);
+        else if (e.key === 'ArrowRight') step(1);
+        return;
+      }
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList &&
+          e.target.classList.contains('gallery-item')) {
+        e.preventDefault();
+        openTile(e.target);
+      }
+    });
+
+    /* Swipe left/right on touch screens */
+    var touchX = null;
+    box.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
     });
   }());
 

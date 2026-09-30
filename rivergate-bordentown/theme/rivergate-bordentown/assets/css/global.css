@@ -1030,8 +1030,39 @@ body.has-video-hero.nav-is-open .site-header {
 }
 .fp-lightbox__close:hover { background: #fff; }
 
-/* The plan images are the click target, so say so */
+/* Gallery mode — photos get a caption and prev/next; plans show neither. */
+.fp-lightbox__dialog { flex-direction: column; }
+.fp-lightbox__nav,
+.fp-lightbox__caption { display: none; }
+.fp-lightbox.is-gallery .fp-lightbox__dialog img { max-height: calc(100% - 3rem); background: none; }
+.fp-lightbox.is-gallery .fp-lightbox__caption {
+  display: block;
+  margin: var(--space-3) 0 0;
+  color: rgba(255,255,255,0.85);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  text-align: center;
+  white-space: pre-wrap;
+}
+.fp-lightbox.is-gallery .fp-lightbox__nav {
+  position: absolute; top: 50%; z-index: 2;
+  transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: 34px; line-height: 1; padding-bottom: 4px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--duration) var(--ease-out);
+}
+.fp-lightbox__nav:hover { background: #fff; }
+.fp-lightbox__nav--prev { left: var(--space-3); }
+.fp-lightbox__nav--next { right: var(--space-3); }
+
+/* The plan images and gallery tiles are the click target, so say so */
 .fp-plan-img, .plan-card__img { cursor: zoom-in; }
+.gallery-item:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
 
 body.mp-open { overflow: hidden; }
 @media (max-width: 640px) { .mp-modal__dialog { width: 96vw; margin-top: 3vh; } }
@@ -1386,6 +1417,13 @@ body.mp-open { overflow: hidden; }
   object-fit: cover;
   object-position: center 35%;
 }
+
+/* The hero is a wide, short strip, so on desktop only a band of the photo shows.
+   Image Focus (page-hero sidebar) picks which band; unset keeps the 35% default. */
+.page-hero--focus-top    .page-hero__bg img { object-position: center 10%; }
+.page-hero--focus-center .page-hero__bg img { object-position: center 50%; }
+.page-hero--focus-lower  .page-hero__bg img { object-position: center 65%; }
+.page-hero--focus-bottom .page-hero__bg img { object-position: center 90%; }
 
 .page-hero__bg::after {
   content: '';
@@ -2043,7 +2081,7 @@ body.mp-open { overflow: hidden; }
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  cursor: pointer;
+  cursor: zoom-in;
 }
 
 .gallery-item--wide  { grid-column: span 2; }
