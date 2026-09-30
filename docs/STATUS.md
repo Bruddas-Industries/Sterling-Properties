@@ -12,7 +12,7 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 
 Property #1 of 10. Pre-launch, not yet on its own domain.
 
-- Theme **1.16.4** (photo refresh, pending merge); 1.16.3 is on `main` and deployed to production
+- Theme **1.16.4** on `main` and deployed to production
 - All **16 client edits** requested by Andrew Zuckerman (8/26) and Nina Chichelo (8/18) are
   implemented and live — verified against the rendered page, not just the commits
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built
@@ -34,9 +34,19 @@ rebuilt from patterns, re-apply them.
 | 9 (Home) | `rivergate/contact-form` given `recipientEmail: rivergate@spgnj.com` | `~/premigration/prelaunch-edits/post-9.*.bak` |
 | 27 (Contact) | same | `~/premigration/prelaunch-edits/post-27.*.bak` |
 | 28 (Residents) | `info@sterlingpropertiesnj.com` → `rivergate@spgnj.com` | `~/premigration/prelaunch-edits/post-28.*.bak` |
+| 9, 13, 25, 28 | 2026-09-30 photo refresh — images swapped to Media Library attachments 82–101; Gallery rebuilt with Residences + Neighborhood rows | `~/premigration/photo-refresh/` (per-post `.bak` + posts/postmeta SQL); also WP revisions 102–105 |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
 deploy workflow excludes that directory. See the ACF section of `OPERATIONS.md`.
+
+**Photo refresh (2026-09-30).** Nina's 9/14/26 Pailas Media set is live. Home CTA, the Amenities
+and Residents heroes, the Amenities pool section and every Gallery photo now point at **Media
+Library** attachments (IDs 82–101, uploaded at 2400px), so the theme files and patterns no longer
+describe those slots — see "one silent behaviour" in `OPERATIONS.md`. The homepage amenity cards
+are still theme files: `amenities/amenity-5.jpg` (pool, replaced in place) and
+`amenities/dog-run.jpg`. Staged living-room shots deliberately stay in the Floor Plans hero and
+homepage Residences section. Source exports: `D:\Downloads\Rivergate New Photos\web-2400\`
+(filenames prefixed with Nina's frame number).
 
 ---
 
@@ -48,22 +58,6 @@ numbers for the same trip. Worst: Princeton "~20 min" above "27 min drive"; Ride
 "24 min"; Capital Health "~20 min" above "30 min". The measured figures are the accurate ones —
 strip the `~N min` fragments from the `$categories` array in
 `blocks/neighborhood-explorer/render.php`.
-
-**Photo refresh in progress (Nina's 9/14/26 Pailas Media set).** Theme 1.16.4 replaces
-`amenities/amenity-5.jpg` in place with the new pool shot (homepage Heated Pool card) and adds
-`amenities/dog-run.jpg`. The page-content swaps go in through the **Media Library**, not the theme:
-- Home CTA photo → building with the monument sign
-- Amenities hero → pool; its "Resort-Style Pool" section, which was showing the EV-charger
-  photo, → a second pool shot
-- Residents hero → entrance drive. The old one showed a "Future Resident Parking" sign.
-- Gallery: new hero; duplicate sunset and hazy drone tiles replaced; expanded pool tiles; plus
-  new **Residences** and **Neighborhood** rows. The Residences row replaces the "interiors are
-  best experienced in person" section.
-
-2400px exports are in `D:\Downloads\Rivergate New Photos\web-2400\`, filenames prefixed with
-Nina's frame number. Once swapped, those slots point at uploads URLs, so the theme files and
-patterns no longer describe them (see "one silent behaviour" in `OPERATIONS.md`). Staged
-living-room shots deliberately stay in the Floor Plans hero and homepage Residences section.
 
 **Four amenities have no photo.** Secured Access, Private Garage Spaces, Elevator Access and
 Full-Time Onsite Maintenance ship an empty image, so selecting them snaps the panel back to the
