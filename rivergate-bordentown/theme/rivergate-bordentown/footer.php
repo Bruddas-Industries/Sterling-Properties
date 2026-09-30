@@ -75,12 +75,16 @@
     </div>
 </div>
 
-<!-- Full-screen floor-plan viewer (Andrew, 8/26) -->
+<!-- Full-screen viewer for floor plans (Andrew, 8/26) and gallery photos.
+     Gallery mode (main.js adds .is-gallery) shows the caption and prev/next. -->
 <div class="fp-lightbox" id="fp-lightbox" aria-hidden="true">
     <div class="fp-lightbox__backdrop" data-fpl-close></div>
     <div class="fp-lightbox__dialog" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Floor plan', 'rivergate-bordentown' ); ?>">
-        <button class="fp-lightbox__close" type="button" data-fpl-close aria-label="<?php esc_attr_e( 'Close floor plan', 'rivergate-bordentown' ); ?>">&times;</button>
+        <button class="fp-lightbox__close" type="button" data-fpl-close aria-label="<?php esc_attr_e( 'Close', 'rivergate-bordentown' ); ?>">&times;</button>
+        <button class="fp-lightbox__nav fp-lightbox__nav--prev" type="button" data-fpl-prev aria-label="<?php esc_attr_e( 'Previous photo', 'rivergate-bordentown' ); ?>">&lsaquo;</button>
         <img id="fp-lightbox-img" src="" alt="">
+        <p class="fp-lightbox__caption" id="fp-lightbox-caption" aria-live="polite"></p>
+        <button class="fp-lightbox__nav fp-lightbox__nav--next" type="button" data-fpl-next aria-label="<?php esc_attr_e( 'Next photo', 'rivergate-bordentown' ); ?>">&rsaquo;</button>
     </div>
 </div>
 

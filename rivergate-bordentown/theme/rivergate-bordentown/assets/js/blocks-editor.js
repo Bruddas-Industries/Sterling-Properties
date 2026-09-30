@@ -22,6 +22,7 @@
 	var TextControl       = wp.components.TextControl;
 	var TextareaControl   = wp.components.TextareaControl;
 	var RangeControl      = wp.components.RangeControl;
+	var SelectControl     = wp.components.SelectControl;
 	var Button            = wp.components.Button;
 	var ServerSideRender  = wp.serverSideRender;
 
@@ -172,7 +173,21 @@
 		return el( PanelBody, { title: __( 'Page Hero', 'rivergate-bordentown' ), initialOpen: true }, [
 			text( props, 'eyebrow', __( 'Eyebrow', 'rivergate-bordentown' ) ),
 			text( props, 'heading', __( 'Page Title', 'rivergate-bordentown' ) ),
-			media( props, 'imageUrl', 'imageId', __( 'Background Image', 'rivergate-bordentown' ), 'image' )
+			media( props, 'imageUrl', 'imageId', __( 'Background Image', 'rivergate-bordentown' ), 'image' ),
+			el( SelectControl, {
+				key: 'imageFocus',
+				label: __( 'Image Focus', 'rivergate-bordentown' ),
+				help: __( 'On desktop the hero shows only a strip of the photo. Pick the part to keep in view.', 'rivergate-bordentown' ),
+				value: props.attributes.imageFocus || '',
+				options: [
+					{ label: __( 'Default (upper middle)', 'rivergate-bordentown' ), value: '' },
+					{ label: __( 'Top', 'rivergate-bordentown' ), value: 'top' },
+					{ label: __( 'Center', 'rivergate-bordentown' ), value: 'center' },
+					{ label: __( 'Lower', 'rivergate-bordentown' ), value: 'lower' },
+					{ label: __( 'Bottom', 'rivergate-bordentown' ), value: 'bottom' }
+				],
+				onChange: function ( v ) { props.setAttributes( { imageFocus: v } ); }
+			} )
 		] );
 	} );
 
