@@ -18,8 +18,103 @@ Property #1 of 10. Pre-launch, not yet on its own domain.
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built
   as native block patterns + dynamic blocks
 
-The nine remaining properties have not been started. Everything in `OPERATIONS.md` and the
-conventions in `CLAUDE.md` is written to be inherited by those forks.
+Bellclair (below) is property #2. The other eight have not been started. Everything in
+`OPERATIONS.md` and the conventions in `CLAUDE.md` is written to be inherited by those forks.
+
+---
+
+## Where Bellclair stands
+
+Property #2 of 10: **Bellclair at Montclair**, Montclair NJ. Brief: Nina Chichelo's email
+"Next Website: Bellclair" (8/17/26, cc Andrew Zuckerman). Bellclair has never had its own site,
+only a page on sterlingpropertiesnj.com.
+
+**Static preview built** (2026-09-30, branch `feature/bellclair-preview`) in
+`bellclair-montclair/preview/`: a one-page homepage plus Residents, Availability and Gallery. It
+is named `preview/`, not `preview-1/`, at John's request. It is **not deployed yet.**
+
+- `bellclair-montclair/theme/bellclair-montclair/` holds **assets only**: `global.css`, images
+  and logos. These are what the preview links to. The WordPress fork of `rivergate-bordentown`
+  (PHP, blocks, patterns, `theme.json`) has **not** been done. Fork it into this folder when the
+  preview is approved; the CSS and assets are already in place for it.
+- `global.css` is Rivergate's stylesheet re-skinned by a scripted, exact-match transform. The
+  scheme is inverted: Rivergate is blue-dominant, Bellclair is a light ivory field with black
+  bands. Its header comment and section 4 explain the difference, and all Bellclair-only
+  styles are in section 29. **A new dark band must be added to both selector lists in
+  section 4**, the inverse of the white-surface trap in Rivergate.
+- The preview carries no layout CSS of its own. `preview.css` is just the preview badge, and
+  all shared behaviour is in `preview/site.js`. So OPERATIONS trap 5 (preview inline rules
+  beating theme media queries) cannot happen here.
+- Brand: `Bellclair-BrandGuidelines_C01.pdf` (New World Group). Its palette is in `:root`.
+  Gold and copper fail contrast as small text, so eyebrows and links use a deepened bronze
+  (`--color-primary #7A5719`). Gold is used only for fills, rules and icons.
+
+**Sources for content and assets.** Nina's SharePoint folder could not be opened, so nothing
+from it is in the repo. Everything came from:
+- The email's 3 logo PNGs and the brand PDF. The cream/gold on-dark logo and the favicon were
+  derived from the black/gold PNG, following the guide's "Color Usage" panel.
+- 9 photos from the Sterling portfolio page (`sterlingpropertiesnj.com/sterling-portfolio/bellclair-at-montclair/`)
+- Sterling's AppFolio listings (filter `property_list=BELLCLAIRE, LLC`): 13 interior and aerial
+  photos, two branded floor-plan sheets (**Dorsey** 2bd/1ba 1,075 sf, **Ellington** 2bd/2ba
+  1,125 sf), two Matterport tours (`hrsGWLg4gYT`, `ah1D28hoCbj`), the amenity and feature copy,
+  and the pet policy
+
+### Open — Bellclair
+
+**Waiting on Nina:**
+- **The professional video** (the main feature she asked for) is in the SharePoint "Video"
+  folder. The hero and the "Watch the Film" lightbox are already wired. Drop the files in as
+  `assets/video/bellclair-hero.mp4` (muted loop) and `bellclair-film.mp4` (full film). See
+  `assets/video/README.txt`. Until then the hero shows the aerial and the lightbox shows a
+  "Premiering Soon" card. The full film may be too large for git; consider a video host.
+- The rest of the SharePoint photos. No one-bedroom floor plan exists yet; the selector shows a
+  "coming soon" placeholder.
+- **Licensed webfonts.** Micaroline and ITC Avant Garde Gothic Pro are commercial. The preview
+  uses Poiret One and Questrial as stand-ins. To switch, drop in the files and uncomment the
+  `@font-face` block at the end of `global.css` (see `assets/fonts/README.txt`).
+- The leasing office hours. The contact section currently says "Call or email to schedule a
+  visit."
+
+**Copy to confirm with the client.** All of these came from AppFolio listing text or were
+carried over from Rivergate, and none has been verified with Sterling:
+- "Hardwood floors throughout" (AppFolio) was **deliberately left out**. The photos look like
+  vinyl plank, and Rivergate's flooring rule shows Sterling cares about this wording. Ask
+  before saying anything about floors.
+- "Gas ranges" (AppFolio, townhome text) was **left out**. The kitchen photo shows an
+  electric coil range.
+- The townhome collection at 8 Bell St (private 2-car garages, loft/duplex units, 14 ft
+  ceilings) is only described as "select residences". Confirm which units these are.
+- Residents page: quiet hours, the 60-day move-out notice and the parking rules are
+  Rivergate's text. "Maintenance Requests" points at the AppFolio portal; Rivergate uses
+  Pilera, so ask which Bellclair uses. The after-hours line is assumed to be the office
+  number.
+- The email address is `bellclaire@spgnj.com`, spelled with an **e**. It matches the email,
+  the website and the floor-plan sheets, and the owner LLC is "BELLCLAIRE, LLC", so it is
+  probably right despite the brand spelling.
+- The address: the email says "691 Bloomfield Avenue 7 8". The units are **7 and 8 Bell
+  Street** and the leasing office is 691 Bloomfield Avenue. Both appear in the contact section.
+
+**Infrastructure:**
+- **Google Maps key is referrer-restricted.** It refused `localhost`. Add the Vercel preview
+  domain (and later the production domain) to the key's allowed referrers. If Google refuses
+  the domain, the preview falls back to an OpenStreetMap embed (`gm_authFailure` in `site.js`),
+  so the client never sees an error box.
+- **Vercel.** The project root must be `bellclair-montclair/`, because the preview links to
+  `../theme/`. `bellclair-montclair/vercel.json` redirects `/` to `/preview/`. The connected
+  Vercel account (`jjosephsen-bruddas' projects`) has no projects, so Rivergate's preview
+  lives on a different account.
+- The "More Communities" cards are the same six as Rivergate, including the unverified
+  Eggert's Crossing link (see the Rivergate list below).
+
+**Neighborhood times are measured, not estimated.** They were routed from 7 Bell St (US Census
+geocode 40.817948, −74.222495) with OSRM, 2026-09-30: foot routing for anything under 25
+minutes on foot, car routing beyond that. Like Rivergate's, re-measure rather than guess if a
+place is added or moved. The nearest train station (Walnut Street) is a **22-minute walk**,
+and Bay Street, the main Midtown Direct stop, is a 27-minute walk or 4-minute drive. So the
+copy never calls the trains "steps away". Church Street (5 min), the Art Museum (5 min) and
+Whole Foods (2 min) are the walkable highlights. Route data: OSRM foot and car profiles,
+OpenStreetMap geocodes, with each POI's coordinates in the `data-lat`/`data-lng` of its list
+item in `index.html`.
 
 ---
 
