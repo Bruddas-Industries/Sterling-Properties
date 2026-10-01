@@ -7,7 +7,7 @@
 
 // Brand fonts (Logam + Noyh Geometric Slim) load via @font-face in global.css —
 // the .otf files live in assets/fonts/. No external font request needed.
-define( 'RIVERGATE_VERSION', '1.16.6' );
+define( 'RIVERGATE_VERSION', '1.16.7' );
 define( 'RIVERGATE_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' ); // Add your Google Maps API key here
 
 // Block editor integration: dynamic blocks, block styles, patterns, body class.
@@ -95,6 +95,27 @@ function rivergate_remove_users_sitemap( $provider, string $name ) {
     return 'users' === $name ? false : $provider;
 }
 add_filter( 'wp_sitemaps_add_provider', 'rivergate_remove_users_sitemap', 10, 2 );
+
+// Browser/home-screen icon: the square mark from the logo, shipped with the
+// theme in assets/images/site-icon/ (one PNG per size core asks for). Feeding
+// it through get_site_icon_url lets core emit every <link rel="icon"> tag on
+// the front end, wp-admin and login, and makes /favicon.ico redirect here
+// instead of to the WordPress logo. A Site Icon set in the Customizer still
+// wins — the theme icon only stands in while that option is empty.
+function rivergate_site_icon_url( $url, int $size, $blog_id ) {
+    if ( get_option( 'site_icon' ) || ( $blog_id && (int) $blog_id !== get_current_blog_id() ) ) {
+        return $url;
+    }
+    $file = 512;
+    foreach ( [ 32, 180, 192, 270 ] as $available ) {
+        if ( $size <= $available ) {
+            $file = $available;
+            break;
+        }
+    }
+    return get_template_directory_uri() . '/assets/images/site-icon/site-icon-' . $file . '.png?ver=' . RIVERGATE_VERSION;
+}
+add_filter( 'get_site_icon_url', 'rivergate_site_icon_url', 10, 3 );
 
 
 // ---------------------------------------------------------------------------

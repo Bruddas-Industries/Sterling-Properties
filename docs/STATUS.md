@@ -14,7 +14,9 @@ Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 do
 (see "Domain cutover" below).
 
 - Theme **1.16.5** deployed; **1.16.6** (users sitemap removed) is in PR #27, waiting on the
-  `SITE_BASE_URL` secret
+  `SITE_BASE_URL` secret. **1.16.7** stacks on it and replaces the WordPress favicon with the
+  logo's square mark (`assets/images/site-icon/`, served through the `get_site_icon_url`
+  filter, so a Customizer Site Icon still overrides it)
 - All **16 client edits** requested by Andrew Zuckerman (8/26) and Nina Chichelo (8/18) are
   implemented and live — verified against the rendered page, not just the commits
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built

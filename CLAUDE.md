@@ -193,7 +193,7 @@ composite page pattern and the individual section patterns (keeps markup DRY).
 
 3. **Re-prefix the theme** — rename `RIVERGATE_` constants and `rivergate_` function prefixes to the property prefix across `functions.php`, `inc/blocks.php`, and `blocks/_shared.php`; update the text domain. The block namespace (`rivergate/*` in `blocks/*/block.json`, `inc/blocks.php`, `assets/js/blocks-editor.js`, and `patterns/`) and the `is-style-rivergate-*` button styles can stay or be re-prefixed — if you rename them, update all four places **and** the `global.css` bridge selectors together.
 
-4. **Update design tokens** in `assets/css/global.css` — colors, fonts (the blocks + patterns are inherited unchanged; only tokens differ per property)
+4. **Update design tokens** in `assets/css/global.css` — colors, fonts (the blocks + patterns are inherited unchanged; only tokens differ per property). Replace the favicon PNGs in `assets/images/site-icon/` (32, 180, 192, 270, 512 px, opaque) with the new property's mark — otherwise the fork shows Rivergate's icon
 
 5. **Create a static preview** in `[property-name]/preview-1/` — HTML pages that reference the theme CSS at `../theme/[property-name]/assets/css/global.css`
 
