@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Availability — Bellclair at Montclair</title>
+  <meta name="description" content="Live availability, pricing and online applications for Bellclair at Montclair.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="../theme/bellclair-montclair/assets/images/logos/bellclair-favicon.png">
+  <!-- Brand faces are Micaroline + ITC Avant Garde Gothic Pro (commercial, not yet
+       licensed for web). Poiret One + Questrial stand in until the files arrive —
+       see the BRAND WEBFONTS note at the end of global.css. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Questrial&display=swap">
+  <link rel="stylesheet" href="../theme/bellclair-montclair/assets/css/global.css">
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Bellclair at Montclair — Home">
+      <img class="logo--on-light" src="../theme/bellclair-montclair/assets/images/logos/bellclair-logo-black-gold.png" alt="Bellclair Montclair" width="111" height="40">
+      <img class="logo--on-dark" src="../theme/bellclair-montclair/assets/images/logos/bellclair-logo-cream-gold.png" alt="Bellclair Montclair" width="111" height="40">
+    </a>
+    <div class="nav-actions">
+      <a href="availability.html" class="btn btn--nav">See Availability</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="availability.html">Availability</a>
+    <a href="index.html#amenities">Amenities</a>
+    <a href="index.html#residences">Residences</a>
+    <a href="index.html#floor-plans">Floor Plans</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="index.html#neighborhood">Neighborhood</a>
+    <a href="residents.html">Residents</a>
+  </nav>
+  <div class="nav-overlay__divider"></div>
+  <div class="nav-overlay__ctas">
+    <a href="availability.html" class="btn btn--primary nav-overlay__cta">See Availability</a>
+    <a href="index.html#contact" class="btn btn--ghost nav-overlay__cta">Schedule a Tour</a>
+    <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" class="btn btn--ghost nav-overlay__cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero page-hero--focus-center" aria-label="Availability">
+  <div class="page-hero__bg">
+    <img src="../theme/bellclair-montclair/assets/images/exterior/bell-street.jpg" alt="Bellclair along tree-lined Bell Street in Montclair" loading="eager">
+  </div>
+  <div class="page-hero__content">
+    <span class="eyebrow">Pricing &amp; Online Applications</span>
+    <h1>Availability</h1>
+  </div>
+</section>
+
+
+<!-- LIVE AVAILABILITY -->
+<section>
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Real-Time Listings</span>
+      <h2>Check What's Available Now</h2>
+      <p>Live availability, pricing and online applications are all managed through <strong>AppFolio</strong>. Browse open residences below and apply directly online — no appointment required.</p>
+    </div>
+
+    <div class="appfolio-frame" data-animate>
+      <!-- Fallback shown if AppFolio blocks iframe embedding (common in static previews) -->
+      <div id="appfolio-fallback" class="appfolio-fallback">
+        <p>The AppFolio listing can't be embedded in this preview — click below to view live availability and apply in a new tab.</p>
+        <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" target="_blank" rel="noopener noreferrer" class="btn btn--primary">View Availability &amp; Apply in AppFolio →</a>
+      </div>
+      <iframe
+        src="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC"
+        width="100%" height="650" frameborder="0"
+        title="Bellclair at Montclair — Available Residences" loading="lazy"
+        style="display: block; position: absolute; inset: 0; height: 100%;"
+        onload="document.getElementById('appfolio-fallback').style.display='none'; this.style.position='static'; this.style.height='650px';">
+      </iframe>
+    </div>
+
+    <div class="how-it-works">
+      <div class="how-step" data-animate>
+        <span class="how-step__num">1</span>
+        <h3>Browse Live Listings</h3>
+        <p>See every available residence with current pricing and move-in dates, updated in real time.</p>
+      </div>
+      <div class="how-step" data-animate>
+        <span class="how-step__num">2</span>
+        <h3>Apply Online</h3>
+        <p>Submit your application securely through AppFolio in minutes — no office visit needed.</p>
+      </div>
+      <div class="how-step" data-animate>
+        <span class="how-step__num">3</span>
+        <h3>Move In</h3>
+        <p>Our leasing team guides you through approval, lease signing and key handoff from there.</p>
+      </div>
+    </div>
+
+    <div class="apply-band" data-animate>
+      <span class="eyebrow">Ready When You Are</span>
+      <h2>Start Your Application</h2>
+      <p>Have a floor plan in mind already? Apply now, or reach out to the leasing team with any questions.</p>
+      <div class="apply-band__actions">
+        <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" class="btn btn--primary" target="_blank" rel="noopener noreferrer">Apply in AppFolio →</a>
+        <a href="index.html#contact" class="btn btn--ghost">Schedule a Tour</a>
+        <a href="tel:9736550997" class="btn btn--ghost">Call 973.655.0997</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section class="cta-section deco-rules">
+  <div class="container">
+    <span class="eyebrow">Still Deciding?</span>
+    <div class="divider"></div>
+    <h2>Explore the Floor Plans</h2>
+    <p>Compare the layouts and take a 3D walkthrough, then come back here to check live availability.</p>
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="index.html#floor-plans" class="btn btn--primary">View Floor Plans</a>
+      <a href="index.html#amenities" class="btn btn--ghost">See the Amenities</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo" aria-label="Bellclair at Montclair — Home">
+      <img src="../theme/bellclair-montclair/assets/images/logos/bellclair-logo-cream-gold.png" alt="Bellclair Montclair" width="122" height="44">
+    </a>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="availability.html">Availability</a>
+      <a href="index.html#amenities">Amenities</a>
+      <a href="index.html#residences">Residences</a>
+      <a href="index.html#floor-plans">Floor Plans</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#neighborhood">Neighborhood</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="residents.html">Residents</a>
+      <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer">Pay Rent</a>
+      <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" target="_blank" rel="noopener noreferrer">Apply Now</a>
+    </nav>
+  </div>
+  <div class="footer-badges" aria-label="Fair housing and accessibility">
+    <img src="../theme/bellclair-montclair/assets/images/badges/equal-housing.svg" alt="Equal Housing Opportunity" width="26" height="25">
+    <img src="../theme/bellclair-montclair/assets/images/badges/accessible.svg" alt="Accessible community" width="22" height="25">
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-bottom__copy">&copy; 2026 Bellclair at Montclair. A Sterling Properties Community. All rights reserved. Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.</p>
+    <a class="footer-bottom__brand" href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
+      <img class="footer-sterling-logo" src="../theme/bellclair-montclair/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties">
+    </a>
+    <div class="footer-bottom__links">
+      <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+      <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" target="_blank" rel="noopener noreferrer">Apply Online</a>
+    </div>
+  </div>
+</footer>
+
+<div class="preview-badge" role="status" tabindex="0" aria-label="Design preview — static mockup for client review" title="Design Preview — static mockup for client review">
+  <span class="preview-badge__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2.5l9.5 9.5-9.5 9.5L2.5 12z"/><path d="M12 7.5l4.5 4.5-4.5 4.5L7.5 12z"/>
+    </svg>
+  </span>
+  <span class="preview-badge__text">Design Preview · Static mockup for client review</span>
+</div>
+
+<!-- Not deferred: it defines initMap, which the async Maps script calls back. -->
+<script src="site.js"></script>
+<!-- General inquiry pop-up (styles in theme global.css section 26) -->
+<script src="inquiry-popup.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bellclair at Montclair — Boutique Apartments in Downtown Montclair, NJ</title>
+  <meta name="description" content="One- and two-bedroom apartments on Bell Street in downtown Montclair, New Jersey — a Sterling Properties community.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="../theme/bellclair-montclair/assets/images/logos/bellclair-favicon.png">
+  <!-- Brand faces are Micaroline + ITC Avant Garde Gothic Pro (commercial, not yet
+       licensed for web). Poiret One + Questrial stand in until the files arrive —
+       see the BRAND WEBFONTS note at the end of global.css. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Questrial&display=swap">
+  <link rel="stylesheet" href="../theme/bellclair-montclair/assets/css/global.css">
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body class="has-video-hero">
+
+<header class="site-header" id="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Bellclair at Montclair — Home">
+      <img class="logo--on-light" src="../theme/bellclair-montclair/assets/images/logos/bellclair-logo-black-gold.png" alt="Bellclair Montclair" width="111" height="40">
+      <img class="logo--on-dark" src="../theme/bellclair-montclair/assets/images/logos/bellclair-logo-cream-gold.png" alt="Bellclair Montclair" width="111" height="40">
+    </a>
+    <div class="nav-actions">
+      <a href="availability.html" class="btn btn--nav">See Availability</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-overlay" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="nav-overlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav class="nav-overlay__links" aria-label="Primary navigation">
+    <a href="availability.html">Availability</a>
+    <a href="#amenities">Amenities</a>
+    <a href="#residences">Residences</a>
+    <a href="#floor-plans">Floor Plans</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="#neighborhood">Neighborhood</a>
+    <a href="residents.html">Residents</a>
+  </nav>
+  <div class="nav-overlay__divider"></div>
+  <div class="nav-overlay__ctas">
+    <a href="availability.html" class="btn btn--primary nav-overlay__cta">See Availability</a>
+    <a href="#contact" class="btn btn--ghost nav-overlay__cta">Schedule a Tour</a>
+    <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" class="btn btn--ghost nav-overlay__cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
+  </div>
+</div>
+
+
+<!-- HERO — Nina (8/17): the new professional video is the site's main feature.
+     Drop the loop in as assets/video/bellclair-hero.mp4; the aerial poster shows until then. -->
+<section class="hero hero--video" aria-label="Welcome to Bellclair at Montclair">
+  <div class="hero__bg">
+    <video autoplay muted loop playsinline preload="metadata"
+           poster="../theme/bellclair-montclair/assets/images/aerials/aerial-nyc-skyline.jpg">
+      <source src="../theme/bellclair-montclair/assets/video/bellclair-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero__content">
+    <span class="eyebrow hero__eyebrow">7 &amp; 8 Bell Street · Montclair, New Jersey</span>
+    <h1 class="hero__headline">Boutique Living in the Heart of Montclair</h1>
+    <p class="hero__subheadline">One- and two-bedroom residences a short walk from Church Street, the Montclair Art Museum and Bloomfield Avenue — just 12 miles west of New York City.</p>
+    <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+      <a href="#contact" class="btn btn--primary btn--pulse">Schedule a Tour</a>
+      <button type="button" class="btn btn--ghost" data-film><svg class="btn__play" viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg> Watch the Film</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- INTRO -->
+<article class="feature" id="about">
+  <div class="feature__image" data-animate="fade">
+    <img src="../theme/bellclair-montclair/assets/images/exterior/entry-stairs.jpg" alt="Lantern-lit brick entry stairs at Bellclair on Bell Street" loading="lazy">
+  </div>
+  <div class="feature__body" data-animate>
+    <span class="eyebrow">Welcome to Bellclair</span>
+    <h2>A Boutique Address on Bell Street</h2>
+    <div class="divider"></div>
+    <p>Bellclair is a boutique community by Sterling Properties, set on a quiet street at the edge of downtown Montclair. Spacious one- and two-bedroom residences pair modern kitchens and in-unit laundry with a secured lobby, a fitness center and garage parking — all a short walk from the town's restaurants, museums and shops.</p>
+    <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+      <a href="#floor-plans" class="btn btn--secondary">View Floor Plans</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- FILM -->
+<section class="film-band deco-rules" id="film" aria-label="The Bellclair film">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">The Bellclair Film</span>
+      <h2>See Bellclair in Motion</h2>
+      <div class="divider"></div>
+      <p>A short film tour of the residences, the building and the Montclair streets just outside.</p>
+    </div>
+    <button type="button" class="film-frame" data-film data-animate="fade" aria-label="Play the Bellclair film">
+      <img src="../theme/bellclair-montclair/assets/images/exterior/monument-sign.jpg" alt="" loading="lazy">
+      <span class="film-frame__corners" aria-hidden="true"><span></span></span>
+      <span class="film-play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span>
+      <span class="film-frame__label">Watch the Film</span>
+    </button>
+  </div>
+</section>
+
+
+<!-- AMENITIES -->
+<section id="amenities" class="section--alt" aria-label="Community amenities">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Community Amenities</span>
+      <h2>Everyday Comforts, Close to Home</h2>
+      <p>Select an amenity for a quick detail.</p>
+    </div>
+
+    <div class="amenities-split">
+      <div class="amenity-grid">
+      <div class="amenity" data-animate data-amenity-photo="../theme/bellclair-montclair/assets/images/amenities/fitness-2.jpg" data-amenity-name="Fitness Center">
+        <button class="amenity__head" type="button" aria-expanded="false">
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>
+          <span class="amenity__name">Fitness Center</span>
+          <span class="amenity__plus" aria-hidden="true"></span>
+        </button>
+        <div class="amenity__panel" role="region">
+          <p class="amenity__detail">A state-of-the-art fitness center with cardio machines and free weights — no gym membership required.</p>
+        </div>
+      </div>
+      <div class="amenity" data-animate data-amenity-photo="../theme/bellclair-montclair/assets/images/interior/lobby.jpg" data-amenity-name="Secured Lobby Entry">
+        <button class="amenity__head" type="button" aria-expanded="false">
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/><path d="M12 15v2.5"/></svg>
+          <span class="amenity__name">Secured Lobby Entry</span>
+          <span class="amenity__plus" aria-hidden="true"></span>
+        </button>
+        <div class="amenity__panel" role="region">
+          <p class="amenity__detail">An elegant foyer with secured entrances, so only residents and their guests come and go.</p>
+        </div>
+      </div>
+      <div class="amenity" data-animate data-amenity-photo="../theme/bellclair-montclair/assets/images/exterior/garage-courtyard.jpg" data-amenity-name="Garage Parking">
+        <button class="amenity__head" type="button" aria-expanded="false">
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9.5L12 4l9 5.5V21"/><path d="M7 21v-8.5h10V21M7 15.5h10M7 18.5h10"/></svg>
+          <span class="amenity__name">Garage Parking</span>
+          <span class="amenity__plus" aria-hidden="true"></span>
+        </button>
+        <div class="amenity__panel" role="region">
+          <p class="amenity__detail">Underground garage parking and on-site reserved spaces, with private garages at select townhome residences.</p>
+        </div>
+      </div>
+      <div class="amenity" data-animate data-amenity-photo="../theme/bellclair-montclair/assets/images/exterior/leasing-office.jpg" data-amenity-name="On-Site Leasing Office">
+        <button class="amenity__head" type="button" aria-expanded="false">
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2 19 4M15.5 7.5l2.5 2.5M13.5 9.5l2 2"/></svg>
+          <span class="amenity__name">On-Site Leasing Office</span>
+          <span class="amenity__plus" aria-hidden="true"></span>
+        </button>
+        <div class="amenity__panel" role="region">
+          <p class="amenity__detail">Our leasing and management team works on site at 691 Bloomfield Avenue, steps from the residences.</p>
+        </div>
+      </div>
+      <div class="amenity" data-animate data-amenity-photo="../theme/bellclair-montclair/assets/images/exterior/monument-sign-corner.jpg" data-amenity-name="Landscaped Grounds">
+        <button class="amenity__head" type="button" aria-expanded="false">
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5v-6.5"/><path d="M12 2.5c-3.6 0-6.2 2.8-6.2 6.1 0 3.1 2.6 5.9 6.2 5.9s6.2-2.8 6.2-5.9c0-3.3-2.6-6.1-6.2-6.1z"/><path d="M9 21.5h6"/></svg>
+          <span class="amenity__name">Landscaped Grounds</span>
+          <span class="amenity__plus" aria-hidden="true"></span>
+        </button>
+        <div class="amenity__panel" role="region">
+          <p class="amenity__detail">Mature trees and seasonal plantings frame the buildings along Bell Street.</p>
+        </div>
+      </div>
+      <div class="amenity" data-animate data-amenity-photo="" data-amenity-name="Cats Welcome">
+        <button class="amenity__head" type="button" aria-expanded="false">
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20.5v-8.2L4 4.5l4.2 3.3h7.6L20 4.5l-1 7.8v8.2z"/><path d="M9.5 13.2v.1M14.5 13.2v.1M11 16.5l1 .8 1-.8"/></svg>
+          <span class="amenity__name">Cats Welcome</span>
+          <span class="amenity__plus" aria-hidden="true"></span>
+        </button>
+        <div class="amenity__panel" role="region">
+          <p class="amenity__detail">Cats are welcome at Bellclair. Dogs are not permitted.</p>
+        </div>
+      </div>
+      </div>
+
+      <div class="amenities-photo">
+        <img src="../theme/bellclair-montclair/assets/images/amenities/fitness-1.jpg" alt="" loading="lazy">
+        <div class="amenities-photo__overlay">
+          <span class="amenities-photo__caption">Fitness Center</span>
+          <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+            <a href="gallery.html" class="btn btn--primary">View Gallery</a>
+            <button type="button" class="btn btn--ghost" data-film><svg class="btn__play" viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg> Watch the Film</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- RESIDENCE FEATURES -->
+<section id="residences" aria-label="Residence features">
+  <div class="container">
+    <div class="residences-split">
+      <div class="residences-split__text">
+        <div class="section-intro" data-animate>
+          <span class="eyebrow">Residence Features</span>
+          <h2>Light-Filled Homes, Thoughtfully Appointed</h2>
+          <p>Open layouts with oversized windows, generous closets and a full-size washer and dryer in the home.</p>
+        </div>
+        <ul class="residence-grid">
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> In-Unit Washer &amp; Dryer</li>
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Stainless Steel Appliances</li>
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Quartz or Granite Countertops</li>
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Oversized &amp; Bay Windows</li>
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> 9-Foot Ceilings</li>
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Walk-In Closets (select plans)</li>
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Individual Central Air &amp; Gas Heat</li>
+          <li data-animate><span class="residence-grid__check"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Loft &amp; Duplex Layouts (select residences)</li>
+        </ul>
+      </div>
+      <div class="residences-split__photo" data-animate="right">
+        <img src="../theme/bellclair-montclair/assets/images/residences/living-dining.jpg" alt="Bellclair residence — open living and dining room with tall windows" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLOOR PLANS -->
+<section id="floor-plans" class="section--alt" aria-label="Floor plans">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Floor Plans</span>
+      <h2>Find Your Layout</h2>
+      <p>Select a residence to view its plan. Both two-bedroom layouts include a 3D walkthrough; one-bedroom plans are on the way.</p>
+    </div>
+
+    <div class="fp-selector">
+      <div class="fp-list" id="fp-list" role="tablist" aria-label="Choose a floor plan">
+        <!-- Ordered smallest → largest -->
+        <button class="fp-option" type="button" role="tab" data-plan="one-bedroom"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="dorsey"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="ellington"></button>
+      </div>
+      <div class="fp-detail" id="fp-detail" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- GALLERY TEASER -->
+<article class="feature feature--reverse">
+  <div class="feature__image" data-animate="fade">
+    <img src="../theme/bellclair-montclair/assets/images/interior/hallway.jpg" alt="Bellclair corridor with paneled walls and brass sconces" loading="lazy">
+  </div>
+  <div class="feature__body" data-animate>
+    <span class="eyebrow">Gallery</span>
+    <h2>See Bellclair for Yourself</h2>
+    <div class="divider"></div>
+    <p>The lobby, the residences, the fitness center and the tree-lined blocks of Bell Street.</p>
+    <a href="gallery.html" class="btn btn--primary" style="align-self: flex-start;">View Full Gallery</a>
+  </div>
+</article>
+
+
+<!-- NEIGHBORHOOD — walk/drive times are OSRM routing figures measured from
+     7 Bell St (2026-09-30), not estimates. Re-measure if a place is added. -->
+<section id="neighborhood" class="section--alt" aria-label="Neighborhood">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Montclair, New Jersey</span>
+      <h2>Explore the Neighborhood</h2>
+      <p>Filter the map by category. Times are measured from Bellclair.</p>
+    </div>
+
+    <div class="location-photo" data-animate="fade">
+      <img src="../theme/bellclair-montclair/assets/images/exterior/bloomfield-avenue.jpg" alt="Bellclair's Bloomfield Avenue building in downtown Montclair" loading="lazy">
+      <span class="location-photo__caption">Bellclair on Bloomfield Avenue</span>
+    </div>
+
+    <div class="loc-stats" data-animate>
+      <div class="loc-stat">
+        <span class="loc-stat__num">12 mi</span>
+        <span class="loc-stat__label">west of New York City</span>
+      </div>
+      <div class="loc-stat">
+        <span class="loc-stat__num">5 min</span>
+        <span class="loc-stat__label">walk to Church Street's cafés and restaurants</span>
+      </div>
+      <div class="loc-stat">
+        <span class="loc-stat__num">Doorstep</span>
+        <span class="loc-stat__label">NYC commuter bus on Bloomfield Avenue</span>
+      </div>
+    </div>
+
+    <div class="neighborhood-explorer" id="neighborhood-explorer" data-active-tab="all">
+      <div class="explorer__list-panel">
+        <div class="explorer__tabs" role="tablist" aria-label="Neighborhood categories">
+          <button class="tab-btn is-active" role="tab" aria-selected="true"  data-tab="all"       aria-controls="explorer-list">All</button>
+          <button class="tab-btn"           role="tab" aria-selected="false" data-tab="transit"   aria-controls="explorer-list"><span class="tab-dot tab-dot--transit"></span>Transit</button>
+          <button class="tab-btn"           role="tab" aria-selected="false" data-tab="dining"    aria-controls="explorer-list"><span class="tab-dot tab-dot--dining"></span>Dining</button>
+          <button class="tab-btn"           role="tab" aria-selected="false" data-tab="shopping"  aria-controls="explorer-list"><span class="tab-dot tab-dot--shopping"></span>Shopping</button>
+          <button class="tab-btn"           role="tab" aria-selected="false" data-tab="rec"       aria-controls="explorer-list"><span class="tab-dot tab-dot--rec"></span>Recreation</button>
+          <button class="tab-btn"           role="tab" aria-selected="false" data-tab="education" aria-controls="explorer-list"><span class="tab-dot tab-dot--education"></span>Education</button>
+        </div>
+
+        <div class="explorer__list" id="explorer-list" role="tabpanel">
+        <div class="poi-category-list" data-category="transit">
+          <div class="poi-cat-heading"><span class="poi-cat-dot" style="background:#A16D29"></span>Transit &amp; Commuting</div>
+          <div class="explorer-poi-item" data-poi="Bay Street Station" data-lat="40.80819" data-lng="-74.20874"><span class="poi-num-badge" style="background:#A16D29">1</span><span><span class="explorer-poi-name">Bay Street Station</span><span class="explorer-poi-detail">NJ Transit Montclair-Boonton Line · Midtown Direct to NYC</span><span class="explorer-poi-drive">4 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Walnut Street Station" data-lat="40.81701" data-lng="-74.20969"><span class="poi-num-badge" style="background:#A16D29">2</span><span><span class="explorer-poi-name">Walnut Street Station</span><span class="explorer-poi-detail">NJ Transit Montclair-Boonton Line</span><span class="explorer-poi-drive">22 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Watchung Plaza Station" data-lat="40.82951" data-lng="-74.20699"><span class="poi-num-badge" style="background:#A16D29">3</span><span><span class="explorer-poi-name">Watchung Plaza Station</span><span class="explorer-poi-detail">NJ Transit Montclair-Boonton Line</span><span class="explorer-poi-drive">5 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Glen Ridge Station" data-lat="40.80030" data-lng="-74.20461"><span class="poi-num-badge" style="background:#A16D29">4</span><span><span class="explorer-poi-name">Glen Ridge Station</span><span class="explorer-poi-detail">NJ Transit Montclair-Boonton Line</span><span class="explorer-poi-drive">6 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Upper Montclair Station" data-lat="40.84211" data-lng="-74.20940"><span class="poi-num-badge" style="background:#A16D29">5</span><span><span class="explorer-poi-name">Upper Montclair Station</span><span class="explorer-poi-detail">NJ Transit Montclair-Boonton Line</span><span class="explorer-poi-drive">5 min drive</span></span></div>
+        </div>
+        <div class="poi-category-list" data-category="dining">
+          <div class="poi-cat-heading"><span class="poi-cat-dot" style="background:#0A090C"></span>Dining &amp; Entertainment</div>
+          <div class="explorer-poi-item" data-poi="Church Street" data-lat="40.81483" data-lng="-74.22235"><span class="poi-num-badge" style="background:#0A090C">1</span><span><span class="explorer-poi-name">Church Street</span><span class="explorer-poi-detail">Cafés, restaurants & boutiques off Bloomfield Ave</span><span class="explorer-poi-drive">5 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Wellmont Theater" data-lat="40.81266" data-lng="-74.21665"><span class="poi-num-badge" style="background:#0A090C">2</span><span><span class="explorer-poi-name">Wellmont Theater</span><span class="explorer-poi-detail">Concerts and live performances</span><span class="explorer-poi-drive">13 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="The Clairidge" data-lat="40.81429" data-lng="-74.21839"><span class="poi-num-badge" style="background:#0A090C">3</span><span><span class="explorer-poi-name">The Clairidge</span><span class="explorer-poi-detail">Montclair Film’s independent cinema</span><span class="explorer-poi-drive">8 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Upper Montclair Village" data-lat="40.84472" data-lng="-74.19992"><span class="poi-num-badge" style="background:#0A090C">4</span><span><span class="explorer-poi-name">Upper Montclair Village</span><span class="explorer-poi-detail">Restaurants and shops around Valley Road</span><span class="explorer-poi-drive">7 min drive</span></span></div>
+        </div>
+        <div class="poi-category-list" data-category="shopping">
+          <div class="poi-cat-heading"><span class="poi-cat-dot" style="background:#B6984E"></span>Shopping &amp; Groceries</div>
+          <div class="explorer-poi-item" data-poi="Whole Foods Market" data-lat="40.81858" data-lng="-74.22286"><span class="poi-num-badge" style="background:#B6984E;color:#0A090C">1</span><span><span class="explorer-poi-name">Whole Foods Market</span><span class="explorer-poi-detail">Groceries at the end of the block</span><span class="explorer-poi-drive">1 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Lackawanna Plaza" data-lat="40.81238" data-lng="-74.21354"><span class="poi-num-badge" style="background:#B6984E;color:#0A090C">2</span><span><span class="explorer-poi-name">Lackawanna Plaza</span><span class="explorer-poi-detail">Shopping center on Bloomfield Ave</span><span class="explorer-poi-drive">17 min walk</span></span></div>
+        </div>
+        <div class="poi-category-list" data-category="rec">
+          <div class="poi-cat-heading"><span class="poi-cat-dot" style="background:#6B6458"></span>Recreation &amp; Culture</div>
+          <div class="explorer-poi-item" data-poi="Montclair Art Museum" data-lat="40.81860" data-lng="-74.22424"><span class="poi-num-badge" style="background:#6B6458">1</span><span><span class="explorer-poi-name">Montclair Art Museum</span><span class="explorer-poi-detail">American & Native American art</span><span class="explorer-poi-drive">5 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Van Vleck House &amp; Gardens" data-lat="40.82355" data-lng="-74.22216"><span class="poi-num-badge" style="background:#6B6458">2</span><span><span class="explorer-poi-name">Van Vleck House &amp; Gardens</span><span class="explorer-poi-detail">Historic estate gardens, free to visit</span><span class="explorer-poi-drive">12 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Edgemont Memorial Park" data-lat="40.83070" data-lng="-74.21254"><span class="poi-num-badge" style="background:#6B6458">3</span><span><span class="explorer-poi-name">Edgemont Memorial Park</span><span class="explorer-poi-detail">Pond, paths and open lawns</span><span class="explorer-poi-drive">4 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Anderson Park" data-lat="40.83963" data-lng="-74.21020"><span class="poi-num-badge" style="background:#6B6458">4</span><span><span class="explorer-poi-name">Anderson Park</span><span class="explorer-poi-detail">Olmsted-designed park</span><span class="explorer-poi-drive">6 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Brookdale Park" data-lat="40.83421" data-lng="-74.18881"><span class="poi-num-badge" style="background:#6B6458">5</span><span><span class="explorer-poi-name">Brookdale Park</span><span class="explorer-poi-detail">121-acre county park</span><span class="explorer-poi-drive">8 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Eagle Rock Reservation" data-lat="40.81034" data-lng="-74.23926"><span class="poi-num-badge" style="background:#6B6458">6</span><span><span class="explorer-poi-name">Eagle Rock Reservation</span><span class="explorer-poi-detail">Trails and Manhattan skyline views</span><span class="explorer-poi-drive">7 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Presby Memorial Iris Gardens" data-lat="40.85104" data-lng="-74.20571"><span class="poi-num-badge" style="background:#6B6458">7</span><span><span class="explorer-poi-name">Presby Memorial Iris Gardens</span><span class="explorer-poi-detail">Seasonal iris gardens</span><span class="explorer-poi-drive">7 min drive</span></span></div>
+        </div>
+        <div class="poi-category-list" data-category="education">
+          <div class="poi-cat-heading"><span class="poi-cat-dot" style="background:#CFC3A6"></span>Education &amp; Healthcare</div>
+          <div class="explorer-poi-item" data-poi="Montclair Public Library" data-lat="40.81165" data-lng="-74.21877"><span class="poi-num-badge" style="background:#CFC3A6;color:#0A090C">1</span><span><span class="explorer-poi-name">Montclair Public Library</span><span class="explorer-poi-detail">Main branch</span><span class="explorer-poi-drive">15 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Montclair High School" data-lat="40.82324" data-lng="-74.21284"><span class="poi-num-badge" style="background:#CFC3A6;color:#0A090C">2</span><span><span class="explorer-poi-name">Montclair High School</span><span class="explorer-poi-detail">Montclair Public Schools</span><span class="explorer-poi-drive">19 min walk</span></span></div>
+          <div class="explorer-poi-item" data-poi="Montclair State University" data-lat="40.86469" data-lng="-74.19692"><span class="poi-num-badge" style="background:#CFC3A6;color:#0A090C">3</span><span><span class="explorer-poi-name">Montclair State University</span><span class="explorer-poi-detail">Public research university</span><span class="explorer-poi-drive">10 min drive</span></span></div>
+          <div class="explorer-poi-item" data-poi="Mountainside Medical Center" data-lat="40.81122" data-lng="-74.20403"><span class="poi-num-badge" style="background:#CFC3A6;color:#0A090C">4</span><span><span class="explorer-poi-name">Mountainside Medical Center</span><span class="explorer-poi-detail">Full-service hospital</span><span class="explorer-poi-drive">4 min drive</span></span></div>
+        </div>
+        </div>
+
+        <div class="explorer-actions">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=7+Bell+St%2C+Montclair%2C+NJ+07042" id="explorer-directions" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Get Directions</a>
+          <a href="#contact" class="btn btn--secondary">Contact Leasing Office</a>
+        </div>
+      </div>
+
+      <div class="explorer__map-panel">
+        <div id="poi-map" class="explorer-map"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section class="cta-section deco-rules">
+  <div class="container">
+    <span class="eyebrow">Ready to Move In?</span>
+    <div class="divider"></div>
+    <h2>Make Bellclair Home</h2>
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="#contact" class="btn btn--primary btn--pulse">Schedule a Tour</a>
+      <a href="tel:9736550997" class="btn btn--ghost">Call 973.655.0997</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- MORE COMMUNITIES — same six cards as Rivergate. The Eggert's Crossing card
+     points at /the-crossings-at-ewing/; STATUS.md flags it as unverified. -->
+<section aria-label="More Sterling communities">
+  <div class="container">
+    <div class="section-intro" data-animate>
+      <span class="eyebrow">Sterling Properties</span>
+      <h2>More Communities You May Like</h2>
+    </div>
+    <div class="communities-teaser">
+      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/the-crossings-at-ewing/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Eggert's Crossing</p>
+        <p class="community-teaser__loc">Crossings at Ewing &middot; Ewing, NJ</p>
+      </a>
+      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/evans-mill/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Evan's Mill</p>
+        <p class="community-teaser__loc">Cherry Hill, NJ</p>
+      </a>
+      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/station-place/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Station Place</p>
+        <p class="community-teaser__loc">Lawnside, NJ</p>
+      </a>
+      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/metro-at-woodbridge/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Metro Woodbridge</p>
+        <p class="community-teaser__loc">Woodbridge, NJ</p>
+      </a>
+      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/wellsbrook-at-neptune/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">Wellsbrook at Neptune</p>
+        <p class="community-teaser__loc">Neptune, NJ</p>
+      </a>
+      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/the-woods-east-windsor/" target="_blank" rel="noopener noreferrer">
+        <p class="community-teaser__name">The Woods East Windsor</p>
+        <p class="community-teaser__loc">East Windsor, NJ</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- STERLING PORTFOLIO BANNER -->
+<section class="sterling-banner">
+  <div class="container">
+    <div class="sterling-banner__left">
+      <img class="sterling-banner__logo" src="../theme/bellclair-montclair/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties">
+      <p class="sterling-banner__text">Bellclair is one of several distinctive communities by Sterling Properties across New Jersey.</p>
+    </div>
+    <a href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">View the Sterling Portfolio</a>
+  </div>
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="eyebrow">Get in Touch</span>
+        <h2>We'd Love to Show You Around</h2>
+        <div class="divider"></div>
+        <div style="margin-bottom: var(--space-6);">
+          <p class="contact-label">Leasing Office</p>
+          <p>691 Bloomfield Avenue<br>Montclair, NJ 07042</p>
+        </div>
+        <div style="margin-bottom: var(--space-6);">
+          <p class="contact-label">Residences</p>
+          <p>7 &amp; 8 Bell Street, Montclair</p>
+        </div>
+        <div style="margin-bottom: var(--space-6);">
+          <p class="contact-label">Phone</p>
+          <p><a href="tel:9736550997">973.655.0997</a></p>
+        </div>
+        <div style="margin-bottom: var(--space-6);">
+          <p class="contact-label">Email</p>
+          <p><a href="mailto:bellclaire@spgnj.com">bellclaire@spgnj.com</a></p>
+        </div>
+        <div>
+          <p class="contact-label">Leasing Office Hours</p>
+          <p>Call or email to schedule a visit.</p>
+        </div>
+      </div>
+
+      <form class="contact-form" action="#" method="post" aria-label="Contact form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first_name" placeholder="Jane" autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last_name" placeholder="Smith" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="jane@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(973) 000-0000" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="unit-type">Interested In</label>
+          <select id="unit-type" name="unit_type">
+            <option value="">Select a floor plan...</option>
+            <option value="1br">One Bedroom</option>
+            <option value="2br-dorsey">Two Bedroom — Dorsey (1,075 sq ft)</option>
+            <option value="2br-ellington">Two Bedroom — Ellington (1,125 sq ft)</option>
+            <option value="unsure">Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="move-date">Desired Move-In</label>
+          <input type="text" id="move-date" name="move_date" placeholder="e.g. January 2027">
+        </div>
+        <div class="form-group">
+          <label for="message">Message (optional)</label>
+          <textarea id="message" name="message" placeholder="Any questions or requests for the leasing team..."></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary" style="align-self: flex-start;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo" aria-label="Bellclair at Montclair — Home">
+      <img src="../theme/bellclair-montclair/assets/images/logos/bellclair-logo-cream-gold.png" alt="Bellclair Montclair" width="122" height="44">
+    </a>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="availability.html">Availability</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#residences">Residences</a>
+      <a href="#floor-plans">Floor Plans</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="#neighborhood">Neighborhood</a>
+      <a href="#contact">Contact</a>
+      <a href="residents.html">Residents</a>
+      <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer">Pay Rent</a>
+      <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" target="_blank" rel="noopener noreferrer">Apply Now</a>
+    </nav>
+  </div>
+  <div class="footer-badges" aria-label="Fair housing and accessibility">
+    <img src="../theme/bellclair-montclair/assets/images/badges/equal-housing.svg" alt="Equal Housing Opportunity" width="26" height="25">
+    <img src="../theme/bellclair-montclair/assets/images/badges/accessible.svg" alt="Accessible community" width="22" height="25">
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-bottom__copy">&copy; 2026 Bellclair at Montclair. A Sterling Properties Community. All rights reserved. Made with ❤️ by <a href="https://bruddasindustries.com" target="_blank" rel="noopener noreferrer">Brudda's Industries</a>.</p>
+    <a class="footer-bottom__brand" href="https://sterlingpropertiesnj.com" target="_blank" rel="noopener noreferrer" aria-label="A Sterling Properties community">
+      <img class="footer-sterling-logo" src="../theme/bellclair-montclair/assets/images/logos/sterling-logo-white.png" alt="Sterling Properties">
+    </a>
+    <div class="footer-bottom__links">
+      <a href="https://sterlingproperties.appfolio.com/connect" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+      <a href="https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC" target="_blank" rel="noopener noreferrer">Apply Online</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Matterport 3D tour lightbox -->
+<div class="mp-modal" id="mp-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="3D tour">
+  <div class="mp-modal__backdrop" data-mp-close></div>
+  <div class="mp-modal__dialog">
+    <button class="mp-modal__close" type="button" data-mp-close aria-label="Close 3D tour">&times;</button>
+    <div class="mp-modal__title" id="mp-modal-title">3D Tour</div>
+    <div class="mp-modal__frame">
+      <iframe id="mp-modal-iframe" title="Matterport 3D walkthrough" allow="fullscreen; vr" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Film lightbox. The film itself is assets/video/bellclair-film.mp4 — see
+     assets/video/README.txt. Until it is added the modal shows a coming-soon card. -->
+<div class="mp-modal mp-modal--film" id="film-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="The Bellclair film">
+  <div class="mp-modal__backdrop" data-film-close></div>
+  <div class="mp-modal__dialog">
+    <button class="mp-modal__close" type="button" data-film-close aria-label="Close film">&times;</button>
+    <div class="mp-modal__title">The Bellclair Film</div>
+    <div class="mp-modal__frame">
+      <video controls playsinline preload="none" poster="../theme/bellclair-montclair/assets/images/aerials/aerial-nyc-skyline.jpg">
+        <source src="../theme/bellclair-montclair/assets/video/bellclair-film.mp4" type="video/mp4">
+      </video>
+      <div class="film-modal__fallback" style="background-image: url('../theme/bellclair-montclair/assets/images/aerials/aerial-nyc-skyline.jpg');">
+        <span class="eyebrow">Premiering Soon</span>
+        <p>The new Bellclair film will play here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="preview-badge" role="status" tabindex="0" aria-label="Design preview — static mockup for client review" title="Design Preview — static mockup for client review">
+  <span class="preview-badge__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2.5l9.5 9.5-9.5 9.5L2.5 12z"/><path d="M12 7.5l4.5 4.5-4.5 4.5L7.5 12z"/>
+    </svg>
+  </span>
+  <span class="preview-badge__text">Design Preview · Static mockup for client review</span>
+</div>
+
+<!-- Not deferred: it defines initMap, which the async Maps script calls back. -->
+<script src="site.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE&amp;callback=initMap"></script>
+<!-- General inquiry pop-up (styles in theme global.css section 26) -->
+<script src="inquiry-popup.js" defer></script>
+</body>
+</html>
