@@ -7,7 +7,7 @@
 
 // Brand fonts (Logam + Noyh Geometric Slim) load via @font-face in global.css —
 // the .otf files live in assets/fonts/. No external font request needed.
-define( 'RIVERGATE_VERSION', '1.16.5' );
+define( 'RIVERGATE_VERSION', '1.16.6' );
 define( 'RIVERGATE_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' ); // Add your Google Maps API key here
 
 // Block editor integration: dynamic blocks, block styles, patterns, body class.
@@ -88,6 +88,13 @@ function rivergate_clean_head(): void {
     remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
 }
 add_action( 'init', 'rivergate_clean_head' );
+
+// Core's users sitemap lists every author of a published page — here, the
+// developer login. A property site has no author archives worth indexing.
+function rivergate_remove_users_sitemap( $provider, string $name ) {
+    return 'users' === $name ? false : $provider;
+}
+add_filter( 'wp_sitemaps_add_provider', 'rivergate_remove_users_sitemap', 10, 2 );
 
 
 // ---------------------------------------------------------------------------
