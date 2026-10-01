@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-09-30.** Update this file when something here changes — it is the first
+**Last updated: 2026-10-01.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -10,9 +10,11 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 
 ## Where Rivergate stands
 
-Property #1 of 10. Pre-launch, not yet on its own domain.
+Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
+(see "Domain cutover" below).
 
-- Theme **1.16.4** on `main` and deployed to production
+- Theme **1.16.5** deployed; **1.16.6** (users sitemap removed) is in PR #27, waiting on the
+  `SITE_BASE_URL` secret
 - All **16 client edits** requested by Andrew Zuckerman (8/26) and Nina Chichelo (8/18) are
   implemented and live — verified against the rendered page, not just the commits
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built
@@ -129,6 +131,7 @@ rebuilt from patterns, re-apply them.
 | 9 (Home) | `rivergate/contact-form` given `recipientEmail: rivergate@spgnj.com` | `~/premigration/prelaunch-edits/post-9.*.bak` |
 | 27 (Contact) | same | `~/premigration/prelaunch-edits/post-27.*.bak` |
 | 28 (Residents) | `info@sterlingpropertiesnj.com` → `rivergate@spgnj.com` | `~/premigration/prelaunch-edits/post-28.*.bak` |
+| all site 2 content | 2026-10-01 domain cutover — 51 `https://wordpress-1661870-6622382.cloudwaysapps.com/rivergate-bordentown` URLs rewritten to `https://rivergatenj.com` (`guid` left alone); default post 1 "Hello world!" and page 2 "Sample Page" trashed | `~/premigration/domain-cutover/site2-2026-10-01-1854.sql` |
 | 9, 13, 25, 28 | 2026-09-30 photo refresh — images swapped to Media Library attachments 82–101; Gallery rebuilt with Residences + Neighborhood rows | `~/premigration/photo-refresh/` (per-post `.bak` + posts/postmeta SQL); also WP revisions 102–105 |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
@@ -177,9 +180,21 @@ six and confirm each lands on the right property.
 
 ## Open — infrastructure
 
-**Domain.** `rivergatenj.com` is registered in Sterling's GoDaddy account but not connected.
-Agreed order: **domain first, then SMTP** — OAuth binds to a redirect URI containing the domain,
-so doing it the other way round means re-authenticating.
+**Domain cutover — done 2026-10-01.** DNS, Network Admin and Let's Encrypt were done by John.
+After the switch, every image, PDF and in-page link baked into page content still pointed at the
+staging host. The new certificate does not cover that host, so all of them broke. They were
+rewritten in the database and Varnish was purged. Left over:
+- **`SITE_BASE_URL` repo secret** still needs changing to `https://rivergatenj.com`, or the next
+  deploy fails its smoke test. Do this before merging PR #27.
+- **The network root (blog 1) and Network Admin still live on the staging domain**, which now
+  shows a certificate error because the cert covers only `rivergatenj.com`. Accepted for now.
+  Decide where the network's primary domain lives before property #2 gets its own domain.
+- The Maps key has `rivergatenj.com` in its allowed referrers (John, 2026-10-01).
+- `/author/jjosephsen/` still resolves. It is no longer in the sitemap, but the login is
+  discoverable there.
+
+Next is SMTP, with Nina. The order was **domain first, then SMTP**, because OAuth binds to a
+redirect URI containing the domain.
 
 **Mail.** FluentSMTP is installed and network-activated but not configured, so **no form on the
 site delivers anything right now**. Route chosen: Google Workspace via app password (not OAuth,

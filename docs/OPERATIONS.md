@@ -14,7 +14,7 @@ GitHub repo secrets, and hosting logins in the Cloudways panel.
 | | |
 |---|---|
 | Host | **Cloudways** (DigitalOcean) |
-| App URL | `https://wordpress-1661870-6622382.cloudwaysapps.com` — temporary, no domains mapped yet |
+| App URL | `https://wordpress-1661870-6622382.cloudwaysapps.com` — network root + Network Admin only; its TLS cert no longer matches (see Domain cutover) |
 | SSH | `master_avjztmdgms@142.93.71.107` |
 | App root | `/home/master/applications/xhxwssuusk/public_html` |
 | Stack | WordPress 7.0.5, PHP 8.2.33, MariaDB 10.11, nginx |
@@ -30,7 +30,7 @@ copy it from the panel if it ever changes.
 | blog_id | Path | Purpose |
 |---|---|---|
 | 1 | `/` | Network root |
-| 2 | `/rivergate-bordentown/` | Rivergate Bordentown |
+| 2 | `rivergatenj.com` `/` (was `/rivergate-bordentown/`) | Rivergate Bordentown |
 
 Subdirectory multisite (`SUBDOMAIN_INSTALL` is `false`). `DOMAIN_CURRENT_SITE` is defined in
 `wp-config.php`, which is what makes core domain mapping work without `sunrise.php` — see the
@@ -114,7 +114,8 @@ wp eval '$g = acf_get_field_group("group_rg_amenity");
 page days old while an admin sees it fresh. A change that "did not deploy" is usually Varnish.
 
 - Check with `curl -sSI <url> | grep -iE 'x-cache|^age'` before concluding anything
-- Purge from the Cloudways panel after every change
+- Purge from the Cloudways panel after every change, or from SSH (Varnish is on port 8080):
+  `curl -X PURGE -H 'Host: <domain>' -H 'X-Purge-Method: regex' 'http://127.0.0.1:8080/.*'`
 - Breeze and Object Cache Pro are both **inactive**, their drop-ins parked as
   `wp-content/*.premigration-bak`. This is deliberate and consistent — nothing is half-wired.
   Breeze would duplicate what Varnish already does; Object Cache Pro is worth revisiting once
@@ -201,6 +202,34 @@ referenced this way. Because the deploy runs `--delete`, renaming or removing on
 takes it off the server while the database keeps pointing at the old path, and the live page shows
 a broken image. Adding a new file is always safe. Replacing one *in place* (same filename, new
 photo) is not only safe but the cleanest way to swap a photo everywhere it appears at once.
+
+---
+
+## Domain cutover
+
+Rivergate moved from the staging subdirectory to `rivergatenj.com` on 2026-10-01. Changing the
+domain in Network Admin does **not** touch page content. Patterns bake absolute URLs into the
+database (trap 9), so every image, PDF and in-page link still pointed at the staging host. Once
+the Let's Encrypt cert replaced the default one, that host failed TLS and all of them broke.
+
+For each property, after DNS, Network Admin → Sites → Edit, and SSL:
+
+1. Back up the site's tables:
+   `wp db export ~/premigration/domain-cutover/siteN-$(date +%F).sql --tables=$(wp db tables --url=<domain> --format=csv)`
+2. Rewrite the old URL **including the old subdirectory path**, leaving `guid` alone. Dry run first:
+   `wp search-replace 'https://<staging-host>/<old-path>' 'https://<domain>' --url=<domain> --skip-columns=guid --precise --report-changed-only --dry-run`
+   Also dry-run the JSON-escaped form (`https:\/\/…`). It was zero for Rivergate, but block
+   attributes can store it.
+3. Purge Varnish, then crawl every page and confirm no reference to the staging host remains.
+4. Update the `SITE_BASE_URL` repo secret, or the next deploy fails its smoke test.
+5. Add the domain to the Google Maps key's allowed referrers (trap 7).
+6. Trash WordPress's default "Hello world!" post and "Sample Page". The site becomes indexable
+   on its new domain, and both are in the sitemap.
+7. Then configure SMTP (see Mail).
+
+> The network root keeps the staging domain (`DOMAIN_CURRENT_SITE` in `wp-config.php`), and its
+> cert stops matching once a custom cert is installed. That means a browser warning on Network
+> Admin. Decide where the network's primary domain lives before the next property moves.
 
 ---
 
