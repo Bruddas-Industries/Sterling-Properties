@@ -101,6 +101,16 @@ add_action( 'init', function (): void {
 	add_post_type_support( 'page', 'excerpt' );
 } );
 
+// Search Console ownership: URL-prefix property https://rivergatenj.com/,
+// HTML-tag method. Google re-checks it periodically, so removing it
+// un-verifies the property. Rivergate-only — a property fork must drop or
+// replace this token. Printed even when an SEO plugin is active.
+add_action( 'wp_head', function (): void {
+	if ( is_front_page() ) {
+		echo '<meta name="google-site-verification" content="TgBf3XKaJFQBBh9xVuBCsylPL5GwH5pwomDKCEGsqxA">' . "\n";
+	}
+}, 1 );
+
 add_filter( 'document_title_separator', fn() => '|' );
 
 add_filter( 'pre_get_document_title', function ( string $title ): string {
