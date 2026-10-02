@@ -13,10 +13,10 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
-- Theme **1.16.5** deployed; **1.16.6** (users sitemap removed) is in PR #27, waiting on the
-  `SITE_BASE_URL` secret. **1.16.7** stacks on it and replaces the WordPress favicon with the
-  logo's square mark (`assets/images/site-icon/`, served through the `get_site_icon_url`
-  filter, so a Customizer Site Icon still overrides it)
+- Theme **1.17.0** adds search and sharing metadata (`inc/seo.php`; see "Search (SEO)" below).
+  1.16.6 removed the users sitemap and 1.16.7 swapped the WordPress favicon for the logo's square
+  mark (`assets/images/site-icon/`, served through the `get_site_icon_url` filter, so a
+  Customizer Site Icon still overrides it)
 - All **16 client edits** requested by Andrew Zuckerman (8/26) and Nina Chichelo (8/18) are
   implemented and live — verified against the rendered page, not just the commits
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built
@@ -186,14 +186,27 @@ six and confirm each lands on the right property.
 After the switch, every image, PDF and in-page link baked into page content still pointed at the
 staging host. The new certificate does not cover that host, so all of them broke. They were
 rewritten in the database and Varnish was purged. Left over:
-- **`SITE_BASE_URL` repo secret** still needs changing to `https://rivergatenj.com`, or the next
-  deploy fails its smoke test. Do this before merging PR #27.
 - **The network root (blog 1) and Network Admin still live on the staging domain**, which now
   shows a certificate error because the cert covers only `rivergatenj.com`. Accepted for now.
   Decide where the network's primary domain lives before property #2 gets its own domain.
 - The Maps key has `rivergatenj.com` in its allowed referrers (John, 2026-10-01).
-- `/author/jjosephsen/` still resolves. It is no longer in the sitemap, but the login is
-  discoverable there.
+- `SITE_BASE_URL` now points at `https://rivergatenj.com` (updated 2026-10-01, before PRs #27/#28
+  merged).
+
+**Search (SEO) — theme side done in 1.17.0.** `inc/seo.php` sets per-page titles and meta
+descriptions, Open Graph/Twitter tags (`assets/images/social/rivergate-share.jpg`, a 1200×630
+crop of the hero aerial), and homepage JSON-LD (`WebSite` + `ApartmentComplex` with address,
+phone, geo and amenities). It also drops `/contact/` and `/location/` from the sitemap (they
+301), and closes `/author/*`, `?author=N`, the logged-out `/wp-json/wp/v2/users` route and the
+oEmbed author fields, which all exposed the developer login.
+- **Descriptions are client-editable**: a page's Excerpt (block editor sidebar) overrides the
+  theme copy. Titles stay in code (`rivergate_seo_pages` filter).
+- Everything except the sitemap/author lockdown steps aside if an SEO plugin is activated.
+- Still open, none of it ours to do: Search Console (needs a DNS TXT record — Sterling's DNS),
+  Google Business Profile, the link from the Sterling portfolio page, listing-site URLs. Tracked
+  with the user outside the repo.
+- **Copy bug on the live Availability page**: "Compare all eight layouts" — there are nine.
+  It is page content (DB), so fix it in wp-admin, and in `patterns/page-availability.php`.
 
 Next is SMTP, with Nina. The order was **domain first, then SMTP**, because OAuth binds to a
 redirect URI containing the domain.
