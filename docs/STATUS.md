@@ -202,6 +202,10 @@ oEmbed author fields, which all exposed the developer login.
 - **Descriptions are client-editable**: a page's Excerpt (block editor sidebar) overrides the
   theme copy. Titles stay in code (`rivergate_seo_pages` filter).
 - Everything except the sitemap/author lockdown steps aside if an SEO plugin is activated.
+- **Search Console verification** is the `google-site-verification` meta tag in `inc/seo.php`
+  (URL-prefix property `https://rivergatenj.com/`, HTML-tag method — the HTML-file method would
+  need a file in the network-shared web root, which no deploy reaches). Do not remove it: Google
+  re-checks it. **A property fork must drop or replace this token.**
 - Still open, none of it ours to do: Search Console (needs a DNS TXT record — Sterling's DNS),
   Google Business Profile, the link from the Sterling portfolio page, listing-site URLs. Tracked
   with the user outside the repo.
