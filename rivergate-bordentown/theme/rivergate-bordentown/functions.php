@@ -7,12 +7,14 @@
 
 // Brand fonts (Logam + Noyh Geometric Slim) load via @font-face in global.css —
 // the .otf files live in assets/fonts/. No external font request needed.
-define( 'RIVERGATE_VERSION', '1.16.7' );
+define( 'RIVERGATE_VERSION', '1.17.0' );
 define( 'RIVERGATE_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' ); // Add your Google Maps API key here
 
 // Block editor integration: dynamic blocks, block styles, patterns, body class.
 require_once get_template_directory() . '/inc/blocks.php';
 require_once get_template_directory() . '/inc/inquiry-popup.php';
+// Titles, descriptions, Open Graph, JSON-LD, sitemap exclusions, author lockdown.
+require_once get_template_directory() . '/inc/seo.php';
 
 
 // ---------------------------------------------------------------------------
@@ -266,20 +268,24 @@ add_filter( 'acf/settings/save_json', function (): string {
 //         add_filter( 'rivergate_legacy_redirect_status', fn() => 302 );
 // ---------------------------------------------------------------------------
 
-function rivergate_legacy_page_redirects(): void {
-    if ( is_admin() || wp_doing_ajax() || ! is_page() ) {
-        return;
-    }
-
-    $map = apply_filters(
+// Slug => homepage target. Also read by inc/seo.php to keep these pages out
+// of the sitemap.
+function rivergate_legacy_redirect_map(): array {
+    return apply_filters(
         'rivergate_legacy_redirects',
         [
             'contact'  => '/#contact',
             'location' => '/#neighborhood',
         ]
     );
+}
 
-    foreach ( $map as $slug => $target ) {
+function rivergate_legacy_page_redirects(): void {
+    if ( is_admin() || wp_doing_ajax() || ! is_page() ) {
+        return;
+    }
+
+    foreach ( rivergate_legacy_redirect_map() as $slug => $target ) {
         if ( is_page( $slug ) ) {
             $status = (int) apply_filters( 'rivergate_legacy_redirect_status', 301 );
             wp_safe_redirect( home_url( $target ), $status );
