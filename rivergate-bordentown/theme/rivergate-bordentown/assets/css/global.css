@@ -718,6 +718,13 @@ body.has-video-hero.nav-is-open .site-header {
   color: rgba(255,255,255,0.88);
 }
 
+/* The homepage gallery teaser and the neighborhood section below it both sit on
+   the blue field, so the teaser's copy ran straight into the next heading. A
+   full-bleed rule marks the seam (full-bleed so it meets the photo's edge). */
+.feature + #neighborhood {
+  border-top: 1px solid rgba(255,255,255,0.4);
+}
+
 @media (max-width: 900px) {
   .feature {
     grid-template-columns: 1fr;

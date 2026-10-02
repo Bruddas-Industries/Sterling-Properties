@@ -194,7 +194,7 @@ function rivergate_seo_schema(): void {
 	$amenities = [
 		'Heated outdoor pool', 'Resident clubhouse', 'Fitness studio', 'Dog run',
 		'Outdoor BBQ and fire pit area', 'EV chargers', 'Secured access',
-		'Private garage spaces', 'Elevator access', 'Full-time onsite maintenance',
+		'Private garage spaces', 'Elevator access', 'Onsite maintenance',
 		'Private balcony', 'In-unit washer and dryer',
 	];
 

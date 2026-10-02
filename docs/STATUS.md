@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-10-01.** Update this file when something here changes — it is the first
+**Last updated: 2026-10-02.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -13,6 +13,10 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
+- Theme **1.17.2** (2026-10-02) renames "Full-Time Onsite Maintenance" to "Onsite Maintenance"
+  at the client's request and adds a full-bleed rule between the homepage gallery teaser and the
+  neighborhood section, which both sit on the blue field and had run together. The rule is
+  CSS-only (`.feature + #neighborhood` in `global.css` section 7), so no page content changed.
 - Theme **1.17.0** adds search and sharing metadata (`inc/seo.php`; see "Search (SEO)" below).
   1.16.6 removed the users sitemap and 1.16.7 swapped the WordPress favicon for the logo's square
   mark (`assets/images/site-icon/`, served through the `get_site_icon_url` filter, so a
@@ -160,7 +164,7 @@ strip the `~N min` fragments from the `$categories` array in
 `blocks/neighborhood-explorer/render.php`.
 
 **Four amenities have no photo.** Secured Access, Private Garage Spaces, Elevator Access and
-Full-Time Onsite Maintenance ship an empty image, so selecting them snaps the panel back to the
+Onsite Maintenance ship an empty image, so selecting them snaps the panel back to the
 default clubhouse shot. None of the 66 photos in the 9/14 set shows any of them. Ask Nina for a
 fob reader or controlled entry, the detached garages with doors in view, the elevator lobby, and
 the maintenance team, shop or vehicle. Note that creating real `rg_amenity` entries is
@@ -260,6 +264,8 @@ Accuracy rules confirmed with the client. **Do not reintroduce these errors.**
 - **The River Line is a neighborhood amenity, not a property amenity.** It may be described as
   nearby; it must never be listed among the community's own amenities.
 - **Flooring is "hardwood-like."** Never "hardwood" and never "carpet."
+- **Maintenance is "onsite," not "full-time."** The client had "Full-Time" removed (2026-10-02);
+  do not describe the maintenance team as full-time anywhere.
 - **Email convention is `@spgnj.com`** (cf. `Canterly@spgNJ.com`), not `@sterlingpropertiesnj.com`.
 - **Never link `sterlingproperties.com`** — an unrelated firm in Washington/Oregon. The correct
   domain is `sterlingpropertiesnj.com`.
