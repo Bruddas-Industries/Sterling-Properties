@@ -105,7 +105,7 @@ function rivergate_get_amenities( int $max = 8 ): array {
 		[ 'name' => 'Private Garage Spaces',          'icon_key' => 'garage',      'group' => 'property', 'image' => '', 'detail' => 'Free-standing private garages available at select locations, with additional surface parking on-site.' ],
 		[ 'name' => 'EV Chargers',                    'icon_key' => 'ev',          'group' => 'property', 'image' => 'amenities/amenity-1.jpg', 'detail' => 'On-site electric vehicle charging stations, reserved for residents while charging.' ],
 		[ 'name' => 'Elevator Access',                'icon_key' => 'elevator',        'group' => 'property', 'image' => '', 'detail' => 'Elevator service in select buildings for added convenience and accessibility.' ],
-		[ 'name' => 'Full-Time Onsite Maintenance',   'icon_key' => 'maintenance', 'group' => 'property', 'image' => '', 'detail' => 'A full-time maintenance team based on site, so requests are handled quickly by people who know the community.' ],
+		[ 'name' => 'Onsite Maintenance',             'icon_key' => 'maintenance', 'group' => 'property', 'image' => '', 'detail' => 'A maintenance team based on site, so requests are handled quickly by people who know the community.' ],
 	];
 }
 
