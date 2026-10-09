@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-10-02.** Update this file when something here changes — it is the first
+**Last updated: 2026-10-08.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -57,8 +57,32 @@ is named `preview/`, not `preview-1/`, at John's request. It is **not deployed y
   Gold and copper fail contrast as small text, so eyebrows and links use a deepened bronze
   (`--color-primary #7A5719`). Gold is used only for fills, rules and icons.
 
-**Sources for content and assets.** Nina's SharePoint folder could not be opened, so nothing
-from it is in the repo. Everything came from:
+**Client edits (2026-10-08, branch `feature/bellclair-client-edits`).** Applied from John's list
+using the SharePoint share, now synced locally (`07_Assets/Bellclair (Montclair, NJ)`):
+- **Hero video + film.** Hero = VTC "Wide_Silent" cut trimmed to 2.8–83.7 s (title card and
+  end card removed). That cut has **no** interview shots; Andrew appears only in the v9 FINAL,
+  which plays with sound in the "Watch the Film" lightbox. Encodes and commands are in
+  `assets/video/README.txt` (hero 13.7 MB desktop / 8.7 MB 720p for phones, film 34.7 MB).
+- **Floor plans.** Eight plans from "Updated Floorplans/JPG", smallest → largest: Calloway 745,
+  Armstrong 775, Holloway 825 (loft), Basie 850, Dorsey 1,075, Ellington 1,125, Duplex 1,300,
+  Fitzgerald 1,383. The one-bedroom placeholder is gone. Data is `PLANS` in `preview/site.js`.
+  Armstrong has a Matterport tour (`PVaodWhQSWT`). Matterport's own titles confirm Dorsey =
+  `hrsGWLg4gYT` and Ellington = `ah1D28hoCbj`; the "Dorsey NDR Matterport.docx" on SharePoint
+  wrongly lists Ellington's link.
+- **Amenities.** Landscaped Grounds → EV Chargers (photo is a ChargePoint frame from the film).
+  Added "24/7 On-Site Maintenance", as the client requested; the Residents card says the same.
+- **Photos.** Residences are **renovated units only**. On SharePoint, **"NDR" folders are the
+  un-renovated units** (beige granite, tile kitchens, almond tub surrounds); the renovated
+  finish (white shaker uppers, dark lowers, white quartz) is in "Armstrong (1 BR)",
+  "Ellington (2 BR)", "Calloway (8 Bell Street)", "Halloway24" and the six `DSC0562x–5651`
+  frames at the end of "Dorsey NDR". Every previous residence photo was from an NDR unit and
+  has been replaced. Virtually staged shots are captioned as such. Skipped: the "(Edited)" and
+  "(Golden Hour)" exterior PNGs (AI-edit mark, fabricated sky).
+- **Gallery** opens with the film, then Residences, Building & Amenities, Exterior, and
+  Around Montclair (stills from the silent cut).
+
+**Sources for content and assets (original 2026-09-30 build).** Before the SharePoint share was
+available, everything came from:
 - The email's 3 logo PNGs and the brand PDF. The cream/gold on-dark logo and the favicon were
   derived from the black/gold PNG, following the guide's "Color Usage" panel.
 - 9 photos from the Sterling portfolio page (`sterlingpropertiesnj.com/sterling-portfolio/bellclair-at-montclair/`)
@@ -70,13 +94,12 @@ from it is in the repo. Everything came from:
 ### Open — Bellclair
 
 **Waiting on Nina:**
-- **The professional video** (the main feature she asked for) is in the SharePoint "Video"
-  folder. The hero and the "Watch the Film" lightbox are already wired. Drop the files in as
-  `assets/video/bellclair-hero.mp4` (muted loop) and `bellclair-film.mp4` (full film). See
-  `assets/video/README.txt`. Until then the hero shows the aerial and the lightbox shows a
-  "Premiering Soon" card. The full film may be too large for git; consider a video host.
-- The rest of the SharePoint photos. No one-bedroom floor plan exists yet; the selector shows a
-  "coming soon" placeholder.
+- **Duplex drawing.** The Duplex sheet (and its flyer page) has specs but no drawing, so the
+  selector shows "Floor plan drawing coming soon".
+- **A second "Holloway" sheet** (`Holloway (2).jpg`: 691 Bloomfield, 2bd/2ba, 1,134 sf) is a
+  different plan under the same name. Only the 1bd/825 sf loft is on the site. Ask what the
+  2-bed plan is called and whether it belongs in the selector.
+- Plan names follow the sheets: **Basie** and **Calloway** (not "Bassey"/"Callaway").
 - **Licensed webfonts.** Micaroline and ITC Avant Garde Gothic Pro are commercial. The preview
   uses Poiret One and Questrial as stand-ins. To switch, drop in the files and uncomment the
   `@font-face` block at the end of `global.css` (see `assets/fonts/README.txt`).
@@ -92,6 +115,10 @@ carried over from Rivergate, and none has been verified with Sterling:
   electric coil range.
 - The townhome collection at 8 Bell St (private 2-car garages, loft/duplex units, 14 ft
   ceilings) is only described as "select residences". Confirm which units these are.
+- EV charging: the copy says only "ChargePoint electric-vehicle charging on site". Confirm the
+  number of chargers, where they are, and whether there is a fee before saying more.
+- The contact section now lists residences at "7 & 8 Bell Street and 691 Bloomfield Avenue",
+  since the Holloway lofts are at 691 Bloomfield.
 - Residents page: quiet hours, the 60-day move-out notice and the parking rules are
   Rivergate's text. "Maintenance Requests" points at the AppFolio portal; Rivergate uses
   Pilera, so ask which Bellclair uses. The after-hours line is assumed to be the office

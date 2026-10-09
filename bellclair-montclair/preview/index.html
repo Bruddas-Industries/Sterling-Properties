@@ -52,12 +52,15 @@
 </div>
 
 
-<!-- HERO — Nina (8/17): the new professional video is the site's main feature.
-     Drop the loop in as assets/video/bellclair-hero.mp4; the aerial poster shows until then. -->
+<!-- HERO — background loop cut from VTC's "Wide_Silent" film (title and end cards
+     trimmed; it has no interview shots). "Watch the Film" plays the full v9 cut with sound. -->
 <section class="hero hero--video" aria-label="Welcome to Bellclair at Montclair">
   <div class="hero__bg">
-    <video autoplay muted loop playsinline preload="metadata"
-           poster="../theme/bellclair-montclair/assets/images/aerials/aerial-nyc-skyline.jpg">
+    <video autoplay muted loop playsinline preload="auto"
+           poster="../theme/bellclair-montclair/assets/images/film/hero-poster.jpg">
+      <!-- Phones get the 720p cut (8.7 MB vs 13.7 MB); browsers without <source media>
+           support take the first source, so the 720p one is a safe fallback too. -->
+      <source src="../theme/bellclair-montclair/assets/video/bellclair-hero-720.mp4" type="video/mp4" media="(max-width: 900px)">
       <source src="../theme/bellclair-montclair/assets/video/bellclair-hero.mp4" type="video/mp4">
     </video>
   </div>
@@ -100,7 +103,7 @@
       <p>A short film tour of the residences, the building and the Montclair streets just outside.</p>
     </div>
     <button type="button" class="film-frame" data-film data-animate="fade" aria-label="Play the Bellclair film">
-      <img src="../theme/bellclair-montclair/assets/images/exterior/monument-sign.jpg" alt="" loading="lazy">
+      <img src="../theme/bellclair-montclair/assets/images/film/film-frame.jpg" alt="" loading="lazy">
       <span class="film-frame__corners" aria-hidden="true"><span></span></span>
       <span class="film-play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span>
       <span class="film-frame__label">Watch the Film</span>
@@ -160,14 +163,14 @@
           <p class="amenity__detail">Our leasing and management team works on site at 691 Bloomfield Avenue, steps from the residences.</p>
         </div>
       </div>
-      <div class="amenity" data-animate data-amenity-photo="../theme/bellclair-montclair/assets/images/exterior/monument-sign-corner.jpg" data-amenity-name="Landscaped Grounds">
+      <div class="amenity" data-animate data-amenity-photo="../theme/bellclair-montclair/assets/images/amenities/ev-charger.jpg" data-amenity-name="EV Chargers">
         <button class="amenity__head" type="button" aria-expanded="false">
-          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5v-6.5"/><path d="M12 2.5c-3.6 0-6.2 2.8-6.2 6.1 0 3.1 2.6 5.9 6.2 5.9s6.2-2.8 6.2-5.9c0-3.3-2.6-6.1-6.2-6.1z"/><path d="M9 21.5h6"/></svg>
-          <span class="amenity__name">Landscaped Grounds</span>
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="10" height="18" rx="1"/><path d="M9.6 7.5 7.6 11.5h3l-2 4"/><path d="M14 9h2.5a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 0 3 0V7.5L19 5.5"/></svg>
+          <span class="amenity__name">EV Chargers</span>
           <span class="amenity__plus" aria-hidden="true"></span>
         </button>
         <div class="amenity__panel" role="region">
-          <p class="amenity__detail">Mature trees and seasonal plantings frame the buildings along Bell Street.</p>
+          <p class="amenity__detail">ChargePoint electric-vehicle charging on site, so you can charge at home.</p>
         </div>
       </div>
       <div class="amenity" data-animate data-amenity-photo="" data-amenity-name="Cats Welcome">
@@ -178,6 +181,16 @@
         </button>
         <div class="amenity__panel" role="region">
           <p class="amenity__detail">Cats are welcome at Bellclair. Dogs are not permitted.</p>
+        </div>
+      </div>
+      <div class="amenity" data-animate data-amenity-photo="" data-amenity-name="24/7 On-Site Maintenance">
+        <button class="amenity__head" type="button" aria-expanded="false">
+          <svg class="amenity__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.2 5.2L3.8 17.2a1.5 1.5 0 0 0 2.1 2.1l5.7-5.7a4 4 0 0 0 5.2-5.2l-2.5 2.5-2.1-.5-.5-2.1z"/></svg>
+          <span class="amenity__name">24/7 On-Site Maintenance</span>
+          <span class="amenity__plus" aria-hidden="true"></span>
+        </button>
+        <div class="amenity__panel" role="region">
+          <p class="amenity__detail">Our on-site maintenance team is available 24/7. Submit a request online any time, or call for emergencies around the clock.</p>
         </div>
       </div>
       </div>
@@ -219,7 +232,7 @@
         </ul>
       </div>
       <div class="residences-split__photo" data-animate="right">
-        <img src="../theme/bellclair-montclair/assets/images/residences/living-dining.jpg" alt="Bellclair residence — open living and dining room with tall windows" loading="lazy">
+        <img src="../theme/bellclair-montclair/assets/images/residences/living-dining-staged.jpg" alt="Renovated Ellington two-bedroom living and dining room, virtually staged" loading="lazy">
       </div>
     </div>
   </div>
@@ -232,15 +245,20 @@
     <div class="section-intro" data-animate>
       <span class="eyebrow">Floor Plans</span>
       <h2>Find Your Layout</h2>
-      <p>Select a residence to view its plan. Both two-bedroom layouts include a 3D walkthrough; one-bedroom plans are on the way.</p>
+      <p>Eight one- and two-bedroom layouts, from 745 to 1,383 square feet, including lofts and two-level homes. Select a residence to view its plan.</p>
     </div>
 
     <div class="fp-selector">
       <div class="fp-list" id="fp-list" role="tablist" aria-label="Choose a floor plan">
-        <!-- Ordered smallest → largest -->
-        <button class="fp-option" type="button" role="tab" data-plan="one-bedroom"></button>
+        <!-- Ordered smallest → largest. Details live in PLANS in site.js. -->
+        <button class="fp-option" type="button" role="tab" data-plan="calloway"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="armstrong"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="holloway"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="basie"></button>
         <button class="fp-option" type="button" role="tab" data-plan="dorsey"></button>
         <button class="fp-option" type="button" role="tab" data-plan="ellington"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="duplex"></button>
+        <button class="fp-option" type="button" role="tab" data-plan="fitzgerald"></button>
       </div>
       <div class="fp-detail" id="fp-detail" role="tabpanel" aria-live="polite"></div>
     </div>
@@ -435,7 +453,7 @@
         </div>
         <div style="margin-bottom: var(--space-6);">
           <p class="contact-label">Residences</p>
-          <p>7 &amp; 8 Bell Street, Montclair</p>
+          <p>7 &amp; 8 Bell Street and 691 Bloomfield Avenue, Montclair</p>
         </div>
         <div style="margin-bottom: var(--space-6);">
           <p class="contact-label">Phone</p>
@@ -474,9 +492,14 @@
           <label for="unit-type">Interested In</label>
           <select id="unit-type" name="unit_type">
             <option value="">Select a floor plan...</option>
-            <option value="1br">One Bedroom</option>
+            <option value="1br-calloway">One Bedroom — Calloway (745 sq ft)</option>
+            <option value="1br-armstrong">One Bedroom — Armstrong (775 sq ft)</option>
+            <option value="1br-holloway">One Bedroom Loft — Holloway (825 sq ft)</option>
+            <option value="1br-basie">One Bedroom — Basie (850 sq ft)</option>
             <option value="2br-dorsey">Two Bedroom — Dorsey (1,075 sq ft)</option>
             <option value="2br-ellington">Two Bedroom — Ellington (1,125 sq ft)</option>
+            <option value="2br-duplex">Two Bedroom — Duplex (1,300 sq ft)</option>
+            <option value="2br-fitzgerald">Two Bedroom — Fitzgerald (1,383 sq ft)</option>
             <option value="unsure">Not Sure Yet</option>
           </select>
         </div>
@@ -540,15 +563,15 @@
   </div>
 </div>
 
-<!-- Film lightbox. The film itself is assets/video/bellclair-film.mp4 — see
-     assets/video/README.txt. Until it is added the modal shows a coming-soon card. -->
+<!-- Film lightbox: the full VTC film with sound (assets/video/bellclair-film.mp4,
+     see assets/video/README.txt). The coming-soon card only shows if the file fails. -->
 <div class="mp-modal mp-modal--film" id="film-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="The Bellclair film">
   <div class="mp-modal__backdrop" data-film-close></div>
   <div class="mp-modal__dialog">
     <button class="mp-modal__close" type="button" data-film-close aria-label="Close film">&times;</button>
     <div class="mp-modal__title">The Bellclair Film</div>
     <div class="mp-modal__frame">
-      <video controls playsinline preload="none" poster="../theme/bellclair-montclair/assets/images/aerials/aerial-nyc-skyline.jpg">
+      <video controls playsinline preload="none" poster="../theme/bellclair-montclair/assets/images/film/film-poster.jpg">
         <source src="../theme/bellclair-montclair/assets/video/bellclair-film.mp4" type="video/mp4">
       </video>
       <div class="film-modal__fallback" style="background-image: url('../theme/bellclair-montclair/assets/images/aerials/aerial-nyc-skyline.jpg');">
