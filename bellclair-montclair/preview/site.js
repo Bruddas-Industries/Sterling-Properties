@@ -14,16 +14,27 @@
   var APPLY_URL = 'https://sterlingproperties.appfolio.com/listings?filters%5Bproperty_list%5D=BELLCLAIRE%2C+LLC';
   var MATTERPORT = 'https://my.matterport.com/show/?m=';
 
-  /* Floor plans — from Sterling's AppFolio listings and the branded plan
-     sheets (Ellington, Dorsey). Ordered smallest -> largest. The one-bedroom
-     plan has not been supplied yet, so it renders a placeholder panel. */
+  /* Floor plans — from Nina's "Updated Floorplans" sheets (SharePoint,
+     Marketing Collateral/Floorplans). Ordered smallest -> largest. Tours are
+     Matterport models whose titles name the plan. The Duplex sheet has specs
+     but no drawing, so it renders the placeholder panel. */
   var PLANS = {
-    'one-bedroom': { name: 'One Bedroom', code: 'Plan details coming soon', bed: 1, bath: '—', sqft: '—',
-                     where: '', img: null, mp: null },
-    dorsey:        { name: 'Dorsey', code: '7 Bell St · Floors 1–4', bed: 2, bath: 1, sqft: '1,075',
-                     where: '7 Bell Street', img: 'dorsey.jpg', mp: MATTERPORT + 'hrsGWLg4gYT' },
-    ellington:     { name: 'Ellington', code: '7 Bell St · Floors 1–4 & 8 Bell St · Floors 1–2', bed: 2, bath: 2, sqft: '1,125',
-                     where: '7 & 8 Bell Street', img: 'ellington.jpg', mp: MATTERPORT + 'ah1D28hoCbj' }
+    calloway:   { name: 'Calloway', code: '7 Bell St · Floor 1 & 8 Bell St · Floor 3', bed: 1, bath: 1, sqft: '745',
+                  where: '7 & 8 Bell Street', img: 'calloway.jpg', mp: null },
+    armstrong:  { name: 'Armstrong', code: '7 Bell St · Floors 1–4', bed: 1, bath: 1, sqft: '775',
+                  where: '7 Bell Street', img: 'armstrong.jpg', mp: MATTERPORT + 'PVaodWhQSWT' },
+    holloway:   { name: 'Holloway', code: '691 Bloomfield Ave · Floors 1 & 2 · Loft', bed: 1, bath: 1, sqft: '825',
+                  where: '691 Bloomfield Avenue', img: 'holloway.jpg', mp: null },
+    basie:      { name: 'Basie', code: '7 Bell St · Floor 1', bed: 1, bath: 1, sqft: '850',
+                  where: '7 Bell Street', img: 'basie.jpg', mp: null },
+    dorsey:     { name: 'Dorsey', code: '7 Bell St · Floors 1–4', bed: 2, bath: 1, sqft: '1,075',
+                  where: '7 Bell Street', img: 'dorsey.jpg', mp: MATTERPORT + 'hrsGWLg4gYT' },
+    ellington:  { name: 'Ellington', code: '7 Bell St · Floors 1–4 & 8 Bell St · Floors 1–2', bed: 2, bath: 2, sqft: '1,125',
+                  where: '7 & 8 Bell Street', img: 'ellington.jpg', mp: MATTERPORT + 'ah1D28hoCbj' },
+    duplex:     { name: 'Duplex', code: '8 Bell St · Floors 1 & 2', bed: 2, bath: 2, sqft: '1,300',
+                  where: '8 Bell Street', img: null, mp: null },
+    fitzgerald: { name: 'Fitzgerald', code: '8 Bell St · Floor 3 · Two levels', bed: 2, bath: 1.5, sqft: '1,383',
+                  where: '8 Bell Street', img: 'fitzgerald.jpg', mp: null }
   };
   var DEFAULT_PLAN = 'dorsey';
 
@@ -133,7 +144,7 @@
         '<span class="fp-option__specs">' + p.bed + ' Bed' + (p.bath !== '—' ? ' / ' + p.bath + ' Bath' : '') +
           (p.where ? ' · ' + p.where : '') + '</span>' +
         '<span class="fp-option__name">' + p.name + '</span>' +
-        '<span class="fp-option__size">' + (p.sqft !== '—' ? p.sqft + ' sq ft' : 'Coming soon') + '</span>' +
+        '<span class="fp-option__size">' + p.sqft + ' sq ft</span>' +
         (p.mp ? '<span class="fp-option__tag">3D Tour</span>' : '');
     });
 
@@ -143,7 +154,7 @@
         ? '<img class="fp-plan-img" src="' + ASSETS + 'images/floorplans/' + p.img + '" alt="' + p.name +
           ' floor plan — ' + p.bed + ' bed, ' + p.bath + ' bath, ' + p.sqft + ' sq ft" loading="lazy">'
         : '<div class="fp-diagram"><span class="fp-diagram__watermark">' + p.name + '</span>' +
-          '<span class="fp-diagram__note">Floor plan coming soon</span></div>';
+          '<span class="fp-diagram__note">Floor plan drawing coming soon</span></div>';
       var tour = p.mp
         ? '<button type="button" class="btn btn--secondary" data-mp="' + p.mp + '" data-name="' + p.name + '">Take a 3D Tour</button>'
         : '';
@@ -243,10 +254,9 @@
   }());
 
   /* ---------------------------------------------------- 6. film modal
-     The professional film Nina sent (8/17) lives in her SharePoint "Video"
-     folder and is not in the repo yet. Drop it in as
-     theme/bellclair-montclair/assets/video/bellclair-film.mp4 and this plays
-     it; until then the modal shows a "coming soon" card instead of a broken
+     Plays the full VTC film with sound
+     (theme/bellclair-montclair/assets/video/bellclair-film.mp4). If the file
+     is ever missing the modal shows a "coming soon" card instead of a broken
      player. */
   (function () {
     var modal = $('#film-modal');
