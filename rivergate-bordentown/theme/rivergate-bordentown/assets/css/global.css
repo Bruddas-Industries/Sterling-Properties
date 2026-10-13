@@ -3236,3 +3236,62 @@ body.inq-open { overflow: hidden; }
   font-style: normal;
   font-display: swap;
 }
+
+
+/* --------------------------------------------------------------------------
+   29. SHORT AND NARROW SCREENS
+   --------------------------------------------------------------------------
+   Same fix as bellclair-montclair 1.0.1 (global.css 29i-2/29i-3).
+
+   Overlay nav: six links plus three buttons is taller than a phone's visible
+   area (iPhone Safari with its toolbar). Centred with justify-content:center,
+   the overflowing column spilled out of the TOP and the first link slid under
+   the logo. Instead: start below the header, centre with auto margins (which
+   fall back to top-aligned rather than overflowing upward), size links and
+   gaps by viewport height, and let anything still too tall scroll inside the
+   overlay under a solid header. The dvh lines follow vh fallbacks so Safari
+   sizes against the visible area. */
+.nav-overlay {
+  justify-content: flex-start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  gap: clamp(1rem, 3vh, 2.5rem);
+  gap: clamp(1rem, 3dvh, 2.5rem);
+  padding-top: calc(var(--nav-height) + var(--space-5));
+  padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+}
+.nav-overlay > :first-child { margin-top: auto; }
+.nav-overlay > :last-child  { margin-bottom: auto; }
+.nav-overlay__links {
+  gap: clamp(0.25rem, 1.4vh, 1rem);
+  gap: clamp(0.25rem, 1.4dvh, 1rem);
+}
+.nav-overlay__links a {
+  /* The original clamp(1.75rem, 3.5vw, 3rem), capped at 4.4% of the height */
+  font-size: min(max(1.75rem, 3.5vw), 3rem, max(1.25rem, 4.4vh));
+  font-size: min(max(1.75rem, 3.5vw), 3rem, max(1.25rem, 4.4dvh));
+  line-height: 1.25;
+}
+.nav-overlay__divider {
+  flex-shrink: 0;
+  height: clamp(16px, 4vh, 40px);
+  height: clamp(16px, 4dvh, 40px);
+}
+/* Same navy as the overlay, so it reads as one panel — but opaque, so links
+   scrolled up on a very short screen pass beneath the logo, not through it.
+   Must come after section 5/6's transparent-header rules. */
+body.nav-is-open .site-header,
+body.has-video-hero.nav-is-open .site-header { background-color: var(--color-text); }
+@media (max-width: 640px) {
+  .nav-overlay { padding-top: calc(var(--nav-height-mob) + var(--space-4)); }
+}
+
+/* No sideways scroll on narrow phones. A plain 1fr column grows to its widest
+   no-wrap child, and elements waiting to slide in (data-animate="left"/"right")
+   sit off-screen until revealed — both widened the page past the screen.
+   `clip`, unlike `hidden`, creates no scroll container, so the sticky header
+   keeps working. */
+@media (max-width: 900px) {
+  .feature { grid-template-columns: minmax(0, 1fr); }
+}
+html, body { overflow-x: clip; }

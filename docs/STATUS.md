@@ -13,6 +13,11 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
+- Theme **1.17.3** (2026-10-12) keeps the open mobile menu clear of the logo bar. On phones up
+  to ~760px of visible height (iPhone Safari) the centred overlay overflowed upward and the first
+  link sat under the logo. It also stops pages scrolling sideways on narrow phones (the homepage
+  was 12px too wide at 390px). Same fix as Bellclair 1.0.1; CSS-only, in a new `global.css`
+  section 29.
 - Theme **1.17.2** (2026-10-02) renames "Full-Time Onsite Maintenance" to "Onsite Maintenance"
   at the client's request and adds a full-bleed rule between the homepage gallery teaser and the
   neighborhood section, which both sit on the blue field and had run together. The rule is
