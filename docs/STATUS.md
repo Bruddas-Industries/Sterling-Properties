@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-10-08.** Update this file when something here changes — it is the first
+**Last updated: 2026-10-12.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -41,10 +41,9 @@ only a page on sterlingpropertiesnj.com.
 `bellclair-montclair/preview/`: a one-page homepage plus Residents, Availability and Gallery. It
 is named `preview/`, not `preview-1/`, at John's request. It is **not deployed yet.**
 
-- `bellclair-montclair/theme/bellclair-montclair/` holds **assets only**: `global.css`, images
-  and logos. These are what the preview links to. The WordPress fork of `rivergate-bordentown`
-  (PHP, blocks, patterns, `theme.json`) has **not** been done. Fork it into this folder when the
-  preview is approved; the CSS and assets are already in place for it.
+- `bellclair-montclair/theme/bellclair-montclair/` is now the **full WordPress theme** (see
+  "WordPress fork" below). The preview still links to its `global.css` and images, so the
+  preview and the theme share one stylesheet.
 - `global.css` is Rivergate's stylesheet re-skinned by a scripted, exact-match transform. The
   scheme is inverted: Rivergate is blue-dominant, Bellclair is a light ivory field with black
   bands. Its header comment and section 4 explain the difference, and all Bellclair-only
@@ -80,6 +79,54 @@ using the SharePoint share, now synced locally (`07_Assets/Bellclair (Montclair,
   "(Golden Hour)" exterior PNGs (AI-edit mark, fabricated sky).
 - **Gallery** opens with the film, then Residences, Building & Amenities, Exterior, and
   Around Montclair (stills from the silent cut).
+
+**WordPress fork — running locally (2026-10-12, branch `feature/bellclair-wordpress`).** Not on
+production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Rivergate 1.17.2.
+- **Local site:** blog 3, `http://sterling-network.local/bellclair-montclair/`. The theme is a
+  directory junction from `wp-content/themes/bellclair-montclair` into the repo, like Rivergate's,
+  and is enabled for that site only (not network-wide). Pages: Home (front page), Availability,
+  Gallery, Residents — each inserted from its composite pattern on the Block Canvas template.
+  There are no Amenities, Floor Plans, Contact or Location pages; those live on the homepage.
+- **Re-prefixed throughout:** `bellclair_` functions, `BELLCLAIR_` constants, `bellclair/*` blocks,
+  `is-style-bellclair-*` buttons, `bc_amenity` / `bc_floor_plan` CPTs, `group_bc_*` ACF groups.
+- **New vs Rivergate:** a `bellclair/film-frame` block and film modal (any `[data-film]` opens
+  it); the hero takes a second, phone-sized video; the floor-plan panel shows the building, a
+  "3D Tour" tag, a Laundry row and a "drawing coming soon" placeholder (Duplex); the map uses
+  Bellclair styling, walking directions and an OpenStreetMap fallback. ACF gained `plan_where`
+  and `plan_laundry` plus `leasing` / `cat` icon choices. Dropped as unused: the `amenity-cards`
+  and `plan-cards` blocks and the Amenities / Floor Plans / Contact / Location page patterns.
+- **Data is in code, as on Rivergate:** the seven amenities and eight plans are the fallback lists
+  in `blocks/_shared.php`, and the neighborhood places and times are in the explorer's
+  `render.php`. Trap 8 applies — create CPT entries all at once or not at all.
+- **Spacing:** `global.css` section 2 cancels WordPress's default 24px block gap
+  (`:root :where(.is-layout-flow) > *`), which otherwise added up to ~100px per section over the
+  approved preview. Rivergate still has the gap. After this, every page measures within 0.5% of
+  the preview's height at desktop and phone widths.
+- **QA (2026-10-12, Playwright + Edge):** no console errors; every asset 200; all four pages open
+  in the block editor with zero invalid blocks; tour form and pop-up both deliver to
+  `bellclaire@spgnj.com` (Local's Mailpit). The map shows the OpenStreetMap fallback locally
+  because the Maps key refuses `sterling-network.local`.
+- **Found on the way, Rivergate:** `patterns/parts/communities.php` has an HTML comment inside
+  the block markup, which makes the editor flag that group as invalid ("unexpected content").
+  Fixed in Bellclair's copy; Rivergate's homepage likely shows the warning. Not yet fixed there.
+
+**Going live — in progress (2026-10-12).** No domain yet, by decision: Bellclair runs on the
+Cloudways staging host until it gets one.
+- **Done:** production blog 3 at
+  `https://wordpress-1661870-6622382.cloudwaysapps.com/bellclair-montclair/`, created with
+  "discourage search engines" on (`blog_public` 0) and the starter post/page trashed. The
+  staging host's certificate covers only rivergatenj.com, so browsers warn before showing the
+  site — fine for internal review, not something to send the client.
+- **Done:** `.github/workflows/deploy-bellclair.yml`, with secrets `BELLCLAIR_THEME_PATH` and
+  `BELLCLAIR_SITE_URL`. It refuses to run unless the path ends in `/themes/bellclair-montclair`.
+  The theme folder was pre-created on the server as `master:www-data`, mode 2775.
+- **Backup** before any of this: `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql`.
+- **Next, after PR #34 merges and the Action deploys:** enable and activate the theme for blog 3
+  only, copy `acf-json/` by hand (the deploy excludes it), insert the four pages from their
+  patterns, purge Varnish, and QA.
+- **At domain time:** run the domain cutover runbook (OPERATIONS), turn `blog_public` back on,
+  update `BELLCLAIR_SITE_URL`, add the domain to the Maps key, and add Bellclair's own Search
+  Console token in `inc/seo.php`.
 
 **Sources for content and assets (original 2026-09-30 build).** Before the SharePoint share was
 available, everything came from:
@@ -135,7 +182,9 @@ carried over from Rivergate, and none has been verified with Sterling:
   the domain, the preview falls back to an OpenStreetMap embed (`gm_authFailure` in `site.js`),
   so the client never sees an error box.
 - **Vercel.** The project root must be `bellclair-montclair/`, because the preview links to
-  `../theme/`. `bellclair-montclair/vercel.json` redirects `/` to `/preview/`. The connected
+  `../theme/`. Since the WordPress fork, that root also contains the theme's PHP, which a static
+  host would serve as plain-text source. Nothing secret is in it (the Maps key is public by
+  design), but exclude `theme/**/*.php` before deploying the preview. `bellclair-montclair/vercel.json` redirects `/` to `/preview/`. The connected
   Vercel account (`jjosephsen-bruddas' projects`) has no projects, so Rivergate's preview
   lives on a different account.
 - The "More Communities" cards are the same six as Rivergate, including the unverified

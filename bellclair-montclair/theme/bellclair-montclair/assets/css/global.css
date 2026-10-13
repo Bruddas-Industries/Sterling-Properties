@@ -136,6 +136,13 @@
   padding: 0;
 }
 
+/* WordPress's flow layout gives every block inside a group a 24px top margin
+   (core's default block gap). This cancels it at the same specificity, and this
+   file loads after WordPress's global styles, so the components below keep
+   their own margins — the spacing the static preview was approved with.
+   Bellclair-only; Rivergate still has the gap. */
+:root :where(.is-layout-flow) > * { margin-block-start: 0; }
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -3013,7 +3020,7 @@ body.inq-open { overflow: hidden; }
 }
 
 /* Eyebrow paragraph block style. */
-.is-style-rivergate-eyebrow {
+.is-style-bellclair-eyebrow {
   display: block;
   font-family: var(--font-body);
   font-size: var(--text-xs);
@@ -3025,9 +3032,9 @@ body.inq-open { overflow: hidden; }
 }
 
 /* Core Buttons → Rivergate .btn appearance (block styles registered in PHP). */
-.wp-block-button.is-style-rivergate-primary   > .wp-block-button__link,
-.wp-block-button.is-style-rivergate-secondary > .wp-block-button__link,
-.wp-block-button.is-style-rivergate-ghost     > .wp-block-button__link {
+.wp-block-button.is-style-bellclair-primary   > .wp-block-button__link,
+.wp-block-button.is-style-bellclair-secondary > .wp-block-button__link,
+.wp-block-button.is-style-bellclair-ghost     > .wp-block-button__link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3046,22 +3053,22 @@ body.inq-open { overflow: hidden; }
               box-shadow var(--duration) var(--ease-out);
 }
 
-.wp-block-button.is-style-rivergate-primary > .wp-block-button__link {
+.wp-block-button.is-style-bellclair-primary > .wp-block-button__link {
   background-color: var(--color-accent);   /* matches .btn--primary */
   color: var(--color-ink);
 }
-.wp-block-button.is-style-rivergate-primary > .wp-block-button__link:hover {
+.wp-block-button.is-style-bellclair-primary > .wp-block-button__link:hover {
   background-color: var(--color-accent-light);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
-.wp-block-button.is-style-rivergate-secondary > .wp-block-button__link {
+.wp-block-button.is-style-bellclair-secondary > .wp-block-button__link {
   background-color: transparent;
   color: inherit;                        /* adaptive: ink on the field, ivory on dark bands */
   border: 1.5px solid currentColor;
 }
-.wp-block-button.is-style-rivergate-secondary > .wp-block-button__link:hover {
+.wp-block-button.is-style-bellclair-secondary > .wp-block-button__link:hover {
   background-color: var(--color-accent);
   color: var(--color-ink);
   border-color: var(--color-accent);
@@ -3069,12 +3076,12 @@ body.inq-open { overflow: hidden; }
   box-shadow: var(--shadow-sm);
 }
 
-.wp-block-button.is-style-rivergate-ghost > .wp-block-button__link {
+.wp-block-button.is-style-bellclair-ghost > .wp-block-button__link {
   background-color: transparent;
   color: var(--color-on-dark);
   border: 1.5px solid rgba(243, 238, 228, 0.6);
 }
-.wp-block-button.is-style-rivergate-ghost > .wp-block-button__link:hover {
+.wp-block-button.is-style-bellclair-ghost > .wp-block-button__link:hover {
   background-color: rgba(243, 238, 228, 0.12);
   border-color: var(--color-accent-light);
 }
@@ -3086,7 +3093,7 @@ body.inq-open { overflow: hidden; }
   align-items: center;
   gap: var(--space-4);
 }
-.cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link {
+.cta-section .wp-block-button.is-style-bellclair-primary > .wp-block-button__link {
   position: relative;
   isolation: isolate;
   --bc-bd-angle: 0deg;
@@ -3099,7 +3106,7 @@ body.inq-open { overflow: hidden; }
   background-position: 0% 50%;
   animation: bc-btn-pulse 5s ease-in-out infinite alternate;
 }
-.cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link::after {
+.cta-section .wp-block-button.is-style-bellclair-primary > .wp-block-button__link::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -3121,12 +3128,12 @@ body.inq-open { overflow: hidden; }
   pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link {
+  .cta-section .wp-block-button.is-style-bellclair-primary > .wp-block-button__link {
     animation: none;
     background-image: none;
     background-color: var(--color-accent);
   }
-  .cta-section .wp-block-button.is-style-rivergate-primary > .wp-block-button__link::after {
+  .cta-section .wp-block-button.is-style-bellclair-primary > .wp-block-button__link::after {
     animation: none;
     display: none;
   }
@@ -3424,6 +3431,79 @@ body.nav-is-open .nav-logo .logo--on-dark { display: block; }
 /* Seven amenities in a two-column grid: the odd last tile takes the full row
    instead of leaving an empty cell beside it. */
 .amenity-grid > .amenity:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+
+/* ---- 29l. WordPress block bridges (Bellclair pages) ----------------------
+   The theme's patterns build the preview's markup from core blocks. These
+   rules close the gaps the section 28 bridges do not cover. */
+
+/* Gallery tiles are core Image blocks, which write their caption as
+   <figcaption class="wp-element-caption">. Same overlay as .gallery-item__caption. */
+.gallery-grid .gallery-item > figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+  color: rgba(255,255,255,0.85);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-align: left;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+}
+.gallery-grid .gallery-item:hover > figcaption,
+.gallery-grid .gallery-item:focus-visible > figcaption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* More grids whose items are block groups (see the margin note in section 28). */
+.portal-grid > .wp-block-group,
+.how-it-works > .wp-block-group {
+  margin-inline: 0;
+  max-width: none;
+}
+
+/* Portal cards: preview set the titles at text-xl and pinned the button to the
+   card's foot. */
+.portal-card h3 { font-size: var(--text-xl); }
+.portal-card > .wp-block-buttons { margin-top: auto; }
+
+/* "Trouble logging in?" note under the portal cards */
+.portal-note {
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  background: var(--color-bg-alt);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.portal-note p { max-width: none; font-size: var(--text-sm); margin: 0; }
+.portal-note a { color: var(--color-primary); }
+
+/* Policy lists: the preview's em-dash bullet, not Rivergate's arrow. */
+.policy-block .wp-block-list li::before { content: "—"; }
+
+/* The film frame sits directly in the container group. */
+.film-band .container > .film-frame { margin-inline: auto; }
+
+/* With the block gap cancelled (section 2), the contact column needs its own
+   spacing: the preview separated its label/value pairs with wrapper divs. */
+.contact-info > p:not(.contact-label) + .contact-label { margin-top: var(--space-6); }
+/* An eyebrow is a <p> in the patterns, so `.feature__body p` outranks .eyebrow. */
+.feature__body p.eyebrow { margin-bottom: var(--space-4); }
+
+/* Closing CTAs: buttons side by side and wrapping, as in the preview (the
+   section 28 bridge stacks them for Rivergate). */
+.cta-section .wp-block-buttons.is-layout-flex {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 
 /* ==========================================================================

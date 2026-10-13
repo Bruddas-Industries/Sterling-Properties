@@ -1,0 +1,46 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bellclair/location-stats",
+	"title": "Bellclair Location Stats",
+	"category": "bellclair",
+	"icon": "location",
+	"description": "Three commute stat cards with an animated highlight.",
+	"keywords": [
+		"location",
+		"neighborhood",
+		"stats",
+		"transit"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"stat1Num": {
+			"type": "string",
+			"default": "12 mi"
+		},
+		"stat1Label": {
+			"type": "string",
+			"default": "west of New York City"
+		},
+		"stat2Num": {
+			"type": "string",
+			"default": "5 min"
+		},
+		"stat2Label": {
+			"type": "string",
+			"default": "walk to Church Street's cafés and restaurants"
+		},
+		"stat3Num": {
+			"type": "string",
+			"default": "Doorstep"
+		},
+		"stat3Label": {
+			"type": "string",
+			"default": "NYC commuter bus on Bloomfield Avenue"
+		}
+	},
+	"render": "file:./render.php"
+}

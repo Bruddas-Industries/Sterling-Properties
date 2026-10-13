@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bellclair/film-frame",
+	"title": "Bellclair Film Frame",
+	"category": "bellclair",
+	"icon": "video-alt3",
+	"description": "Poster frame with a play button that opens the Bellclair film in the lightbox.",
+	"keywords": [
+		"film",
+		"video",
+		"play"
+	],
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"posterId": {
+			"type": "number",
+			"default": 0
+		},
+		"posterUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"label": {
+			"type": "string",
+			"default": "Watch the Film"
+		}
+	},
+	"render": "file:./render.php"
+}
