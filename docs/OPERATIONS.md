@@ -31,6 +31,7 @@ copy it from the panel if it ever changes.
 |---|---|---|
 | 1 | `/` | Network root |
 | 2 | `rivergatenj.com` `/` (was `/rivergate-bordentown/`) | Rivergate Bordentown |
+| 3 | staging host `/bellclair-montclair/` (no domain yet; `blog_public` 0) | Bellclair at Montclair |
 
 Subdirectory multisite (`SUBDOMAIN_INSTALL` is `false`). `DOMAIN_CURRENT_SITE` is defined in
 `wp-config.php`, which is what makes core domain mapping work without `sunrise.php` — see the
@@ -43,7 +44,8 @@ domain cutover runbook before moving a site onto its own domain.
 
 ## Deploying
 
-`.github/workflows/deploy-rivergate.yml` deploys automatically. There is no manual step and
+`.github/workflows/deploy-rivergate.yml` and `deploy-bellclair.yml` deploy automatically, each
+watching only its own theme folder. There is no manual step and
 **theme files must never be edited on the server** — the next deploy overwrites them.
 
 - **Triggers** on push to `main` touching `rivergate-bordentown/theme/rivergate-bordentown/**`

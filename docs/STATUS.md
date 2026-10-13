@@ -110,16 +110,23 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
   the block markup, which makes the editor flag that group as invalid ("unexpected content").
   Fixed in Bellclair's copy; Rivergate's homepage likely shows the warning. Not yet fixed there.
 
-**Going live (not started — do when John approves the local site):**
-1. Production has no Bellclair site. Create it in Network Admin (or `wp site create`) and decide
-   its domain first — see "Domain cutover" in OPERATIONS.md.
-2. Add a **separate** deploy workflow and secret for Bellclair's theme path. Do **not** reuse
-   `CLOUDWAYS_THEME_PATH`: it points at Rivergate's theme, and the rsync runs with `--delete`.
-3. Copy `acf-json/` to the server by hand (the deploy excludes it — OPERATIONS "ACF field groups").
-4. Insert the pages from the patterns, as on local; set the contact block's recipient (the
-   pattern already carries `bellclaire@spgnj.com`).
-5. Add the production domain to the Maps key's referrers, and give Bellclair its own Search
-   Console token in `inc/seo.php` (Rivergate's was removed from the fork).
+**Going live — in progress (2026-10-12).** No domain yet, by decision: Bellclair runs on the
+Cloudways staging host until it gets one.
+- **Done:** production blog 3 at
+  `https://wordpress-1661870-6622382.cloudwaysapps.com/bellclair-montclair/`, created with
+  "discourage search engines" on (`blog_public` 0) and the starter post/page trashed. The
+  staging host's certificate covers only rivergatenj.com, so browsers warn before showing the
+  site — fine for internal review, not something to send the client.
+- **Done:** `.github/workflows/deploy-bellclair.yml`, with secrets `BELLCLAIR_THEME_PATH` and
+  `BELLCLAIR_SITE_URL`. It refuses to run unless the path ends in `/themes/bellclair-montclair`.
+  The theme folder was pre-created on the server as `master:www-data`, mode 2775.
+- **Backup** before any of this: `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql`.
+- **Next, after PR #34 merges and the Action deploys:** enable and activate the theme for blog 3
+  only, copy `acf-json/` by hand (the deploy excludes it), insert the four pages from their
+  patterns, purge Varnish, and QA.
+- **At domain time:** run the domain cutover runbook (OPERATIONS), turn `blog_public` back on,
+  update `BELLCLAIR_SITE_URL`, add the domain to the Maps key, and add Bellclair's own Search
+  Console token in `inc/seo.php`.
 
 **Sources for content and assets (original 2026-09-30 build).** Before the SharePoint share was
 available, everything came from:
