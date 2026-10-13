@@ -33,7 +33,7 @@ Bellclair (below) is property #2. The other eight have not been started. Everyth
 
 ## Where Bellclair stands
 
-Property #2 of 10: **Bellclair at Montclair**, Montclair NJ. Brief: Nina Chichelo's email
+Property #2 of 10: **Bellclair at Montclair**, Montclair NJ. **Running on production at the Cloudways staging host, no domain yet** (see "Live on the staging host" below). Brief: Nina Chichelo's email
 "Next Website: Bellclair" (8/17/26, cc Andrew Zuckerman). Bellclair has never had its own site,
 only a page on sterlingpropertiesnj.com.
 
@@ -110,23 +110,31 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
   the block markup, which makes the editor flag that group as invalid ("unexpected content").
   Fixed in Bellclair's copy; Rivergate's homepage likely shows the warning. Not yet fixed there.
 
-**Going live — in progress (2026-10-12).** No domain yet, by decision: Bellclair runs on the
-Cloudways staging host until it gets one.
-- **Done:** production blog 3 at
-  `https://wordpress-1661870-6622382.cloudwaysapps.com/bellclair-montclair/`, created with
-  "discourage search engines" on (`blog_public` 0) and the starter post/page trashed. The
-  staging host's certificate covers only rivergatenj.com, so browsers warn before showing the
-  site — fine for internal review, not something to send the client.
-- **Done:** `.github/workflows/deploy-bellclair.yml`, with secrets `BELLCLAIR_THEME_PATH` and
-  `BELLCLAIR_SITE_URL`. It refuses to run unless the path ends in `/themes/bellclair-montclair`.
-  The theme folder was pre-created on the server as `master:www-data`, mode 2775.
-- **Backup** before any of this: `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql`.
-- **Next, after PR #34 merges and the Action deploys:** enable and activate the theme for blog 3
-  only, copy `acf-json/` by hand (the deploy excludes it), insert the four pages from their
-  patterns, purge Varnish, and QA.
-- **At domain time:** run the domain cutover runbook (OPERATIONS), turn `blog_public` back on,
-  update `BELLCLAIR_SITE_URL`, add the domain to the Maps key, and add Bellclair's own Search
-  Console token in `inc/seo.php`.
+**Live on the staging host (2026-10-12), no domain yet.** Production blog 3:
+`https://wordpress-1661870-6622382.cloudwaysapps.com/bellclair-montclair/`.
+- Search engines are discouraged (`blog_public` 0; pages carry `noindex, nofollow`). The staging
+  host's certificate covers only rivergatenj.com, so browsers warn before showing the site — fine
+  for internal review, not something to send the client.
+- Theme 1.0.0 deployed by `deploy-bellclair.yml` (PR #34) and enabled for blog 3 only. Secrets
+  `BELLCLAIR_THEME_PATH` and `BELLCLAIR_SITE_URL`; the workflow refuses any path not ending in
+  `/themes/bellclair-montclair`. Its first run failed only the smoke test because the pages did
+  not exist yet; the re-run was green.
+- `acf-json/` copied by hand from `main`; ACF registers both groups, including `plan_where` and
+  `plan_laundry`.
+- Pages 6–9 (Home, Availability, Gallery, Residents) inserted from their patterns via
+  `~/premigration/bellclair-setup/setup-pages.php`; Home is the front page. Varnish purged.
+- QA on production (Playwright + Edge): no console errors or failed requests, all 56 assets 200,
+  page heights identical to local, all four pages valid in the block editor. The Google map
+  renders there (the key already allows the Cloudways host).
+- **Forms do not deliver on production yet.** FluentSMTP is still unconfigured network-wide (see
+  "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
+  SMTP is set up. Not test-submitted on production for that reason.
+- **Backup** taken before any of this:
+  `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql`.
+
+**At domain time:** run the domain cutover runbook (OPERATIONS), turn `blog_public` back on,
+update `BELLCLAIR_SITE_URL`, add the domain to the Maps key, and add Bellclair's own Search
+Console token in `inc/seo.php`.
 
 **Sources for content and assets (original 2026-09-30 build).** Before the SharePoint share was
 available, everything came from:
@@ -215,6 +223,7 @@ rebuilt from patterns, re-apply them.
 | 28 (Residents) | `info@sterlingpropertiesnj.com` → `rivergate@spgnj.com` | `~/premigration/prelaunch-edits/post-28.*.bak` |
 | all site 2 content | 2026-10-01 domain cutover — 51 `https://wordpress-1661870-6622382.cloudwaysapps.com/rivergate-bordentown` URLs rewritten to `https://rivergatenj.com` (`guid` left alone); default post 1 "Hello world!" and page 2 "Sample Page" trashed | `~/premigration/domain-cutover/site2-2026-10-01-1854.sql` |
 | 9, 13, 25, 28 | 2026-09-30 photo refresh — images swapped to Media Library attachments 82–101; Gallery rebuilt with Residences + Neighborhood rows | `~/premigration/photo-refresh/` (per-post `.bak` + posts/postmeta SQL); also WP revisions 102–105 |
+| site 3 (Bellclair) | 2026-10-12 — site created; pages 6–9 inserted from patterns (`blog_public` 0). No hand edits to page content yet | `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql` |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
 deploy workflow excludes that directory. See the ACF section of `OPERATIONS.md`.
