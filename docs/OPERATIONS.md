@@ -153,8 +153,33 @@ but check every contact block has an explicit recipient first.
 
 Local by Flywheel, multisite, at `sterling-network.local`.
 
+| blog_id | Path | Theme |
+|---|---|---|
+| 2 | `/rivergate-bordentown/` | `rivergate-bordentown` (network-enabled) |
+| 3 | `/bellclair-montclair/` | `bellclair-montclair` (enabled for blog 3 only) |
+
+Each theme folder under `app/public/wp-content/themes/` is a **directory junction** into this
+repo (`New-Item -ItemType Junction`), so edits show up on refresh with no copy step. The local
+blog IDs and paths do not match production — never copy a local database up.
+
 XAMPP's `Apache2.4` service claims ports 80/443 on every reboot and blocks Local's router. Set
 that service to **Manual** rather than stopping it each time.
+
+**WP-CLI outside Local's site shell.** Local is installed on `E:` on this machine. Run its bundled
+`wp-cli.phar` with Local's PHP and the site's generated `php.ini`, which is what points MySQL at
+Local's port (10005) instead of 3306. Put Local's MySQL `bin` on `PATH` for `wp db export`:
+
+```bash
+export PATH="$APPDATA/Local/lightning-services/mysql-8.4.0/bin/win64/bin:$PATH"
+MSYS_NO_PATHCONV=1 "$APPDATA/Local/lightning-services/php-8.2.29+0/bin/win64/php.exe" \
+  -c "$APPDATA/Local/run/nNWYC5ilU/conf/php/php.ini" -d display_startup_errors=0 \
+  "E:/Program Files (x86)/Local/resources/extraResources/bin/wp-cli/wp-cli.phar" \
+  --path="C:/Users/heatw/Local Sites/sterling-network/app/public" <command> --url=<site url>
+# db export also needs: --host=127.0.0.1 --port=10005
+```
+
+`nNWYC5ilU` is the site's ID in Local's `sites.json`. Mail sent locally is caught by Mailpit
+(`http://localhost:10000`), so form tests go nowhere real.
 
 ---
 

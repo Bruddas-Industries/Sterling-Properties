@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bellclair/hero",
+	"title": "Bellclair Hero",
+	"category": "bellclair",
+	"icon": "cover-image",
+	"description": "Full-screen video hero with eyebrow, headline, subheadline, a call-to-action button and a Watch the Film button.",
+	"keywords": [
+		"hero",
+		"video",
+		"banner"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false,
+		"align": [
+			"full"
+		]
+	},
+	"attributes": {
+		"eyebrow": {
+			"type": "string",
+			"default": "7 & 8 Bell Street · Montclair, New Jersey"
+		},
+		"headline": {
+			"type": "string",
+			"default": "Boutique Living in the Heart of Montclair"
+		},
+		"subheadline": {
+			"type": "string",
+			"default": "One- and two-bedroom residences a short walk from Church Street, the Montclair Art Museum and Bloomfield Avenue — just 12 miles west of New York City."
+		},
+		"videoUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"videoMobileUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"posterId": {
+			"type": "number",
+			"default": 0
+		},
+		"posterUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"primaryLabel": {
+			"type": "string",
+			"default": "Schedule a Tour"
+		},
+		"primaryUrl": {
+			"type": "string",
+			"default": "#contact"
+		},
+		"secondaryLabel": {
+			"type": "string",
+			"default": "Watch the Film"
+		},
+		"secondaryUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"render": "file:./render.php"
+}

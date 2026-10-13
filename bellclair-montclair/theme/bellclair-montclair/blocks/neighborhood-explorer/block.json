@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bellclair/neighborhood-explorer",
+	"title": "Bellclair Neighborhood Explorer",
+	"category": "bellclair",
+	"icon": "location-alt",
+	"description": "Filterable points-of-interest list beside a map panel (Google Maps, with an OpenStreetMap fallback).",
+	"keywords": [
+		"location",
+		"map",
+		"neighborhood",
+		"poi"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {},
+	"render": "file:./render.php"
+}

@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bellclair/contact-form",
+	"title": "Bellclair Tour-Request Form",
+	"category": "bellclair",
+	"icon": "email",
+	"description": "Leasing / tour-request contact form. Submissions are emailed to the recipient address.",
+	"keywords": [
+		"contact",
+		"form",
+		"tour",
+		"leasing"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"recipientEmail": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"render": "file:./render.php"
+}

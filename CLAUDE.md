@@ -39,8 +39,8 @@ Sterling Properties/
 │   ├── theme/rivergate-bordentown/  ← Fork this for every new property
 │   └── preview-1/                   ← Current multi-page static HTML preview
 │
-├── bellclair-montclair/              ← Property #2 — static preview built; WP fork pending
-│   ├── theme/bellclair-montclair/   ← Assets + re-skinned global.css (light field, black bands)
+├── bellclair-montclair/              ← Property #2 — WP fork running locally; not on production yet
+│   ├── theme/bellclair-montclair/   ← Full theme (forked from Rivergate) + re-skinned global.css
 │   └── preview/                     ← Client preview (named preview/, not preview-1/)
 │
 ├── sterling-properties/              ← Legacy base theme (no longer active)

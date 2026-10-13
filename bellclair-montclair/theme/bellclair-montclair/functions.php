@@ -1,0 +1,314 @@
+<?php
+/**
+ * Bellclair Montclair — functions.php
+ * Bellclair at Montclair, forked from rivergate-bordentown.
+ */
+
+define( 'BELLCLAIR_VERSION', '1.0.0' );
+// Same referrer-restricted key as Rivergate (OPERATIONS trap 7): every domain
+// Bellclair is served from must be in its allowed referrers.
+define( 'BELLCLAIR_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' );
+// Brand faces are Micaroline + ITC Avant Garde Gothic Pro, which are commercial
+// and not yet licensed for web. Poiret One + Questrial stand in until the files
+// arrive (see assets/fonts/README.txt and the @font-face block at the end of
+// global.css). Set this to '' once the licensed files are self-hosted.
+define( 'BELLCLAIR_FONTS_URL', 'https://fonts.googleapis.com/css2?family=Poiret+One&family=Questrial&display=swap' );
+
+// Block editor integration: dynamic blocks, block styles, patterns, body class.
+require_once get_template_directory() . '/inc/blocks.php';
+require_once get_template_directory() . '/inc/inquiry-popup.php';
+// Titles, descriptions, Open Graph, JSON-LD, sitemap exclusions, author lockdown.
+require_once get_template_directory() . '/inc/seo.php';
+
+
+// ---------------------------------------------------------------------------
+// 1. THEME SETUP
+// ---------------------------------------------------------------------------
+
+function bellclair_theme_setup(): void {
+    add_theme_support( 'title-tag' );
+    add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'html5', [
+        'search-form', 'comment-form', 'comment-list',
+        'gallery', 'caption', 'style', 'script',
+    ] );
+    add_theme_support( 'align-wide' );
+    add_theme_support( 'editor-styles' );
+    add_theme_support( 'responsive-embeds' );
+    add_editor_style( array_filter( [ BELLCLAIR_FONTS_URL, 'assets/css/global.css' ] ) );
+
+    register_nav_menus( [
+        'primary' => __( 'Primary Navigation', 'bellclair-montclair' ),
+        'footer'  => __( 'Footer Navigation',  'bellclair-montclair' ),
+    ] );
+}
+add_action( 'after_setup_theme', 'bellclair_theme_setup' );
+
+
+// ---------------------------------------------------------------------------
+// 2. ENQUEUE ASSETS
+// ---------------------------------------------------------------------------
+
+function bellclair_enqueue_assets(): void {
+    if ( BELLCLAIR_FONTS_URL ) {
+        wp_enqueue_style( 'bellclair-fonts', BELLCLAIR_FONTS_URL, [], null );
+    }
+
+    wp_enqueue_style(
+        'bellclair-global',
+        get_template_directory_uri() . '/assets/css/global.css',
+        BELLCLAIR_FONTS_URL ? [ 'bellclair-fonts' ] : [],
+        BELLCLAIR_VERSION
+    );
+
+    wp_enqueue_script(
+        'bellclair-main',
+        get_template_directory_uri() . '/assets/js/main.js',
+        [],
+        BELLCLAIR_VERSION,
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'bellclair_enqueue_assets' );
+
+// Open the Google Fonts connections early.
+function bellclair_resource_hints( array $urls, string $relation ): array {
+    if ( BELLCLAIR_FONTS_URL && 'preconnect' === $relation ) {
+        $urls[] = 'https://fonts.googleapis.com';
+        $urls[] = [ 'href' => 'https://fonts.gstatic.com', 'crossorigin' ];
+    }
+    return $urls;
+}
+add_filter( 'wp_resource_hints', 'bellclair_resource_hints', 10, 2 );
+
+
+// ---------------------------------------------------------------------------
+// 3. PAGE TEMPLATES
+// ---------------------------------------------------------------------------
+
+function bellclair_add_page_templates( array $templates ): array {
+    // All pages are built with the block editor on the Block Canvas template,
+    // using the "Bellclair Page — *" block patterns (see patterns/page-*.php).
+    $templates['templates/page-canvas.php'] = __( 'Block Canvas (Full Width)', 'bellclair-montclair' );
+    $templates['templates/full-width.php']  = __( 'Bellclair Full Width', 'bellclair-montclair' );
+    return $templates;
+}
+add_filter( 'theme_page_templates', 'bellclair_add_page_templates' );
+
+
+// ---------------------------------------------------------------------------
+// 4. CLEAN UP WORDPRESS HEAD
+// ---------------------------------------------------------------------------
+
+function bellclair_clean_head(): void {
+    remove_action( 'wp_head', 'rsd_link' );
+    remove_action( 'wp_head', 'wlwmanifest_link' );
+    remove_action( 'wp_head', 'wp_generator' );
+    remove_action( 'wp_head', 'wp_shortlink_wp_head' );
+    remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
+}
+add_action( 'init', 'bellclair_clean_head' );
+
+// Core's users sitemap lists every author of a published page — here, the
+// developer login. A property site has no author archives worth indexing.
+function bellclair_remove_users_sitemap( $provider, string $name ) {
+    return 'users' === $name ? false : $provider;
+}
+add_filter( 'wp_sitemaps_add_provider', 'bellclair_remove_users_sitemap', 10, 2 );
+
+// Browser/home-screen icon: the square mark from the logo, shipped with the
+// theme in assets/images/site-icon/ (one PNG per size core asks for). Feeding
+// it through get_site_icon_url lets core emit every <link rel="icon"> tag on
+// the front end, wp-admin and login, and makes /favicon.ico redirect here
+// instead of to the WordPress logo. A Site Icon set in the Customizer still
+// wins — the theme icon only stands in while that option is empty.
+function bellclair_site_icon_url( $url, int $size, $blog_id ) {
+    if ( get_option( 'site_icon' ) || ( $blog_id && (int) $blog_id !== get_current_blog_id() ) ) {
+        return $url;
+    }
+    $file = 512;
+    foreach ( [ 32, 180, 192, 270 ] as $available ) {
+        if ( $size <= $available ) {
+            $file = $available;
+            break;
+        }
+    }
+    return get_template_directory_uri() . '/assets/images/site-icon/site-icon-' . $file . '.png?ver=' . BELLCLAIR_VERSION;
+}
+add_filter( 'get_site_icon_url', 'bellclair_site_icon_url', 10, 3 );
+
+
+// ---------------------------------------------------------------------------
+// 5. BODY CLASSES
+// ---------------------------------------------------------------------------
+
+function bellclair_body_classes( array $classes ): array {
+    if ( is_page() ) {
+        $post = get_post();
+        if ( $post ) {
+            $classes[] = 'page-' . $post->post_name;
+        }
+    }
+    return $classes;
+}
+add_filter( 'body_class', 'bellclair_body_classes' );
+
+
+// ---------------------------------------------------------------------------
+// 6. NAV WALKER & FALLBACK
+// ---------------------------------------------------------------------------
+
+if ( ! function_exists( 'bellclair_nav_fallback' ) ) {
+    function bellclair_nav_fallback(): void {
+        echo '<a href="' . esc_url( home_url( '/' ) ) . '">'
+            . esc_html__( 'Home', 'bellclair-montclair' )
+            . '</a>';
+    }
+}
+
+if ( ! class_exists( 'Bellclair_Nav_Walker' ) ) :
+class Bellclair_Nav_Walker extends Walker_Nav_Menu {
+
+    public function start_el( &$output, $data_object, $depth = 0, $args = null, $current_object_id = 0 ): void {
+        $item  = $data_object;
+        $url   = $item->url ?? '#';
+        $label = $item->title ?? '';
+
+        $output .= sprintf(
+            '<a href="%s" role="listitem"%s>%s</a>',
+            esc_url( $url ),
+            in_array( 'current-menu-item', $item->classes, true ) ? ' aria-current="page"' : '',
+            esc_html( $label )
+        );
+    }
+
+    public function start_lvl( &$output, $depth = 0, $args = null ): void {}
+    public function end_lvl( &$output, $depth = 0, $args = null ): void {}
+    public function end_el( &$output, $data_object, $depth = 0, $args = null ): void {}
+}
+endif;
+
+
+// ---------------------------------------------------------------------------
+// 7. HELPER — get ACF field with fallback (graceful when ACF not active)
+// ---------------------------------------------------------------------------
+
+/**
+ * Wrapper around get_field() that returns $fallback when ACF is not active
+ * or when the field has no saved value.
+ *
+ * @param string    $name     ACF field name.
+ * @param int|false $post_id  Post ID, or false for the current post.
+ * @param mixed     $fallback Value returned when field is empty or ACF inactive.
+ * @return mixed
+ */
+function bellclair_field( string $name, $post_id = false, $fallback = '' ) {
+    if ( ! function_exists( 'get_field' ) ) {
+        return $fallback;
+    }
+    $val = get_field( $name, $post_id );
+    return ( $val !== false && $val !== null && $val !== '' ) ? $val : $fallback;
+}
+
+
+// ---------------------------------------------------------------------------
+// 8. CUSTOM POST TYPES
+// ---------------------------------------------------------------------------
+
+function bellclair_register_post_types(): void {
+
+    register_post_type( 'bc_amenity', [
+        'labels'       => [
+            'name'          => __( 'Amenities',    'bellclair-montclair' ),
+            'singular_name' => __( 'Amenity',      'bellclair-montclair' ),
+            'add_new_item'  => __( 'Add Amenity',  'bellclair-montclair' ),
+            'edit_item'     => __( 'Edit Amenity', 'bellclair-montclair' ),
+            'all_items'     => __( 'All Amenities','bellclair-montclair' ),
+        ],
+        'public'       => false,
+        'show_ui'      => true,
+        'show_in_menu' => true,
+        'menu_icon'    => 'dashicons-star-filled',
+        'supports'     => [ 'title', 'page-attributes' ],
+        'has_archive'  => false,
+        'rewrite'      => false,
+    ] );
+
+    register_post_type( 'bc_floor_plan', [
+        'labels'       => [
+            'name'          => __( 'Floor Plans',    'bellclair-montclair' ),
+            'singular_name' => __( 'Floor Plan',     'bellclair-montclair' ),
+            'add_new_item'  => __( 'Add Floor Plan', 'bellclair-montclair' ),
+            'edit_item'     => __( 'Edit Floor Plan','bellclair-montclair' ),
+            'all_items'     => __( 'All Floor Plans','bellclair-montclair' ),
+        ],
+        'public'       => false,
+        'show_ui'      => true,
+        'show_in_menu' => true,
+        'menu_icon'    => 'dashicons-layout',
+        'supports'     => [ 'title', 'page-attributes' ],
+        'has_archive'  => false,
+        'rewrite'      => false,
+    ] );
+}
+add_action( 'init', 'bellclair_register_post_types' );
+
+
+// ---------------------------------------------------------------------------
+// 9. ACF FIELD GROUPS (registered in code — no DB entries required)
+//    Requires: Advanced Custom Fields (free or Pro)
+//    Install:  Plugins → Add New → search "Advanced Custom Fields"
+// ---------------------------------------------------------------------------
+// 9. ACF LOCAL JSON — point ACF at the theme's acf-json/ directory
+//    Field group definitions live in acf-json/*.json (version-controlled).
+//    Requires: Advanced Custom Fields (free or Pro)
+// ---------------------------------------------------------------------------
+
+add_filter( 'acf/settings/load_json', function ( array $paths ): array {
+    $paths[] = get_template_directory() . '/acf-json';
+    return $paths;
+} );
+
+add_filter( 'acf/settings/save_json', function (): string {
+    return get_stylesheet_directory() . '/acf-json';
+} );
+
+
+// ---------------------------------------------------------------------------
+// 10. LEGACY PAGE REDIRECTS
+//     The standalone Contact and Location pages were folded into the homepage
+//     (#contact and #neighborhood). Nothing links to them any more, but the
+//     URLs stay valid so old links and search results still land somewhere
+//     sensible instead of 404ing.
+//
+//     NOTE: 301 is cached hard by browsers. While iterating pre-launch you can
+//     drop this to 302 with:
+//         add_filter( 'bellclair_legacy_redirect_status', fn() => 302 );
+// ---------------------------------------------------------------------------
+
+// Slug => homepage target. Also read by inc/seo.php to keep these pages out
+// of the sitemap.
+function bellclair_legacy_redirect_map(): array {
+    return apply_filters(
+        'bellclair_legacy_redirects',
+        [
+            'contact'  => '/#contact',
+            'location' => '/#neighborhood',
+        ]
+    );
+}
+
+function bellclair_legacy_page_redirects(): void {
+    if ( is_admin() || wp_doing_ajax() || ! is_page() ) {
+        return;
+    }
+
+    foreach ( bellclair_legacy_redirect_map() as $slug => $target ) {
+        if ( is_page( $slug ) ) {
+            $status = (int) apply_filters( 'bellclair_legacy_redirect_status', 301 );
+            wp_safe_redirect( home_url( $target ), $status );
+            exit;
+        }
+    }
+}
+add_action( 'template_redirect', 'bellclair_legacy_page_redirects' );
