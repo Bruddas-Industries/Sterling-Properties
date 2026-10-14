@@ -4,7 +4,8 @@
  *
  * The form's recipient is set on the block so submissions never fall back to
  * admin_email (the developer). bellclaire@spgnj.com is spelled with an e; see
- * docs/STATUS.md. Office hours are still to come from the client.
+ * docs/STATUS.md. Office hours confirmed by the client 2026-10-14; they also live
+ * in the JSON-LD in inc/seo.php — change both together.
  */
 ?>
 <!-- wp:group {"tagName":"section","align":"full","anchor":"contact","lock":{"move":true,"remove":true}} -->
@@ -33,7 +34,7 @@
 <!-- wp:paragraph {"className":"contact-label"} --><p class="contact-label">Email</p><!-- /wp:paragraph -->
 <!-- wp:paragraph --><p><a href="mailto:bellclaire@spgnj.com">bellclaire@spgnj.com</a></p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"contact-label"} --><p class="contact-label">Leasing Office Hours</p><!-- /wp:paragraph -->
-<!-- wp:paragraph --><p>Call or email to schedule a visit.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Tuesday – Saturday: 10:00 AM – 5:00 PM<br>Sunday &amp; Monday: Closed</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:bellclair/contact-form {"recipientEmail":"bellclaire@spgnj.com","lock":{"move":true,"remove":true}} /-->

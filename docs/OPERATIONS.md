@@ -230,6 +230,17 @@ takes it off the server while the database keeps pointing at the old path, and t
 a broken image. Adding a new file is always safe. Replacing one *in place* (same filename, new
 photo) is not only safe but the cleanest way to swap a photo everywhere it appears at once.
 
+**10. Scripted page writes must `wp_slash()` the content.** `wp_insert_post()` and
+`wp_update_post()` *unslash* what they are given, because they expect form-style input. Block
+markup holds JSON escapes in its comments: WordPress writes `--` as `\u002d\u002d` and `&` as
+`\u0026`. So content passed in raw from `wp eval` or `wp eval-file` silently loses those
+backslashes. The page still renders, because the saved HTML is intact, but block attributes
+are corrupted. Bellclair's live Availability hero read "Pricing u0026 Online Applications",
+and classes like `section--alt` became `sectionu002du002dalt`, which the editor would have
+written back into the HTML on the first save. Always
+`wp_insert_post( wp_slash( [ ... ] ) )`, then re-read the post and compare. The editor and
+`wp post update <id> <file>` handle this themselves.
+
 ---
 
 ## Domain cutover

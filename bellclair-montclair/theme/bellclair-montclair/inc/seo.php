@@ -222,6 +222,15 @@ function bellclair_seo_schema(): void {
 				fn( string $name ) => [ '@type' => 'LocationFeatureSpecification', 'name' => $name, 'value' => true ],
 				$amenities
 			),
+			// Leasing office hours, as in the homepage contact section.
+			'openingHoursSpecification' => [
+				[
+					'@type'     => 'OpeningHoursSpecification',
+					'dayOfWeek' => [ 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
+					'opens'     => '10:00',
+					'closes'    => '17:00',
+				],
+			],
 			'tourBookingPage' => $home . '#contact',
 		],
 	];
