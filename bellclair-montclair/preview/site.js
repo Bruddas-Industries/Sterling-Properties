@@ -16,8 +16,8 @@
 
   /* Floor plans — from Nina's "Updated Floorplans" sheets (SharePoint,
      Marketing Collateral/Floorplans). Ordered smallest -> largest. Tours are
-     Matterport models whose titles name the plan. The Duplex sheet has specs
-     but no drawing, so it renders the placeholder panel. */
+     Matterport models whose titles name the plan. The Duplex drawing was
+     rebuilt from listing screenshots (bellclair-montclair/floorplan-sources/). */
   var PLANS = {
     calloway:   { name: 'Calloway', code: '7 Bell St · Floor 1 & 8 Bell St · Floor 3', bed: 1, bath: 1, sqft: '745',
                   where: '7 & 8 Bell Street', img: 'calloway.jpg', mp: null },
@@ -32,7 +32,7 @@
     ellington:  { name: 'Ellington', code: '7 Bell St · Floors 1–4 & 8 Bell St · Floors 1–2', bed: 2, bath: 2, sqft: '1,125',
                   where: '7 & 8 Bell Street', img: 'ellington.jpg', mp: MATTERPORT + 'ah1D28hoCbj' },
     duplex:     { name: 'Duplex', code: '8 Bell St · Floors 1 & 2', bed: 2, bath: 2, sqft: '1,300',
-                  where: '8 Bell Street', img: null, mp: null },
+                  where: '8 Bell Street', img: 'duplex.jpg', mp: null },
     fitzgerald: { name: 'Fitzgerald', code: '8 Bell St · Floor 3 · Two levels', bed: 2, bath: 1.5, sqft: '1,383',
                   where: '8 Bell Street', img: 'fitzgerald.jpg', mp: null }
   };

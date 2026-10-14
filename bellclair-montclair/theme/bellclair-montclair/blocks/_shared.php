@@ -202,8 +202,11 @@ function bellclair_get_plans(): array {
 	// Fallback until the client adds Floor Plan entries — the eight plans from
 	// Nina's "Updated Floorplans" sheets, as in the approved preview. Tours are
 	// Matterport models whose titles name the plan (the SharePoint "Dorsey NDR
-	// Matterport.docx" lists Ellington's link by mistake). The Duplex sheet has
-	// specs but no drawing, so it renders the "coming soon" placeholder.
+	// Matterport.docx" lists Ellington's link by mistake). The Duplex drawing was
+	// rebuilt from listing-site screenshots Nina sent (2026-10-14) onto the blank
+	// Duplex template; sources and script in bellclair-montclair/floorplan-sources/.
+	// It shows a powder room plus two full baths (2.5) — bath stays 2, as on the
+	// client's sheet, until they confirm.
 	$fp = get_template_directory_uri() . '/assets/images/floorplans/';
 	$mp = 'https://my.matterport.com/show/?m=';
 	return [
@@ -213,7 +216,7 @@ function bellclair_get_plans(): array {
 		'basie'      => [ 'name' => 'Basie',      'code' => '7 Bell St · Floor 1',                              'where' => '7 Bell Street',         'bed' => 1, 'bath' => 1,   'sqft' => '850',   'rent' => '', 'tag' => '', 'laundry' => 'In-Unit', 'pdf' => '', 'image' => $fp . 'basie.jpg',      'mp' => '' ],
 		'dorsey'     => [ 'name' => 'Dorsey',     'code' => '7 Bell St · Floors 1–4',                           'where' => '7 Bell Street',         'bed' => 2, 'bath' => 1,   'sqft' => '1,075', 'rent' => '', 'tag' => '', 'laundry' => 'In-Unit', 'pdf' => '', 'image' => $fp . 'dorsey.jpg',     'mp' => $mp . 'hrsGWLg4gYT' ],
 		'ellington'  => [ 'name' => 'Ellington',  'code' => '7 Bell St · Floors 1–4 & 8 Bell St · Floors 1–2', 'where' => '7 & 8 Bell Street',     'bed' => 2, 'bath' => 2,   'sqft' => '1,125', 'rent' => '', 'tag' => '', 'laundry' => 'In-Unit', 'pdf' => '', 'image' => $fp . 'ellington.jpg',  'mp' => $mp . 'ah1D28hoCbj' ],
-		'duplex'     => [ 'name' => 'Duplex',     'code' => '8 Bell St · Floors 1 & 2',                         'where' => '8 Bell Street',         'bed' => 2, 'bath' => 2,   'sqft' => '1,300', 'rent' => '', 'tag' => '', 'laundry' => '',        'pdf' => '', 'image' => '',                         'mp' => '' ],
+		'duplex'     => [ 'name' => 'Duplex',     'code' => '8 Bell St · Floors 1 & 2',                         'where' => '8 Bell Street',         'bed' => 2, 'bath' => 2,   'sqft' => '1,300', 'rent' => '', 'tag' => '', 'laundry' => 'In-Unit', 'pdf' => '', 'image' => $fp . 'duplex.jpg',     'mp' => '' ],
 		'fitzgerald' => [ 'name' => 'Fitzgerald', 'code' => '8 Bell St · Floor 3 · Two levels',                 'where' => '8 Bell Street',         'bed' => 2, 'bath' => 1.5, 'sqft' => '1,383', 'rent' => '', 'tag' => '', 'laundry' => 'In-Unit', 'pdf' => '', 'image' => $fp . 'fitzgerald.jpg', 'mp' => '' ],
 	];
 }
