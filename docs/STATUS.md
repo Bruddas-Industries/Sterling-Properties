@@ -13,7 +13,10 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
-- Theme **1.17.3** (2026-10-12) keeps the open mobile menu clear of the logo bar. On phones up
+- Theme **1.17.3** (2026-10-12, live and purged 2026-10-14) keeps the open mobile menu clear
+  of the logo bar. Varnish had been serving logged-out visitors a 42-hour-old page that still
+  loaded the 1.17.2 CSS until it was purged.
+  Details: On phones up
   to ~760px of visible height (iPhone Safari) the centred overlay overflowed upward and the first
   link sat under the logo. It also stops pages scrolling sideways on narrow phones (the homepage
   was 12px too wide at 390px). Same fix as Bellclair 1.0.1; CSS-only, in a new `global.css`
@@ -155,7 +158,10 @@ available, everything came from:
 
 **Waiting on Nina:**
 - **Duplex drawing.** The Duplex sheet (and its flyer page) has specs but no drawing, so the
-  selector shows "Floor plan drawing coming soon".
+  selector shows "Floor plan drawing coming soon". Nina emailed photos of the layout
+  ("Bellclair Duplex layout", 2026-10-14) that need editing into a sheet matching the other
+  plans' template. The photos are only in that email (not on SharePoint), so save them locally
+  first. The Regional Manager has also been asked for a drawing.
 - **A second "Holloway" sheet** (`Holloway (2).jpg`: 691 Bloomfield, 2bd/2ba, 1,134 sf) is a
   different plan under the same name. Only the 1bd/825 sf loft is on the site. Ask what the
   2-bed plan is called and whether it belongs in the selector.
@@ -163,8 +169,15 @@ available, everything came from:
 - **Licensed webfonts.** Micaroline and ITC Avant Garde Gothic Pro are commercial. The preview
   uses Poiret One and Questrial as stand-ins. To switch, drop in the files and uncomment the
   `@font-face` block at the end of `global.css` (see `assets/fonts/README.txt`).
-- The leasing office hours. The contact section currently says "Call or email to schedule a
-  visit."
+
+**Confirmed by the client (2026-10-14), live in theme 1.0.2 and on production pages 6 and 9:**
+- **Leasing office hours:** Tuesday–Saturday 10 AM–5 PM, closed Sunday and Monday. These are in
+  the homepage contact section and in the JSON-LD (`openingHoursSpecification`, `inc/seo.php`),
+  so change both together.
+- **Early lease termination:** the resident stays responsible through the full term, but may end
+  the lease early with 60 days' written notice plus a two-month rent penalty, and owes rent
+  through the notice period on top of the penalty. Two lines were added to the Residents page's
+  Move-Out block, which is now titled "Move-Out & Lease Termination".
 
 **Copy to confirm with the client.** All of these came from AppFolio listing text or were
 carried over from Rivergate, and none has been verified with Sterling:
@@ -174,18 +187,17 @@ carried over from Rivergate, and none has been verified with Sterling:
 - "Gas ranges" (AppFolio, townhome text) was **left out**. The kitchen photo shows an
   electric coil range.
 - The townhome collection at 8 Bell St (private 2-car garages, loft/duplex units, 14 ft
-  ceilings) is only described as "select residences". Confirm which units these are.
-- EV charging: the copy says only "ChargePoint electric-vehicle charging on site". Confirm the
-  number of chargers, where they are, and whether there is a fee before saying more.
+  ceilings) is only described as "select residences". EV charging says only "ChargePoint
+  electric-vehicle charging on site". **John, 2026-10-14: treat both as correct unless the
+  client says otherwise.** Do not add detail (charger count, fees, unit list) without a source.
 - The contact section now lists residences at "7 & 8 Bell Street and 691 Bloomfield Avenue",
   since the Holloway lofts are at 691 Bloomfield.
-- Residents page: quiet hours, the 60-day move-out notice and the parking rules are
-  Rivergate's text. "Maintenance Requests" points at the AppFolio portal; Rivergate uses
-  Pilera, so ask which Bellclair uses. The after-hours line is assumed to be the office
-  number.
-- The email address is `bellclaire@spgnj.com`, spelled with an **e**. It matches the email,
-  the website and the floor-plan sheets, and the owner LLC is "BELLCLAIRE, LLC", so it is
-  probably right despite the brand spelling.
+- Residents page: **quiet hours and the parking rules** are still Rivergate's text, and
+  "Maintenance Requests" points at the AppFolio portal (Rivergate uses Pilera). The Regional
+  Manager and Bellclair staff are confirming all three (asked 2026-10-14). The after-hours line
+  is assumed to be the office number.
+- ~~The email address~~ **Confirmed by the client 2026-10-14:** `bellclaire@spgnj.com`, spelled
+  with an **e**, is correct.
 - The address: the email says "691 Bloomfield Avenue 7 8". The units are **7 and 8 Bell
   Street** and the leasing office is 691 Bloomfield Avenue. Both appear in the contact section.
 
@@ -228,7 +240,8 @@ rebuilt from patterns, re-apply them.
 | 28 (Residents) | `info@sterlingpropertiesnj.com` → `rivergate@spgnj.com` | `~/premigration/prelaunch-edits/post-28.*.bak` |
 | all site 2 content | 2026-10-01 domain cutover — 51 `https://wordpress-1661870-6622382.cloudwaysapps.com/rivergate-bordentown` URLs rewritten to `https://rivergatenj.com` (`guid` left alone); default post 1 "Hello world!" and page 2 "Sample Page" trashed | `~/premigration/domain-cutover/site2-2026-10-01-1854.sql` |
 | 9, 13, 25, 28 | 2026-09-30 photo refresh — images swapped to Media Library attachments 82–101; Gallery rebuilt with Residences + Neighborhood rows | `~/premigration/photo-refresh/` (per-post `.bak` + posts/postmeta SQL); also WP revisions 102–105 |
-| site 3 (Bellclair) | 2026-10-12 — site created; pages 6–9 inserted from patterns (`blog_public` 0). No hand edits to page content yet | `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql` |
+| site 3 (Bellclair) | 2026-10-12 — site created; pages 6–9 inserted from patterns (`blog_public` 0) | `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql` |
+| 6–9 (Bellclair) | 2026-10-14 — repaired block-comment escapes that the setup script stripped (OPERATIONS trap 10: the Availability hero read "Pricing u0026 Online Applications"); office hours (6) and lease termination (9) swapped in | `~/premigration/bellclair-setup/site3-before-repair-2026-10-14-2243.sql` + per-page `post-<id>-*.html` |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
 deploy workflow excludes that directory. See the ACF section of `OPERATIONS.md`.

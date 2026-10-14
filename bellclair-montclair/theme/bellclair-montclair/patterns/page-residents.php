@@ -6,9 +6,10 @@
  * Description: Residents page — hero, portal quick access, resources, community guidelines, emergency contacts, CTA.
  * Inserter: true
  *
- * Unverified copy (docs/STATUS.md): quiet hours, the 60-day move-out notice and
- * the parking rules are carried over from Rivergate, and "Maintenance Requests"
- * points at AppFolio (Rivergate uses Pilera) — confirm both with the client.
+ * Unverified copy (docs/STATUS.md): quiet hours and the parking rules are
+ * carried over from Rivergate, and "Maintenance Requests" points at AppFolio
+ * (Rivergate uses Pilera) — the client is confirming both. The early lease
+ * termination terms are the client's own (2026-10-14).
  */
 $img   = get_template_directory_uri() . '/assets/images';
 $apply = bellclair_apply_url();
@@ -179,8 +180,8 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <!-- /wp:group -->
 <!-- wp:group {"className":"policy-block"} -->
 <div class="wp-block-group policy-block">
-<!-- wp:paragraph {"className":"policy-block__heading"} --><p class="policy-block__heading">Move-Out</p><!-- /wp:paragraph -->
-<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>60-day written notice required prior to vacating</li><!-- /wp:list-item --><!-- wp:list-item --><li>Schedule a move-out inspection with the leasing office</li><!-- /wp:list-item --><!-- wp:list-item --><li>Return all keys and fobs on move-out day</li><!-- /wp:list-item --><!-- wp:list-item --><li>Security deposit returned per NJ state law</li><!-- /wp:list-item --></ul><!-- /wp:list -->
+<!-- wp:paragraph {"className":"policy-block__heading"} --><p class="policy-block__heading">Move-Out &amp; Lease Termination</p><!-- /wp:paragraph -->
+<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>60-day written notice required prior to vacating</li><!-- /wp:list-item --><!-- wp:list-item --><li>Early termination option: 60-day written notice plus a two-month rent penalty</li><!-- /wp:list-item --><!-- wp:list-item --><li>Rent is due through the 60-day notice period, in addition to the penalty</li><!-- /wp:list-item --><!-- wp:list-item --><li>Schedule a move-out inspection with the leasing office</li><!-- /wp:list-item --><!-- wp:list-item --><li>Return all keys and fobs on move-out day</li><!-- /wp:list-item --><!-- wp:list-item --><li>Security deposit returned per NJ state law</li><!-- /wp:list-item --></ul><!-- /wp:list -->
 </div>
 <!-- /wp:group -->
 </div>
