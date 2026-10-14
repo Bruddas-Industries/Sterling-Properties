@@ -157,11 +157,14 @@ available, everything came from:
 ### Open — Bellclair
 
 **Waiting on Nina:**
-- **Duplex drawing.** The Duplex sheet (and its flyer page) has specs but no drawing, so the
-  selector shows "Floor plan drawing coming soon". Nina emailed photos of the layout
-  ("Bellclair Duplex layout", 2026-10-14) that need editing into a sheet matching the other
-  plans' template. The photos are only in that email (not on SharePoint), so save them locally
-  first. The Regional Manager has also been asked for a drawing.
+- **Duplex drawing — built 2026-10-14 (theme 1.0.3).** Nina's screenshots of the plan from a
+  listing site were rebuilt onto the blank Duplex template: Unit A, with the garage level,
+  first floor and second floor, and labels retyped to match the other sheets. Sources and
+  script are in `bellclair-montclair/floorplan-sources/duplex/`. The plan is three levels: a
+  private tandem garage (11'8" × 43'8"), storage and a shared entry at ground level, then two
+  living floors. **The drawing shows 2.5 baths** (a powder room plus two full baths), but the
+  sheet and the site say 2. Confirm with the client. Swap in a clean drawing from the Regional
+  Manager if one arrives, keeping the filename `duplex.jpg`.
 - **A second "Holloway" sheet** (`Holloway (2).jpg`: 691 Bloomfield, 2bd/2ba, 1,134 sf) is a
   different plan under the same name. Only the 1bd/825 sf loft is on the site. Ask what the
   2-bed plan is called and whether it belongs in the selector.
