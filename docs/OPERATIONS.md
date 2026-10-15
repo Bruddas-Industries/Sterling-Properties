@@ -15,6 +15,7 @@ GitHub repo secrets, and hosting logins in the Cloudways panel.
 |---|---|
 | Host | **Cloudways** (DigitalOcean) |
 | App URL | `https://wordpress-1661870-6622382.cloudwaysapps.com` — network root + Network Admin only; its TLS cert no longer matches (see Domain cutover) |
+| TLS | One Let's Encrypt cert for the app, listing every property domain (rivergatenj.com, bellclair.com, each with www). Adding a domain = add it to that list in Cloudways → SSL Certificate and save; never drop the others |
 | SSH | `master_avjztmdgms@142.93.71.107` |
 | App root | `/home/master/applications/xhxwssuusk/public_html` |
 | Stack | WordPress 7.0.5, PHP 8.2.33, MariaDB 10.11, nginx |
@@ -31,7 +32,7 @@ copy it from the panel if it ever changes.
 |---|---|---|
 | 1 | `/` | Network root |
 | 2 | `rivergatenj.com` `/` (was `/rivergate-bordentown/`) | Rivergate Bordentown |
-| 3 | staging host `/bellclair-montclair/` (no domain yet; `blog_public` 0) | Bellclair at Montclair |
+| 3 | `bellclair.com` `/` (was staging host `/bellclair-montclair/`) | Bellclair at Montclair |
 
 Subdirectory multisite (`SUBDOMAIN_INSTALL` is `false`). `DOMAIN_CURRENT_SITE` is defined in
 `wp-config.php`, which is what makes core domain mapping work without `sunrise.php` — see the
