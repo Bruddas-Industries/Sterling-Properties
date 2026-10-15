@@ -196,7 +196,9 @@ available, everything came from:
   `@font-face` block at the end of `global.css` (see `assets/fonts/README.txt`).
 
 **Confirmed by the client (2026-10-14), live in theme 1.0.2 and on production pages 6 and 9:**
-- **Leasing office hours:** Tuesday–Saturday 10 AM–5 PM, closed Sunday and Monday. These are in
+- **Leasing office hours:** Tuesday–Saturday 10 AM–5 PM, closed Sunday and Monday, **by
+  appointment only** (2026-10-15: the leasing manager is not on site full time, so every visit
+  is by appointment within those hours). The appointment line sits in bold above the hours. These are in
   the homepage contact section and in the JSON-LD (`openingHoursSpecification`, `inc/seo.php`),
   so change both together.
 - **Early lease termination:** the resident stays responsible through the full term, but may end
@@ -237,8 +239,12 @@ carried over from Rivergate, and none has been verified with Sterling:
   design), but exclude `theme/**/*.php` before deploying the preview. `bellclair-montclair/vercel.json` redirects `/` to `/preview/`. The connected
   Vercel account (`jjosephsen-bruddas' projects`) has no projects, so Rivergate's preview
   lives on a different account.
-- The "More Communities" cards are the same six as Rivergate, including the unverified
-  Eggert's Crossing link (see the Rivergate list below).
+- The "More Communities" cards are the six the client chose (2026-10-15): Riverbend
+  (Florham Park), MillPond (Franklin Lakes), Canterly Place (Livingston), Station Court
+  (Berkeley Heights), Columbia Court (Springfield) and Lafayette Court (Morristown). Each links
+  to its Sterling Portfolio page, all of which returned 200 that day; the towns come from those
+  pages. "MillPond" follows Sterling's own spelling. Station Court's portfolio URL misspells
+  "berkely", but the card text spells Berkeley correctly.
 
 **Neighborhood times are measured, not estimated.** They were routed from 7 Bell St (US Census
 geocode 40.817948, −74.222495) with OSRM, 2026-09-30: foot routing for anything under 25
@@ -268,6 +274,7 @@ rebuilt from patterns, re-apply them.
 | site 3 (Bellclair) | 2026-10-12 — site created; pages 6–9 inserted from patterns (`blog_public` 0) | `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql` |
 | site 3 (Bellclair) | 2026-10-15 — domain cutover: 56 staging URLs on the live pages (114 including revisions) rewritten to `https://bellclair.com` (`guid` left alone) | `~/premigration/domain-cutover/site3-bellclair-2026-10-15-1815.sql` |
 | 6–9 (Bellclair) | 2026-10-14 — repaired block-comment escapes that the setup script stripped (OPERATIONS trap 10: the Availability hero read "Pricing u0026 Online Applications"); office hours (6) and lease termination (9) swapped in | `~/premigration/bellclair-setup/site3-before-repair-2026-10-14-2243.sql` + per-page `post-<id>-*.html` |
+| 6 (Bellclair Home) | 2026-10-15 — "By appointment only" added above the hours, and the six community cards replaced. The first attempt dropped the last old card's closing tag, so the page stopped rendering after the hours (contact form and cards missing) for a few minutes. It was restored from the backup and re-applied with a structure check (`restore-and-swap-home.php`: same top-level blocks, balanced block comments, nothing unparsed) | `~/premigration/bellclair-setup/post-6-home-20261015-215218.html` |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
 deploy workflow excludes that directory. See the ACF section of `OPERATIONS.md`.

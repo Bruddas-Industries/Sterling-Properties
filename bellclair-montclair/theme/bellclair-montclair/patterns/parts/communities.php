@@ -1,8 +1,8 @@
 <?php
 /**
- * Pattern part: more Sterling communities teaser. Same six cards as Rivergate.
- * The Eggert's Crossing card points at /the-crossings-at-ewing/, which
- * docs/STATUS.md flags as unverified.
+ * Pattern part: more Sterling communities teaser. The six communities were
+ * chosen by the client (2026-10-15), each linking to its page in the Sterling
+ * Portfolio; towns are from those pages. Not the same six as Rivergate.
  *
  * Each card links to that community's feature page in the Sterling Portfolio.
  * The link lives on the name paragraph and is stretched over the whole card by
@@ -30,38 +30,38 @@
 <div class="wp-block-group communities-teaser">
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/the-crossings-at-ewing/" target="_blank" rel="noreferrer noopener">Eggert's Crossing</a></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Crossings at Ewing · Ewing, NJ</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/riverbend-at-florham-park/" target="_blank" rel="noreferrer noopener">Riverbend</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Florham Park, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/evans-mill/" target="_blank" rel="noreferrer noopener">Evan's Mill</a></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Cherry Hill, NJ</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/millpond/" target="_blank" rel="noreferrer noopener">MillPond</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Franklin Lakes, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/station-place/" target="_blank" rel="noreferrer noopener">Station Place</a></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Lawnside, NJ</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/canterly-place-livingston/" target="_blank" rel="noreferrer noopener">Canterly Place</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Livingston, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/metro-at-woodbridge/" target="_blank" rel="noreferrer noopener">Metro Woodbridge</a></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Woodbridge, NJ</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/station-court-at-berkely-heights/" target="_blank" rel="noreferrer noopener">Station Court</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Berkeley Heights, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/wellsbrook-at-neptune/" target="_blank" rel="noreferrer noopener">Wellsbrook at Neptune</a></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Neptune, NJ</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/columbia-court-at-springfield/" target="_blank" rel="noreferrer noopener">Columbia Court</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Springfield, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"community-teaser"} -->
 <div class="wp-block-group community-teaser">
-<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/the-woods-east-windsor/" target="_blank" rel="noreferrer noopener">The Woods East Windsor</a></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">East Windsor, NJ</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__name"} --><p class="community-teaser__name"><a href="https://sterlingpropertiesnj.com/sterling-portfolio/lafayette-court/" target="_blank" rel="noreferrer noopener">Lafayette Court</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"community-teaser__loc"} --><p class="community-teaser__loc">Morristown, NJ</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 </div>
