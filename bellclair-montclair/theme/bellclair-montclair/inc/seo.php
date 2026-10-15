@@ -93,9 +93,15 @@ add_action( 'init', function (): void {
 	add_post_type_support( 'page', 'excerpt' );
 } );
 
-// Search Console: Rivergate verifies with a google-site-verification meta tag
-// printed here. Bellclair has no property yet — add its own token here once
-// the domain is set up (never reuse Rivergate's).
+// Search Console ownership: URL-prefix property https://bellclair.com/,
+// HTML-tag method (2026-10-15). Google re-checks it periodically, so removing it
+// un-verifies the property. Bellclair-only — never copy it to another property.
+// Printed even when an SEO plugin is active.
+add_action( 'wp_head', function (): void {
+	if ( is_front_page() ) {
+		echo '<meta name="google-site-verification" content="TmnkBw71gCIBcSBgR0YVHEkS5tti_-RhDStKs5phmkI">' . "\n";
+	}
+}, 1 );
 
 add_filter( 'document_title_separator', fn() => '|' );
 

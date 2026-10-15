@@ -41,7 +41,7 @@ Bellclair (below) is property #2. The other eight have not been started. Everyth
 
 ## Where Bellclair stands
 
-Property #2 of 10: **Bellclair at Montclair**, Montclair NJ. **Live at `https://bellclair.com`** since the 2026-10-15 domain cutover (see "Domain cutover — bellclair.com" below). Search indexing is still off until the client gives the go-ahead. Brief: Nina Chichelo's email
+Property #2 of 10: **Bellclair at Montclair**, Montclair NJ. **Live at `https://bellclair.com`** since the 2026-10-15 domain cutover (see "Domain cutover — bellclair.com" below). Indexed since 2026-10-15; Search Console verified by HTML tag (theme 1.0.5). Brief: Nina Chichelo's email
 "Next Website: Bellclair" (8/17/26, cc Andrew Zuckerman). Bellclair has never had its own site,
 only a page on sterlingpropertiesnj.com.
 
@@ -161,9 +161,13 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - Verified with strict TLS (Playwright + Edge): all four pages, all 56 assets, `www` → apex and
   `http` → `https` redirects, no console errors. The Google map renders, so the Maps key already
   accepts bellclair.com. The old staging path now returns 404; it was never public or indexed.
-- **Still to do:** turn indexing on (`blog_public` 1) when the client says go; add Bellclair's
-  Search Console HTML-tag token to `inc/seo.php` and submit the sitemap; SMTP (the forms do not
-  deliver yet — see "Mail").
+- **Indexing on** 2026-10-15 (`blog_public` 1): pages carry `max-image-preview:large`, and
+  `robots.txt` points at `wp-sitemap.xml`, which lists the four pages. `?author=` and `/author/`
+  301 home; the logged-out users REST route returns no route.
+- **Search Console:** URL-prefix property `https://bellclair.com/`, HTML-tag method. The token is
+  in `inc/seo.php` (theme 1.0.5, homepage only). Do not remove it, because Google re-checks.
+  John verifies and submits the sitemap.
+- **Still to do:** SMTP. The forms do not deliver yet; see "Mail".
 - Backup before the rewrite: `~/premigration/domain-cutover/site3-bellclair-2026-10-15-1815.sql`.
 
 **Sources for content and assets (original 2026-09-30 build).** Before the SharePoint share was
