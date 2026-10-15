@@ -41,7 +41,7 @@ Bellclair (below) is property #2. The other eight have not been started. Everyth
 
 ## Where Bellclair stands
 
-Property #2 of 10: **Bellclair at Montclair**, Montclair NJ. **Running on production at the Cloudways staging host, no domain yet** (see "Live on the staging host" below). Brief: Nina Chichelo's email
+Property #2 of 10: **Bellclair at Montclair**, Montclair NJ. **Live at `https://bellclair.com`** since the 2026-10-15 domain cutover (see "Domain cutover — bellclair.com" below). Search indexing is still off until the client gives the go-ahead. Brief: Nina Chichelo's email
 "Next Website: Bellclair" (8/17/26, cc Andrew Zuckerman). Bellclair has never had its own site,
 only a page on sterlingpropertiesnj.com.
 
@@ -140,9 +140,31 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - **Backup** taken before any of this:
   `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql`.
 
-**At domain time:** run the domain cutover runbook (OPERATIONS), turn `blog_public` back on,
-update `BELLCLAIR_SITE_URL`, add the domain to the Maps key, and add Bellclair's own Search
-Console token in `inc/seo.php`.
+**Domain cutover — bellclair.com (2026-10-15).**
+- DNS (GoDaddy, registered 2026-10-12): `@` A → `142.93.71.107`; `www` CNAME → `@`. Nina made the
+  change; GoDaddy's parked A records are gone.
+- John changed site 3's URL in Network Admin: `wp_blogs` domain `bellclair.com`, path `/`, and
+  `home`/`siteurl` `https://bellclair.com`.
+- Cloudways: `bellclair.com` and `www.bellclair.com` added under Domain Management (primary stays
+  rivergatenj.com). The Let's Encrypt certificate was reissued with **all four names** —
+  rivergatenj.com, www.rivergatenj.com, bellclair.com, www.bellclair.com — issued 2026-10-15,
+  expires 2027-01-13, auto-renewal on. Saving the domain list reissues it; "Renew Now" is not
+  needed. **Any future property domain must be added to this same list, keeping the others.**
+- Page content: 56 staging URLs on the four live pages (114 in total, counting revisions and the
+  trashed starter content) were rewritten with
+  `wp search-replace 'https://wordpress-1661870-6622382.cloudwaysapps.com/bellclair-montclair'
+  'https://bellclair.com' --skip-columns=guid --precise`. The JSON-escaped form had 0 matches,
+  nothing remained in postmeta or options, and 0 references remain. Varnish purged for all three
+  hostnames.
+- `BELLCLAIR_SITE_URL` set to `https://bellclair.com`, so the smoke test no longer skips the
+  certificate check. A manual workflow run after the cutover was green.
+- Verified with strict TLS (Playwright + Edge): all four pages, all 56 assets, `www` → apex and
+  `http` → `https` redirects, no console errors. The Google map renders, so the Maps key already
+  accepts bellclair.com. The old staging path now returns 404; it was never public or indexed.
+- **Still to do:** turn indexing on (`blog_public` 1) when the client says go; add Bellclair's
+  Search Console HTML-tag token to `inc/seo.php` and submit the sitemap; SMTP (the forms do not
+  deliver yet — see "Mail").
+- Backup before the rewrite: `~/premigration/domain-cutover/site3-bellclair-2026-10-15-1815.sql`.
 
 **Sources for content and assets (original 2026-09-30 build).** Before the SharePoint share was
 available, everything came from:
@@ -244,6 +266,7 @@ rebuilt from patterns, re-apply them.
 | all site 2 content | 2026-10-01 domain cutover — 51 `https://wordpress-1661870-6622382.cloudwaysapps.com/rivergate-bordentown` URLs rewritten to `https://rivergatenj.com` (`guid` left alone); default post 1 "Hello world!" and page 2 "Sample Page" trashed | `~/premigration/domain-cutover/site2-2026-10-01-1854.sql` |
 | 9, 13, 25, 28 | 2026-09-30 photo refresh — images swapped to Media Library attachments 82–101; Gallery rebuilt with Residences + Neighborhood rows | `~/premigration/photo-refresh/` (per-post `.bak` + posts/postmeta SQL); also WP revisions 102–105 |
 | site 3 (Bellclair) | 2026-10-12 — site created; pages 6–9 inserted from patterns (`blog_public` 0) | `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql` |
+| site 3 (Bellclair) | 2026-10-15 — domain cutover: 56 staging URLs on the live pages (114 including revisions) rewritten to `https://bellclair.com` (`guid` left alone) | `~/premigration/domain-cutover/site3-bellclair-2026-10-15-1815.sql` |
 | 6–9 (Bellclair) | 2026-10-14 — repaired block-comment escapes that the setup script stripped (OPERATIONS trap 10: the Availability hero read "Pricing u0026 Online Applications"); office hours (6) and lease termination (9) swapped in | `~/premigration/bellclair-setup/site3-before-repair-2026-10-14-2243.sql` + per-page `post-<id>-*.html` |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
