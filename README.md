@@ -11,13 +11,13 @@ Sterling Properties/
 │   └── elementor-kit/               ← Elementor JSON templates
 │
 ├── rivergate-bordentown/
-│   ├── theme/rivergate-bordentown/  ← Child-style theme (forked from base)
-│   ├── preview-1/                   ← Current multi-page static preview
+│   ├── theme/rivergate-bordentown/  ← Property #1 theme (live)
+│   ├── preview-1/                   ← Multi-page static preview (Vercel)
 │   └── preview/                     ← Earlier preview iteration
 │
 └── bellclair-montclair/
-    ├── theme/bellclair-montclair/   ← Assets only so far (CSS, images); WP fork pending
-    ├── preview/                     ← Multi-page static client preview
+    ├── theme/bellclair-montclair/   ← Property #2 theme (live) — the fork base for new properties
+    ├── preview/                     ← Static client preview (Vercel)
     └── vercel.json                  ← Vercel project root is this folder
 ```
 
@@ -25,9 +25,9 @@ Sterling Properties/
 
 | Site | Theme | Status |
 |------|-------|--------|
-| Sterling Properties | `sterling-properties` | In development |
-| Rivergate Bordentown | `rivergate-bordentown` | In development |
-| Bellclair at Montclair | `bellclair-montclair` | Static preview |
+| Sterling Properties | `sterling-properties` | Legacy, inactive |
+| Rivergate Bordentown | `rivergate-bordentown` | Live — rivergatenj.com |
+| Bellclair at Montclair | `bellclair-montclair` | Live — bellclair.com |
 
 ## Quick Links
 

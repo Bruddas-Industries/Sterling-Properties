@@ -9,7 +9,8 @@ before doing production work or picking the project back up:
 | Document | What's in it |
 |----------|--------------|
 | **[`docs/STATUS.md`](docs/STATUS.md)** | Where each property stands, open work, decisions already made, client-verified copy constraints, and the changes applied directly to the database that no deploy reproduces. **Read this first.** |
-| **[`docs/OPERATIONS.md`](docs/OPERATIONS.md)** | Hosting and SSH coordinates, the deploy pipeline, the ACF field-group exception, caching, mail routing, and the eight traps that have each cost real time here. |
+| **[`docs/OPERATIONS.md`](docs/OPERATIONS.md)** | Hosting and SSH coordinates, the deploy pipeline, the ACF field-group exception, caching, mail routing, and the traps that have each cost real time here. |
+| **`.claude/skills/`** | Step-by-step procedures, loaded on demand: **`edit-site-dev`** (static Vercel previews), **`edit-site-prod`** (anything on a WordPress site, local or live), **`new-property`** (brief → preview → WordPress → domain). They point into the two docs above rather than repeating them. |
 
 Two things from those documents are worth knowing before touching anything, because they are
 counter-intuitive and have caused repeated mistakes:
@@ -25,7 +26,7 @@ repo when the work moves to another machine.
 
 ## What This Project Is
 
-This repo is the master development directory for **10 luxury property marketing websites** built by [Brudda's Industries](https://bruddaindustries.com) for Sterling Properties. All 10 sites run as a **WordPress Multisite** network. Each property gets its own subdirectory in this repo with its own theme (forked from `rivergate-bordentown`) and its own static HTML previews.
+This repo is the master development directory for **10 luxury property marketing websites** built by [Brudda's Industries](https://bruddaindustries.com) for Sterling Properties. All 10 sites run as a **WordPress Multisite** network. Each property gets its own subdirectory in this repo with its own theme (forked from the newest property theme — `bellclair-montclair` since 2026-10-16) and its own static HTML preview.
 
 The goal is for Claude to handle the majority of site generation — layout, copy structure, CSS, PHP templates — while the client retains easy control over their own content through the WordPress admin.
 
@@ -35,13 +36,13 @@ The goal is for Claude to handle the majority of site generation — layout, cop
 
 ```
 Sterling Properties/
-├── rivergate-bordentown/             ← Property #1 and template baseline
-│   ├── theme/rivergate-bordentown/  ← Fork this for every new property
-│   └── preview-1/                   ← Current multi-page static HTML preview
+├── rivergate-bordentown/             ← Property #1 — live at rivergatenj.com
+│   ├── theme/rivergate-bordentown/  ← Original theme; Bellclair was forked from it
+│   └── preview-1/                   ← Multi-page static HTML preview (older layout, inline CSS)
 │
-├── bellclair-montclair/              ← Property #2 — WP fork running locally; not on production yet
-│   ├── theme/bellclair-montclair/   ← Full theme (forked from Rivergate) + re-skinned global.css
-│   └── preview/                     ← Client preview (named preview/, not preview-1/)
+├── bellclair-montclair/              ← Property #2 — live at bellclair.com; the default fork base
+│   ├── theme/bellclair-montclair/   ← Fork this for every new property (theme + preview)
+│   └── preview/                     ← Client preview — the model for new previews
 │
 ├── sterling-properties/              ← Legacy base theme (no longer active)
 │
@@ -56,13 +57,13 @@ Sterling Properties/
 
 ### WordPress Multisite
 - One WordPress install running all 10 property sites as a network (`sterling-network.local` locally, Cloudways in production)
-- Each site gets its own theme (forked from `rivergate-bordentown`)
+- Each site gets its own theme (forked from `bellclair-montclair`, itself a fork of `rivergate-bordentown`)
 - Developed locally via **Local by Flywheel** in multisite mode
 - Production host: Cloudways (domain mapping per property — each site gets its own domain)
 
 ### Theme Architecture
-- **Template theme** (`rivergate-bordentown`): The active baseline — contains all shared PHP structure, nav walker, block editor support, head cleanup, scroll detection
-- **Property themes**: Fork of `rivergate-bordentown` — only design tokens (`global.css`) and theme identity constants (`functions.php`) change per property
+- **Template theme** (`bellclair-montclair` — the default fork base since 2026-10-16; it carries fixes Rivergate lacks, listed in the `new-property` skill): contains all shared PHP structure, nav walker, block editor support, head cleanup, scroll detection
+- **Property themes**: Fork of the template theme — only design tokens (`global.css`) and theme identity constants (`functions.php`) change per property
 - **Design system**: All visual tokens live in `assets/css/global.css` as CSS custom properties — changing ~8 values re-skins the entire site
 - **Page builder**: Native WordPress block editor (Gutenberg) — **no Elementor, no ACF meta-box editing**. Pages are built from custom **dynamic blocks** (interactive/data-driven sections) + **block patterns** (static text sections). See [Block Editor Architecture](#block-editor-architecture--how-every-page-is-built) — this is the standard for every page.
 
@@ -184,20 +185,11 @@ composite page pattern and the individual section patterns (keeps markup DRY).
 
 ## Adding a New Property Site
 
-1. **Copy the base theme:**
-   ```bash
-   cp -r rivergate-bordentown/theme/rivergate-bordentown [property-name]/theme/[property-name]
-   ```
-
-2. **Update `style.css`** — `Theme Name`, `Text Domain`, `Description`
-
-3. **Re-prefix the theme** — rename `RIVERGATE_` constants and `rivergate_` function prefixes to the property prefix across `functions.php`, `inc/blocks.php`, and `blocks/_shared.php`; update the text domain. The block namespace (`rivergate/*` in `blocks/*/block.json`, `inc/blocks.php`, `assets/js/blocks-editor.js`, and `patterns/`) and the `is-style-rivergate-*` button styles can stay or be re-prefixed — if you rename them, update all four places **and** the `global.css` bridge selectors together.
-
-4. **Update design tokens** in `assets/css/global.css` — colors, fonts (the blocks + patterns are inherited unchanged; only tokens differ per property). Replace the favicon PNGs in `assets/images/site-icon/` (32, 180, 192, 270, 512 px, opaque) with the new property's mark — otherwise the fork shows Rivergate's icon
-
-5. **Create a static preview** in `[property-name]/preview-1/` — HTML pages that reference the theme CSS at `../theme/[property-name]/assets/css/global.css`
-
-6. **Deploy preview to Vercel** by connecting the GitHub repo (Vercel serves the static `preview-1/` folders for client review)
+The full procedure lives in the **`new-property`** skill (`.claude/skills/new-property/`), with
+the WordPress fork and go-live steps in its `references/`. In outline: gather the brief → scaffold
+`[property]/preview/` and a re-skinned `global.css` → client review on Vercel → fork the theme
+and re-prefix it → deploy workflow, staging site, pages → domain cutover. Bellclair is the worked
+example for every stage.
 
 ---
 
@@ -216,15 +208,14 @@ composite page pattern and the individual section patterns (keeps markup DRY).
 - All component styles live in `global.css` — no inline styles in PHP except placeholder logo text
 
 ### Static Previews
-- Multi-page HTML files in `preview-1/` — no build step, no dependencies
+- HTML pages in `preview/` (Rivergate's older one is `preview-1/`) — no build step, no dependencies; hosted on Vercel (see the `edit-site-dev` skill)
 - CSS referenced via relative path to the theme: `../theme/[property]/assets/css/global.css`
 - Include a `.preview-banner` strip so clients know they're viewing a preview, not the live site
 
 ### Git
-- `main` — production-ready only
-- `dev` — integration branch for active work
-- `feature/[name]` — individual features or new property builds
-- Never commit directly to `main` — open a PR from `dev`
+- `main` — production. Merging deploys: the theme deploy workflows run on theme changes, and every Vercel preview rebuilds
+- `feature/[name]` / `fix/[name]` / `docs/[name]` — short-lived branches cut from `main`
+- Never commit directly to `main` — open a PR from the feature branch **straight to `main`**, and delete the branch on merge (there is no `dev` integration branch)
 
 ---
 
