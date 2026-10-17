@@ -186,6 +186,28 @@ MSYS_NO_PATHCONV=1 "$APPDATA/Local/lightning-services/php-8.2.29+0/bin/win64/php
 
 ---
 
+## Helper scripts
+
+`scripts/` holds the repeatable steps, so they are run the same way every time. Run them from
+Git Bash at the repo root.
+
+| Script | Does |
+|---|---|
+| `prod.sh wp …` / `sh '…'` | WP-CLI or a shell command on the server, from the WordPress root. It always takes `--url=<domain>` |
+| `prod.sh purge <domain>` | Purges Varnish for one hostname |
+| `prod.sh backup <domain> <label>` | Exports one site's tables to `~/premigration/<label>/` |
+| `prod.sh edit <domain> <id> <spec> [apply]` | Edits page content through `safe-edit.php`: dry run by default, then backup, `wp_slash()` (trap 10), a structure check, and a re-read to verify |
+| `prod.sh insert-page <domain> <pattern> "<Title>" [...] [apply]` | Creates a page from a registered pattern (`insert-page.php`) |
+| `bump-version.sh <property> [patch\|minor\|X.Y.Z]` | Bumps `<PREFIX>_VERSION` and the `style.css` header together |
+| `cache-check.sh <urls>` | Status, `x-cache` and `age`, plus the served theme version compared with `main` |
+| `site-qa.py <urls or preview dir>` | Playwright + Edge at 390/900/1440: console errors, 4xx, sideways scroll, page heights |
+
+`prod.sh` reads the SSH host, app path and key from `scripts/deploy.env`, which is git-ignored.
+If that file is absent, it falls back to the values in the table above and
+`~/.ssh/cloudways_sterling`.
+
+---
+
 ## Traps
 
 Every one of these has cost time on this project at least once.

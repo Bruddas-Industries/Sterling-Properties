@@ -1,0 +1,11 @@
+# This folder is the Vercel project root for the static preview, but it also holds the WordPress
+# theme. A static host serves PHP as plain text, so keep everything except the theme's assets/
+# (which the preview pages load) off Vercel.
+theme/**/*.php
+theme/*/acf-json/
+theme/*/blocks/
+theme/*/inc/
+theme/*/patterns/
+theme/*/templates/
+theme/*/theme.json
+floorplan-sources/

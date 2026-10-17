@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-10-12.** Update this file when something here changes — it is the first
+**Last updated: 2026-10-16.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -47,7 +47,8 @@ only a page on sterlingpropertiesnj.com.
 
 **Static preview built** (2026-09-30, branch `feature/bellclair-preview`) in
 `bellclair-montclair/preview/`: a one-page homepage plus Residents, Availability and Gallery. It
-is named `preview/`, not `preview-1/`, at John's request. It is **not deployed yet.**
+is named `preview/`, not `preview-1/`, at John's request. Hosted on Vercel at
+`https://bellclair-montclair-preview.vercel.app/` (see "Vercel" below).
 
 - `bellclair-montclair/theme/bellclair-montclair/` is now the **full WordPress theme** (see
   "WordPress fork" below). The preview still links to its `global.css` and images, so the
@@ -237,12 +238,21 @@ carried over from Rivergate, and none has been verified with Sterling:
   domain (and later the production domain) to the key's allowed referrers. If Google refuses
   the domain, the preview falls back to an OpenStreetMap embed (`gm_authFailure` in `site.js`),
   so the client never sees an error box.
-- **Vercel.** The project root must be `bellclair-montclair/`, because the preview links to
-  `../theme/`. Since the WordPress fork, that root also contains the theme's PHP, which a static
-  host would serve as plain-text source. Nothing secret is in it (the Maps key is public by
-  design), but exclude `theme/**/*.php` before deploying the preview. `bellclair-montclair/vercel.json` redirects `/` to `/preview/`. The connected
-  Vercel account (`jjosephsen-bruddas' projects`) has no projects, so Rivergate's preview
-  lives on a different account.
+- **Vercel.** Both previews are in the team "jjosephsen-bruddas' projects"
+  (jjosephsen@bruddasindustries.com), as `bellclair-montclair-preview` and
+  `rivergate-bordentown-preview`.
+  - **How they deploy.** Each project is Git-connected to this repo, with the property folder as
+    its Root Directory (the preview links to `../theme/`). `main` is the production branch, so
+    every merge rebuilds both, whatever folder changed.
+  - **Client links:** `https://bellclair-montclair-preview.vercel.app/` (vercel.json redirects to
+    `/preview/`) and `https://rivergate-bordentown-preview.vercel.app/preview-1/`. Rivergate's
+    root returns 404, because it has no redirect.
+  - **Branch deployments are behind Vercel login** (Deployment Protection), so they are not
+    client links.
+  - **Theme PHP was exposed.** Until 2026-10-16 both projects served the theme's PHP as plain
+    text (e.g. `/theme/bellclair-montclair/functions.php` returned 200). The only sensitive-looking
+    value was the Maps key, which is public by design. Each property folder now has a
+    `.vercelignore` that keeps everything but `theme/*/assets/` off Vercel.
 - The "More Communities" cards are the six the client chose (2026-10-15): Riverbend
   (Florham Park), MillPond (Franklin Lakes), Canterly Place (Livingston), Station Court
   (Berkeley Heights), Columbia Court (Springfield) and Lafayette Court (Morristown). Each links
@@ -388,6 +398,14 @@ Recorded so they are not relitigated.
   to hand ordering back to `menu_order`.
 - **`admin_email` stays with the developer** through launch so WordPress system notices are not
   lost; hand it to the client afterward.
+- **New properties fork from Bellclair** (2026-10-16), both the theme and the preview, not
+  Rivergate. Bellclair carries the block-gap, communities-markup and map-fallback fixes, and its
+  preview has no inline layout CSS. The `new-property` skill has the details.
+- **Branching:** short-lived `feature/` / `fix/` / `docs/` branches cut from `main` and PR'd
+  straight to `main`, deleted on merge (2026-10-16). There is no `dev` branch.
+- **Procedures live in `.claude/skills/`** (`edit-site-dev`, `edit-site-prod`, `new-property`),
+  with repeatable steps in `scripts/` (see OPERATIONS → "Helper scripts"). The skills hold no
+  per-property facts; those stay in this file.
 
 ### Still undecided
 
