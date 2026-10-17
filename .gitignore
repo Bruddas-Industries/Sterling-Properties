@@ -20,3 +20,6 @@ desktop.ini
 
 # Node (if build tools get added later)
 node_modules/
+
+# Local SSH coordinates for scripts/prod.sh (never commit)
+scripts/deploy.env
