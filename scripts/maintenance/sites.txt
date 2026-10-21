@@ -1,0 +1,5 @@
+# Live properties checked by the maintenance workflows (smoke.sh, Varnish purges after updates).
+# One line per site: <domain> <path> [<path>...]. "/" is the homepage; paths are relative to it.
+# Add a property here at its domain cutover (new-property skill, go-live step 6).
+rivergatenj.com  /  amenities/  floor-plans/  contact/
+bellclair.com    /  availability/  gallery/  residents/

@@ -1,0 +1,76 @@
+name: Back up production
+
+# Nightly backup of the whole Cloudways multisite: the network database, the uploads, every
+# theme's acf-json/ (which production owns, not git) and a version manifest. The dump is
+# test-imported into a throwaway MariaDB before it counts, then stored in SharePoint:
+#   Sterling Backups/<daily|weekly|monthly>/<date>/   kept 14 days / 8 weeks / 12 months
+# Cloudways' own server backups stay on as a separate first layer. Every run emails its result,
+# success or failure. See docs/OPERATIONS.md "Backups & updates".
+
+on:
+  schedule:
+    - cron: '15 7 * * *'   # 07:15 UTC = 03:15 New York in summer, 02:15 in winter
+  workflow_dispatch:
+    inputs:
+      uploads:
+        description: 'Include wp-content/uploads'
+        type: choice
+        options: [always, weekly, never]
+        default: always
+
+# Shared with update.yml, so a backup and an update never run at the same time.
+concurrency:
+  group: prod-maintenance
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    name: Back up, verify, store
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    services:
+      mariadb:
+        image: mariadb:10.11   # same major as production, so the restore test is like-for-like
+        env:
+          MARIADB_ROOT_PASSWORD: restore-test
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+
+    env:
+      M365_TENANT_ID: ${{ secrets.M365_TENANT_ID }}
+      M365_CLIENT_ID: ${{ secrets.M365_CLIENT_ID }}
+      M365_CLIENT_SECRET: ${{ secrets.M365_CLIENT_SECRET }}
+      M365_SENDER: ${{ secrets.M365_SENDER }}
+      MAINT_NOTIFY_TO: ${{ secrets.MAINT_NOTIFY_TO }}
+      SP_DRIVE_ID: ${{ secrets.SP_DRIVE_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/cloudways-ssh
+        with:
+          ssh-key: ${{ secrets.CLOUDWAYS_SSH_KEY }}
+          host: ${{ secrets.CLOUDWAYS_HOST }}
+          user: ${{ secrets.CLOUDWAYS_USER }}
+          theme-path: ${{ secrets.CLOUDWAYS_THEME_PATH }}
+
+      - name: Back up
+        env:
+          BACKUP_UPLOADS: ${{ inputs.uploads || 'always' }}
+          VERIFY_DOCKER: ${{ job.services.mariadb.id }}
+          VERIFY_DB_PASS: restore-test
+          REQUIRE_UPLOAD: '1'
+        run: bash scripts/maintenance/backup.sh "$RUNNER_TEMP/backup" 2>&1 | tee "$RUNNER_TEMP/backup.log"
+
+      - name: Email the result
+        if: always()
+        run: bash scripts/maintenance/notify.sh backup "$RUNNER_TEMP/backup" "${{ job.status }}" "$RUNNER_TEMP/backup.log"
+
+      - name: Remove the backup and the key from the runner
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/backup" ~/.ssh/deploy_key

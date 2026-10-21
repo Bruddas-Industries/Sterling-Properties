@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-10-16.** Update this file when something here changes — it is the first
+**Last updated: 2026-10-20.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -375,8 +375,21 @@ because domains are still moving). Sterling IT needs to supply a licensed mailbo
 or group — with 2-Step Verification on and a 16-character app password, and confirm Workspace
 policy does not block app passwords.
 
-**Pending updates.** WordPress 7.0.5 → 7.1.1 (major, take a Cloudways backup first). ACF and
-FluentSMTP both have updates and are network-activated.
+**Backups and updates are automated (branch `feature/maintenance-automation`, 2026-10-20)** —
+nightly verified backups to SharePoint, and a weekly update run with smoke test and automatic
+rollback; see OPERATIONS → "Backups & updates". **Not live until:**
+- the Entra app, the SharePoint grant and the `M365_*`/`SP_DRIVE_ID` secrets exist (OPERATIONS
+  one-time setup);
+- the PR is merged (schedules only run from `main`);
+- someone confirms Cloudways server backups are on in the panel.
+
+A dry run on 2026-10-21 found core at 7.0.7 (WordPress's own minor auto-update had already
+applied it). **WordPress 7.1.3 is a major release and is held** for manual approval. Updates
+were waiting for ACF 6.8.4 → 6.8.10, FluentSMTP 2.3.1 → 2.4.1, Akismet, Breeze (inactive), and
+the twentytwentythree and twentytwentyfour default themes. The first real run should be
+watched. `wp-content/plugins/fluent-smtp/` is owned by the SSH user with mode 755/644. It was
+installed over WP-CLI, so WordPress itself cannot update it from wp-admin. The update run's
+permission pass (`g+w` on files the SSH user owns) fixes that on its first run.
 
 **Cosmetic.** A 48-byte junk file with an unprintable glyph name sits at the root of
 `rivergate-bordentown/` — residue of a mistyped shell redirect. Deliberately left for now.

@@ -92,6 +92,9 @@ In order:
     afterwards, because Google re-checks.
 11. **Verify** with `python scripts/site-qa.py https://<domain>/ …`. Also check the redirects:
     `www` → apex, and `http` → `https`.
+12. **Add the property to `scripts/maintenance/sites.txt`**, with its domain and the same pages
+    the deploy workflow smoke-tests. The weekly update run smoke-tests and purges only the sites
+    listed there, so a missing site would be updated blind.
 
 ## 7. Record it
 
