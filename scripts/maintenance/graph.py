@@ -2,9 +2,11 @@
 """Microsoft Graph client for the maintenance workflows: SharePoint backup storage and email.
 
     graph.py mail --subject "<subject>" --body-file report.txt [--to a@x.com,b@y.com]
+                                                     plain-text email (the branded ones come from notify.py)
     graph.py upload <local-file> <remote-path>       e.g. daily/2026-10-20_0715/db.sql.gz
     graph.py prune <tier> <days>                     delete <tier>/<YYYY-MM-DD...> folders older than <days>
     graph.py latest-age <tier> [<tier>...]           hours since the newest backup folder was created
+    graph.py weburl <remote-path>                    browser link to a folder or file
 
 Remote paths are relative to SP_BACKUP_ROOT (default "Sterling Backups") in drive SP_DRIVE_ID.
 
@@ -148,27 +150,44 @@ def cmd_latest_age(args):
     print(f"{hours:.1f}")
 
 
+def cmd_weburl(args):
+    """The browser link for a folder or file, for the email's "Open in SharePoint" button."""
+    print(request("GET", drive_path(args.remote) + "?$select=webUrl", token=get_token())["webUrl"])
+
+
+def send_mail(subject, body_html, to=None, inline=()):
+    """Send an HTML email as M365_SENDER. `inline` is a list of (content-id, path) images, which the
+    HTML references as src="cid:<content-id>". Embedding them (rather than linking to a URL) means
+    Outlook shows them without the "download pictures" prompt."""
+    import base64
+    recipients = [a.strip() for a in (to or env("MAINT_NOTIFY_TO")).split(",") if a.strip()]
+    attachments = []
+    for cid, path in inline:
+        with open(path, "rb") as fh:
+            attachments.append({
+                "@odata.type": "#microsoft.graph.fileAttachment",
+                "name": os.path.basename(path), "contentType": "image/png",
+                "contentBytes": base64.b64encode(fh.read()).decode(), "contentId": cid, "isInline": True,
+            })
+    message = {
+        "subject": subject,
+        "body": {"contentType": "HTML", "content": body_html},
+        "toRecipients": [{"emailAddress": {"address": a}} for a in recipients],
+    }
+    if attachments:
+        message["attachments"] = attachments
+    sender = env("M365_SENDER")
+    request("POST", f"{GRAPH}/users/{urllib.parse.quote(sender)}/sendMail", token=get_token(),
+            data={"message": message, "saveToSentItems": False})
+    print(f"mailed {', '.join(recipients)}: {subject}")
+
+
 def cmd_mail(args):
     with open(args.body_file, encoding="utf-8", errors="replace") as fh:
         text = fh.read()
-    run = ""
-    if os.environ.get("GITHUB_RUN_ID"):
-        link = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/"
-                f"{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}")
-        run = f'<p><a href="{link}">Open this run on GitHub</a></p>'
     body = (f'<pre style="font:13px/1.45 Consolas,Menlo,monospace;white-space:pre-wrap">'
-            f"{html.escape(text)}</pre>{run}")
-    recipients = [a.strip() for a in (args.to or env("MAINT_NOTIFY_TO")).split(",") if a.strip()]
-    sender = env("M365_SENDER")
-    request("POST", f"{GRAPH}/users/{urllib.parse.quote(sender)}/sendMail", token=get_token(), data={
-        "message": {
-            "subject": args.subject,
-            "body": {"contentType": "HTML", "content": body},
-            "toRecipients": [{"emailAddress": {"address": a}} for a in recipients],
-        },
-        "saveToSentItems": False,
-    })
-    print(f"mailed {', '.join(recipients)}: {args.subject}")
+            f"{html.escape(text)}</pre>")
+    send_mail(args.subject, body, args.to)
 
 
 def main():
@@ -177,6 +196,7 @@ def main():
     p = sub.add_parser("upload"); p.add_argument("file"); p.add_argument("remote"); p.set_defaults(fn=cmd_upload)
     p = sub.add_parser("prune"); p.add_argument("tier"); p.add_argument("days", type=int); p.set_defaults(fn=cmd_prune)
     p = sub.add_parser("latest-age"); p.add_argument("tiers", nargs="+"); p.set_defaults(fn=cmd_latest_age)
+    p = sub.add_parser("weburl"); p.add_argument("remote"); p.set_defaults(fn=cmd_weburl)
     p = sub.add_parser("mail")
     p.add_argument("--subject", required=True); p.add_argument("--body-file", required=True); p.add_argument("--to")
     p.set_defaults(fn=cmd_mail)

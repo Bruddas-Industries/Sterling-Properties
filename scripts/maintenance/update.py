@@ -18,8 +18,8 @@ Run by .github/workflows/update.yml; also runs by hand from Git Bash. In order:
      pre-update database if the schema changed, purge, and smoke-test again.
 
 Environment: DRY_RUN (list only), ALLOW_MAJOR_CORE, FORCE_POSTCHECK_FAIL (exercise the rollback
-path), plus whatever backup.sh and graph.py need. Writes <out-dir>/report.txt, result.env and step
-for notify.sh.
+path), plus whatever backup.sh and graph.py need. Writes <out-dir>/report.txt (the plain log),
+report.json (the same, structured, for the HTML email), result.env and step, all read by notify.py.
 """
 import json
 import os
@@ -54,6 +54,8 @@ class Run:
         os.makedirs(out, exist_ok=True)
         open(self.path("report.txt"), "w").close()
         self.result = {"RESULT": "failed", "COUNT": "0"}
+        # Structured copy of the report, which notify.py renders into the HTML email.
+        self.data = {"started": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
     def path(self, name):
         return os.path.join(self.out, name)
@@ -73,6 +75,8 @@ class Run:
         with open(self.path("result.env"), "w") as fh:
             for key, value in self.result.items():
                 fh.write(f"{key}={shlex.quote(value)}\n")
+        with open(self.path("report.json"), "w", encoding="utf-8") as fh:
+            json.dump(self.data, fh, indent=1)
         sys.exit(code)
 
 
@@ -136,9 +140,11 @@ def main(run):
     run.note(f"Sterling production updates — {datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC"
              + ("  (DRY RUN: nothing will be changed)" if dry else ""))
     run.note()
+    run.data["dry_run"] = dry
 
     run.step("preflight smoke test")
     ok, text = smoke()
+    run.data["smoke_before"] = text
     if not ok:
         run.note("A site was already failing BEFORE any update, so nothing was touched:")
         run.note(text)
@@ -158,8 +164,11 @@ def main(run):
                  + (" — the nightly backup may have stopped running." if stale else ""))
         if stale:
             run.result["STALE_BACKUP"] = age
+        run.data["freshness"] = {"checked": True, "stale": stale,
+                                 "hours": float(age) if age not in ("none", "unknown") else None}
     else:
         run.note("Nightly backup freshness: not checked (SP_DRIVE_ID is not set).")
+        run.data["freshness"] = {"checked": False}
 
     run.step("inventory")
     core_before = wp("core version")
@@ -185,6 +194,17 @@ def main(run):
     theme_todo = [t for n, t in themes_before.items() if has_update(t) and n not in ours]
     count = len(plugin_todo) + len(theme_todo) + (1 if core_target else 0)
 
+    run.data.update(
+        core_before=core_before, plugin_count=len(plugins_before), theme_count=len(themes_before),
+        available=([{"name": "WordPress core", "from": core_before, "to": core_target}] if core_target else [])
+        + [{"name": i["name"], "from": i["version"], "to": i["update_version"]} for i in plugin_todo + theme_todo],
+        held=([{"name": "WordPress core", "from": core_before, "to": run.result["HELD_MAJOR"],
+                "reason": f"WordPress {run.result['HELD_MAJOR']} is a major release. Read its release notes, then"
+                          " approve it by running Update production manually with allow_major_core ticked."}]
+              if run.result.get("HELD_MAJOR") else [])
+        + [{"name": i["name"], "from": i["version"], "to": i["update_version"],
+            "reason": "Pinned in scripts/maintenance/pinned-plugins.txt, so it is skipped until unpinned."} for i in plugin_held],
+    )
     run.note(f"WordPress {core_before}; {len(plugins_before)} plugins; {len(themes_before)} themes.")
     run.note()
     run.note("Available" if count else "Available: nothing — everything is current.")
@@ -219,7 +239,8 @@ def main(run):
         run.note("The pre-update backup FAILED, so no updates were applied.")
         run.finish("failed", 1)
     with open(os.path.join(pre, "summary.env")) as fh:
-        remote_dir = dict(line.strip().split("=", 1) for line in fh if "=" in line)["REMOTE_DIR"]
+        run.data["pre_backup"] = dict(w.split("=", 1) for line in fh for w in shlex.split(line) if "=" in w)
+    remote_dir = run.data["pre_backup"]["REMOTE_DIR"]
     with open(os.path.join(pre, "report.txt"), encoding="utf-8") as fh:
         for line in fh:
             run.note(line.rstrip())
@@ -272,6 +293,11 @@ def main(run):
     changed_themes = [(n, themes_before[n]["version"], t["version"]) for n, t in themes_after.items()
                       if n in themes_before and t["version"] != themes_before[n]["version"]]
     not_updated = [p["name"] for p in plugin_todo if p["name"] not in {c[0] for c in changed}]
+    run.data.update(
+        core_after=core_after, not_updated=not_updated, smoke_after=text, problem=reason,
+        updated=([{"name": "WordPress core", "from": core_before, "to": core_after}] if core_after != core_before else [])
+        + [{"name": n, "from": old, "to": new} for n, old, new in changed + changed_themes],
+    )
 
     run.note("Updated")
     if core_after != core_before:
@@ -292,22 +318,29 @@ def main(run):
     run.note(text)
     run.note()
     run.note("Rolling back")
-    for name, old, _ in changed:
+    rolled = run.data["rollback"] = []
+    for name, old, new in changed:
         wp(f"plugin install {shlex.quote(name)} --version={shlex.quote(old)} --force", check=False)
         run.note(f"  {name} → {old}")
-    for name, old, _ in changed_themes:
+        rolled.append({"name": name, "from": new, "to": old})
+    for name, old, new in changed_themes:
         wp(f"theme install {shlex.quote(name)} --version={shlex.quote(old)} --force", check=False)
         run.note(f"  {name} → {old}")
+        rolled.append({"name": name, "from": new, "to": old})
     if core_after and core_after != core_before:
         wp(f"core update --version={shlex.quote(core_before)} --force", check=False)
         run.note(f"  WordPress core → {core_before}")
+        rolled.append({"name": "WordPress core", "from": core_after, "to": core_before})
+    run.data["db_restored"] = False
     if wp("option get db_version", check=False) != db_version_before:
         remote(f"gunzip -c ~/{remote_dir}/db.sql.gz | wp db import - && wp cache flush", check=False)
         run.note(f"  database restored from ~/{remote_dir}/db.sql.gz (the schema had changed). Anything"
                  " edited in wp-admin during the update window was lost.")
+        run.data["db_restored"] = True
     fix_group()
     purge_all()
     ok, text = smoke()
+    run.data["smoke_rollback"] = text
     run.note()
     run.note("Smoke test after rollback" + (" (all sites passing)" if ok else " — STILL FAILING"))
     run.note(text)

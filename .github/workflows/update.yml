@@ -77,7 +77,7 @@ jobs:
 
       - name: Email the result
         if: always()
-        run: bash scripts/maintenance/notify.sh update "$RUNNER_TEMP/update" "${{ job.status }}" "$RUNNER_TEMP/update.log"
+        run: python3 scripts/maintenance/notify.py update "$RUNNER_TEMP/update" "${{ job.status }}" "$RUNNER_TEMP/update.log"
 
       - name: Remove the backup and the key from the runner
         if: always()

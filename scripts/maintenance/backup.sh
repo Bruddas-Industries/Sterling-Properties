@@ -61,7 +61,7 @@ gzip -dc "$dir/db.sql.gz" | tail -c 400 | grep -q 'Dump completed' \
   || fail "the dump has no 'Dump completed' trailer, so the export stopped part-way"
 (cd "$dir" && sha256sum db.sql.gz meta.tar.gz $( [ -f uploads.tar ] && echo uploads.tar ) > SHA256SUMS)
 
-verified="not import-tested"
+verified="not import-tested"; counts=""
 if [ -n "${VERIFY_DOCKER:-}" ]; then
   dbq() { docker exec -i -e MYSQL_PWD="${VERIFY_DB_PASS:-}" "$VERIFY_DOCKER" mariadb -uroot -N "$@"; }
   dbq -e 'DROP DATABASE IF EXISTS restore_test; CREATE DATABASE restore_test'
@@ -78,6 +78,7 @@ if [ -n "${VERIFY_DOCKER:-}" ]; then
     table="${prefix}${id}_posts"; [ "$id" = "1" ] && table="${prefix}posts"
     n=$(dbq restore_test -e "SELECT COUNT(*) FROM \`$table\` WHERE post_status='publish'")
     detail="$detail blog $id: $n published;"
+    counts="$counts $id:$n"
     # The network root (blog 1) may legitimately be empty; a property site never is.
     [ "$id" = "1" ] || [ "$n" -gt 0 ] || fail "restored blog $id has no published posts or pages"
   done
@@ -100,6 +101,7 @@ if [ -n "${SP_DRIVE_ID:-}" ]; then
   "$PY" "$here/graph.py" prune monthly 366
   "$PY" "$here/graph.py" prune pre-update 30
   stored="SharePoint: Sterling Backups/$folder/"
+  stored_url=$("$PY" "$here/graph.py" weburl "$folder" 2>/dev/null || true)
 elif [ "${REQUIRE_UPLOAD:-0}" = "1" ]; then
   fail "SP_DRIVE_ID is not set, so the backup cannot leave the server"
 else
@@ -112,12 +114,19 @@ step "tidy the server"
 bash "$prod" sh "rm -f ~/$remote_dir/uploads.tar; ls -1dt ~/backups/*/ | tail -n +3 | xargs -r rm -rf --"
 
 cat > "$out/summary.env" <<EOF
-TIER=$tier
-FOLDER=$folder
-REMOTE_DIR=$remote_dir
-DB_SIZE=$db_size
-UPLOADS_SIZE=$uploads_size
-VERIFIED=$verified
+NAME="$name"
+TIER="$tier"
+FOLDER="$folder"
+REMOTE_DIR="$remote_dir"
+LOCAL_DIR="$dir"
+SITES="$sites"
+BLOG_COUNTS="${counts# }"
+DB_SIZE="$db_size"
+UPLOADS_SIZE="$uploads_size"
+VERIFIED="$verified"
+STORED="$stored"
+STORED_URL="${stored_url:-}"
+DISK_FREE="$disk_free"
 EOF
 
 note "Backup $name"

@@ -219,6 +219,14 @@ silently skipped schedule gets noticed. If the Graph email step itself breaks (a
 for example), GitHub still sends its own failure email to whoever last edited the workflow's cron
 line.
 
+The emails are Brudda's-branded HTML. `scripts/maintenance/notify.py` fills
+`scripts/maintenance/email/template.html` from the run's `summary.env`, `result.env` and
+`report.json`. The logo and gradient stripe in `email/` are embedded as inline images, so Outlook
+shows them without asking to download pictures. The template is written for Outlook's Word
+rendering engine: tables for layout, inline styles, no CSS gradients. Keep it that way when you
+change it, and preview a change without sending anything:
+`python scripts/maintenance/notify.py update <out-dir> success --preview /tmp/email.html`.
+
 **At every domain cutover, add the property to `scripts/maintenance/sites.txt`.** It drives the
 smoke test and the post-update Varnish purges.
 
