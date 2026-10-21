@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>$subject</title>
+<!--
+  Brudda's Industries maintenance email. Rendered by scripts/maintenance/notify.py, which fills the
+  $placeholders. Written for Outlook's Word rendering engine: tables for layout, inline styles,
+  no CSS gradients (the stripe is an image), images embedded as cid: attachments.
+  Brand: slate #0f172a (bruddasindustries.com), logo blues #1346a3 / #22b9ed / #3ce9d0, Inter.
+-->
+<style>
+  body { margin: 0; padding: 0; }
+  a { color: #1346a3; }
+  @media (max-width: 620px) {
+    .card { width: 100% !important; }
+    .pad { padding-left: 20px !important; padding-right: 20px !important; }
+    .tile { display: block !important; width: 100% !important; box-sizing: border-box; margin-bottom: 8px; }
+    .hide-sm { display: none !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#eef2f7;">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#eef2f7;">$preheader</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#eef2f7" style="background:#eef2f7;">
+<tr><td align="center" style="padding:28px 12px;">
+
+  <table role="presentation" class="card" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="width:600px;max-width:600px;background:#ffffff;border:1px solid #dbe3ee;border-radius:12px;overflow:hidden;">
+
+    <!-- Header -->
+    <tr><td bgcolor="#0f172a" class="pad" style="background:#0f172a;padding:22px 28px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td valign="middle"><img src="cid:logo" width="190" height="39" alt="Brudda's Industries"
+             style="display:block;border:0;outline:none;width:190px;height:auto;"></td>
+        <td valign="middle" align="right" class="hide-sm" style="font-family:Inter,'Segoe UI',Helvetica,Arial,sans-serif;">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#94a3b8;">$client</div>
+          <div style="font-size:13px;color:#e2e8f0;padding-top:2px;">$job</div>
+        </td>
+      </tr></table>
+    </td></tr>
+    <tr><td style="line-height:0;font-size:0;"><img src="cid:stripe" width="600" height="4" alt=""
+         style="display:block;width:100%;height:4px;border:0;"></td></tr>
+
+    <!-- Status -->
+    <tr><td class="pad" style="padding:30px 28px 6px;font-family:Inter,'Segoe UI',Helvetica,Arial,sans-serif;">
+      <span style="display:inline-block;padding:4px 10px;border-radius:999px;background:$pill_bg;color:$pill_fg;
+                   font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">$pill</span>
+      <h1 style="margin:14px 0 6px;font-size:24px;line-height:1.25;font-weight:700;color:#0f172a;">$title</h1>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#475569;">$subtitle</p>
+    </td></tr>
+
+    $tiles
+
+    $sections
+
+    <!-- Actions -->
+    <tr><td class="pad" style="padding:8px 28px 30px;font-family:Inter,'Segoe UI',Helvetica,Arial,sans-serif;">
+      $buttons
+    </td></tr>
+
+    <!-- Footer -->
+    <tr><td bgcolor="#f8fafc" class="pad" style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:18px 28px;
+             font-family:Inter,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#64748b;">
+      $footer
+    </td></tr>
+  </table>
+
+</td></tr>
+</table>
+</body>
+</html>
