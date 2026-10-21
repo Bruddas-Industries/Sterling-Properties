@@ -3295,7 +3295,8 @@ body.nav-is-open .nav-logo .logo--on-dark { display: block; }
 .shuttle-band__inner > .section-intro { margin-bottom: 0; }
 .shuttle-band__stats {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Side by side only when each card gets 200px; otherwise they stack */
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: var(--space-4);
 }
 .shuttle-stat {
@@ -3303,11 +3304,15 @@ body.nav-is-open .nav-logo .logo--on-dark { display: block; }
   border-radius: var(--radius-lg);
   padding: var(--space-6) var(--space-5);
   background: rgba(35, 33, 33, 0.6);
+  min-width: 0;
+  container-type: inline-size;   /* the number below sizes to the card, not the viewport */
 }
 .shuttle-stat__num {
   display: block;
   font-family: var(--font-heading);
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);                    /* fallback without container queries */
+  font-size: min(var(--text-2xl), 15.5cqi);     /* "WEEKDAYS" is ~6em wide: keeps it inside the card */
+  white-space: nowrap;
   font-weight: var(--weight-light);
   color: var(--color-accent);
   line-height: 1;
@@ -3329,9 +3334,6 @@ body.nav-is-open .nav-logo .logo--on-dark { display: block; }
 }
 @media (max-width: 900px) {
   .shuttle-band__inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
-}
-@media (max-width: 640px) {
-  .shuttle-band__stats { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ---- 29g. Amenity photo panel cross-fades when an amenity is opened ------- */
