@@ -250,7 +250,7 @@ def backup_email(out, status, log):
     sections += section("Where it is", kv([
         ("SharePoint", esc(f"backups › Documents › Sterling Backups › {s.get('FOLDER', '')}")),
         ("On the server", esc(f"~/{s.get('REMOTE_DIR', '')}") + f' <span style="color:#94a3b8;">(newest two kept)</span>'),
-        ("Server disk free", esc(s.get("DISK_FREE", "?"))),
+        ("Server disk free", esc(size(s.get("DISK_FREE")))),
         ("Includes", "Database · uploads · ACF field groups · version manifest"),
     ]))
     return subject, content, stat, sections, [("Open in SharePoint", s.get("STORED_URL"), True),
