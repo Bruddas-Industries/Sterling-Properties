@@ -34,7 +34,8 @@ Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 do
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built
   as native block patterns + dynamic blocks
 
-Bellclair (below) is property #2. The other eight have not been started. Everything in
+Bellclair (below) is property #2. Riverbend (below that) is property #3, at the preview stage.
+The other seven have not been started. Everything in
 `OPERATIONS.md` and the conventions in `CLAUDE.md` is written to be inherited by those forks.
 
 ---
@@ -269,6 +270,147 @@ copy never calls the trains "steps away". Church Street (5 min), the Art Museum 
 Whole Foods (2 min) are the walkable highlights. Route data: OSRM foot and car profiles,
 OpenStreetMap geocodes, with each POI's coordinates in the `data-lat`/`data-lng` of its list
 item in `index.html`.
+
+---
+
+## Where Riverbend stands
+
+Property #3 of 10: **Riverbend at Florham Park**, 1901 Sterling Drive, Florham Park NJ 07932.
+Brief: Nina Chichelo's email "Next Website: Riverbend" (2026-10-20, to John and Chris). Nina
+describes it as "small, community-oriented". Sterling is still writing text for the new site, so
+the brief carries only the contact facts. Branding and visuals are complete. The meeting is the
+following Monday.
+
+**Stage: static preview built (2026-10-20, branch `feature/riverbend-florhampark-preview`)** in
+`riverbend-florhampark/preview/`. It is a one-page homepage plus Residents, Availability and
+Gallery, as at Bellclair, and nothing in the brief called for more pages. There is no WordPress
+fork yet. `theme/riverbend-florhampark/` holds only `assets/` (`global.css`, images and the fonts
+README), which the preview loads. The Vercel project is `riverbend-florhampark-preview`; the
+client link goes live at `https://riverbend-florhampark-preview.vercel.app/` once the branch is
+merged.
+
+**Naming (decided with John, 2026-10-20).**
+- Slug: `riverbend-florhampark`.
+- For the fork: `riverbend_` / `RIVERBEND_`, CPTs `rb_amenity` / `rb_floor_plan`, ACF groups
+  `group_rb_*`, blocks `riverbend/*`, buttons `is-style-riverbend-*` (already renamed in
+  `global.css`), and `deploy-riverbend.yml` with `RIVERBEND_THEME_PATH` / `RIVERBEND_SITE_URL`.
+
+**Facts and their sources.**
+| Fact | Value | Source |
+|---|---|---|
+| Name | Riverbend at Florham Park ("Riverbend" one word, as in the logo) | Brand sheet, current site, AppFolio |
+| Address | 1901 Sterling Drive, Florham Park, NJ 07932 | Brief |
+| Phone / email | 973.665.0050 / `riverbend@spgnj.com` | Brief, floor-plan sheets |
+| Office hours | Tuesday – Saturday, 10 AM – 5 PM | Current site's Contact page |
+| Plans | Madison 1bd/1ba 725 sf (floor 1) · Livingston 1bd/1ba + study 800 sf (floor 1) · Chatham 2bd/2ba 1,050 sf (floor 2) · Florham 2bd/2ba 1,225 sf (floor 2). All in Buildings 1–18; every sheet shows a balcony, walk-in closet, washer/dryer and garage | "Updated Floorplans" sheets (SharePoint) |
+| 3D tours | Madison `qRBhDU6A7ZQ`, Livingston `yGQSWLhuVAq`, Chatham `bbuj3Fchx1H` (Matterport's own titles name each plan). Florham has none | AppFolio listings |
+| Pets | "Cats allowed, small dogs allowed" (AppFolio) and "pet-friendly in select buildings" (current site), combined on the preview | Both |
+| Resident portal | AppFolio (`sterlingproperties.appfolio.com/connect`), for rent and service requests | Current site's Residents page |
+| Apply / availability | AppFolio city filter `filters[cities][]=Florham Park`, which returns exactly Riverbend's four listings (2026-10-20). Riverbend has no `property_list` value of its own, unlike Bellclair's `BELLCLAIRE, LLC` | AppFolio |
+| Amenities | clubhouse, fitness center, pool and patio, BBQ, private entrances, garages with remote openers, weekday morning-and-evening shuttle to Chatham station, landscaped grounds with snow removal, onsite and 24/7 emergency maintenance, individual storage | Current site's Amenities page, Sterling portfolio page |
+| More amenities | EV charging, quartz countertops, gas heat, central air, private garage with direct entry into the home | AppFolio listing amenities |
+| Domain | `riverbendatflorhampark.com`, in Sterling's GoDaddy account | Brief |
+
+**Brand.**
+- Source: `Riverbend_Brand_1-Pager.pdf` (New World Group). The sheet covers a family of
+  Riverbend properties: Wappinger Falls, East and Florham Park. Florham Park's colourway is the
+  coral sub-line.
+- Palette in `:root`: charcoal `#232121`, coral `#EB6F63`, sage `#A8C1AA`, sky `#A0BEE2`,
+  cream `#F5F1E9`. The scheme is the same light field with dark bands as Bellclair: a cream page,
+  charcoal bands, and a pale-sage `.section--alt`.
+- Coral fails as small text (2.7:1 on cream), so eyebrows and links use `--color-primary`
+  `#A63F35` (5.5:1 cream, 5.0:1 sage band). Coral itself is only a fill with charcoal labels
+  (5.3:1), a rule or an icon.
+- Typefaces: Condor Light, Acme Gothic Extrawide and Area Normal, all commercial. Stand-ins are
+  Jost, Syncopate and Manrope, with the `@font-face` block commented out (see
+  `assets/fonts/README.txt`). Acme Gothic, as Syncopate, is a third token (`--font-accent`) for
+  eyebrows and labels.
+- The brand's wave pattern is a 64×12 CSS tile (`.wave-texture`) on the dark bands, and the
+  wave line is the `.divider`.
+- Logos are the guide's SVGs: the secondary wordmark in the header (charcoal / cream) and the
+  stacked primary logo in the footer. Site icons are the coral R mark on cream, opaque.
+- Riverbend-only CSS is in section 29. Bellclair's film band, film modal and gold deco rules are
+  gone. A new `.shuttle-band` is registered in both dark-band lists in section 4.
+
+**Photos (2026 shoot, SharePoint `07_Assets/River Bend (Florham Park, NJ)/Photos`).**
+- Only the "Updated" folders are used, never "Old".
+- **Residences:** every residence photo is from the four model units (Madison 1205, Livingston
+  1401, Chatham 510, Florham 1802), all with the same finish: white cabinetry, white counters,
+  stainless appliances and tile kitchen floors. The Virtual Staging sets are captioned
+  "Virtually Staged".
+- **Clubhouse:** the clubhouse photos are the 1200px MLS exports. The High Resolution files are
+  online-only, and their paths exceed Windows' 260-character limit, so OneDrive refuses to
+  download them ("The cloud operation is invalid"). Swap in the high-res versions if they are
+  ever needed, for example by shortening the folder path.
+- **Other rooms:** the clubhouse restrooms are not used.
+
+**Neighborhood times are measured, not estimated.** They were routed with OSRM on 2026-10-20,
+using foot routing under 25 minutes on foot and car routing beyond that.
+- **Origin.** The routes start at the unnumbered building beside the pool (OpenStreetMap way
+  1368465163, 40.75336, −74.36954), taken to be the clubhouse; "1901 Sterling Dr" is not in OSM,
+  and the Census geocoder does not match it. Re-measure rather than guess if a place is added.
+- **Location.** Riverbend is on North Passaic Avenue at the Chatham line, beside the Passaic
+  River, not up on Columbia Turnpike. Chatham station is a **4-minute drive** and the only rail
+  nearby; Florham Park has no station.
+- **Drive times are free-flow**, with no traffic, and the section intro says so. Downtown Chatham
+  is a 24.6-minute walk, shown as its 3-minute drive.
+- **Corrected from the old site's location claims:**
+  - "Three minutes from Chatham Train Station" is 4 minutes by car.
+  - "Elm Street Recreational Complex" does not exist; the nearest match is the borough fields
+    off Elm Street.
+  - "Center Court Tennis Club" is Centercourt Athletic Club of Chatham, next door. It is listed
+    mainly for pickleball, so the card says "racquet club".
+  - "St. Barnabas" is now Cooperman Barnabas Medical Center.
+- **Residents page numbers:**
+  - Florham Park Police dispatch 973-377-2206 (Morris County OEM and NJ 211; the borough's own
+    police page labels no non-emergency line).
+  - Electric is JCP&L: outages 1-888-544-4877, from the FirstEnergy NJ bill insert of Nov 2025.
+  - Gas is PSE&G: leaks 1-800-880-7734, with Florham Park listed in PSE&G's gas tariff.
+- **Working files:** the full route table and rejected places are in the session scratchpad
+  (not in the repo). The coordinates are in each list item's `data-lat` / `data-lng`.
+
+### Open — Riverbend
+
+**Copy to confirm with the client.** None of these is verified with Sterling:
+- **55+ / age restriction.** The current site markets Riverbend as "NJ's newest 55+ Apartment
+  Community" and "Adult Lifestyle Living". The brief, the portfolio page and the AppFolio listings
+  never say so, and AppFolio lists a playground (the old site lists a tot lot). The preview makes
+  **no age claim**, by John's decision on 2026-10-20, because an age restriction has fair-housing
+  weight. Ask Nina whether it is still age-restricted. That answer also decides whether the
+  playground belongs on the site, so it is left out for now.
+- **Flooring is not described.** AppFolio and the portfolio page say "hardwood floors", and the
+  old site says "hardwood and ceramic tile flooring with partial carpeting in select homes".
+  Rivergate's flooring rule shows how much Sterling cares about this wording, so ask before
+  saying anything.
+- **Hours.** The closed days (Sunday and Monday) are inferred from "Tuesday – Saturday", and
+  whether visits are by appointment is unknown.
+- **Shuttle.** "Every weekday" (old homepage) and "morning and evening" (old amenities page) are
+  combined into "weekday mornings and evenings". The schedule is not published. "Complimentary"
+  is from the old homepage.
+- **Pets.** The preview's "cats and small dogs, select buildings" merges two sources. Ask for the
+  actual policy: which buildings, weight limits and fees.
+- **EV charging** is from AppFolio (the clubhouse photo shows a charging space). Do not add a
+  count or fees.
+- **Clubhouse.** "Renovated" comes from the SharePoint folder name ("Updated Renovated
+  Clubhouse"). "Fireside lounge", "coffee bar" and "pergola" describe what the photos show.
+- **Not used on the preview:** the old site's "200 private apartments" (unit count), its "1 Month
+  Free" promotion, the 2016 brochure, and the rental-application PDF, which now returns 404 (the
+  preview uses AppFolio).
+- **Residents page.** The guideline blocks carry only sourced lines. Quiet hours, parking rules,
+  packages and move-out terms are omitted until the client supplies them, unlike Bellclair, which
+  carried Rivergate's text. Police and utility numbers were looked up (sources below).
+- **Sister communities.** These are Bellclair's six with Bellclair in Riverbend's place, and the
+  Bellclair card links to `bellclair.com`. Confirm the set with the client. The portfolio URLs
+  return 403 to `curl` (bot protection) but loaded in a browser on 2026-10-15.
+- **Spelling.** The SharePoint folder and the AppFolio description spell it "River Bend"; the
+  brand and the logo say "Riverbend".
+
+**Waiting on Nina:** the text for the new site (in progress, per the brief); the web licences
+for the three fonts; a Florham Matterport tour; any video (the SharePoint `Videos` folder is
+empty).
+
+**Infrastructure:** add `riverbend-florhampark-preview.vercel.app` to the Maps key's allowed
+referrers (Google Cloud Console). Until then, the preview shows the OpenStreetMap fallback.
 
 ---
 
