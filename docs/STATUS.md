@@ -281,7 +281,7 @@ describes it as "small, community-oriented". Sterling is still writing text for 
 the brief carries only the contact facts. Branding and visuals are complete. The meeting is the
 following Monday.
 
-**Stage: static preview built (2026-10-20, branch `feature/riverbend-preview`)** in
+**Stage: static preview built (2026-10-20, branch `feature/riverbend-florhampark-preview`)** in
 `riverbend-florhampark/preview/`. It is a one-page homepage plus Residents, Availability and
 Gallery, as at Bellclair, and nothing in the brief called for more pages. There is no WordPress
 fork yet. `theme/riverbend-florhampark/` holds only `assets/` (`global.css`, images and the fonts
