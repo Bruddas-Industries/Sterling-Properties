@@ -1,0 +1,84 @@
+name: Update production
+
+# Weekly WordPress update run for the Cloudways multisite (scripts/maintenance/update.py):
+#   smoke test → pre-update backup → plugin, theme, minor-core and language updates → purge
+#   Varnish → smoke test + PHP check + error-log check → automatic rollback if anything fails.
+# Major WordPress releases are only reported; approve one by running this workflow manually
+# with "allow_major_core" ticked. Every run emails its result. See docs/OPERATIONS.md
+# "Backups & updates".
+
+on:
+  schedule:
+    - cron: '0 9 * * 2'   # Tuesdays 09:00 UTC = 05:00 New York in summer, 04:00 in winter
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'List available updates and email them; change nothing'
+        type: boolean
+        default: false
+      allow_major_core:
+        description: 'Also apply a major WordPress release (read its release notes first)'
+        type: boolean
+        default: false
+      force_postcheck_fail:
+        description: 'TEST ONLY: fail the post-update check to exercise the rollback'
+        type: boolean
+        default: false
+
+concurrency:
+  group: prod-maintenance
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: Update, verify, roll back if needed
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    services:
+      mariadb:
+        image: mariadb:10.11   # for the pre-update backup's restore test
+        env:
+          MARIADB_ROOT_PASSWORD: restore-test
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+
+    env:
+      M365_TENANT_ID: ${{ secrets.M365_TENANT_ID }}
+      M365_CLIENT_ID: ${{ secrets.M365_CLIENT_ID }}
+      M365_CLIENT_SECRET: ${{ secrets.M365_CLIENT_SECRET }}
+      M365_SENDER: ${{ secrets.M365_SENDER }}
+      MAINT_NOTIFY_TO: ${{ secrets.MAINT_NOTIFY_TO }}
+      SP_DRIVE_ID: ${{ secrets.SP_DRIVE_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/cloudways-ssh
+        with:
+          ssh-key: ${{ secrets.CLOUDWAYS_SSH_KEY }}
+          host: ${{ secrets.CLOUDWAYS_HOST }}
+          user: ${{ secrets.CLOUDWAYS_USER }}
+          theme-path: ${{ secrets.CLOUDWAYS_THEME_PATH }}
+
+      - name: Update
+        env:
+          DRY_RUN: ${{ inputs.dry_run || false }}
+          ALLOW_MAJOR_CORE: ${{ inputs.allow_major_core || false }}
+          FORCE_POSTCHECK_FAIL: ${{ inputs.force_postcheck_fail || false }}
+          VERIFY_DOCKER: ${{ job.services.mariadb.id }}
+          VERIFY_DB_PASS: restore-test
+          REQUIRE_UPLOAD: '1'
+        run: python3 -u scripts/maintenance/update.py "$RUNNER_TEMP/update" 2>&1 | tee "$RUNNER_TEMP/update.log"
+
+      - name: Email the result
+        if: always()
+        run: bash scripts/maintenance/notify.sh update "$RUNNER_TEMP/update" "${{ job.status }}" "$RUNNER_TEMP/update.log"
+
+      - name: Remove the backup and the key from the runner
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/update" ~/.ssh/deploy_key

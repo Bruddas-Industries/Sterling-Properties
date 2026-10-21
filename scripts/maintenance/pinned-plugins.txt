@@ -1,0 +1,4 @@
+# Plugins the weekly update run must NOT update, one slug per line, with the reason and date.
+# A pinned plugin is still listed as "held" in the update email so it is not forgotten.
+#
+# example-plugin   # 2026-10-20: 3.x breaks the contact block; waiting on vendor fix

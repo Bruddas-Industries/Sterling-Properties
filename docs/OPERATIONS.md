@@ -21,7 +21,7 @@ GitHub repo secrets, and hosting logins in the Cloudways panel.
 | Stack | WordPress 7.0.5, PHP 8.2.33, MariaDB 10.11, nginx |
 | WP-CLI | `/usr/local/bin/wp` — available, use it |
 | File ownership | `xhxwssuusk:www-data` — correct; WordPress can write |
-| Backups | `~/premigration/` (outside the web root) |
+| Backups | Nightly to SharePoint, plus the newest two in `~/backups/` (see Backups & updates). Ad-hoc pre-change exports in `~/premigration/` |
 
 Cloudways names the application folder after its database, so `xhxwssuusk` is not guessable —
 copy it from the panel if it ever changes.
@@ -152,6 +152,145 @@ but check every contact block has an explicit recipient first.
 
 ---
 
+## Backups & updates
+
+Two scheduled GitHub Actions workflows, sharing one concurrency group so they never overlap.
+They are scripts rather than an AI task: `scripts/maintenance/` does the work, and every run
+emails its result, success or failure, from Microsoft 365 through Graph.
+
+| Workflow | When (UTC; New York is 4–5 h behind) | Does |
+|---|---|---|
+| `backup.yml` — Back up production | Daily 07:15 | Whole network DB, uploads, every theme's `acf-json/`, version manifest → test-import → SharePoint |
+| `update.yml` — Update production | Tuesdays 09:00 | Smoke test → pre-update backup → updates → purge → smoke + PHP + error-log check → automatic rollback |
+
+Both can be started by hand from the Actions tab. `update.yml` takes `dry_run` (list and email
+only), `allow_major_core`, and `force_postcheck_fail` (test only: fails the post-check to
+exercise the rollback).
+
+### Layers
+
+1. **Cloudways server backups**, which you turn on in the panel (Server → Backups). They restore
+   the whole server in one click, and are independent of everything below.
+2. **The nightly backup** writes to SharePoint, in `Sterling Backups/<tier>/<YYYY-MM-DD_HHMM>/`:
+   - `daily` is kept for 14 days, `weekly` (Sundays) for 8 weeks, `monthly` (the 1st) for 12
+     months, and `pre-update` for 30 days;
+   - `db.sql.gz` is the whole network database. A multisite cannot be restored a site at a time
+     without `wp_blogs` and the shared tables, so it is never split;
+   - `meta.tar.gz` holds each theme's `acf-json/` (production owns these, see above), plus
+     `mu-plugins/` if one exists, and `manifest/` (core and DB version, the plugin, theme and
+     site lists);
+   - `uploads.tar` is `wp-content/uploads`, about 29 MB in 2026-10. If the media library grows
+     large, set `BACKUP_UPLOADS=weekly`;
+   - `SHA256SUMS`.
+
+   **A backup only counts once it has been restored.** Each dump is imported into a MariaDB 10.11
+   container on the runner, and the run fails unless the site count matches the server and every
+   property has published content. The newest two database exports also stay on the server in
+   `~/backups/`, which is what an update rollback uses.
+3. **`wp-config.php` is deliberately not backed up.** It holds the DB password and salts. Rebuild
+   it from the Cloudways panel (Access Details) if it is ever lost.
+
+### What the update run will and won't do
+
+- It applies plugin updates, wordpress.org theme updates, minor core releases and language packs.
+  Updated files are handed to the `www-data` group, so WordPress can still update them itself.
+- It **holds major core releases**: the email says "WordPress X awaiting approval". Read the
+  release notes, then run the workflow manually with `allow_major_core`.
+- It **never updates our own property themes** from wordpress.org, even if a slug collides. Those
+  ship only through the deploy workflows.
+- It skips any plugin listed in `scripts/maintenance/pinned-plugins.txt`. Give the reason and the
+  date in the file.
+- WordPress's own background minor-core auto-updates stay on. They are the fastest route to
+  security releases, which is why core was already at 7.0.7 when this started.
+- **It rolls back when the post-check fails:**
+  - each plugin and theme is reinstalled at its previous version, and core goes back to its
+    previous version;
+  - the pre-update database is re-imported **only if the update changed the schema**
+    (`db_version`). Anything edited in wp-admin during the few minutes of the run is lost then,
+    and the email says so;
+  - Varnish is purged and the sites are smoke-tested again. Either result is a red run and an
+    email.
+
+Emails arrive with one of these subjects: `Backup OK` / `Backup FAILED at: <step>` /
+`Updates applied (N)` / `No updates needed` / `Update check (dry run)` / `Updates SKIPPED — a
+site was already failing` / `Updates ROLLED BACK` / `Updates FAILED — manual attention`. The
+update email also warns when the newest nightly backup is more than 36 hours old, which is how a
+silently skipped schedule gets noticed. If the Graph email step itself breaks (an expired secret,
+for example), GitHub still sends its own failure email to whoever last edited the workflow's cron
+line.
+
+**At every domain cutover, add the property to `scripts/maintenance/sites.txt`.** It drives the
+smoke test and the post-update Varnish purges.
+
+### Restoring
+
+Take a fresh `scripts/prod.sh backup <domain> pre-restore` first, so the restore itself can be
+undone. Then use whichever of these fits:
+
+- **The whole network, fast:** the newest export is already on the server.
+  `scripts/prod.sh sh 'ls -1dt ~/backups/*/'`, then
+  `scripts/prod.sh sh 'gunzip -c ~/backups/<dir>/db.sql.gz | wp db import - && wp cache flush'`.
+- **From SharePoint:** download the folder and copy the files up with `scp -i
+  ~/.ssh/cloudways_sterling` to `~/backups/restore/`, then run the same import. Check the files
+  against `SHA256SUMS` first.
+- **One property only:** the dump replaces every site. Extract that blog's `wp_<N>_*` table
+  blocks from the dump and import only those. Leave `wp_blogs`, `wp_site*`, `wp_users` and
+  `wp_usermeta` alone unless they are what was lost.
+- **Uploads:** `tar -xf uploads.tar -C wp-content` from the WordPress root, then
+  `find wp-content/uploads -user "$(id -un)" -exec chgrp www-data {} + -exec chmod g+w {} +`.
+- **ACF field groups:** take them from `meta.tar.gz` and **write them in place** with
+  `cat >` (see "Copying a field group to the server safely"). Never replace the file.
+- **A plugin version:** use `manifest/plugins.json`, then
+  `wp plugin install <slug> --version=<v> --force`.
+- Afterwards, purge Varnish for every domain and run `scripts/maintenance/smoke.sh`.
+
+Rehearse a restore occasionally: import a `db.sql.gz` into a scratch database. **Never import it
+into the Local multisite**, because the blog IDs and paths differ.
+
+### One-time setup: the Entra app, SharePoint and secrets
+
+The workflows need one Entra ID app registration in the Brudda's tenant, which handles both the
+mail and the SharePoint uploads:
+
+1. **Register the app.** In Entra admin center → App registrations → New, name it
+   "Sterling Maintenance" (single tenant). Note the tenant ID and client ID. Under Certificates &
+   secrets, create a client secret valid for 24 months, and **put its expiry date in a calendar**.
+2. **SharePoint (least privilege).** Under API permissions, add **Microsoft Graph → Application →
+   `Sites.Selected`** and grant admin consent. Then an admin grants the app write access to the
+   one site, for example in Graph Explorer:
+   ```
+   GET  https://graph.microsoft.com/v1.0/sites/<tenant>.sharepoint.com:/sites/<site>    → site id
+   POST https://graph.microsoft.com/v1.0/sites/<site-id>/permissions
+        {"roles":["write"],"grantedToIdentities":[{"application":{"id":"<client-id>","displayName":"Sterling Maintenance"}}]}
+   GET  https://graph.microsoft.com/v1.0/sites/<site-id>/drives                          → the Documents library id = SP_DRIVE_ID
+   ```
+3. **Mail, scoped to one mailbox.** Do **not** add `Mail.Send` under Entra API permissions: an
+   Entra grant there covers every mailbox in the tenant. Create a shared mailbox (for example
+   `alerts@bruddasindustries.com`; it needs no licence) and grant the permission through
+   **Exchange RBAC for Applications**, in Exchange Online PowerShell:
+   ```powershell
+   New-ServicePrincipal -AppId <client-id> -ObjectId <enterprise-app-object-id> -DisplayName "Sterling Maintenance"
+   New-ManagementScope -Name "Sterling alerts sender" -RecipientRestrictionFilter "PrimarySmtpAddress -eq 'alerts@bruddasindustries.com'"
+   New-ManagementRoleAssignment -App <client-id> -Role "Application Mail.Send" -CustomResourceScope "Sterling alerts sender"
+   Test-ServicePrincipalAuthorization -Identity <client-id> -Resource alerts@bruddasindustries.com
+   ```
+4. **Set the repo secrets:** `M365_TENANT_ID`, `M365_CLIENT_ID`, `M365_CLIENT_SECRET`,
+   `M365_SENDER` (the shared mailbox), `MAINT_NOTIFY_TO` (comma-separated recipients) and
+   `SP_DRIVE_ID`. The SSH secrets are the deploy ones, reused: `CLOUDWAYS_SSH_KEY`,
+   `CLOUDWAYS_HOST`, `CLOUDWAYS_USER`, and `CLOUDWAYS_THEME_PATH`, from which the WordPress root
+   is derived.
+5. **Test from the dev machine** before relying on the schedule. Export the same variables in
+   Git Bash, then:
+   ```bash
+   echo hello > /tmp/t.txt
+   PYTHON=python python scripts/maintenance/graph.py mail --subject "Sterling test" --body-file /tmp/t.txt
+   PYTHON=python python scripts/maintenance/graph.py upload /tmp/t.txt test/2000-01-01/t.txt
+   PYTHON=python python scripts/maintenance/graph.py prune test 1
+   ```
+6. **Confirm Cloudways server backups are on:** Server → Backups, daily, retained for 7+ days.
+
+---
+
 ## Local development
 
 Local by Flywheel, multisite, at `sterling-network.local`.
@@ -196,11 +335,15 @@ Git Bash at the repo root.
 | `prod.sh wp …` / `sh '…'` | WP-CLI or a shell command on the server, from the WordPress root. It always takes `--url=<domain>` |
 | `prod.sh purge <domain>` | Purges Varnish for one hostname |
 | `prod.sh backup <domain> <label>` | Exports one site's tables to `~/premigration/<label>/` |
+| `prod.sh pull <remote-path> <local-dir>` | Copies a file or folder down from the server (paths relative to `~`) |
 | `prod.sh edit <domain> <id> <spec> [apply]` | Edits page content through `safe-edit.php`: dry run by default, then backup, `wp_slash()` (trap 10), a structure check, and a re-read to verify |
 | `prod.sh insert-page <domain> <pattern> "<Title>" [...] [apply]` | Creates a page from a registered pattern (`insert-page.php`) |
 | `bump-version.sh <property> [patch\|minor\|X.Y.Z]` | Bumps `<PREFIX>_VERSION` and the `style.css` header together |
 | `cache-check.sh <urls>` | Status, `x-cache` and `age`, plus the served theme version compared with `main` |
 | `site-qa.py <urls or preview dir>` | Playwright + Edge at 390/900/1440: console errors, 4xx, sideways scroll, page heights |
+| `maintenance/smoke.sh` | Every live site in `maintenance/sites.txt`: 200, theme CSS present, no WordPress error page. Read-only |
+| `maintenance/backup.sh <out-dir>` | The nightly backup, runnable by hand (see Backups & updates) |
+| `DRY_RUN=1 python maintenance/update.py <out-dir>` | Lists available updates without changing anything |
 
 `prod.sh` reads the SSH host, app path and key from `scripts/deploy.env`, which is git-ignored.
 If that file is absent, it falls back to the values in the table above and

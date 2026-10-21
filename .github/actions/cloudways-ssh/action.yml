@@ -1,0 +1,42 @@
+name: Cloudways SSH
+description: >-
+  Load the deploy key and point scripts/prod.sh at the production server. Used by the maintenance
+  workflows; the deploy workflows inline the same steps.
+inputs:
+  ssh-key:
+    description: CLOUDWAYS_SSH_KEY
+    required: true
+  host:
+    description: CLOUDWAYS_HOST
+    required: true
+  user:
+    description: CLOUDWAYS_USER
+    required: true
+  theme-path:
+    description: Any property's theme-path secret; the WordPress root is derived from it
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Load the deploy key
+      shell: bash
+      env:
+        KEY: ${{ inputs.ssh-key }}
+        HOST: ${{ inputs.host }}
+        SSH_USER: ${{ inputs.user }}
+        THEME_PATH: ${{ inputs.theme-path }}
+      run: |
+        mkdir -p ~/.ssh
+        printf '%s\n' "$KEY" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+        ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+        app="${THEME_PATH%/wp-content/themes/*}"
+        case "$app" in
+          */public_html) ;;
+          *) echo "::error::Cannot derive the WordPress root from the theme path"; exit 1 ;;
+        esac
+        {
+          echo "STERLING_SSH_HOST=$SSH_USER@$HOST"
+          echo "STERLING_SSH_KEY=$HOME/.ssh/deploy_key"
+          echo "STERLING_APP_PATH=$app"
+        } >> "$GITHUB_ENV"

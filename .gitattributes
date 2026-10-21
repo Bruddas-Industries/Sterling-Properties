@@ -1,2 +1,5 @@
 # Shell scripts must keep LF or bash refuses them on a Windows checkout
 *.sh text eol=lf
+
+# Read by bash (smoke.sh) line by line; a CR would end up inside the URL
+scripts/maintenance/*.txt text eol=lf

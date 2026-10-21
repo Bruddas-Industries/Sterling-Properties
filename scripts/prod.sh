@@ -11,6 +11,7 @@
 #   scripts/prod.sh insert-page <domain> <pattern-slug> <title> [slug=<s>] [front] [draft] [apply]
 #                                                    create a page from a registered pattern
 #                                                    (scripts/insert-page.php); dry run unless "apply"
+#   scripts/prod.sh pull <remote-path> <local-dir>   copy a file or folder down (paths relative to ~)
 #
 # Coordinates come from scripts/deploy.env when present (untracked), else the values documented in
 # docs/OPERATIONS.md. Override any of them with STERLING_SSH_HOST / STERLING_APP_PATH / STERLING_SSH_KEY.
@@ -63,7 +64,11 @@ case "$cmd" in
     push "$here/insert-page.php"
     remote "wp eval-file $TOOLS/insert-page.php $(quote "$@") --url=$domain"
     ;;
+  pull)
+    src="${1:?usage: prod.sh pull <remote-path> <local-dir>}"; dst="${2:?usage: prod.sh pull <remote-path> <local-dir>}"
+    scp -q -r "${ssh_opts[@]}" "$HOST:$src" "$dst"
+    ;;
   *)
-    sed -n '2,20p' "$0"; exit 1
+    sed -n '2,21p' "$0"; exit 1
     ;;
 esac
