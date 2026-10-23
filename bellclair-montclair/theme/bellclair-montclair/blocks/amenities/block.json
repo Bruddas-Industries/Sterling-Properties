@@ -18,7 +18,7 @@
 	"attributes": {
 		"maxItems": {
 			"type": "number",
-			"default": 8
+			"default": 12
 		},
 		"photoId": {
 			"type": "number",
