@@ -208,6 +208,14 @@ add_action( 'manage_bc_lead_posts_custom_column', static function ( string $col,
 	}
 }, 10, 2 );
 
+// Every lead is private, so the list's " — Private" label is noise.
+add_filter( 'display_post_states', static function ( array $states, WP_Post $post ): array {
+	if ( 'bc_lead' === $post->post_type ) {
+		unset( $states['private'] );
+	}
+	return $states;
+}, 10, 2 );
+
 // Leads are records, not drafts: no Quick Edit.
 add_filter( 'post_row_actions', static function ( array $actions, WP_Post $post ): array {
 	if ( 'bc_lead' === $post->post_type ) {
