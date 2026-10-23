@@ -143,7 +143,10 @@ Nothing is configured yet, so **no form on the site currently delivers anything*
   file swaps that for `sterling_manage_email`, which Administrators hold automatically and which is
   granted to one Editor without changing their role. It opens Settings → FluentSMTP only; general
   settings, plugins, themes and users stay closed. Capabilities are per site, and one site is
-  enough to configure the network (grant others to let them read those sites' logs):
+  enough to configure the network (grant others to let them read those sites' logs). Grant it in
+  wp-admin (Rivergate 1.18.3 / Bellclair 1.1.3+): on the **property's own dashboard** (not Network
+  Admin), Users → All Users → the user → **Email settings → "Can manage email settings"** → Update
+  User. Only Administrators see that box. Or by WP-CLI:
   `scripts/prod.sh wp user add-cap <login> sterling_manage_email --url=<domain>` (and
   `remove-cap` to undo). Sterling IT (Rob, `rsadsts`) is the intended holder.
 - **The theme sets no `From` header anywhere.** Without "Force From Email" turned on, WordPress

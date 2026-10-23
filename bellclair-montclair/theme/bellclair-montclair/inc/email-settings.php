@@ -16,7 +16,9 @@
  * settings, but Sterling's IT contact is an Editor and should not get the rest
  * of the site's settings. FluentSMTP's `fluent_mail/manage_capability` filter
  * swaps that check for our own capability, which every Administrator has and
- * which can be granted to one user without changing their role:
+ * which can be granted to one user without changing their role: tick "Email
+ * settings" on that user's profile (Users → All Users → Edit, on the property's
+ * own dashboard, not Network Admin), or
  *
  *     wp user add-cap <login> sterling_manage_email --url=<domain>
  *     wp user remove-cap <login> sterling_manage_email --url=<domain>
@@ -59,3 +61,59 @@ if ( is_multisite() ) {
 		return $value;
 	} );
 }
+
+
+// ---------------------------------------------------------------------------
+// The grant as a checkbox on Users → Edit, for Administrators only
+// ---------------------------------------------------------------------------
+
+/** May the current user grant or revoke email access for $user_id? */
+function bellclair_can_grant_email_access( int $user_id ): bool {
+	return current_user_can( 'manage_options' ) && current_user_can( 'edit_user', $user_id );
+}
+
+add_action( 'edit_user_profile', static function ( WP_User $user ): void {
+	if ( ! bellclair_can_grant_email_access( $user->ID ) ) {
+		return;
+	}
+	$is_admin = user_can( $user, 'manage_options' );
+	$granted  = $is_admin || ! empty( $user->caps[ BELLCLAIR_EMAIL_CAP ] );
+	?>
+	<h2><?php esc_html_e( 'Email settings', 'bellclair-montclair' ); ?></h2>
+	<table class="form-table" role="presentation">
+		<tr>
+			<th scope="row"><?php esc_html_e( 'FluentSMTP', 'bellclair-montclair' ); ?></th>
+			<td>
+				<input type="hidden" name="sterling_email_access_shown" value="1">
+				<label for="sterling-manage-email">
+					<input type="checkbox" id="sterling-manage-email" name="sterling_manage_email" value="1" <?php checked( $granted ); ?> <?php disabled( $is_admin ); ?>>
+					<?php esc_html_e( 'Can manage email settings (Settings → FluentSMTP)', 'bellclair-montclair' ); ?>
+				</label>
+				<p class="description">
+					<?php
+					echo $is_admin
+						? esc_html__( 'Administrators always have this.', 'bellclair-montclair' )
+						: esc_html__( 'Opens only the FluentSMTP screen; the role stays as it is. The email settings are shared by every Sterling site, so access on one site is enough to configure them all.', 'bellclair-montclair' );
+					?>
+				</p>
+			</td>
+		</tr>
+	</table>
+	<?php
+} );
+
+// Core has already checked this form's nonce (update-user_{id}) before this runs.
+add_action( 'edit_user_profile_update', static function ( int $user_id ): void {
+	if ( empty( $_POST['sterling_email_access_shown'] ) || ! bellclair_can_grant_email_access( $user_id ) ) {
+		return;
+	}
+	$user = get_userdata( $user_id );
+	if ( ! $user || user_can( $user, 'manage_options' ) ) {
+		return;
+	}
+	if ( ! empty( $_POST['sterling_manage_email'] ) ) {
+		$user->add_cap( BELLCLAIR_EMAIL_CAP );
+	} else {
+		$user->remove_cap( BELLCLAIR_EMAIL_CAP );
+	}
+} );
