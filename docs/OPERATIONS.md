@@ -150,6 +150,26 @@ Nothing is configured yet, so **no form on the site currently delivers anything*
 `admin_email` is currently a developer address on both blogs. Hand it to the client after launch,
 but check every contact block has an explicit recipient first.
 
+### Leads — the saved copy of every submission
+
+There is no form plugin. Both forms are theme code, and since Rivergate 1.18.0 / Bellclair 1.1.0
+each submission is **saved before it is emailed**, as a private post of the `<prefix>_lead` type
+(`inc/leads.php`). wp-admin → **Leads** lists them with the form, the contact details and the
+email result: *Emailed to …*, *FAILED to email …* (with the mailer's error on the lead), or
+*Caught as spam*. So a lead survives a failed, bounced or spam-filtered email. Only editors and
+admins can see Leads, and they cannot be created by hand.
+
+- **Spam checks** replace the nonce, which expired inside pages Varnish had cached for more than a
+  day: a hidden honeypot field (`.form-hp`) and a minimum of 3 seconds on the page (`main.js`
+  section 15; an empty value, meaning no JavaScript, is allowed). A caught submission is shown the
+  normal thank-you, is not emailed, and goes **straight to the Trash**, where it can be restored
+  until WordPress empties the Trash after 30 days.
+- **Retention**: real leads are kept until someone deletes them. They are personal data, so agree
+  a retention period with Sterling before the list gets long.
+- **Testing**: on Local, Mailpit catches the email and the lead appears under Leads. A submission
+  made less than 3 seconds after page load (e.g. a scripted POST with `<prefix>_elapsed=1`) is
+  treated as spam by design.
+
 ---
 
 ## Backups & updates

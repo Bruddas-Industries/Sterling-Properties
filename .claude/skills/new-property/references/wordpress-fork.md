@@ -41,7 +41,8 @@ Use exact-match replacements in Python, longest token first, so nothing half-ren
 Bellclair base, the order is:
 1. `bellclair-montclair` (slug, text domain, pattern slugs) before `BELLCLAIR_`, `Bellclair_`
    and `bellclair`
-2. `bc_amenity` / `bc_floor_plan` / `group_bc_` before a bare `bc_`
+2. `bc_amenity` / `bc_floor_plan` / `bc_lead` / `group_bc_` before a bare `bc_` (the bare one also
+   covers the forms' `bc_form` / `bc_website` / `bc_elapsed` fields in `inc/leads.php`)
 3. Display strings such as "Bellclair at Montclair" separately, by hand, since they are copy
 
 Watch two traps. `bellclaire@spgnj.com` (spelled with an e) contains "bellclair", so replace the

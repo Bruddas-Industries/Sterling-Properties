@@ -48,11 +48,8 @@ function bellclair_inquiry_popup_enabled(): bool {
  * is not an inquiry submission.
  */
 function bellclair_handle_inquiry_submission(): string {
-	if ( ! isset( $_POST['bc_inquiry_nonce'] ) ) {
+	if ( 'inquiry' !== ( $_POST['bc_form'] ?? '' ) ) {
 		return '';
-	}
-	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['bc_inquiry_nonce'] ) ), 'bc_inquiry_form' ) ) {
-		return 'error';
 	}
 
 	$name  = sanitize_text_field( wp_unslash( $_POST['inq_name'] ?? '' ) );
@@ -62,21 +59,14 @@ function bellclair_handle_inquiry_submission(): string {
 		return 'error';
 	}
 
-	$body = sprintf(
-		"Name: %s\nEmail: %s\nPhone: %s\nInterested In: %s\n\nSubmitted from: %s",
-		$name,
-		$email,
-		sanitize_text_field( wp_unslash( $_POST['inq_phone'] ?? '' ) ),
-		sanitize_text_field( wp_unslash( $_POST['inq_interest'] ?? '' ) ),
-		esc_url_raw( (string) wp_get_referer() )
-	);
-
-	$sent = wp_mail(
-		bellclair_inquiry_recipient(),
-		sprintf( '%s — Website Inquiry', get_bloginfo( 'name' ) ),
-		$body,
-		[ 'Reply-To: ' . $name . ' <' . $email . '>' ]
-	);
+	// Saved as a Lead, then emailed (inc/leads.php).
+	$sent = bellclair_submit_lead( 'inquiry', __( 'Website Inquiry', 'bellclair-montclair' ), bellclair_inquiry_recipient(), [
+		'Name'           => $name,
+		'Email'          => $email,
+		'Phone'          => sanitize_text_field( wp_unslash( $_POST['inq_phone'] ?? '' ) ),
+		'Interested In'  => sanitize_text_field( wp_unslash( $_POST['inq_interest'] ?? '' ) ),
+		'Submitted from' => esc_url_raw( (string) wp_get_referer() ),
+	] );
 
 	return $sent ? 'sent' : 'error';
 }
@@ -141,7 +131,8 @@ function bellclair_render_inquiry_popup(): void {
         <?php endif; ?>
 
         <form class="inq-popup__form" method="post" action="">
-          <?php wp_nonce_field( 'bc_inquiry_form', 'bc_inquiry_nonce' ); ?>
+          <input type="hidden" name="bc_form" value="inquiry">
+          <?php bellclair_lead_trap_fields( 'inquiry' ); ?>
           <div class="form-group">
             <label for="inq-name"><?php esc_html_e( 'Name', 'bellclair-montclair' ); ?></label>
             <input type="text" id="inq-name" name="inq_name" placeholder="Jane Smith" autocomplete="name" required>
