@@ -86,8 +86,11 @@ function rivergate_get_amenities( int $max = 8 ): array {
 				'name'     => get_the_title(),
 				'icon_key' => rivergate_field( 'amenity_icon_key', $aid, 'star' ),
 				'group'    => rivergate_field( 'amenity_group', $aid, 'property' ),
+				// 2048x2048, not 'large' (1024): the theme's own photos and the plan
+				// drawings are ~2000px, and this size serves them as-is while still
+				// capping huge uploads.
 				'image'    => ( $iid = (int) rivergate_field( 'amenity_image', $aid, 0 ) )
-					? (string) wp_get_attachment_image_url( $iid, 'large' ) : '',
+					? (string) wp_get_attachment_image_url( $iid, '2048x2048' ) : '',
 				'detail'   => rivergate_field( 'amenity_detail', $aid, '' ),
 			];
 		}
@@ -162,7 +165,7 @@ function rivergate_get_plans(): array {
 				'rent'  => rivergate_field( 'plan_rent', $pid, '' ),
 				'tag'   => rivergate_field( 'plan_tag', $pid, '' ),
 				'pdf'   => rivergate_field( 'plan_pdf', $pid, '' ),
-				'image' => $img_id ? (string) wp_get_attachment_image_url( $img_id, 'large' ) : '',
+				'image' => $img_id ? (string) wp_get_attachment_image_url( $img_id, '2048x2048' ) : '', // see amenities
 				'mp'    => rivergate_field( 'plan_matterport', $pid, '' ),
 			];
 		}
