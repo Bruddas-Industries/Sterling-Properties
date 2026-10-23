@@ -13,8 +13,8 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
-- Theme **1.18.3** (2026-10-23, PR open): an **Email settings** checkbox on Users → Edit lets an
-  Administrator grant `sterling_manage_email` in wp-admin. Same as Bellclair 1.1.3.
+- Theme **1.18.3** (2026-10-23, PR open): a network-wide **Email settings** switch on Network Admin
+  → Users → Edit gives a user FluentSMTP access on every site. Same as Bellclair 1.1.3.
 - Theme **1.18.2** (2026-10-23, deployed and purged): one FluentSMTP configuration for the whole network, and an
   Editor granted `sterling_manage_email` can configure it (OPERATIONS → Mail). Same as Bellclair 1.1.2.
 - Theme **1.18.1** (2026-10-23, deployed and purged) serves amenity and floor-plan images from wp-admin
@@ -149,8 +149,8 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - **Forms do not deliver on production yet.** FluentSMTP is still unconfigured network-wide (see
   "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
   SMTP is set up. Not test-submitted on production for that reason.
-- Theme **1.1.3** (2026-10-23, PR open): the Email settings checkbox on Users → Edit, as on
-  Rivergate 1.18.3.
+- Theme **1.1.3** (2026-10-23, PR open): the network-wide Email settings switch, as on Rivergate
+  1.18.3.
 - Theme **1.1.2** (2026-10-23, deployed and purged): network-wide FluentSMTP settings and the
   `sterling_manage_email` grant, as on Rivergate 1.18.2.
 - Theme **1.1.1** (2026-10-23, deployed and purged): amenity and floor-plan images from wp-admin
@@ -538,8 +538,8 @@ policy does not block app passwords.
 
 **SMTP owner (2026-10-23):** Rob at Sterling IT (`rsadsts`, an Editor on both sites) will configure
 FluentSMTP himself, so the app password never passes through us. Once 1.18.3 / 1.1.3 is live, John
-ticks "Can manage email settings" on Rob's profile in wp-admin (OPERATIONS → Mail), and it is
-recorded in the database-changes table. The
+ticks "Can manage email settings" on Rob in Network Admin → Users (OPERATIONS → Mail), which covers
+every site, and it is recorded in the database-changes table. The
 settings are network-wide, so he configures once, on either site, and every property sends with it.
 Grant both sites if he should also see both sites' email logs.
 

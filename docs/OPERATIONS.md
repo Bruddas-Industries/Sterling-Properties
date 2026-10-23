@@ -140,15 +140,15 @@ Nothing is configured yet, so **no form on the site currently delivers anything*
   `scripts/prod.sh wp site option get|delete fluentmail-settings`. Use one neutral sender
   (`website@spgnj.com`, `noreply@spgnj.com`) rather than a property-specific address.
 - **Who can configure it.** FluentSMTP normally needs `manage_options` (Administrators). The same
-  file swaps that for `sterling_manage_email`, which Administrators hold automatically and which is
-  granted to one Editor without changing their role. It opens Settings → FluentSMTP only; general
-  settings, plugins, themes and users stay closed. Capabilities are per site, and one site is
-  enough to configure the network (grant others to let them read those sites' logs). Grant it in
-  wp-admin (Rivergate 1.18.3 / Bellclair 1.1.3+): on the **property's own dashboard** (not Network
-  Admin), Users → All Users → the user → **Email settings → "Can manage email settings"** → Update
-  User. Only Administrators see that box. Or by WP-CLI:
-  `scripts/prod.sh wp user add-cap <login> sterling_manage_email --url=<domain>` (and
-  `remove-cap` to undo). Sterling IT (Rob, `rsadsts`) is the intended holder.
+  file swaps that for `sterling_manage_email`, which Administrators hold automatically. Anyone else
+  gets it from **one network-wide switch** (Rivergate 1.18.3 / Bellclair 1.1.3+): **Network Admin →
+  Users → the user → Email settings → "Can manage email settings" → Update User** (super admins
+  only). It is stored as user meta, which multisite shares, so it applies on every site the user
+  belongs to, including future ones, and never changes their role. It opens Settings → FluentSMTP
+  only; general settings, plugins, themes and users stay closed. The box exists because Network
+  Admin runs on the main site's theme, currently `rivergate-bordentown`; keep a property theme
+  there. WP-CLI: `scripts/prod.sh wp user meta update <login> sterling_manage_email 1` (`meta
+  delete` to undo). Sterling IT (Rob, `rsadsts`) is the intended holder.
 - **The theme sets no `From` header anywhere.** Without "Force From Email" turned on, WordPress
   sends as `wordpress@<site domain>` — an address that will not exist and will fail SPF/DKIM.
 - Sending through Google Workspace as an `@spgnj.com` mailbox means SPF and DKIM are already
