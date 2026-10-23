@@ -13,7 +13,7 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
-- Theme **1.18.3** (2026-10-23, PR open): a network-wide **Email settings** switch on Network Admin
+- Theme **1.18.3** (2026-10-23, deployed and purged): a network-wide **Email settings** switch on Network Admin
   → Users → Edit gives a user FluentSMTP access on every site. Same as Bellclair 1.1.3.
 - Theme **1.18.2** (2026-10-23, deployed and purged): one FluentSMTP configuration for the whole network, and an
   Editor granted `sterling_manage_email` can configure it (OPERATIONS → Mail). Same as Bellclair 1.1.2.
@@ -149,7 +149,7 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - **Forms do not deliver on production yet.** FluentSMTP is still unconfigured network-wide (see
   "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
   SMTP is set up. Not test-submitted on production for that reason.
-- Theme **1.1.3** (2026-10-23, PR open): the network-wide Email settings switch, as on Rivergate
+- Theme **1.1.3** (2026-10-23, deployed and purged): the network-wide Email settings switch, as on Rivergate
   1.18.3.
 - Theme **1.1.2** (2026-10-23, deployed and purged): network-wide FluentSMTP settings and the
   `sterling_manage_email` grant, as on Rivergate 1.18.2.
@@ -450,6 +450,7 @@ rebuilt from patterns, re-apply them.
 | site 3 (Bellclair) | 2026-10-15 — domain cutover: 56 staging URLs on the live pages (114 including revisions) rewritten to `https://bellclair.com` (`guid` left alone) | `~/premigration/domain-cutover/site3-bellclair-2026-10-15-1815.sql` |
 | 6–9 (Bellclair) | 2026-10-14 — repaired block-comment escapes that the setup script stripped (OPERATIONS trap 10: the Availability hero read "Pricing u0026 Online Applications"); office hours (6) and lease termination (9) swapped in | `~/premigration/bellclair-setup/site3-before-repair-2026-10-14-2243.sql` + per-page `post-<id>-*.html` |
 | 6 (Bellclair Home) | 2026-10-15 — "By appointment only" added above the hours, and the six community cards replaced. The first attempt dropped the last old card's closing tag, so the page stopped rendering after the hours (contact form and cards missing) for a few minutes. It was restored from the backup and re-applied with a structure check (`restore-and-swap-home.php`: same top-level blocks, balanced block comments, nothing unparsed) | `~/premigration/bellclair-setup/post-6-home-20261015-215218.html` |
+| network (user `rsadsts`, ID 5) | 2026-10-23 — Rob given FluentSMTP access: user meta `sterling_manage_email = 1`, set by John in Network Admin → Users. Applies on every site he belongs to; role unchanged (Editor). Undo: untick the box, or `wp user meta delete rsadsts sterling_manage_email` | none needed (one meta row) |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
 deploy workflow excludes that directory. See the ACF section of `OPERATIONS.md`.
@@ -536,12 +537,15 @@ because domains are still moving). Sterling IT needs to supply a licensed mailbo
 or group — with 2-Step Verification on and a 16-character app password, and confirm Workspace
 policy does not block app passwords.
 
-**SMTP owner (2026-10-23):** Rob at Sterling IT (`rsadsts`, an Editor on both sites) will configure
-FluentSMTP himself, so the app password never passes through us. Once 1.18.3 / 1.1.3 is live, John
-ticks "Can manage email settings" on Rob in Network Admin → Users (OPERATIONS → Mail), which covers
-every site, and it is recorded in the database-changes table. The
-settings are network-wide, so he configures once, on either site, and every property sends with it.
-Grant both sites if he should also see both sites' email logs.
+**SMTP owner (2026-10-23):** Rob at Sterling IT (`rsadsts`, an Editor on both sites) configures
+FluentSMTP himself, so the app password never passes through us. **Access granted 2026-10-23**:
+John ticked "Can manage email settings" on Rob in Network Admin → Users (OPERATIONS → Mail).
+Verified on production: Rob has `sterling_manage_email` on rivergatenj.com and bellclair.com,
+is still an Editor on both, and does not have `manage_options`. The settings are network-wide, so
+he configures once, on either site, and every property sends with it. **Next:** Rob saves the
+Google Workspace connection and sends FluentSMTP's test email; then a real form submission on each
+site should show "Emailed to …" under Leads. Until then `wp site option get fluentmail-settings`
+is empty.
 
 **Backups and updates are automated (branch `feature/maintenance-automation`, 2026-10-20)** —
 nightly verified backups to SharePoint, and a weekly update run with smoke test and automatic
