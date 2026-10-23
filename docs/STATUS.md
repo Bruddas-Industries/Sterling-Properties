@@ -320,10 +320,12 @@ merged.
 | Name | Riverbend at Florham Park ("Riverbend" one word, as in the logo) | Brand sheet, current site, AppFolio |
 | Address | 1901 Sterling Drive, Florham Park, NJ 07932 | Brief |
 | Phone / email | 973.665.0050 / `riverbend@spgnj.com` | Brief, floor-plan sheets |
-| Office hours | Tuesday – Saturday, 10 AM – 5 PM | Current site's Contact page |
+| Office hours | Tue & Wed 10 AM – 5 PM · Thu 10 AM – 6 PM · Fri 10 AM – 5 PM · Sat 9 AM – 5 PM · Sun & Mon closed (Nina wrote "OFF") | Nina, "Re: Riverbend Website - First Preview" (2026-10-22) |
 | Plans | Madison 1bd/1ba 725 sf (floor 1) · Livingston 1bd/1ba + study 800 sf (floor 1) · Chatham 2bd/2ba 1,050 sf (floor 2) · Florham 2bd/2ba 1,225 sf (floor 2). All in Buildings 1–18; every sheet shows a balcony, walk-in closet, washer/dryer and garage | "Updated Floorplans" sheets (SharePoint) |
 | 3D tours | Madison `qRBhDU6A7ZQ`, Livingston `yGQSWLhuVAq`, Chatham `bbuj3Fchx1H` (Matterport's own titles name each plan). Florham has none | AppFolio listings |
-| Pets | "Cats allowed, small dogs allowed" (AppFolio) and "pet-friendly in select buildings" (current site), combined on the preview | Both |
+| Pets | 2 pets max. Dog: $500 non-refundable deposit + $50/month. Cat: $250 non-refundable deposit + $25/month. The old "small dogs" (AppFolio) and "select buildings" (current site) limits were dropped by John's decision, because Nina's policy doesn't state them | Nina (2026-10-22) |
+| Shuttle | Weekday AM/PM route. Riverbend is Stop #3, in front of the Gate House; Stops #1–2 are Sun Valley Buildings 16 and 13 and are not on the site. Mornings leave Riverbend at 5:22, 5:42, 6:07, 6:17, 6:32, 6:47, 7:02, 7:21, 7:37, 7:54, 8:15 and 8:27 AM, each reaching Chatham station 6 minutes later. Evenings leave Chatham station every 15 minutes, 5:30–8:30 PM; the sheet gives no Riverbend arrival times | "Shutte Service Schedule.pdf", attached to Nina's follow-up email (2026-10-22) |
+| More Communities | Canterly Place, Lafayette Court, Willow Court | Nina (2026-10-22) |
 | Resident portal | AppFolio (`sterlingproperties.appfolio.com/connect`), for rent and service requests | Current site's Residents page |
 | Apply / availability | AppFolio city filter `filters[cities][]=Florham Park`, which returns exactly Riverbend's four listings (2026-10-20). Riverbend has no `property_list` value of its own, unlike Bellclair's `BELLCLAIRE, LLC` | AppFolio |
 | Amenities | clubhouse, fitness center, pool and patio, BBQ, private entrances, garages with remote openers, weekday morning-and-evening shuttle to Chatham station, landscaped grounds with snow removal, onsite and 24/7 emergency maintenance, individual storage | Current site's Amenities page, Sterling portfolio page |
@@ -401,13 +403,13 @@ using foot routing under 25 minutes on foot and car routing beyond that.
   old site says "hardwood and ceramic tile flooring with partial carpeting in select homes".
   Rivergate's flooring rule shows how much Sterling cares about this wording, so ask before
   saying anything.
-- **Hours.** The closed days (Sunday and Monday) are inferred from "Tuesday – Saturday", and
-  whether visits are by appointment is unknown.
-- **Shuttle.** "Every weekday" (old homepage) and "morning and evening" (old amenities page) are
-  combined into "weekday mornings and evenings". The schedule is not published. "Complimentary"
-  is from the old homepage.
-- **Pets.** The preview's "cats and small dogs, select buildings" merges two sources. Ask for the
-  actual policy: which buildings, weight limits and fees.
+- **Hours.** Confirmed by Nina (2026-10-22). Whether visits are by appointment is still unknown.
+- **Shuttle.** The schedule is confirmed (2026-10-22) and is on the homepage as a timetable.
+  "Complimentary" still comes only from the old homepage. The PDF's tables run to the bottom
+  edge of its single page; if a second page has later runs, add them.
+- **Pets.** The fees and the two-pet limit are confirmed (2026-10-22). Ask whether there are
+  size, weight or breed limits, or buildings without pets, since the old sources said "small
+  dogs" and "select buildings".
 - **EV charging** is from AppFolio (the clubhouse photo shows a charging space). Do not add a
   count or fees.
 - **Clubhouse.** "Renovated" comes from the SharePoint folder name ("Updated Renovated
@@ -418,15 +420,18 @@ using foot routing under 25 minutes on foot and car routing beyond that.
 - **Residents page.** The guideline blocks carry only sourced lines. Quiet hours, parking rules,
   packages and move-out terms are omitted until the client supplies them, unlike Bellclair, which
   carried Rivergate's text. Police and utility numbers were looked up (sources below).
-- **Sister communities.** These are Bellclair's six with Bellclair in Riverbend's place, and the
-  Bellclair card links to `bellclair.com`. Confirm the set with the client. The portfolio URLs
-  return 403 to `curl` (bot protection) but loaded in a browser on 2026-10-15.
+- **Sister communities.** These are Nina's three (2026-10-22). Canterly Place (Livingston) and
+  Lafayette Court (Morristown) link to their Sterling Portfolio pages. **Willow Court** is not
+  in the portfolio (all 30 entries checked 2026-10-22), on AppFolio, on SharePoint or in a web
+  search, so its card shows the name only, with no town and no link. Ask Nina for both. The
+  portfolio returns 403 to a bare `curl` but 200 with a browser user agent.
 - **Spelling.** The SharePoint folder and the AppFolio description spell it "River Bend"; the
   brand and the logo say "Riverbend".
 
 **Waiting on Nina:** the text for the new site (in progress, per the brief); the web licences
 for the three fonts; a Florham Matterport tour; any video (the SharePoint `Videos` folder is
-empty).
+empty); Willow Court's town and link; new photography, which Nina hopes to schedule before
+launch (2026-10-22).
 
 **Infrastructure:** add `riverbend-florhampark-preview.vercel.app` to the Maps key's allowed
 referrers (Google Cloud Console). Until then, the preview shows the OpenStreetMap fallback.

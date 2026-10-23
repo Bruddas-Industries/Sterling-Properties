@@ -88,9 +88,12 @@
 </article>
 
 
-<!-- SHUTTLE — Riverbend's weekday courtesy shuttle to Chatham station
-     (current site: "every weekday"; amenities page: "morning and evening").
-     The drive time is an OSRM routing figure, not an estimate. -->
+<!-- SHUTTLE — Riverbend's weekday courtesy shuttle to Chatham station.
+     Times are from Sterling's "Shuttle Schedule — Weekday AM/PM Route" sheet
+     (Nina, 2026-10-22). Riverbend is Stop #3, in front of the Gate House; the
+     shuttle's first two stops are at another community and are not listed.
+     The evening runs leave Chatham station; the sheet gives no Riverbend
+     arrival times for them. "Complimentary" is from the current site. -->
 <section class="shuttle-band wave-texture" id="shuttle" aria-label="Weekday shuttle to Chatham station">
   <div class="container">
     <div class="shuttle-band__inner">
@@ -98,26 +101,67 @@
         <span class="eyebrow">Commuting from Riverbend</span>
         <h2>A Weekday Shuttle to Chatham Station</h2>
         <div class="divider"></div>
-        <p>A complimentary courtesy shuttle runs between Riverbend and the Chatham NJ&nbsp;Transit station on weekday mornings and evenings.</p>
-        <span class="shuttle-band__kicker">Ask the leasing office for the current schedule</span>
+        <p>A complimentary courtesy shuttle runs between Riverbend and the Chatham NJ&nbsp;Transit station every weekday morning and evening. Morning pickups are in front of the Gate House.</p>
       </div>
       <div class="shuttle-band__stats" data-animate>
         <div class="shuttle-stat">
           <span class="shuttle-stat__num">Weekdays</span>
-          <span class="shuttle-stat__label">Morning and evening courtesy shuttle</span>
+          <span class="shuttle-stat__label">12 morning runs to the station and 13 evening runs back</span>
         </div>
         <div class="shuttle-stat">
-          <span class="shuttle-stat__num">4 min</span>
-          <span class="shuttle-stat__label">drive to Chatham station on NJ&nbsp;Transit's Morris &amp; Essex Line</span>
+          <span class="shuttle-stat__num">6 min</span>
+          <span class="shuttle-stat__label">ride from the Gate House to Chatham station on NJ&nbsp;Transit's Morris &amp; Essex Line</span>
         </div>
       </div>
     </div>
+
+    <div class="shuttle-schedule" data-animate>
+      <div class="shuttle-schedule__col">
+        <h3 class="shuttle-schedule__title">Mornings <span>to Chatham station</span></h3>
+        <p class="shuttle-schedule__note">Leaves the Riverbend Gate House</p>
+        <ul class="shuttle-times">
+          <li><span class="shuttle-times__time">5:22 AM</span><span class="shuttle-times__sub">arrives 5:28</span></li>
+          <li><span class="shuttle-times__time">5:42 AM</span><span class="shuttle-times__sub">arrives 5:48</span></li>
+          <li><span class="shuttle-times__time">6:07 AM</span><span class="shuttle-times__sub">arrives 6:13</span></li>
+          <li><span class="shuttle-times__time">6:17 AM</span><span class="shuttle-times__sub">arrives 6:23</span></li>
+          <li><span class="shuttle-times__time">6:32 AM</span><span class="shuttle-times__sub">arrives 6:38</span></li>
+          <li><span class="shuttle-times__time">6:47 AM</span><span class="shuttle-times__sub">arrives 6:53</span></li>
+          <li><span class="shuttle-times__time">7:02 AM</span><span class="shuttle-times__sub">arrives 7:08</span></li>
+          <li><span class="shuttle-times__time">7:21 AM</span><span class="shuttle-times__sub">arrives 7:27</span></li>
+          <li><span class="shuttle-times__time">7:37 AM</span><span class="shuttle-times__sub">arrives 7:43</span></li>
+          <li><span class="shuttle-times__time">7:54 AM</span><span class="shuttle-times__sub">arrives 8:00</span></li>
+          <li><span class="shuttle-times__time">8:15 AM</span><span class="shuttle-times__sub">arrives 8:21</span></li>
+          <li><span class="shuttle-times__time">8:27 AM</span><span class="shuttle-times__sub">arrives 8:33</span></li>
+        </ul>
+      </div>
+      <div class="shuttle-schedule__col">
+        <h3 class="shuttle-schedule__title">Evenings <span>from Chatham station</span></h3>
+        <p class="shuttle-schedule__note">Leaves Chatham station every 15 minutes</p>
+        <ul class="shuttle-times">
+          <li><span class="shuttle-times__time">5:30 PM</span></li>
+          <li><span class="shuttle-times__time">5:45 PM</span></li>
+          <li><span class="shuttle-times__time">6:00 PM</span></li>
+          <li><span class="shuttle-times__time">6:15 PM</span></li>
+          <li><span class="shuttle-times__time">6:30 PM</span></li>
+          <li><span class="shuttle-times__time">6:45 PM</span></li>
+          <li><span class="shuttle-times__time">7:00 PM</span></li>
+          <li><span class="shuttle-times__time">7:15 PM</span></li>
+          <li><span class="shuttle-times__time">7:30 PM</span></li>
+          <li><span class="shuttle-times__time">7:45 PM</span></li>
+          <li><span class="shuttle-times__time">8:00 PM</span></li>
+          <li><span class="shuttle-times__time">8:15 PM</span></li>
+          <li><span class="shuttle-times__time">8:30 PM</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="shuttle-schedule__foot">Weekday schedule as of October 2026, subject to change. The leasing office has the latest times.</p>
   </div>
 </section>
 
 
 <!-- AMENITIES — sources: current site's amenities page, the Sterling portfolio
-     page and the AppFolio listings (EV charging, pet policy). Photos are the
+     page and the AppFolio listings (EV charging). Pet policy and shuttle times
+     are Nina's (2026-10-22). Photos are the
      2026 shoot. Items without a photo keep the default pool shot. -->
 <section id="amenities" class="section--alt" aria-label="Community amenities">
   <div class="container">
@@ -186,7 +230,7 @@
           <span class="amenity__plus" aria-hidden="true"></span>
         </button>
         <div class="amenity__panel" role="region">
-          <p class="amenity__detail">A complimentary courtesy shuttle to the Chatham train station on weekday mornings and evenings.</p>
+          <p class="amenity__detail">A complimentary courtesy shuttle to the Chatham train station every weekday: morning runs from 5:22 to 8:27 AM, and evening runs back every 15 minutes from 5:30 to 8:30 PM.</p>
         </div>
       </div>
       <div class="amenity" data-animate data-amenity-photo="../theme/riverbend-florhampark/assets/images/clubhouse/clubhouse-exterior.jpg" data-amenity-name="EV Charging">
@@ -206,7 +250,7 @@
           <span class="amenity__plus" aria-hidden="true"></span>
         </button>
         <div class="amenity__panel" role="region">
-          <p class="amenity__detail">Cats and small dogs are welcome in select buildings. Ask the leasing office for details.</p>
+          <p class="amenity__detail">Cats and dogs are welcome, up to two pets per home. Dogs: $500 non-refundable deposit and $50 a month. Cats: $250 non-refundable deposit and $25 a month.</p>
         </div>
       </div>
       <div class="amenity" data-animate data-amenity-photo="" data-amenity-name="Onsite Maintenance">
@@ -427,8 +471,9 @@
 </section>
 
 
-<!-- MORE COMMUNITIES — Bellclair's six, with Bellclair in Riverbend's place.
-     Bellclair links to its own site; the rest to their Sterling Portfolio pages. -->
+<!-- MORE COMMUNITIES — the three Nina chose (2026-10-22). Willow Court is not
+     in Sterling's online portfolio, so its card has no town or link until she
+     supplies them (STATUS → Copy to confirm). -->
 <section aria-label="More Sterling communities">
   <div class="container">
     <div class="section-intro" data-animate>
@@ -436,30 +481,17 @@
       <h2>More Communities You May Like</h2>
     </div>
     <div class="communities-teaser">
-      <a class="community-teaser" data-animate href="https://bellclair.com/" target="_blank" rel="noopener noreferrer">
-        <p class="community-teaser__name">Bellclair</p>
-        <p class="community-teaser__loc">Montclair, NJ</p>
-      </a>
-      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/millpond/" target="_blank" rel="noopener noreferrer">
-        <p class="community-teaser__name">MillPond</p>
-        <p class="community-teaser__loc">Franklin Lakes, NJ</p>
-      </a>
       <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/canterly-place-livingston/" target="_blank" rel="noopener noreferrer">
         <p class="community-teaser__name">Canterly Place</p>
         <p class="community-teaser__loc">Livingston, NJ</p>
-      </a>
-      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/station-court-at-berkely-heights/" target="_blank" rel="noopener noreferrer">
-        <p class="community-teaser__name">Station Court</p>
-        <p class="community-teaser__loc">Berkeley Heights, NJ</p>
-      </a>
-      <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/columbia-court-at-springfield/" target="_blank" rel="noopener noreferrer">
-        <p class="community-teaser__name">Columbia Court</p>
-        <p class="community-teaser__loc">Springfield, NJ</p>
       </a>
       <a class="community-teaser" data-animate href="https://sterlingpropertiesnj.com/sterling-portfolio/lafayette-court/" target="_blank" rel="noopener noreferrer">
         <p class="community-teaser__name">Lafayette Court</p>
         <p class="community-teaser__loc">Morristown, NJ</p>
       </a>
+      <div class="community-teaser" data-animate>
+        <p class="community-teaser__name">Willow Court</p>
+      </div>
     </div>
   </div>
 </section>
@@ -477,8 +509,8 @@
 </section>
 
 
-<!-- CONTACT — hours are the current site's (Tuesday – Saturday, 10 AM to 5 PM);
-     the closed days and any appointment rule are to be confirmed (STATUS). -->
+<!-- CONTACT — office hours are Nina's (2026-10-22). Whether visits are by
+     appointment is unconfirmed (STATUS). -->
 <section id="contact">
   <div class="container">
     <div class="contact-grid">
@@ -500,7 +532,7 @@
         </div>
         <div>
           <p class="contact-label">Leasing Office Hours</p>
-          <p>Tuesday – Saturday: 10:00 AM – 5:00 PM<br>Sunday &amp; Monday: Closed</p>
+          <p>Tuesday &amp; Wednesday: 10:00 AM – 5:00 PM<br>Thursday: 10:00 AM – 6:00 PM<br>Friday: 10:00 AM – 5:00 PM<br>Saturday: 9:00 AM – 5:00 PM<br>Sunday &amp; Monday: Closed</p>
         </div>
       </div>
 

@@ -3332,8 +3332,75 @@ body.nav-is-open .nav-logo .logo--on-dark { display: block; }
   text-transform: uppercase;
   color: var(--color-accent-light);
 }
+/* Weekday timetable under the intro: mornings (Gate House to the station)
+   beside evenings (from the station), each a grid of time chips. The
+   ul/li/h3/p markup maps onto core List, Heading and Paragraph blocks. */
+.shuttle-schedule {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+.shuttle-schedule__col {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  background: rgba(35, 33, 33, 0.6);
+  min-width: 0;
+}
+.shuttle-schedule__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  margin: 0;
+}
+.shuttle-schedule__title span {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  color: var(--color-on-dark-muted);
+}
+.shuttle-schedule__note {
+  margin: var(--space-2) 0 var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-accent-light);
+}
+.shuttle-times {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr));
+  gap: var(--space-2);
+}
+.shuttle-times li {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid rgba(235, 111, 99, 0.35);
+  border-radius: var(--radius-base);
+  line-height: 1.3;
+}
+.shuttle-times__time {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-on-dark);
+  white-space: nowrap;
+}
+.shuttle-times__sub {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-on-dark-muted);
+  white-space: nowrap;
+}
+.shuttle-schedule__foot {
+  margin: var(--space-5) 0 0;
+  font-size: var(--text-xs);
+  color: var(--color-on-dark-muted);
+}
 @media (max-width: 900px) {
   .shuttle-band__inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+  .shuttle-schedule { grid-template-columns: minmax(0, 1fr); margin-top: var(--space-6); }
 }
 
 /* ---- 29g. Amenity photo panel cross-fades when an amenity is opened ------- */
