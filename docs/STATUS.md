@@ -15,7 +15,8 @@ Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 do
 
 - Theme **1.18.1** (2026-10-23, PR open) serves amenity and floor-plan images from wp-admin
   entries at full size (the live plan drawings are 2000px and were served at 1024), and raises the
-  amenities block's default limit from 8 to 12 so all ten show once they move into wp-admin.
+  amenities block's default limit from 8 to 12 so all ten show once they move into wp-admin. It
+  also lets an Editor granted `sterling_manage_email` configure FluentSMTP (OPERATIONS → Mail).
 - Theme **1.18.0** (2026-10-22, deployed and purged 2026-10-23) saves every form submission as a **Lead** in
   wp-admin before emailing it, and swaps the forms' nonce for a honeypot + 3-second check. See
   OPERATIONS → Mail → "Leads". Same change as Bellclair 1.1.0.
@@ -146,7 +147,8 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
   "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
   SMTP is set up. Not test-submitted on production for that reason.
 - Theme **1.1.1** (2026-10-23, PR open): amenity and floor-plan images from wp-admin entries at
-  full size, and an amenities limit of 12; groundwork for moving both lists into wp-admin.
+  full size, and an amenities limit of 12; groundwork for moving both lists into wp-admin. Also
+  the `sterling_manage_email` grant for FluentSMTP, as on Rivergate 1.18.1.
 - Theme **1.1.0** (2026-10-22, deployed and purged 2026-10-23): submissions are saved as **Leads** in wp-admin
   before they are emailed, so nothing is lost while SMTP is unconfigured; the nonce is replaced by
   a honeypot + 3-second check. See OPERATIONS → Mail → "Leads". Same change as Rivergate 1.18.0.
@@ -527,6 +529,11 @@ site delivers anything right now**. Route chosen: Google Workspace via app passw
 because domains are still moving). Sterling IT needs to supply a licensed mailbox — not an alias
 or group — with 2-Step Verification on and a 16-character app password, and confirm Workspace
 policy does not block app passwords.
+
+**SMTP owner (2026-10-23):** Rob at Sterling IT (`rsadsts`, an Editor on both sites) will configure
+FluentSMTP himself, so the app password never passes through us. Once 1.18.1 / 1.1.1 is live, grant
+him `sterling_manage_email` on each site (OPERATIONS → Mail) and record it in the database-changes
+table. FluentSMTP settings are per site, so he configures rivergatenj.com and bellclair.com separately.
 
 **Backups and updates are automated (branch `feature/maintenance-automation`, 2026-10-20)** —
 nightly verified backups to SharePoint, and a weekly update run with smoke test and automatic
