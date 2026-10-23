@@ -12,7 +12,7 @@
 		"multiple": false
 	},
 	"attributes": {
-		"maxItems":     { "type": "number", "default": 8 },
+		"maxItems":     { "type": "number", "default": 12 },
 		"photoId":      { "type": "number", "default": 0 },
 		"photoUrl":     { "type": "string", "default": "" },
 		"photoCaption": { "type": "string", "default": "The Rivergate Clubhouse" }

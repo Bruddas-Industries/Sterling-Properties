@@ -113,8 +113,10 @@ function bellclair_get_amenities( int $max = 8 ): array {
 				'name'     => get_the_title(),
 				'icon_key' => bellclair_field( 'amenity_icon_key', $aid, 'star' ),
 				'group'    => bellclair_field( 'amenity_group', $aid, 'property' ),
+				// 2048x2048, not 'large' (1024): the theme's own photos are 1800-1920px,
+				// and this size serves them as-is while still capping huge uploads.
 				'image'    => ( $iid = (int) bellclair_field( 'amenity_image', $aid, 0 ) )
-					? (string) wp_get_attachment_image_url( $iid, 'large' ) : '',
+					? (string) wp_get_attachment_image_url( $iid, '2048x2048' ) : '',
 				'detail'   => bellclair_field( 'amenity_detail', $aid, '' ),
 			];
 		}
@@ -191,7 +193,7 @@ function bellclair_get_plans(): array {
 				'tag'     => bellclair_field( 'plan_tag', $pid, '' ),
 				'laundry' => bellclair_field( 'plan_laundry', $pid, 'In-Unit' ),
 				'pdf'     => bellclair_field( 'plan_pdf', $pid, '' ),
-				'image'   => $img_id ? (string) wp_get_attachment_image_url( $img_id, 'large' ) : '',
+				'image'   => $img_id ? (string) wp_get_attachment_image_url( $img_id, '2048x2048' ) : '', // see amenities
 				'mp'      => bellclair_field( 'plan_matterport', $pid, '' ),
 			];
 		}
