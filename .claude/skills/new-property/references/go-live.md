@@ -60,8 +60,10 @@ internal review, but don't send that link to the client.
 ## 5. Launch decision
 
 The client approves going live, and the domain is registered with DNS access arranged. Mail
-needs SMTP before the forms deliver anything. Check STATUS → Mail; if it is still unconfigured,
-tell the user that launching means the forms will not work yet.
+needs SMTP before the forms deliver anything. FluentSMTP's settings are network-wide (OPERATIONS →
+Mail), so once they exist a new property sends with no setup, as long as its theme kept
+`inc/email-settings.php`. Check STATUS → Mail; if SMTP is still unconfigured, tell the user that
+launching means the forms will not work yet (submissions are still saved under Leads).
 
 ## 6. Domain cutover
 

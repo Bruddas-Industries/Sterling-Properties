@@ -4,7 +4,7 @@
  * Bellclair at Montclair, forked from rivergate-bordentown.
  */
 
-define( 'BELLCLAIR_VERSION', '1.1.1' );
+define( 'BELLCLAIR_VERSION', '1.1.2' );
 // Same referrer-restricted key as Rivergate (OPERATIONS trap 7): every domain
 // Bellclair is served from must be in its allowed referrers.
 define( 'BELLCLAIR_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' );
