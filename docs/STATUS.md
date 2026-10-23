@@ -13,7 +13,9 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
-- Theme **1.18.2** (2026-10-23, PR open): one FluentSMTP configuration for the whole network, and an
+- Theme **1.18.3** (2026-10-23, PR open): a network-wide **Email settings** switch on Network Admin
+  → Users → Edit gives a user FluentSMTP access on every site. Same as Bellclair 1.1.3.
+- Theme **1.18.2** (2026-10-23, deployed and purged): one FluentSMTP configuration for the whole network, and an
   Editor granted `sterling_manage_email` can configure it (OPERATIONS → Mail). Same as Bellclair 1.1.2.
 - Theme **1.18.1** (2026-10-23, deployed and purged) serves amenity and floor-plan images from wp-admin
   entries at full size (the live plan drawings are 2000px and were served at 1024), and raises the
@@ -147,7 +149,9 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - **Forms do not deliver on production yet.** FluentSMTP is still unconfigured network-wide (see
   "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
   SMTP is set up. Not test-submitted on production for that reason.
-- Theme **1.1.2** (2026-10-23, PR open): network-wide FluentSMTP settings and the
+- Theme **1.1.3** (2026-10-23, PR open): the network-wide Email settings switch, as on Rivergate
+  1.18.3.
+- Theme **1.1.2** (2026-10-23, deployed and purged): network-wide FluentSMTP settings and the
   `sterling_manage_email` grant, as on Rivergate 1.18.2.
 - Theme **1.1.1** (2026-10-23, deployed and purged): amenity and floor-plan images from wp-admin
   entries at full size, and an amenities limit of 12; groundwork for moving both lists into wp-admin.
@@ -533,8 +537,9 @@ or group — with 2-Step Verification on and a 16-character app password, and co
 policy does not block app passwords.
 
 **SMTP owner (2026-10-23):** Rob at Sterling IT (`rsadsts`, an Editor on both sites) will configure
-FluentSMTP himself, so the app password never passes through us. Once 1.18.2 / 1.1.2 is live, grant
-him `sterling_manage_email` (OPERATIONS → Mail) and record it in the database-changes table. The
+FluentSMTP himself, so the app password never passes through us. Once 1.18.3 / 1.1.3 is live, John
+ticks "Can manage email settings" on Rob in Network Admin → Users (OPERATIONS → Mail), which covers
+every site, and it is recorded in the database-changes table. The
 settings are network-wide, so he configures once, on either site, and every property sends with it.
 Grant both sites if he should also see both sites' email logs.
 
