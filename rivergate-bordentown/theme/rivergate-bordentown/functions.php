@@ -7,13 +7,15 @@
 
 // Brand fonts (Logam + Noyh Geometric Slim) load via @font-face in global.css —
 // the .otf files live in assets/fonts/. No external font request needed.
-define( 'RIVERGATE_VERSION', '1.18.1' );
+define( 'RIVERGATE_VERSION', '1.18.2' );
 define( 'RIVERGATE_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' ); // Add your Google Maps API key here
 
 // Block editor integration: dynamic blocks, block styles, patterns, body class.
 require_once get_template_directory() . '/inc/blocks.php';
 // Form submissions are saved as Leads before they are emailed; spam checks.
 require_once get_template_directory() . '/inc/leads.php';
+// Lets a non-Administrator (Sterling IT) configure FluentSMTP.
+require_once get_template_directory() . '/inc/email-settings.php';
 require_once get_template_directory() . '/inc/inquiry-popup.php';
 // Titles, descriptions, Open Graph, JSON-LD, sitemap exclusions, author lockdown.
 require_once get_template_directory() . '/inc/seo.php';

@@ -130,9 +130,22 @@ page days old while an admin sees it fresh. A change that "did not deploy" is us
 
 Nothing is configured yet, so **no form on the site currently delivers anything**.
 
-- FluentSMTP is installed and **network-activated** — expect one shared configuration across all
-  sites, not per-property. Use a neutral sender (`website@spgnj.com`, `noreply@spgnj.com`) rather
-  than a property-specific address.
+- FluentSMTP is installed and **network-activated**. On its own it keeps settings **per site** (the
+  `fluentmail-settings` option, checked in 2.3.1's code). Since Rivergate 1.18.2 / Bellclair 1.1.2,
+  `inc/email-settings.php` redirects that option to a **network option of the same name**, so
+  **saving FluentSMTP on any property configures every property**, including ones added later.
+  Email logs stay per site. Secrets are encrypted with `LOGGED_IN_KEY`, which all sites share.
+  Every property theme must carry `inc/email-settings.php` (forks inherit it from Bellclair); a site
+  on a theme without it would fall back to its own, empty settings. Inspect or reset with
+  `scripts/prod.sh wp site option get|delete fluentmail-settings`. Use one neutral sender
+  (`website@spgnj.com`, `noreply@spgnj.com`) rather than a property-specific address.
+- **Who can configure it.** FluentSMTP normally needs `manage_options` (Administrators). The same
+  file swaps that for `sterling_manage_email`, which Administrators hold automatically and which is
+  granted to one Editor without changing their role. It opens Settings → FluentSMTP only; general
+  settings, plugins, themes and users stay closed. Capabilities are per site, and one site is
+  enough to configure the network (grant others to let them read those sites' logs):
+  `scripts/prod.sh wp user add-cap <login> sterling_manage_email --url=<domain>` (and
+  `remove-cap` to undo). Sterling IT (Rob, `rsadsts`) is the intended holder.
 - **The theme sets no `From` header anywhere.** Without "Force From Email" turned on, WordPress
   sends as `wordpress@<site domain>` — an address that will not exist and will fail SPF/DKIM.
 - Sending through Google Workspace as an `@spgnj.com` mailbox means SPF and DKIM are already
