@@ -1,6 +1,7 @@
 <?php
 /**
- * rivergate/contact-form — tour-request form with wp_mail handling.
+ * rivergate/contact-form — tour-request form. Submissions are saved as a Lead,
+ * then emailed (inc/leads.php).
  *
  * @var array $attributes Block attributes.
  */
@@ -23,29 +24,22 @@ $recipient = ! empty( $attributes['recipientEmail'] ) && is_email( $attributes['
 $sent  = false;
 $error = false;
 
-if ( ! rivergate_in_editor()
-	&& isset( $_POST['rg_contact_nonce'] )
-	&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['rg_contact_nonce'] ) ), 'rg_contact_form' ) ) {
-
-	$subject = sprintf( '%s — Tour Request', get_bloginfo( 'name' ) );
-	$body    = sprintf(
-		"Name: %s %s\nEmail: %s\nPhone: %s\nInterested In: %s\nDesired Move-In: %s\nMessage: %s",
-		sanitize_text_field( wp_unslash( $_POST['first_name'] ?? '' ) ),
-		sanitize_text_field( wp_unslash( $_POST['last_name'] ?? '' ) ),
-		sanitize_email( wp_unslash( $_POST['email'] ?? '' ) ),
-		sanitize_text_field( wp_unslash( $_POST['phone'] ?? '' ) ),
-		sanitize_text_field( wp_unslash( $_POST['unit_type'] ?? '' ) ),
-		sanitize_text_field( wp_unslash( $_POST['move_date'] ?? '' ) ),
-		sanitize_textarea_field( wp_unslash( $_POST['message'] ?? '' ) )
-	);
-	$sent = wp_mail( $recipient, $subject, $body );
-	if ( ! $sent ) {
-		$error = true;
-	}
+if ( ! rivergate_in_editor() && 'tour' === ( $_POST['rg_form'] ?? '' ) ) {
+	$sent  = rivergate_submit_lead( 'tour', __( 'Tour Request', 'rivergate-bordentown' ), $recipient, [
+		'Name'            => trim( sanitize_text_field( wp_unslash( $_POST['first_name'] ?? '' ) ) . ' ' . sanitize_text_field( wp_unslash( $_POST['last_name'] ?? '' ) ) ),
+		'Email'           => sanitize_email( wp_unslash( $_POST['email'] ?? '' ) ),
+		'Phone'           => sanitize_text_field( wp_unslash( $_POST['phone'] ?? '' ) ),
+		'Interested In'   => sanitize_text_field( wp_unslash( $_POST['unit_type'] ?? '' ) ),
+		'Desired Move-In' => sanitize_text_field( wp_unslash( $_POST['move_date'] ?? '' ) ),
+		'Message'         => sanitize_textarea_field( wp_unslash( $_POST['message'] ?? '' ) ),
+		'Submitted from'  => esc_url_raw( (string) wp_get_referer() ),
+	] );
+	$error = ! $sent;
 }
 ?>
 <form class="contact-form" method="post" action="#contact" aria-label="Contact form">
-  <?php wp_nonce_field( 'rg_contact_form', 'rg_contact_nonce' ); ?>
+  <input type="hidden" name="rg_form" value="tour">
+  <?php rivergate_lead_trap_fields( 'tour' ); ?>
 
   <?php if ( $sent ) : ?>
     <div style="background:var(--color-bg-alt);border:1px solid var(--color-border);border-radius:var(--radius-base);padding:var(--space-5);color:var(--color-text);">

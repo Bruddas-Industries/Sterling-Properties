@@ -2486,6 +2486,16 @@ body.mp-open { overflow: hidden; }
 
 .form-group textarea { resize: vertical; min-height: 120px; }
 
+/* Honeypot (inc/leads.php): hidden from people and screen readers; bots fill it in */
+.form-hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 
 /* Quick contact strip */
 .quick-contact-strip {

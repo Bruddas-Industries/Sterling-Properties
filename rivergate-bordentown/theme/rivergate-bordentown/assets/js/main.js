@@ -854,4 +854,18 @@
     window.setTimeout(open, OPEN_DELAY);
   }());
 
+  /* ------------------------------------------------------------------
+     15. FORM TIMING
+         Records how long the visitor was on the page before submitting a
+         form. inc/leads.php treats anything under 3 seconds as a bot; an
+         empty value (no JavaScript) is let through.
+     ------------------------------------------------------------------ */
+  (function () {
+    var loaded = Date.now();
+    document.addEventListener('submit', function (e) {
+      var field = e.target.querySelector && e.target.querySelector('[data-form-elapsed]');
+      if (field) field.value = String(Math.floor((Date.now() - loaded) / 1000));
+    }, true);
+  }());
+
 }());

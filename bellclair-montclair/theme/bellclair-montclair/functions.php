@@ -4,7 +4,7 @@
  * Bellclair at Montclair, forked from rivergate-bordentown.
  */
 
-define( 'BELLCLAIR_VERSION', '1.0.5' );
+define( 'BELLCLAIR_VERSION', '1.1.0' );
 // Same referrer-restricted key as Rivergate (OPERATIONS trap 7): every domain
 // Bellclair is served from must be in its allowed referrers.
 define( 'BELLCLAIR_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' );
@@ -16,6 +16,8 @@ define( 'BELLCLAIR_FONTS_URL', 'https://fonts.googleapis.com/css2?family=Poiret+
 
 // Block editor integration: dynamic blocks, block styles, patterns, body class.
 require_once get_template_directory() . '/inc/blocks.php';
+// Form submissions are saved as Leads before they are emailed; spam checks.
+require_once get_template_directory() . '/inc/leads.php';
 require_once get_template_directory() . '/inc/inquiry-popup.php';
 // Titles, descriptions, Open Graph, JSON-LD, sitemap exclusions, author lockdown.
 require_once get_template_directory() . '/inc/seo.php';

@@ -13,6 +13,9 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
+- Theme **1.18.0** (2026-10-22, not yet deployed) saves every form submission as a **Lead** in
+  wp-admin before emailing it, and swaps the forms' nonce for a honeypot + 3-second check. See
+  OPERATIONS → Mail → "Leads". Same change as Bellclair 1.1.0.
 - Theme **1.17.3** (2026-10-12, live and purged 2026-10-14) keeps the open mobile menu clear
   of the logo bar. Varnish had been serving logged-out visitors a 42-hour-old page that still
   loaded the 1.17.2 CSS until it was purged.
@@ -139,6 +142,9 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - **Forms do not deliver on production yet.** FluentSMTP is still unconfigured network-wide (see
   "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
   SMTP is set up. Not test-submitted on production for that reason.
+- Theme **1.1.0** (2026-10-22, not yet deployed): submissions are saved as **Leads** in wp-admin
+  before they are emailed, so nothing is lost while SMTP is unconfigured; the nonce is replaced by
+  a honeypot + 3-second check. See OPERATIONS → Mail → "Leads". Same change as Rivergate 1.18.0.
 - **Backup** taken before any of this:
   `~/premigration/bellclair-setup/network-before-bellclair-2026-10-13-0203.sql`.
 
