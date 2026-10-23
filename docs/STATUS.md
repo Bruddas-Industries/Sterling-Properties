@@ -13,7 +13,10 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
-- Theme **1.18.0** (2026-10-22, not yet deployed) saves every form submission as a **Lead** in
+- Theme **1.18.1** (2026-10-23, PR open) serves amenity and floor-plan images from wp-admin
+  entries at full size (the live plan drawings are 2000px and were served at 1024), and raises the
+  amenities block's default limit from 8 to 12 so all ten show once they move into wp-admin.
+- Theme **1.18.0** (2026-10-22, deployed and purged 2026-10-23) saves every form submission as a **Lead** in
   wp-admin before emailing it, and swaps the forms' nonce for a honeypot + 3-second check. See
   OPERATIONS → Mail → "Leads". Same change as Bellclair 1.1.0.
 - Theme **1.17.3** (2026-10-12, live and purged 2026-10-14) keeps the open mobile menu clear
@@ -142,7 +145,9 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - **Forms do not deliver on production yet.** FluentSMTP is still unconfigured network-wide (see
   "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
   SMTP is set up. Not test-submitted on production for that reason.
-- Theme **1.1.0** (2026-10-22, not yet deployed): submissions are saved as **Leads** in wp-admin
+- Theme **1.1.1** (2026-10-23, PR open): amenity and floor-plan images from wp-admin entries at
+  full size, and an amenities limit of 12; groundwork for moving both lists into wp-admin.
+- Theme **1.1.0** (2026-10-22, deployed and purged 2026-10-23): submissions are saved as **Leads** in wp-admin
   before they are emailed, so nothing is lost while SMTP is unconfigured; the nonce is replaced by
   a honeypot + 3-second check. See OPERATIONS → Mail → "Leads". Same change as Rivergate 1.18.0.
 - **Backup** taken before any of this:
