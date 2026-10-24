@@ -61,8 +61,10 @@ internal review, but don't send that link to the client.
 
 The client approves going live, and the domain is registered with DNS access arranged. Mail
 needs SMTP before the forms deliver anything. FluentSMTP's settings are network-wide (OPERATIONS →
-Mail), so once they exist a new property sends with no setup, as long as its theme kept
-`inc/email-settings.php`. Check STATUS → Mail; if SMTP is still unconfigured, tell the user that
+Mail), but each property sends through **its own connection**, picked by From address. Ask Rob
+(Sterling IT) to add one for the new property's address, and set the theme's `<PREFIX>_MAIL_FROM`
+to that sender exactly, capitals included; until then its mail goes out under the default
+(Rivergate) connection's name. The theme must also keep `inc/email-settings.php`. Check STATUS → Mail; if SMTP is still unconfigured, tell the user that
 launching means the forms will not work yet (submissions are still saved under Leads).
 
 ## 6. Domain cutover

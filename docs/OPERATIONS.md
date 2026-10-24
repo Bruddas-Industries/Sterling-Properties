@@ -128,7 +128,9 @@ page days old while an admin sees it fresh. A change that "did not deploy" is us
 
 ## Mail
 
-Nothing is configured yet, so **no form on the site currently delivers anything**.
+Configured 2026-10-23 by Rob at Sterling IT: an SMTP relay (DuoCircle, `outbound.mailhop.org:465`,
+SSL), with **one FluentSMTP connection per property**. Since Rivergate 1.18.4 / Bellclair 1.1.4
+each site sends as its own address, so each uses its own connection.
 
 - FluentSMTP is installed and **network-activated**. On its own it keeps settings **per site** (the
   `fluentmail-settings` option, checked in 2.3.1's code). Since Rivergate 1.18.2 / Bellclair 1.1.2,
@@ -137,8 +139,7 @@ Nothing is configured yet, so **no form on the site currently delivers anything*
   Email logs stay per site. Secrets are encrypted with `LOGGED_IN_KEY`, which all sites share.
   Every property theme must carry `inc/email-settings.php` (forks inherit it from Bellclair); a site
   on a theme without it would fall back to its own, empty settings. Inspect or reset with
-  `scripts/prod.sh wp site option get|delete fluentmail-settings`. Use one neutral sender
-  (`website@spgnj.com`, `noreply@spgnj.com`) rather than a property-specific address.
+  `scripts/prod.sh wp site option get|delete fluentmail-settings`.
 - **Who can configure it.** FluentSMTP normally needs `manage_options` (Administrators). The same
   file swaps that for `sterling_manage_email`, which Administrators hold automatically. Anyone else
   gets it from **one network-wide switch** (Rivergate 1.18.3 / Bellclair 1.1.3+): **Network Admin →
@@ -149,12 +150,25 @@ Nothing is configured yet, so **no form on the site currently delivers anything*
   Admin runs on the main site's theme, currently `rivergate-bordentown`; keep a property theme
   there. WP-CLI: `scripts/prod.sh wp user meta update <login> sterling_manage_email 1` (`meta
   delete` to undo). Sterling IT (Rob, `rsadsts`) is the intended holder.
-- **The theme sets no `From` header anywhere.** Without "Force From Email" turned on, WordPress
-  sends as `wordpress@<site domain>` — an address that will not exist and will fail SPF/DKIM.
-- Sending through Google Workspace as an `@spgnj.com` mailbox means SPF and DKIM are already
-  satisfied by Sterling's existing records. A property domain needs **no mail DNS at all**.
-- Prefer an app password over OAuth while domains are still moving: OAuth binds its authorization
-  to a redirect URI containing the site domain, so a cutover breaks it.
+- **Which connection a message uses.** FluentSMTP has no per-form or per-site routing. It looks
+  the message's From address up among its connections' senders (**exact, case-sensitive** match)
+  and falls back to the default connection, forcing that connection's sender. WordPress's own
+  From is `wordpress@<domain>`, which matches nothing, so before 1.18.4 / 1.1.4 everything went out
+  through the default (Rivergate) connection. Each theme now sets `wp_mail_from` to its
+  `<PREFIX>_MAIL_FROM` constant (`functions.php`; the filter is in `inc/email-settings.php`):
+  `Rivergate@spgnj.com` and `Bellclaire@spgnj.com`, capitalised exactly as Rob saved them. If a
+  sender is ever re-saved with different capitalisation, change the constant to match, or that
+  site silently falls back to the default connection. **A new property needs its own connection
+  from Rob and its constant set to that sender.** Check which connection sent a message in
+  FluentSMTP → Email Logs (per site), or `wp db query` on `wp_<blog>_fsmpt_email_logs`.
+- **Deliverability.** `spgnj.com`'s SPF includes `outbound.mailhop.org`, Return-Path is on (so SPF
+  aligns), and its DMARC policy is `p=reject`: a message that fails alignment is dropped, not
+  junked. A property domain needs **no mail DNS**, because everything sends as `@spgnj.com`.
+- **Temporary BCC.** The network option `sterling_lead_bcc` (comma-separated addresses) is
+  blind-copied on every lead email from every property (`<prefix>_lead_bcc()` in
+  `inc/leads.php`). Meant for confirming delivery, not as a permanent route. Set or clear it with
+  `scripts/prod.sh wp site option update|delete sterling_lead_bcc …`; no deploy needed. STATUS →
+  "Changes made directly in the database" says whether it is set.
 
 ### Where submissions go
 

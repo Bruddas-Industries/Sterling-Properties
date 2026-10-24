@@ -13,6 +13,9 @@ conventions in [`CLAUDE.md`](../CLAUDE.md).
 Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 domain cutover
 (see "Domain cutover" below).
 
+- Theme **1.18.4** (2026-10-24): sends as `Rivergate@spgnj.com`, so FluentSMTP uses the Rivergate
+  connection, and lead emails can be BCC'd through the `sterling_lead_bcc` network option
+  (OPERATIONS → Mail). Same as Bellclair 1.1.4.
 - Theme **1.18.3** (2026-10-23, deployed and purged): a network-wide **Email settings** switch on Network Admin
   → Users → Edit gives a user FluentSMTP access on every site. Same as Bellclair 1.1.3.
 - Theme **1.18.2** (2026-10-23, deployed and purged): one FluentSMTP configuration for the whole network, and an
@@ -146,9 +149,11 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - QA on production (Playwright + Edge): no console errors or failed requests, all 56 assets 200,
   page heights identical to local, all four pages valid in the block editor. The Google map
   renders there (the key already allows the Cloudways host).
-- **Forms do not deliver on production yet.** FluentSMTP is still unconfigured network-wide (see
-  "Mail" below); both Bellclair forms are addressed to `bellclaire@spgnj.com` and will work once
-  SMTP is set up. Not test-submitted on production for that reason.
+- **Forms:** both are addressed to `bellclaire@spgnj.com`. SMTP is configured (see "Mail" below),
+  but no Bellclair form has been test-submitted on production yet.
+- Theme **1.1.4** (2026-10-24): sends as `Bellclaire@spgnj.com`, so FluentSMTP uses the Bellclair
+  connection; before this, Bellclair mail would have gone out as "Rivergate Website". Lead emails
+  can be BCC'd through `sterling_lead_bcc`, as on Rivergate 1.18.4.
 - Theme **1.1.3** (2026-10-23, deployed and purged): the network-wide Email settings switch, as on Rivergate
   1.18.3.
 - Theme **1.1.2** (2026-10-23, deployed and purged): network-wide FluentSMTP settings and the
@@ -188,7 +193,7 @@ production yet; that waits for John's go-ahead. Theme **1.0.0**, forked from Riv
 - **Search Console:** URL-prefix property `https://bellclair.com/`, HTML-tag method. The token is
   in `inc/seo.php` (theme 1.0.5, homepage only). Do not remove it, because Google re-checks.
   John verifies and submits the sitemap.
-- **Still to do:** SMTP. The forms do not deliver yet; see "Mail".
+- SMTP: configured 2026-10-23; see "Mail".
 - Backup before the rewrite: `~/premigration/domain-cutover/site3-bellclair-2026-10-15-1815.sql`.
 
 **Sources for content and assets (original 2026-09-30 build).** Before the SharePoint share was
@@ -533,24 +538,21 @@ oEmbed author fields, which all exposed the developer login.
 - **Copy bug on the live Availability page**: "Compare all eight layouts" — there are nine.
   It is page content (DB), so fix it in wp-admin, and in `patterns/page-availability.php`.
 
-Next is SMTP, with Nina. The order was **domain first, then SMTP**, because OAuth binds to a
-redirect URI containing the domain.
-
-**Mail.** FluentSMTP is installed and network-activated but not configured, so **no form on the
-site delivers anything right now**. Route chosen: Google Workspace via app password (not OAuth,
-because domains are still moving). Sterling IT needs to supply a licensed mailbox — not an alias
-or group — with 2-Step Verification on and a 16-character app password, and confirm Workspace
-policy does not block app passwords.
+**Mail — configured 2026-10-23 by Rob.** Not Google Workspace as planned: an SMTP relay
+(`outbound.mailhop.org`), with two connections, **Rivergate Website <Rivergate@spgnj.com>**
+(default) and **Bellclair Website <Bellclaire@spgnj.com>**. Rob could not tie the forms to a
+connection because FluentSMTP routes by From address and the themes set none, so everything used
+the default; Rivergate 1.18.4 / Bellclair 1.1.4 fix that (OPERATIONS → Mail). Rivergate's tour
+form delivered on 2026-10-23 (FluentSMTP log, blog 2). **Next:** with the user's approval, one
+tour-form and one pop-up submission per site, checking the From name, the BCC copy and "Emailed
+to …" under Leads; then delete `sterling_lead_bcc`.
 
 **SMTP owner (2026-10-23):** Rob at Sterling IT (`rsadsts`, an Editor on both sites) configures
 FluentSMTP himself, so the app password never passes through us. **Access granted 2026-10-23**:
 John ticked "Can manage email settings" on Rob in Network Admin → Users (OPERATIONS → Mail).
 Verified on production: Rob has `sterling_manage_email` on rivergatenj.com and bellclair.com,
 is still an Editor on both, and does not have `manage_options`. The settings are network-wide, so
-he configures once, on either site, and every property sends with it. **Next:** Rob saves the
-Google Workspace connection and sends FluentSMTP's test email; then a real form submission on each
-site should show "Emailed to …" under Leads. Until then `wp site option get fluentmail-settings`
-is empty.
+he configures once, on either site, and every property sends with it. Done 2026-10-23 (above).
 
 **Backups and updates are automated (branch `feature/maintenance-automation`, 2026-10-20)** —
 nightly verified backups to SharePoint, and a weekly update run with smoke test and automatic

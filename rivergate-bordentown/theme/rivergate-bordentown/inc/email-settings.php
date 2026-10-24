@@ -24,6 +24,13 @@
  *     wp user meta update <login> sterling_manage_email 1
  *     wp user meta delete <login> sterling_manage_email
  *
+ * WHICH CONNECTION. FluentSMTP holds one connection per property and picks one
+ * by the message's From address; anything unmatched goes out through the
+ * default connection, under that property's sender. WordPress's own From is
+ * wordpress@<domain>, which matches nothing, so every message from this site
+ * is sent as RIVERGATE_MAIL_FROM (functions.php). Each new property needs its own
+ * connection in FluentSMTP, and its theme's constant set to that sender.
+ *
  * The switch never changes the user's role. Network Admin runs on the main
  * site's theme, which is a property theme, so the checkbox appears there. The
  * names are deliberately unprefixed: they mean the same thing on every Sterling
@@ -37,6 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 const RIVERGATE_EMAIL_CAP = 'sterling_manage_email';
+
+add_filter( 'wp_mail_from', static fn(): string => RIVERGATE_MAIL_FROM );
 
 add_filter( 'fluent_mail/manage_capability', static fn(): string => RIVERGATE_EMAIL_CAP );
 

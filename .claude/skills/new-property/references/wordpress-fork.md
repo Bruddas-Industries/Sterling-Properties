@@ -76,6 +76,8 @@ must be deliberate. `php -l` every PHP file using Local's PHP
 - **Default recipients:** the inquiry pop-up (`<prefix>_inquiry_recipient`, in
   `inc/inquiry-popup.php`) and the contact form's fallback. A blank recipient falls back to
   `admin_email`, which is a developer address.
+- **Sending address:** `<PREFIX>_MAIL_FROM` in `functions.php`. FluentSMTP matches it exactly
+  against its connections' senders, so it must equal the new property's connection (go-live §5).
 
 ## 5. Build the patterns from the preview
 
