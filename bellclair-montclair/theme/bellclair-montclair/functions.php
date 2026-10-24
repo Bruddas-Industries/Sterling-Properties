@@ -4,10 +4,15 @@
  * Bellclair at Montclair, forked from rivergate-bordentown.
  */
 
-define( 'BELLCLAIR_VERSION', '1.1.3' );
+define( 'BELLCLAIR_VERSION', '1.1.4' );
 // Same referrer-restricted key as Rivergate (OPERATIONS trap 7): every domain
 // Bellclair is served from must be in its allowed referrers.
 define( 'BELLCLAIR_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' );
+// This property's sending address. FluentSMTP picks its connection by matching
+// the From address against each connection's sender, exactly and case-sensitively,
+// so this must match the sender saved in FluentSMTP character for character
+// (inc/email-settings.php; OPERATIONS → Mail).
+define( 'BELLCLAIR_MAIL_FROM', 'Bellclaire@spgnj.com' );
 // Brand faces are Micaroline + ITC Avant Garde Gothic Pro, which are commercial
 // and not yet licensed for web. Poiret One + Questrial stand in until the files
 // arrive (see assets/fonts/README.txt and the @font-face block at the end of

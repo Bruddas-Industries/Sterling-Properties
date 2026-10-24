@@ -95,6 +95,22 @@ function rivergate_lead_is_spam(): bool {
 // ---------------------------------------------------------------------------
 
 /**
+ * Addresses blind-copied on every lead email, from the network option
+ * `sterling_lead_bcc` (comma-separated). Meant for checking delivery, not as a
+ * permanent route: leads belong in the property's own inbox. Unprefixed so one
+ * setting covers every property. By WP-CLI:
+ *
+ *     wp site option update sterling_lead_bcc 'someone@example.com'
+ *     wp site option delete sterling_lead_bcc
+ *
+ * @return string[]
+ */
+function rivergate_lead_bcc(): array {
+	$list = array_map( 'trim', explode( ',', (string) get_site_option( 'sterling_lead_bcc', '' ) ) );
+	return array_values( array_filter( $list, 'is_email' ) );
+}
+
+/**
  * Save a submission as a Lead, then email it. Returns true when the visitor
  * should see the success message: the email was sent, or the submission was
  * caught as spam (a bot is never told it was caught).
@@ -139,6 +155,9 @@ function rivergate_submit_lead( string $form, string $label, string $to, array $
 	}
 
 	$headers = is_email( $email ) ? [ 'Reply-To: ' . ( '' !== $name ? $name . ' ' : '' ) . '<' . $email . '>' ] : [];
+	foreach ( rivergate_lead_bcc() as $bcc ) {
+		$headers[] = 'Bcc: ' . $bcc;
+	}
 	$error   = '';
 	$catch   = static function ( WP_Error $e ) use ( &$error ) {
 		$error = $e->get_error_message();
