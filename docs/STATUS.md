@@ -336,6 +336,7 @@ merged.
 | Amenities | clubhouse, fitness center, pool and patio, BBQ, private entrances, garages with remote openers, weekday morning-and-evening shuttle to Chatham station, landscaped grounds with snow removal, onsite and 24/7 emergency maintenance, individual storage | Current site's Amenities page, Sterling portfolio page |
 | More amenities | EV charging, quartz countertops, gas heat, central air, private garage with direct entry into the home | AppFolio listing amenities |
 | Domain | `riverbendatflorhampark.com`, in Sterling's GoDaddy account | Brief |
+| Utilities | **Residents pay water and sewer.** Never list them (or any utility) as included. The old portfolio listing's "Utilities included: Garbage, Water, Sewer" is wrong; the preview never carried it (checked 2026-11-05). Garbage is unconfirmed either way | Riverbend office via Nina, "Fw: Riverbend website" (2026-10-30) |
 
 **Brand.**
 - Source: `Riverbend_Brand_1-Pager.pdf` (New World Group). The sheet covers a family of
@@ -369,6 +370,23 @@ merged.
   download them ("The cloud operation is invalid"). Swap in the high-res versions if they are
   ever needed, for example by shortening the folder path.
 - **Other rooms:** the clubhouse restrooms are not used.
+- **October 2026 exterior shoot** (Nina, "New Riverbend Photos", 2026-10-30; SharePoint
+  `SPGProperties` › "Oct 2026 Property Exterior", High Resolution and MLS sets of 15 photos). Nina
+  sent it to replace **the drone photos and the photos with the old signage** (the blue
+  "riverbend at florham park" sign and banners). Applied 2026-11-05 from the MLS exports
+  (2700–2800px):
+  - **All four drone aerials are removed** (`images/aerials/` is gone), as is the aerial social
+    share image, now cut from photo 10. Don't bring aerials back without asking Nina.
+  - **Old-signage shots replaced in place:** `main-entrance` (photo 10, now also the homepage
+    hero), `entrance-sign` (16, gallery hero), `entry-drive` (7, availability hero),
+    `monument-sign` (1), `clubhouse/clubhouse-exterior` (25) and `garden-benches` (28).
+  - **New files:** `entrance-approach` (4), `entrance-corner` (13), `rental-office-sign` (19),
+    `community-drive` (22, the neighborhood photo) and `clubhouse/ev-charger` (31, the EV
+    Charging amenity photo).
+  - **Not used:** the four lamp-post banner close-ups (34–37). `residences-garages` (summer
+    2026) stays; its only sign is a small building-number plaque.
+  - The pool gallery lost its aerial, so its six photos now alternate wide and single to fill
+    the three-column grid.
 
 **Neighborhood times are measured, not estimated.** They were routed with OSRM on 2026-10-20,
 using foot routing under 25 minutes on foot and car routing beyond that.
@@ -435,8 +453,8 @@ using foot routing under 25 minutes on foot and car routing beyond that.
 
 **Waiting on Nina:** the text for the new site (in progress, per the brief); the web licences
 for the three fonts; a Florham Matterport tour; any video (the SharePoint `Videos` folder is
-empty); Willow Court's town and link; new photography, which Nina hopes to schedule before
-launch (2026-10-22).
+empty); Willow Court's town and link. The October 2026 exterior shoot has arrived (above);
+any further shoots (pool in season, interiors) would be new.
 
 **Infrastructure:** add `riverbend-florhampark-preview.vercel.app` to the Maps key's allowed
 referrers (Google Cloud Console). Until then, the preview shows the OpenStreetMap fallback.
