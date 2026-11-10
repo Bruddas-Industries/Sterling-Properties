@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "riverbend/shuttle-schedule",
+	"title": "Riverbend Shuttle Timetable",
+	"category": "riverbend",
+	"icon": "clock",
+	"description": "The weekday shuttle timetable: morning runs to Chatham station beside evening runs back. Times are edited in the sidebar, one per line.",
+	"keywords": [
+		"shuttle",
+		"schedule",
+		"timetable",
+		"train"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"morningTitle": {
+			"type": "string",
+			"default": "Mornings"
+		},
+		"morningSub": {
+			"type": "string",
+			"default": "to Chatham station"
+		},
+		"morningNote": {
+			"type": "string",
+			"default": "Leaves the Riverbend Gate House"
+		},
+		"morningTimes": {
+			"type": "string",
+			"default": "5:22 AM | arrives 5:28\n5:42 AM | arrives 5:48\n6:07 AM | arrives 6:13\n6:17 AM | arrives 6:23\n6:32 AM | arrives 6:38\n6:47 AM | arrives 6:53\n7:02 AM | arrives 7:08\n7:21 AM | arrives 7:27\n7:37 AM | arrives 7:43\n7:54 AM | arrives 8:00\n8:15 AM | arrives 8:21\n8:27 AM | arrives 8:33"
+		},
+		"eveningTitle": {
+			"type": "string",
+			"default": "Evenings"
+		},
+		"eveningSub": {
+			"type": "string",
+			"default": "from Chatham station"
+		},
+		"eveningNote": {
+			"type": "string",
+			"default": "Leaves Chatham station every 15 minutes"
+		},
+		"eveningTimes": {
+			"type": "string",
+			"default": "5:30 PM\n5:45 PM\n6:00 PM\n6:15 PM\n6:30 PM\n6:45 PM\n7:00 PM\n7:15 PM\n7:30 PM\n7:45 PM\n8:00 PM\n8:15 PM\n8:30 PM"
+		}
+	},
+	"render": "file:./render.php"
+}

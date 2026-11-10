@@ -208,6 +208,13 @@ available, everything came from:
 
 ### Open — Bellclair
 
+**Theme fix, not urgent:**
+- **The closing-CTA eyebrows ("Ready to Move In?" and the inner pages' CTAs) render in muted
+  ivory with a 40px gap**, not in the accent colour with 16px as on the approved preview
+  (checked on bellclair.com, 2026-11-09). In the patterns the eyebrow is a `<p>`, so
+  `.cta-section p` outranks `.eyebrow`. Riverbend's fix is two rules in its section 29m
+  (`.cta-section p.eyebrow`); port them and bump the version. Rivergate has not been checked.
+
 **Waiting on Nina:**
 - **Duplex drawing — built 2026-10-14 (theme 1.0.3).** Nina's screenshots of the plan from a
   listing site were rebuilt onto the blank Duplex template: Unit A, with the garage level,
@@ -305,13 +312,54 @@ describes it as "small, community-oriented". Sterling is still writing text for 
 the brief carries only the contact facts. Branding and visuals are complete. The meeting is the
 following Monday.
 
-**Stage: static preview built (2026-10-20, branch `feature/riverbend-florhampark-preview`)** in
-`riverbend-florhampark/preview/`. It is a one-page homepage plus Residents, Availability and
-Gallery, as at Bellclair, and nothing in the brief called for more pages. There is no WordPress
-fork yet. `theme/riverbend-florhampark/` holds only `assets/` (`global.css`, images and the fonts
-README), which the preview loads. The Vercel project is `riverbend-florhampark-preview`; the
-client link goes live at `https://riverbend-florhampark-preview.vercel.app/` once the branch is
-merged.
+**Stage: WordPress fork running locally (2026-11-09, branch
+`feature/riverbend-florhampark-wordpress`).** The static preview in
+`riverbend-florhampark/preview/` was approved (confirmed by John, 2026-11-09). It is a one-page
+homepage plus Residents, Availability and Gallery, as at Bellclair. The Vercel project is
+`riverbend-florhampark-preview` (`https://riverbend-florhampark-preview.vercel.app/`). The theme
+`riverbend-florhampark` 1.0.0 is forked from Bellclair 1.1.4 and runs in Local as blog 4. Stage 5
+(deploy workflow, production site, staging, domain) is next. From here on, a copy change goes in
+the preview **and** the patterns, and once pages exist on production, in the page content too.
+
+**WordPress fork (theme 1.0.0, 2026-11-09).**
+- **Base.** `bellclair-montclair` 1.1.4, copied in around the preview's `assets/` and re-prefixed
+  per the naming below. Rivergate had no fixes since 1.17.2 that Bellclair lacks.
+- **Dropped from the base:** the film-frame block, the film pattern and band, the film modal
+  (footer and `main.js`), the videos, and Bellclair's eight plans (Duplex included).
+- **Added:**
+  - the shuttle band (`patterns/parts/shuttle.php`) in place of the film band. Its intro and
+    stat cards are core blocks; the timetable is a new dynamic block,
+    `riverbend/shuttle-schedule`, whose times are edited in the sidebar, one per line
+    (`5:22 AM | arrives 5:28`).
+  - a photo hero (main entrance), with an optional background video if Nina supplies one.
+  - a "Take a 3D Tour" button in the amenities photo panel (Chatham by default, editable).
+  - the preview's line icons for every amenity, plus a new `grounds` icon key (ACF choice too).
+  - map directions that default to driving, and walk only for places measured as a walk.
+- **Data is in the fallbacks**, as at Bellclair: the ten amenities and four plans in
+  `blocks/_shared.php`, the 23 neighborhood places in the explorer's `render.php`. The CPTs stay
+  empty (OPERATIONS trap 8).
+- **CSS beyond the preview's `global.css`:**
+  - Bellclair's `.form-hp` honeypot rule (section 22). The preview's stylesheet was copied before
+    the lead-capture change, so without it the "Leave this field empty" trap showed on the form.
+  - 29d's wave divider now also matches `.wp-block-separator.divider`. Section 28's flat 2px bar
+    outranked it, so every divider on the WordPress pages was a plain bar, not the wave.
+  - 29m bridges: shuttle-band groups and stat paragraphs, the residences split's top margin (lost
+    to core's first-child reset), the contact column's last margin, and the CTA eyebrow's colour
+    and spacing (`.cta-section p` outranked `.eyebrow`; see the Bellclair item under Open).
+- **Identity:** titles and descriptions, the JSON-LD (address, the clubhouse pin, phone, three
+  opening-hours blocks, pets, amenities) and the share image (main entrance). Bellclair's
+  `google-site-verification` token is removed; Riverbend gets its own at go-live. Mail is
+  `riverbend@spgnj.com` both ways: the contact block's `recipientEmail` in the pattern, the
+  inquiry pop-up default and `RIVERBEND_MAIL_FROM`.
+- **Local QA (2026-11-09),** `scripts/site-qa.py` at 390/900/1440: the homepage, Availability and
+  Gallery are identical in height to the preview; Residents is within 10px (0.2%). No console
+  errors or failed requests. All four pages open in the editor with no invalid blocks (353
+  blocks). The tour form and the inquiry pop-up each saved a Lead and reached Mailpit from and
+  to `riverbend@spgnj.com`.
+- **Local site:** blog 4, `http://sterling-network.local/riverbend-florhampark/`. Pages: Home 3
+  (front page), Availability 4, Gallery 5, Residents 6. The theme junction points at the git
+  worktree `D:\Bruddas Industries\sp-riverbend-wp` until this branch merges; repoint it at the
+  main checkout afterwards, like the other two.
 
 **Naming (decided with John, 2026-10-20).**
 - Slug: `riverbend-florhampark`.
@@ -459,6 +507,13 @@ any further shoots (pool in season, interiors) would be new.
 **Infrastructure:** add `riverbend-florhampark-preview.vercel.app` to the Maps key's allowed
 referrers (Google Cloud Console). Until then, the preview shows the OpenStreetMap fallback.
 
+**Next — stage 5 (new-property skill, `references/go-live.md`):** `deploy-riverbend.yml` with
+`RIVERBEND_THEME_PATH` / `RIVERBEND_SITE_URL`; the production site on the Cloudways network; the
+two ACF field groups written in place on the server (the deploy skips `acf-json/`); the four
+pages inserted on staging; a FluentSMTP connection whose sender is exactly
+`riverbend@spgnj.com`; then the cutover to `riverbendatflorhampark.com` (Sterling's GoDaddy),
+its Search Console token, and the domain in the Maps key's referrers.
+
 ---
 
 ## Changes made directly in the database
@@ -479,7 +534,7 @@ rebuilt from patterns, re-apply them.
 | 6–9 (Bellclair) | 2026-10-14 — repaired block-comment escapes that the setup script stripped (OPERATIONS trap 10: the Availability hero read "Pricing u0026 Online Applications"); office hours (6) and lease termination (9) swapped in | `~/premigration/bellclair-setup/site3-before-repair-2026-10-14-2243.sql` + per-page `post-<id>-*.html` |
 | 6 (Bellclair Home) | 2026-10-15 — "By appointment only" added above the hours, and the six community cards replaced. The first attempt dropped the last old card's closing tag, so the page stopped rendering after the hours (contact form and cards missing) for a few minutes. It was restored from the backup and re-applied with a structure check (`restore-and-swap-home.php`: same top-level blocks, balanced block comments, nothing unparsed) | `~/premigration/bellclair-setup/post-6-home-20261015-215218.html` |
 | network (user `rsadsts`, ID 5) | 2026-10-23 — Rob given FluentSMTP access: user meta `sterling_manage_email = 1`, set by John in Network Admin → Users. Applies on every site he belongs to; role unchanged (Editor). Undo: untick the box, or `wp user meta delete rsadsts sterling_manage_email` | none needed (one meta row) |
-| network (site option) | 2026-10-24 — `sterling_lead_bcc = jjosephsen@bruddasindustries.com`: lead emails on every property BCC John while delivery is confirmed (read by Rivergate 1.18.4+ / Bellclair 1.1.4+). **Temporary.** Undo: `scripts/prod.sh wp site option delete sterling_lead_bcc --url=rivergatenj.com` | none needed (one option row) |
+| network (site option) | 2026-10-24 — `sterling_lead_bcc = jjosephsen@bruddasindustries.com`: lead emails on every property BCC John while delivery is confirmed (read by Rivergate 1.18.4+ / Bellclair 1.1.4+ / Riverbend 1.0.0+). **Temporary.** Undo: `scripts/prod.sh wp site option delete sterling_lead_bcc --url=rivergatenj.com` | none needed (one option row) |
 
 Also applied by hand on the server: `acf-json/group_rg_amenity.json` (4 fields), because the
 deploy workflow excludes that directory. See the ACF section of `OPERATIONS.md`.

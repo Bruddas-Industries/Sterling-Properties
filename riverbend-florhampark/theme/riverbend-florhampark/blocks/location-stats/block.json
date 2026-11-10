@@ -1,0 +1,46 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "riverbend/location-stats",
+	"title": "Riverbend Location Stats",
+	"category": "riverbend",
+	"icon": "location",
+	"description": "Three commute stat cards with an animated highlight. Times are OSRM drive times from Riverbend (2026-10-20).",
+	"keywords": [
+		"location",
+		"neighborhood",
+		"stats",
+		"transit"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"stat1Num": {
+			"type": "string",
+			"default": "4 min"
+		},
+		"stat1Label": {
+			"type": "string",
+			"default": "drive to Chatham's NJ Transit station"
+		},
+		"stat2Num": {
+			"type": "string",
+			"default": "7 min"
+		},
+		"stat2Label": {
+			"type": "string",
+			"default": "drive to Route 24"
+		},
+		"stat3Num": {
+			"type": "string",
+			"default": "24 min"
+		},
+		"stat3Label": {
+			"type": "string",
+			"default": "drive to Newark Liberty International Airport"
+		}
+	},
+	"render": "file:./render.php"
+}

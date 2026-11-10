@@ -44,8 +44,8 @@ Sterling Properties/
 │   ├── theme/bellclair-montclair/   ← Fork this for every new property (theme + preview)
 │   └── preview/                     ← Client preview — the model for new previews
 │
-├── riverbend-florhampark/            ← Property #3 — static preview in client review
-│   ├── theme/riverbend-florhampark/ ← Assets only so far (global.css, images); WordPress fork pending
+├── riverbend-florhampark/            ← Property #3 — preview approved; WordPress fork local, going live next
+│   ├── theme/riverbend-florhampark/ ← WordPress theme, forked from Bellclair 1.1.4 (2026-11-09)
 │   └── preview/                     ← Client preview (forked from Bellclair's)
 │
 ├── sterling-properties/              ← Legacy base theme (no longer active)

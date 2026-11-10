@@ -2495,6 +2495,16 @@ body.mp-open { overflow: hidden; }
 
 .form-group textarea { resize: vertical; min-height: 120px; }
 
+/* Honeypot (inc/leads.php): hidden from people and screen readers; bots fill it in */
+.form-hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 
 /* Quick contact strip */
 .quick-contact-strip {
@@ -3259,9 +3269,12 @@ body.nav-is-open .nav-logo .logo--on-dark { display: block; }
 /* ---- 29d. Wave divider ----------------------------------------------------
    The brand's wave line (two periods of the supporting pattern's curve)
    replaces the plain gradient rule. Works on <div> and on the patterns'
-   <hr class="wp-block-separator divider">. */
-.divider {
+   <hr class="wp-block-separator divider">. The second selector outranks the
+   flat gradient bar that section 28 gives the separator. */
+.divider,
+.wp-block-separator.divider {
   width: 56px;
+  max-width: 56px;
   height: 10px;
   border: 0;
   border-radius: 0;
@@ -3558,8 +3571,12 @@ html, body { overflow-x: clip; }
 /* With the block gap cancelled (section 2), the contact column needs its own
    spacing: the preview separated its label/value pairs with wrapper divs. */
 .contact-info > p:not(.contact-label) + .contact-label { margin-top: var(--space-6); }
-/* An eyebrow is a <p> in the patterns, so `.feature__body p` outranks .eyebrow. */
-.feature__body p.eyebrow { margin-bottom: var(--space-4); }
+/* An eyebrow is a <p> in the patterns, so `.feature__body p` and `.cta-section p`
+   outrank .eyebrow: restore its spacing, and its colour on the CTA band (coral,
+   via the dark-band --color-primary remap in section 4). */
+.feature__body p.eyebrow,
+.cta-section p.eyebrow { margin-bottom: var(--space-4); }
+.cta-section p.eyebrow { color: var(--color-primary); }
 
 /* Closing CTAs: buttons side by side and wrapping, as in the preview (the
    section 28 bridge stacks them for Rivergate). */
@@ -3568,6 +3585,25 @@ html, body { overflow-x: clip; }
   flex-wrap: wrap;
   justify-content: center;
 }
+
+/* Shuttle band (29f) as block groups: the intro and the stat cards are grid
+   items, and the stat number and label are <p>s where the preview had <span>s. */
+.shuttle-band__inner > .wp-block-group,
+.shuttle-band__stats > .wp-block-group {
+  margin-inline: 0;
+  max-width: none;
+}
+.shuttle-stat > p { margin: 0; max-width: none; }
+.shuttle-stat > p.shuttle-stat__label { margin-top: var(--space-3); line-height: inherit; }
+.shuttle-band p.shuttle-schedule__foot { max-width: none; }
+
+/* The residences split keeps its preview top margin (16 above). As the
+   container's first child it otherwise loses it to core's
+   `:root :where(.is-layout-flow) > :first-child` reset, which outranks a class. */
+.container > .residences-split.wp-block-group { margin-top: var(--space-8); }
+/* The hours paragraph closes the contact column; core's last-child reset would
+   drop the bottom margin it has in the preview. */
+.contact-info.wp-block-group > p:last-child { margin-bottom: var(--space-4); }
 
 
 /* ==========================================================================

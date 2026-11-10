@@ -1,0 +1,79 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "1280px",
+			"wideSize": "1440px"
+		},
+		"color": {
+			"custom": false,
+			"customDuotone": false,
+			"customGradient": false,
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"link": true,
+			"palette": [
+				{ "slug": "primary",      "color": "#A63F35", "name": "Coral (Text-Safe Primary)" },
+				{ "slug": "primary-dark", "color": "#87322A", "name": "Coral (Dark)" },
+				{ "slug": "ink",          "color": "#232121", "name": "Charcoal" },
+				{ "slug": "coral",        "color": "#EB6F63", "name": "Coral (Buttons, Rules)" },
+				{ "slug": "light-coral",  "color": "#F6B1A9", "name": "Light Coral" },
+				{ "slug": "sage",         "color": "#A8C1AA", "name": "Sage" },
+				{ "slug": "sky",          "color": "#A0BEE2", "name": "Sky" },
+				{ "slug": "pale-sage",    "color": "#E1E8DC", "name": "Pale Sage (Alt Band)" },
+				{ "slug": "background",   "color": "#F5F1E9", "name": "Cream (Page)" },
+				{ "slug": "surface",      "color": "#FFFDF9", "name": "Surface" },
+				{ "slug": "text-muted",   "color": "#5D5752", "name": "Muted Text" },
+				{ "slug": "border",       "color": "#DCD4C6", "name": "Border" }
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"lineHeight": true,
+			"dropCap": false,
+			"fontFamilies": [
+				{
+					"slug": "heading",
+					"name": "Heading (Condor / Jost)",
+					"fontFamily": "'Condor', 'Jost', 'Century Gothic', 'Avenir Next', sans-serif"
+				},
+				{
+					"slug": "accent",
+					"name": "Accent (Acme Gothic / Syncopate)",
+					"fontFamily": "'Acme Gothic Extrawide', 'Acme Gothic', 'Syncopate', 'Arial Black', sans-serif"
+				},
+				{
+					"slug": "body",
+					"name": "Body (Area / Manrope)",
+					"fontFamily": "'Area Normal', 'Area', 'Manrope', 'Avenir Next', system-ui, sans-serif"
+				}
+			],
+			"fontSizes": [
+				{ "slug": "small",   "name": "Small",         "size": "clamp(0.875rem, 1.8vw, 1rem)" },
+				{ "slug": "medium",  "name": "Base",          "size": "clamp(1rem, 2vw, 1.125rem)" },
+				{ "slug": "large",   "name": "Large",         "size": "clamp(1.125rem, 2.2vw, 1.375rem)" },
+				{ "slug": "x-large", "name": "Heading",       "size": "clamp(1.75rem, 3.5vw, 2.5rem)" },
+				{ "slug": "xx-large","name": "Display",       "size": "clamp(2.5rem, 5vw, 3.75rem)" }
+			]
+		},
+		"spacing": {
+			"customSpacingSize": true,
+			"units": [ "px", "rem", "em", "vw", "%" ],
+			"spacingSizes": [
+				{ "slug": "30", "name": "Small",   "size": "1rem" },
+				{ "slug": "40", "name": "Medium",  "size": "1.5rem" },
+				{ "slug": "50", "name": "Large",   "size": "2rem" },
+				{ "slug": "60", "name": "X-Large", "size": "3.5rem" },
+				{ "slug": "70", "name": "Section",  "size": "clamp(3rem, 6vw, 5.5rem)" }
+			]
+		},
+		"blocks": {
+			"core/button": {
+				"border": { "radius": true }
+			}
+		}
+	}
+}
