@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "riverbend/hero",
+	"title": "Riverbend Hero",
+	"category": "riverbend",
+	"icon": "cover-image",
+	"description": "Full-screen photo hero with eyebrow, headline, subheadline and two buttons. An optional background video plays over the photo once one is chosen.",
+	"keywords": [
+		"hero",
+		"photo",
+		"banner"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false,
+		"align": [
+			"full"
+		]
+	},
+	"attributes": {
+		"eyebrow": {
+			"type": "string",
+			"default": "1901 Sterling Drive · Florham Park, New Jersey"
+		},
+		"headline": {
+			"type": "string",
+			"default": "Garden-Style Living, Surrounded by Green"
+		},
+		"subheadline": {
+			"type": "string",
+			"default": "One- and two-bedroom apartments with private entrances, balconies and garages, set beside scenic wetlands in Morris County."
+		},
+		"imageId": {
+			"type": "number",
+			"default": 0
+		},
+		"imageUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"imageAlt": {
+			"type": "string",
+			"default": "The tree-lined main entrance to Riverbend at Florham Park, with its monument signs and autumn plantings"
+		},
+		"videoUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"primaryLabel": {
+			"type": "string",
+			"default": "Schedule a Tour"
+		},
+		"primaryUrl": {
+			"type": "string",
+			"default": "#contact"
+		},
+		"secondaryLabel": {
+			"type": "string",
+			"default": "View Floor Plans"
+		},
+		"secondaryUrl": {
+			"type": "string",
+			"default": "#floor-plans"
+		}
+	},
+	"render": "file:./render.php"
+}

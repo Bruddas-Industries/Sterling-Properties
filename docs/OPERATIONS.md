@@ -357,6 +357,7 @@ Local by Flywheel, multisite, at `sterling-network.local`.
 |---|---|---|
 | 2 | `/rivergate-bordentown/` | `rivergate-bordentown` (network-enabled) |
 | 3 | `/bellclair-montclair/` | `bellclair-montclair` (enabled for blog 3 only) |
+| 4 | `/riverbend-florhampark/` | `riverbend-florhampark` (enabled for blog 4 only) |
 
 Each theme folder under `app/public/wp-content/themes/` is a **directory junction** into this
 repo (`New-Item -ItemType Junction`), so edits show up on refresh with no copy step. The local

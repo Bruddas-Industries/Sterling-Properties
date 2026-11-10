@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "riverbend/amenities",
+	"title": "Riverbend Amenities Accordion",
+	"category": "riverbend",
+	"icon": "star-filled",
+	"description": "Expandable amenity cards (from the Amenities post type) beside a feature photo.",
+	"keywords": [
+		"amenities",
+		"accordion",
+		"features"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"maxItems": {
+			"type": "number",
+			"default": 12
+		},
+		"photoId": {
+			"type": "number",
+			"default": 0
+		},
+		"photoUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"photoCaption": {
+			"type": "string",
+			"default": "Pool & Sun Patio"
+		},
+		"tourUrl": {
+			"type": "string",
+			"default": "https://my.matterport.com/show/?m=bbuj3Fchx1H"
+		},
+		"tourName": {
+			"type": "string",
+			"default": "Chatham"
+		}
+	},
+	"render": "file:./render.php"
+}
