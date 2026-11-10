@@ -33,6 +33,7 @@ copy it from the panel if it ever changes.
 | 1 | `/` | Network root |
 | 2 | `rivergatenj.com` `/` (was `/rivergate-bordentown/`) | Rivergate Bordentown |
 | 3 | `bellclair.com` `/` (was staging host `/bellclair-montclair/`) | Bellclair at Montclair |
+| 4 | staging host `/riverbend-florhampark/` (until its domain cutover) | Riverbend at Florham Park |
 
 Subdirectory multisite (`SUBDOMAIN_INSTALL` is `false`). `DOMAIN_CURRENT_SITE` is defined in
 `wp-config.php`, which is what makes core domain mapping work without `sunrise.php` — see the
@@ -45,7 +46,7 @@ domain cutover runbook before moving a site onto its own domain.
 
 ## Deploying
 
-`.github/workflows/deploy-rivergate.yml` and `deploy-bellclair.yml` deploy automatically, each
+`.github/workflows/deploy-rivergate.yml`, `deploy-bellclair.yml` and `deploy-riverbend.yml` deploy automatically, each
 watching only its own theme folder. There is no manual step and
 **theme files must never be edited on the server** — the next deploy overwrites them.
 
@@ -465,6 +466,14 @@ and classes like `section--alt` became `sectionu002du002dalt`, which the editor 
 written back into the HTML on the first save. Always
 `wp_insert_post( wp_slash( [ ... ] ) )`, then re-read the post and compare. The editor and
 `wp post update <id> <file>` handle this themselves.
+
+**11. Set path secrets from PowerShell, not Git Bash.** Git Bash (MSYS) rewrites any argument
+that starts with `/` into a Windows path, so `gh secret set X_THEME_PATH --body /home/master/...`
+stores `C:/Program Files/Git/home/master/...`. The deploy's path guard still passes (the value
+ends in `/themes/<slug>`), and rsync then fails with `mkdir "/home/master/***" failed`, because
+the server resolves the mangled path relative to the home directory. That happened to
+Riverbend's first deploy (2026-11-10); nothing was written. Use PowerShell, or prefix the command
+with `MSYS_NO_PATHCONV=1`.
 
 ---
 

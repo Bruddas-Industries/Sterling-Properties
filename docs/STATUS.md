@@ -312,14 +312,42 @@ describes it as "small, community-oriented". Sterling is still writing text for 
 the brief carries only the contact facts. Branding and visuals are complete. The meeting is the
 following Monday.
 
-**Stage: WordPress fork running locally (2026-11-09, branch
-`feature/riverbend-florhampark-wordpress`).** The static preview in
+**Stage: live on the staging host (2026-11-10), no domain yet.** Production blog 4:
+`https://wordpress-1661870-6622382.cloudwaysapps.com/riverbend-florhampark/`. The fork (PR #56) and its deploy workflow (PR #57)
+are merged. The static preview in
 `riverbend-florhampark/preview/` was approved (confirmed by John, 2026-11-09). It is a one-page
 homepage plus Residents, Availability and Gallery, as at Bellclair. The Vercel project is
 `riverbend-florhampark-preview` (`https://riverbend-florhampark-preview.vercel.app/`). The theme
-`riverbend-florhampark` 1.0.0 is forked from Bellclair 1.1.4 and runs in Local as blog 4. Stage 5
-(deploy workflow, production site, staging, domain) is next. From here on, a copy change goes in
-the preview **and** the patterns, and once pages exist on production, in the page content too.
+`riverbend-florhampark` 1.0.0 is forked from Bellclair 1.1.4 and runs in Local as blog 4 too.
+What remains is the launch decision and the domain cutover. From here on a copy change goes in
+the preview, the patterns **and** the production page content (patterns are copy-on-insert), and
+production changes go through **edit-site-prod**.
+
+**Live on the staging host (2026-11-10).**
+- Search engines are discouraged (`blog_public` 0; pages carry `noindex, nofollow`). The staging
+  host's certificate does not cover it, so browsers warn — fine for internal review, not a link
+  to send the client.
+- Theme 1.0.0 deployed by `deploy-riverbend.yml` and enabled for blog 4 only. Secrets
+  `RIVERBEND_THEME_PATH` and `RIVERBEND_SITE_URL` (the staging URL for now). The first run failed
+  in rsync because the path secret had been set from Git Bash, which rewrote it to a Windows path
+  (OPERATIONS trap 11); re-set from PowerShell. The next run failed only the smoke test (no pages
+  yet), and the run after the pages went in was green.
+- `acf-json/` written in place from `main` (master:www-data, 775/664, as on Bellclair); ACF
+  registers both groups (4 amenity fields, 13 floor-plan fields).
+- Pages 4–7 (Home, Availability, Gallery, Residents) inserted from their patterns with
+  `scripts/prod.sh insert-page`; Home is the front page. Varnish purged.
+- QA on production (Playwright + Edge, certificate ignored): page heights identical to local on
+  all four pages at 390/900/1440, no console errors, failed requests or sideways scroll, and no
+  references to the local host. The Google map renders (the key already allows the Cloudways
+  host).
+- **Not done yet:** a check that every page opens in the editor with no invalid blocks (the
+  content is the same as local, where all four passed). "Hello world!" and "Sample Page" are
+  still there; trash them at cutover.
+- **Forms:** both are addressed to `riverbend@spgnj.com` and send as it, but there is no
+  FluentSMTP connection for that address yet, so until Rob adds one (sender exactly
+  `riverbend@spgnj.com`, lowercase, as `RIVERBEND_MAIL_FROM`) mail would go out through the
+  default Rivergate connection. Submissions are saved under Leads either way. Not test-submitted
+  on production.
 
 **WordPress fork (theme 1.0.0, 2026-11-09).**
 - **Base.** `bellclair-montclair` 1.1.4, copied in around the preview's `assets/` and re-prefixed
@@ -507,12 +535,11 @@ any further shoots (pool in season, interiors) would be new.
 **Infrastructure:** add `riverbend-florhampark-preview.vercel.app` to the Maps key's allowed
 referrers (Google Cloud Console). Until then, the preview shows the OpenStreetMap fallback.
 
-**Next — stage 5 (new-property skill, `references/go-live.md`):** `deploy-riverbend.yml` with
-`RIVERBEND_THEME_PATH` / `RIVERBEND_SITE_URL`; the production site on the Cloudways network; the
-two ACF field groups written in place on the server (the deploy skips `acf-json/`); the four
-pages inserted on staging; a FluentSMTP connection whose sender is exactly
-`riverbend@spgnj.com`; then the cutover to `riverbendatflorhampark.com` (Sterling's GoDaddy),
-its Search Console token, and the domain in the Maps key's referrers.
+**Next — launch (new-property skill, `references/go-live.md` §5–7):** the client's go-ahead;
+Rob's FluentSMTP connection for `riverbend@spgnj.com`; then the cutover to
+`riverbendatflorhampark.com` (Sterling's GoDaddy): DNS, Network Admin domain, the Let's Encrypt
+reissue listing **every** property domain, the URL rewrite, `RIVERBEND_SITE_URL`, the Maps key
+referrer, `blog_public` 1, a Search Console token, and `scripts/maintenance/sites.txt`.
 
 ---
 
@@ -533,6 +560,7 @@ rebuilt from patterns, re-apply them.
 | site 3 (Bellclair) | 2026-10-15 — domain cutover: 56 staging URLs on the live pages (114 including revisions) rewritten to `https://bellclair.com` (`guid` left alone) | `~/premigration/domain-cutover/site3-bellclair-2026-10-15-1815.sql` |
 | 6–9 (Bellclair) | 2026-10-14 — repaired block-comment escapes that the setup script stripped (OPERATIONS trap 10: the Availability hero read "Pricing u0026 Online Applications"); office hours (6) and lease termination (9) swapped in | `~/premigration/bellclair-setup/site3-before-repair-2026-10-14-2243.sql` + per-page `post-<id>-*.html` |
 | 6 (Bellclair Home) | 2026-10-15 — "By appointment only" added above the hours, and the six community cards replaced. The first attempt dropped the last old card's closing tag, so the page stopped rendering after the hours (contact form and cards missing) for a few minutes. It was restored from the backup and re-applied with a structure check (`restore-and-swap-home.php`: same top-level blocks, balanced block comments, nothing unparsed) | `~/premigration/bellclair-setup/post-6-home-20261015-215218.html` |
+| site 4 (Riverbend) | 2026-11-10 — site created on the staging host (`/riverbend-florhampark/`, `blog_public` 0); theme enabled for blog 4 only; pages 4–7 inserted from patterns | `~/premigration/riverbend-setup/network-before-riverbend-2026-11-10-0254.sql` |
 | network (user `rsadsts`, ID 5) | 2026-10-23 — Rob given FluentSMTP access: user meta `sterling_manage_email = 1`, set by John in Network Admin → Users. Applies on every site he belongs to; role unchanged (Editor). Undo: untick the box, or `wp user meta delete rsadsts sterling_manage_email` | none needed (one meta row) |
 | network (site option) | 2026-10-24 — `sterling_lead_bcc = jjosephsen@bruddasindustries.com`: lead emails on every property BCC John while delivery is confirmed (read by Rivergate 1.18.4+ / Bellclair 1.1.4+ / Riverbend 1.0.0+). **Temporary.** Undo: `scripts/prod.sh wp site option delete sterling_lead_bcc --url=rivergatenj.com` | none needed (one option row) |
 

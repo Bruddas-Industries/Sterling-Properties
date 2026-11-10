@@ -21,7 +21,7 @@ Sterling Properties/
 │   └── vercel.json                  ← Vercel project root is this folder
 │
 └── riverbend-florhampark/
-    ├── theme/riverbend-florhampark/ ← Property #3 — WordPress theme (forked from Bellclair), local only so far
+    ├── theme/riverbend-florhampark/ ← Property #3 — WordPress theme (forked from Bellclair), on staging
     ├── preview/                     ← Static client preview (Vercel)
     └── vercel.json                  ← Vercel project root is this folder
 ```
@@ -33,7 +33,7 @@ Sterling Properties/
 | Sterling Properties | `sterling-properties` | Legacy, inactive |
 | Rivergate Bordentown | `rivergate-bordentown` | Live — rivergatenj.com |
 | Bellclair at Montclair | `bellclair-montclair` | Live — bellclair.com |
-| Riverbend at Florham Park | `riverbend-florhampark` | Preview approved; WordPress theme running locally, production next |
+| Riverbend at Florham Park | `riverbend-florhampark` | On the Cloudways staging host (blog 4); domain cutover pending |
 
 ## Quick Links
 
