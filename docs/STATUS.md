@@ -332,6 +332,12 @@ production changes go through **edit-site-prod**.
   in rsync because the path secret had been set from Git Bash, which rewrote it to a Windows path
   (OPERATIONS trap 11); re-set from PowerShell. The next run failed only the smoke test (no pages
   yet), and the run after the pages went in was green.
+- Theme **1.0.1** (2026-11-13): the old site's URLs 301 to their new homes (`/amenities/`,
+  `/floor-plans/`, `/photo-gallery/`, `/portfolio/*`, `/view-availability/`, the four
+  `/request-availability-the-<plan>/` pages, `/location/`, `/contact/`, `/thank-you/`, `/about/`,
+  `/residents-4-blocks/`). Path-matched and only on a 404, so a real page always wins; the old
+  theme's demo pages (samples, features, our-work, blog) are left to 404. Map in
+  `functions.php` §10.
 - `acf-json/` written in place from `main` (master:www-data, 775/664, as on Bellclair); ACF
   registers both groups (4 amenity fields, 13 floor-plan fields).
 - Pages 4–7 (Home, Availability, Gallery, Residents) inserted from their patterns with
@@ -534,6 +540,16 @@ any further shoots (pool in season, interiors) would be new.
 
 **Infrastructure:** add `riverbend-florhampark-preview.vercel.app` to the Maps key's allowed
 referrers (Google Cloud Console). Until then, the preview shows the OpenStreetMap fallback.
+
+**The domain today (checked 2026-11-13).** `riverbendatflorhampark.com` serves the old 2016
+WordPress site through **Sucuri's proxy** (`@` and `www` → `192.124.249.30`), probably set up by
+the old site's vendor. DNS is at GoDaddy (`ns05/ns06.domaincontrol.com`), so the cutover is two
+records there (`@` A → `142.93.71.107`, `www` CNAME → `@`), which also takes Sucuri out of the
+path; cancel that subscription afterwards. **Leave `mail.`, MX and the SPF TXT alone**: they
+point at separate GoDaddy mail hosting (`68.178.221.10`).
+
+**Waiting on before launch (2026-11-13):** Nina's copy changes (in progress), including the 55+
+question; Rob's FluentSMTP connection for `riverbend@spgnj.com` (John emailed him).
 
 **Next — launch (new-property skill, `references/go-live.md` §5–7):** the client's go-ahead;
 Rob's FluentSMTP connection for `riverbend@spgnj.com`; then the cutover to
