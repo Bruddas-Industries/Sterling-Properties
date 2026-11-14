@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-10-20.** Update this file when something here changes — it is the first
+**Last updated: 2026-11-13.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -47,8 +47,9 @@ Property #1 of 10. **Live at `https://rivergatenj.com`** since the 2026-10-01 do
 - The homepage, amenities, floor plans, gallery, neighborhood and contact sections are all built
   as native block patterns + dynamic blocks
 
-Bellclair (below) is property #2. Riverbend (below that) is property #3, at the preview stage.
-The other seven have not been started. Everything in
+Bellclair (below) is property #2. Riverbend (below that) is property #3, on the staging host.
+The Arden (below that) is property #4, with a coming-soon splash page in client review. The other
+six have not been started. Everything in
 `OPERATIONS.md` and the conventions in `CLAUDE.md` is written to be inherited by those forks.
 
 ---
@@ -556,6 +557,98 @@ Rob's FluentSMTP connection for `riverbend@spgnj.com`; then the cutover to
 `riverbendatflorhampark.com` (Sterling's GoDaddy): DNS, Network Admin domain, the Let's Encrypt
 reissue listing **every** property domain, the URL rewrite, `RIVERBEND_SITE_URL`, the Maps key
 referrer, `blog_public` 1, a Search Console token, and `scripts/maintenance/sites.txt`.
+
+---
+
+## Where The Arden stands
+
+Property #4 of 10: **The Arden at Sterling Pointe**, Franklin Township (Somerset County), NJ. The
+working name was "Sterling Pointe". Brief: Nina Chichelo's emails "The Arden (Sterling Pointe) -
+Next Website" (2026-11-11, to John and Chris) and her reply the same day: **a splash page first,
+then the official website closer to the end of December.** She describes a splash page as "one
+page of a website with general information and more of a COMING SOON vibe. 'Inquire here for
+more information' etc.", and points to Blue Hill's (`bluehillnj.com`) as the example.
+
+**Stage: coming-soon splash built (2026-11-13, branch `feature/arden-splash`)** in
+`arden-franklin/preview/index.html`. It is a single page; there are no Residents, Availability or
+Gallery pages yet. `theme/arden-franklin/` holds only `assets/` (`global.css`, logos, site icons,
+the share image, the terrain texture and the fonts README). The Vercel project is
+`arden-franklin-preview`, to be added by John in the dashboard; the client link will be
+`https://arden-franklin-preview.vercel.app/` once the branch is merged.
+
+**Naming (decided with John, 2026-11-13).**
+- Slug: `arden-franklin`.
+- For the fork: `arden_` / `ARDEN_`, CPTs `ar_amenity` / `ar_floor_plan`, ACF groups `group_ar_*`,
+  blocks `arden/*`, buttons `is-style-arden-*` (already renamed in `global.css`), and
+  `deploy-arden.yml` with `ARDEN_THEME_PATH` / `ARDEN_SITE_URL`.
+
+**Facts and their sources.**
+| Fact | Value | Source |
+|---|---|---|
+| Name | The Arden ("the arden" in the logo); "Arden at Sterling Pointe" on the guide's identity page and business-card mock-up | Brief; branding proposal |
+| Town | Franklin Township, NJ (Somerset County) | Branding proposal cover ("Sterling Pointe, Franklin Township") |
+| Domain | `TheArdenNJ.com` — registration and DNS control not yet confirmed | Branding proposal, page 2 |
+| Brand story | "Arden evokes a sense of natural beauty and timeless sophistication… from the wooded trails of Six Mile Run to the gardens and open green spaces of Colonial Park"; vibe board: "Calm, Comfortable, & Contemporary" | Branding proposal, pages 2–3 |
+| Palette | Espresso `#4B3D32`, Walnut `#675A49`, Sage Mountain `#999381`, Intrigue `#818981`, Stone `#CCC9C0`, plus white and black | Branding proposal, page 4 |
+| Typefaces | Ansam (headlines, tagline), Mont (headlines, sub-heads, body), Josefin Sans (sub-heads, body). The font packet also shows Craw Modern, with no stated use | Branding proposal, pages 4–5 |
+| Logos | PNGs only (3840×2160 canvases): "THE ARDEN" and "ARDEN" full logos and the "ar" mark, each in beige, black, dark brown, green and white | SharePoint `07_Assets/The Arden/Branding & Logos/LOGOS/PNG` |
+
+**Brand and build.**
+- `global.css` is Riverbend's, re-skinned by the same kind of scripted exact-match transform
+  (Riverbend's charcoal/coral/cream → espresso/Intrigue/stone-white). It keeps the light field
+  with dark bands; the splash hero is registered in both dark-band lists in section 4.
+- **Contrast.** Intrigue and Sage Mountain fail as small text on the light field (3.2:1 and
+  2.7:1), so eyebrows and links use `--color-primary #596159`, a deepened Intrigue (5.7:1).
+  Muted text is Walnut (6.0:1). The brand tones are rules, icons and large fills only.
+- **Buttons** read new `--btn-*` tokens: espresso with a stone-white label on the field, stone
+  with an espresso label on dark bands (the tokens flip in the section 4 dark-band rule).
+- **Fonts.** Josefin Sans is a Google Font, so the labels are already on-brand. Ansam and Mont
+  are commercial: Cormorant and Montserrat stand in, with the `@font-face` block commented out
+  (see `assets/fonts/README.txt`).
+- **No photography or renderings exist yet**, so the hero is the logo in Stone on Espresso (the
+  guide's colour logo panel) over a terrain-line texture (`assets/images/texture/contours.svg`,
+  generated contour lines in Stone that nod to the parks named in the brand story). None of the
+  vibe-board photos is used; they are mood imagery of unknown licence.
+- Arden-only CSS is in section 29: 29a–29m are the brand layer (most carried from Riverbend),
+  29n onward the splash components (`.splash-*`, `.terrain`). Riverbend's wave divider, wave
+  texture and shuttle band are gone.
+- `preview/site.js` is cut down to the header, smooth scrolling, scroll reveal and the form. The
+  form shows a thank-you state and sends nothing; on WordPress it becomes a lead form (theme
+  1.18's Leads). There is no inquiry pop-up: the whole page is the inquiry.
+- Site icons are the espresso "ar" mark on Stone, opaque (32–512px); the 1200×630 share image is
+  the hero lockup.
+
+### Open — The Arden
+
+**Copy to confirm with the client.** None of these is verified with Sterling:
+- **55+ / age restriction.** A 2021 Franklin Reporter article on the Planning Board approval
+  calls Sterling Pointe "a 55-and-over community", and the neighbouring Four Seasons at Sterling
+  Pointe is age-restricted. The brief never says so, and the vibe board shows older couples.
+  The splash makes **no age claim**, as at Riverbend, because an age restriction has
+  fair-housing weight. Ask Nina.
+- **What the building is.** The page says only "a new community from Sterling Properties" and
+  "new homes". The same article describes two four-storey buildings of 30 apartments each; a
+  traffic letter in the township's records says 60 apartments in two three-storey buildings.
+  Neither figure, nor "luxury", nor any unit mix, amenity or finish is on the page.
+- **The setting.** Six Mile Run and Colonial Park come from the branding proposal. The D&R Canal
+  towpath and the park descriptions (Six Mile Run State Park is part of D&R Canal State Park;
+  Colonial Park has the Rudolf W. van der Goot Rose Garden) are public facts added for the page.
+  No distances are given; measure with OSRM once the address is known.
+- **"The Arden Way of Living"** pillars (Calm / Comfortable / Contemporary) expand the brand's
+  vibe-board line with general copy that makes no factual claim.
+- **Form fields.** Name, email, phone, ideal move-in timing and questions. Ask Nina what she
+  wants collected (Blue Hill's shows no form fields), and where leads should go.
+
+**Waiting on Nina:** the street address; the leasing phone and `@spgnj.com` email (confirm the
+spelling); whether a leasing office or sales centre will be open before launch; the leasing or
+opening timeline; any renderings, floor plans or site photography; web licences for Ansam and
+Mont; and whether `TheArdenNJ.com` is registered and who controls its DNS.
+
+**Next:** merge, then John adds the `arden-franklin-preview` Vercel project (Root Directory
+`arden-franklin/`, framework Other, no build command) and sends Nina the link. Revision rounds
+use **edit-site-dev**. For the go-live of the splash itself, decide with John whether it goes
+onto the multisite as a one-page Arden site (the splash as a page pattern) or stays static until
+the December site.
 
 ---
 

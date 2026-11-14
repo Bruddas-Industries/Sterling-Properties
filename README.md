@@ -20,9 +20,14 @@ Sterling Properties/
 │   ├── preview/                     ← Static client preview (Vercel)
 │   └── vercel.json                  ← Vercel project root is this folder
 │
-└── riverbend-florhampark/
-    ├── theme/riverbend-florhampark/ ← Property #3 — WordPress theme (forked from Bellclair), on staging
-    ├── preview/                     ← Static client preview (Vercel)
+├── riverbend-florhampark/
+│   ├── theme/riverbend-florhampark/ ← Property #3 — WordPress theme (forked from Bellclair), on staging
+│   ├── preview/                     ← Static client preview (Vercel)
+│   └── vercel.json                  ← Vercel project root is this folder
+│
+└── arden-franklin/
+    ├── theme/arden-franklin/        ← Property #4 — assets only so far (global.css forked from Riverbend)
+    ├── preview/                     ← Coming-soon splash page (Vercel)
     └── vercel.json                  ← Vercel project root is this folder
 ```
 
@@ -34,6 +39,7 @@ Sterling Properties/
 | Rivergate Bordentown | `rivergate-bordentown` | Live — rivergatenj.com |
 | Bellclair at Montclair | `bellclair-montclair` | Live — bellclair.com |
 | Riverbend at Florham Park | `riverbend-florhampark` | On the Cloudways staging host (blog 4); domain cutover pending |
+| The Arden at Sterling Pointe | `arden-franklin` | Coming-soon splash in client review (static preview); full site due end of December |
 
 ## Quick Links
 
