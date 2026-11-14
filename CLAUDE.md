@@ -48,6 +48,10 @@ Sterling Properties/
 │   ├── theme/riverbend-florhampark/ ← WordPress theme, forked from Bellclair 1.1.4 (2026-11-09)
 │   └── preview/                     ← Client preview (forked from Bellclair's)
 │
+├── arden-franklin/                   ← Property #4 — The Arden; coming-soon splash in client review
+│   ├── theme/arden-franklin/        ← Assets only so far (global.css forked from Riverbend's)
+│   └── preview/                     ← One-page splash (index.html); the full site follows in December
+│
 ├── sterling-properties/              ← Legacy base theme (no longer active)
 │
 └── [property-name]/                  ← Future properties follow same pattern

@@ -1,0 +1,3867 @@
+/* ==========================================================================
+   THE ARDEN AT STERLING POINTE — GLOBAL STYLESHEET
+   ==========================================================================
+   Forked from riverbend-florhampark (2026-11), itself a fork of
+   bellclair-montclair and rivergate-bordentown. What differs from Riverbend:
+     1. BRAND TOKENS below (palette, type) from "Sterling Pointe Branding
+        Proposal_UPDATED 11_4_2026.pdf" — the brand Nina approved 2026-11-11.
+     2. Colour scheme — the same LIGHT FIELD with DARK BANDS as Bellclair and
+        Riverbend: a warm stone-white page, espresso text, espresso bands for
+        the hero, CTA, Sterling banner and footer. See "LIGHT FIELD, DARK
+        BANDS" in section 4. The alternate band is the brand's light stone.
+        Buttons read their colours from --btn-* tokens, which the dark bands
+        flip (espresso fill on the field, stone fill on the bands).
+     3. Section 29 (end of file) — Arden additions: the serif display face,
+        the brand's tracked Josefin Sans labels, hairline dividers, and the
+        COMING-SOON SPLASH page components (29n onward). Riverbend's wave
+        divider, wave texture and shuttle band are gone.
+   Structural / layout styles are otherwise unchanged from Riverbend.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. BRAND TOKENS — The Arden at Sterling Pointe
+   --------------------------------------------------------------------------
+   Source: Sterling Pointe Branding Proposal (updated 11/4/2026), "Brand
+   Identity" page (SharePoint 07_Assets/The Arden/Branding & Logos).
+     Espresso        #4B3D32  (P 23-16 C)  -> text, dark bands
+     Walnut          #675A49  (P 13-16 C)  -> secondary text, hovers
+     Sage Mountain   #999381  (P 178-6 C)  -> rules and icons on dark bands
+     Intrigue        #818981  (P 176-5 C)  -> rules, icons, fills
+     Stone           #CCC9C0  (P 169-3 C)  -> alternate band tint, fills on dark
+   Intrigue and Sage Mountain are mid-tones: both fail as small text on the
+   light field (3.2:1 and 2.7:1), so eyebrows and links use --color-primary,
+   Intrigue deepened to 5.7:1 on the field (4.9:1 on the stone band). The
+   brand tones themselves are used only for rules, icons and large fills.
+   On the dark bands --color-primary flips to Stone (6.3:1 on espresso).
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Brand palette */
+  --color-ink:          #4B3D32;   /* Espresso — text, dark bands                */
+  --color-walnut:       #675A49;   /* Walnut — secondary text, button hover      */
+  --color-sage:         #999381;   /* Sage Mountain                              */
+  --color-intrigue:     #818981;   /* Intrigue                                   */
+  --color-stone:        #CCC9C0;   /* Stone                                      */
+  --color-accent:       #818981;   /* Intrigue — rules, icons, fills (3.2:1 non-text) */
+  --color-accent-dark:  #675A49;   /* Walnut — pressed / divider tail            */
+  --color-accent-light: #CCC9C0;   /* Stone — hovers and highlights on dark      */
+  --color-accent-mid:   #818981;   /* alias kept for Rivergate parity            */
+
+  /* Semantic tokens (the ~8 values that re-skin the site) */
+  --color-primary:      #596159;   /* text-safe Intrigue — eyebrows, links (5.7:1) */
+  --color-primary-dark: #4B3D32;   /* link hover                                 */
+  --color-bg:           #F4F2ED;   /* warm stone-white page field                */
+  --color-bg-alt:       #EAE7E0;   /* deeper field — chips, hovers, insets       */
+  --color-surface:      #FBFAF7;   /* cards and panels                           */
+  --color-text:         #4B3D32;   /* Espresso (9.3:1)                           */
+  --color-text-muted:   #675A49;   /* Walnut secondary text (6.0:1, 5.1:1 on stone band) */
+  --color-border:       #D9D5CB;   /* dividers and input borders                 */
+
+  /* Alternate section band */
+  --color-alt-bg:       #E4E1D9;   /* light stone — .section--alt                */
+  --color-alt-text:     #4B3D32;
+
+  /* Text on dark bands */
+  --color-on-dark:        #F4F2ED;
+  --color-on-dark-muted:  rgba(244, 242, 237, 0.78);   /* 6.4:1 on espresso */
+
+  /* Buttons and rules — flipped on the dark bands (section 4) */
+  --btn-fill:        var(--color-ink);      /* espresso fill, stone-white label (9.3:1) */
+  --btn-label:       var(--color-bg);
+  --btn-fill-hover:  var(--color-walnut);
+  --color-rule:      var(--color-accent);
+
+  /* Typography — brand guide: Ansam (primary 1: headlines, taglines), Mont
+     (primary 2: headlines, sub-headers, body) and Josefin Sans (secondary:
+     sub-headers, body). Ansam and Mont are commercial; until licensed webfont
+     files are dropped into assets/fonts/ (see the @font-face block at the END
+     of this file) the stacks fall back to Google Fonts: Cormorant Light for
+     Ansam (a light, high-contrast display serif) and Montserrat for Mont.
+     Josefin Sans is itself a Google Font, so the labels are already on-brand. */
+  --font-heading:  'Ansam', 'Cormorant', 'Cormorant Garamond', Georgia, serif;
+  --font-accent:   'Josefin Sans', 'Mont', 'Montserrat', 'Avenir Next', sans-serif;
+  --font-body:     'Mont', 'Montserrat', 'Avenir Next', system-ui, sans-serif;
+
+  /* Font sizes (fluid via clamp) */
+  --text-xs:   clamp(0.75rem,  1.5vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 1.8vw, 1rem);
+  --text-base: clamp(1rem,     2vw,   1.125rem);
+  --text-lg:   clamp(1.125rem, 2.2vw, 1.375rem);
+  --text-xl:   clamp(1.375rem, 2.8vw, 1.75rem);
+  --text-2xl:  clamp(1.875rem, 3.8vw, 2.75rem);
+  --text-3xl:  clamp(2.5rem,   5vw,   3.875rem);
+  --text-4xl:  clamp(3rem,     7vw,   5.5rem);
+
+  /* Font weights */
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  /* Letter spacing */
+  --tracking-tight:   0;
+  --tracking-normal:  0;
+  --tracking-wide:    0.08em;
+  --tracking-wider:   0.14em;
+  --tracking-widest:  0.22em;
+  --tracking-display: 0;
+
+  /* Spacing scale (8-point grid) */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  2.5rem;
+  --space-8:  3.5rem;
+  --space-9:  4.5rem;
+  --space-10: 6rem;
+
+  /* Section padding — a calm brand wants more air than Riverbend */
+  --section-padding-y: clamp(3.5rem, 8vw, 7rem);
+  --section-padding-x: clamp(1.5rem, 6vw, 6rem);
+
+  /* Layout */
+  --container-max:   1280px;
+  --container-wide:  1440px;
+  --nav-height:      80px;
+  --nav-height-mob:  64px;
+
+  /* Border radius — the brand's panels are square-cornered */
+  --radius-sm:   0;
+  --radius-base: 0;
+  --radius-lg:   2px;
+  --radius-full: 9999px;
+
+  /* Shadows (espresso) */
+  --shadow-sm:  0 1px 3px rgba(75,61,50,0.07), 0 1px 2px rgba(75,61,50,0.04);
+  --shadow-md:  0 4px 14px rgba(75,61,50,0.10), 0 2px 4px rgba(75,61,50,0.04);
+  --shadow-lg:  0 18px 44px rgba(75,61,50,0.16), 0 4px 8px rgba(75,61,50,0.05);
+
+  /* Transitions */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --duration:   220ms;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE
+   -------------------------------------------------------------------------- */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* WordPress's flow layout gives every block inside a group a 24px top margin
+   (core's default block gap). This cancels it at the same specificity, and this
+   file loads after WordPress's global styles, so the components below keep
+   their own margins — the spacing the static preview was approved with.
+   Added at Bellclair; Rivergate still has the gap. */
+:root :where(.is-layout-flow) > * { margin-block-start: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. TYPOGRAPHY SCALE
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-light);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl);  }
+h5 { font-size: var(--text-lg);  }
+h6 { font-size: var(--text-base); font-weight: var(--weight-medium); }
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+
+/* Eyebrow on dark / coloured backgrounds */
+.eyebrow--light { color: rgba(255, 255, 255, 0.65); }
+
+p {
+  max-width: 68ch;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+.p-full { max-width: none; }
+
+
+/* --------------------------------------------------------------------------
+   4. LAYOUT UTILITIES
+   -------------------------------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+
+.container--wide {
+  max-width: var(--container-wide);
+}
+
+.full-bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+section {
+  padding-block: var(--section-padding-y);
+}
+
+.section--alt {
+  background-color: var(--color-alt-bg);
+}
+
+/* ===== LIGHT FIELD, DARK BANDS ===============================================
+   The inverse of Rivergate's blue-dominant scheme, as at Bellclair and
+   Riverbend. Stone-white is the page field with espresso text, so cards and
+   surfaces need no special handling. The DARK bands below (CTA, Sterling banner, footer, nav overlay...) flip
+   the muted/accent/border tokens light, so text and inline
+   `color: var(--color-*)` styles inside them stay readable.
+   A NEW dark component must be added to BOTH selector lists, or its copy
+   renders black-on-black.
+   ============================================================================ */
+.cta-section, .site-footer, .sterling-banner, .apply-band, .includes-band,
+.availability-cta, .portal-card--primary, .nav-overlay, .splash-hero,
+.section--dark, .transit-strip {
+  color: var(--color-on-dark);
+  --color-text-muted:   var(--color-on-dark-muted);
+  --color-primary:      var(--color-accent);
+  --color-primary-dark: var(--color-accent-light);
+  --color-border:       rgba(244, 242, 237, 0.2);
+  --btn-fill:           var(--color-stone);
+  --btn-label:          var(--color-ink);
+  --btn-fill-hover:     #E4E1D9;
+  --color-rule:         var(--color-stone);
+}
+:is(.cta-section, .site-footer, .sterling-banner, .apply-band, .includes-band,
+    .availability-cta, .portal-card--primary, .nav-overlay, .splash-hero,
+    .section--dark, .transit-strip)
+    :is(h1, h2, h3, h4, h5, h6) { color: var(--color-on-dark); }
+
+/* The neighborhood explorer is a dense interactive module on a light map —
+   it sits on the field as a bordered surface panel. */
+.neighborhood-explorer {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.section--dark {
+  background-color: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4,
+.section--dark p {
+  color: var(--color-bg);
+}
+
+.divider {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dark));
+  border-radius: var(--radius-full);
+  margin-block: var(--space-6);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. NAVIGATION
+   -------------------------------------------------------------------------- */
+
+/* Homepage section targets clear the sticky header when jumped to from the
+   nav (which links to home_url('/#section')). */
+#about, #amenities, #residences, #floor-plans, #neighborhood, #contact {
+  scroll-margin-top: var(--nav-height);
+}
+
+@media (max-width: 640px) {          /* matches where .site-header shrinks */
+  #about, #amenities, #residences, #floor-plans, #neighborhood, #contact {
+    scroll-margin-top: var(--nav-height-mob);
+  }
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: var(--nav-height);
+  background-color: rgba(244, 242, 237, 0.96);
+  /* Note: backdrop-filter intentionally omitted — it creates a containing block
+     for position:fixed descendants, which breaks the full-screen overlay */
+  border-bottom: 1px solid var(--color-border);
+  transition: box-shadow var(--duration) var(--ease-out),
+              background-color 350ms var(--ease-out),
+              border-color 350ms var(--ease-out);
+}
+
+.site-header.is-scrolled {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Header becomes invisible bg when overlay is open */
+body.nav-is-open .site-header {
+  background-color: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+
+.nav-logo {
+  flex-shrink: 0;
+  max-height: 40px;
+}
+
+.nav-logo img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Right-side actions: CTA button + hamburger */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* Hamburger — always visible on all viewports */
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: var(--space-2);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background-color: var(--color-ink);
+  transition: transform 350ms var(--ease-out),
+              opacity 350ms var(--ease-out),
+              background-color 350ms var(--ease-out);
+}
+
+/* Hamburger → X when overlay is open */
+body.nav-is-open .nav-toggle span {
+  background-color: rgba(244, 242, 237, 0.85);
+}
+body.nav-is-open .nav-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+body.nav-is-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+body.nav-is-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Logo text turns light when overlay is open */
+body.nav-is-open .nav-logo span,
+body.nav-is-open .nav-logo span span {
+  color: rgba(244, 242, 237, 0.85) !important;
+}
+
+/* nav-actions CTA button turns light when overlay is open */
+body.nav-is-open .btn--nav {
+  background-color: transparent;
+  color: rgba(244, 242, 237, 0.85);
+  border: 1.5px solid rgba(244, 242, 237, 0.4);
+}
+
+body.nav-is-open { overflow: hidden; }
+
+/* ---- Full-screen overlay nav -------------------------------------------- */
+/* Lives as a direct child of <body>, not inside <header>, to avoid the
+   backdrop-filter containing-block issue */
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99; /* below sticky header (100) so header stays on top */
+  background-color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-7);
+  padding: var(--space-10) var(--section-padding-x);
+  /* Hidden state */
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 400ms var(--ease-out),
+              visibility 400ms var(--ease-out);
+}
+
+.nav-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.nav-overlay__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav-overlay__links a {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color: rgba(244, 242, 237, 0.7);
+  /* Per-link fade-up — starts hidden */
+  opacity: 0;
+  transform: translateY(14px);
+  transition: color var(--duration) var(--ease-out),
+              opacity 380ms var(--ease-out),
+              transform 380ms var(--ease-out);
+}
+
+.nav-overlay.is-open .nav-overlay__links a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-overlay__links a:nth-child(1) { transition-delay: 60ms; }
+.nav-overlay__links a:nth-child(2) { transition-delay: 110ms; }
+.nav-overlay__links a:nth-child(3) { transition-delay: 160ms; }
+.nav-overlay__links a:nth-child(4) { transition-delay: 210ms; }
+.nav-overlay__links a:nth-child(5) { transition-delay: 260ms; }
+.nav-overlay__links a:nth-child(6) { transition-delay: 310ms; }
+
+.nav-overlay__links a:hover { color: var(--color-accent-light); }
+
+/* Overlay CTA row — See Availability / Schedule a Tour / Apply Now.
+   The header .btn--nav is hidden below 640px, so the overlay carries all three. */
+.nav-overlay__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.nav-overlay__cta {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 380ms var(--ease-out) 360ms,
+              transform 380ms var(--ease-out) 360ms,
+              background-color var(--duration) var(--ease-out),
+              box-shadow var(--duration) var(--ease-out);
+}
+
+.nav-overlay.is-open .nav-overlay__cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-overlay__divider {
+  width: 1px;
+  height: 40px;
+  background-color: rgba(244, 242, 237, 0.15);
+  opacity: 0;
+  transition: opacity 380ms var(--ease-out) 280ms;
+}
+
+.nav-overlay.is-open .nav-overlay__divider {
+  opacity: 1;
+}
+
+/* Hide old inline nav links — replaced by overlay */
+.nav-links { display: none; }
+
+@media (max-width: 640px) {
+  .site-header { height: var(--nav-height-mob); }
+
+  /* Hide header CTA on small mobile — it's in the overlay */
+  .nav-actions .btn--nav { display: none; }
+
+  /* Stack the overlay CTAs rather than wrapping them raggedly */
+  .nav-overlay__ctas { flex-direction: column; align-items: stretch; width: min(100%, 320px); }
+}
+
+
+/* --------------------------------------------------------------------------
+   6. HERO
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: calc(100vh - var(--nav-height));
+  display: flex;
+  align-items: flex-end;
+  /* Cancel the generic section padding-block so the image fills exactly */
+  padding-block: 0;
+  padding-bottom: var(--space-10);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: calc(100vh - var(--nav-height-mob));
+  }
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.25) 50%,
+    rgba(0,0,0,0.08) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+  color: #fff;
+}
+
+.hero__eyebrow {
+  color: rgba(255,255,255,0.7);
+}
+
+.hero__headline {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-light);
+  color: #fff;
+  letter-spacing: var(--tracking-tight);
+  max-width: 18ch;
+  margin-bottom: var(--space-5);
+}
+
+.hero__subheadline {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  color: rgba(255,255,255,0.85);
+  max-width: 48ch;
+  margin-bottom: var(--space-7);
+  line-height: 1.65;
+}
+
+/* Full-viewport video hero variant */
+.hero--video {
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .hero--video { min-height: 100vh; }
+}
+
+.hero__bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Transparent-until-scroll navbar — applies only when body.has-video-hero */
+.has-video-hero .site-header {
+  position: fixed;
+  background-color: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.has-video-hero .site-header.is-scrolled {
+  background-color: rgba(244, 242, 237, 0.97);
+  border-bottom-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Override: when nav overlay is open on video-hero pages, always reset header —
+   without this, .has-video-hero .site-header.is-scrolled wins the cascade over
+   body.nav-is-open .site-header (line ~257) due to later source order */
+body.has-video-hero.nav-is-open .site-header {
+  background-color: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.has-video-hero .site-header:not(.is-scrolled) .nav-toggle span {
+  background-color: #fff;
+}
+
+
+
+/* --------------------------------------------------------------------------
+   7. FEATURE SECTIONS (alternating image/text)
+   -------------------------------------------------------------------------- */
+
+.feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: stretch;
+  min-height: 480px;
+}
+
+.feature--reverse .feature__image { order: 2; }
+.feature--reverse .feature__body  { order: 1; }
+
+.feature__image {
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+}
+
+.feature__image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out);
+}
+
+.feature:hover .feature__image img {
+  transform: scale(1.03);
+}
+
+.feature__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(3rem, 7vw, 6rem);
+  background-color: transparent;
+}
+
+.feature--alt .feature__body {
+  background-color: transparent;
+}
+
+
+.feature__body h2 {
+  margin-bottom: var(--space-5);
+}
+
+.feature__body p {
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .feature {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .feature--reverse .feature__image,
+  .feature--reverse .feature__body {
+    order: unset;
+  }
+
+  .feature__image { min-height: 300px; }
+}
+
+
+/* --------------------------------------------------------------------------
+   8. GRID / CARDS
+   -------------------------------------------------------------------------- */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: transform var(--duration) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card__icon {
+  width: 40px;
+  height: 40px;
+  color: var(--color-primary);
+  transition: color var(--duration) var(--ease-out),
+              transform var(--duration) var(--ease-out);
+}
+
+.card:hover .card__icon {
+  color: var(--color-primary);
+  transform: scale(1.08);
+}
+
+.card__heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.card:hover .card__heading {
+  color: var(--color-primary);
+}
+
+.card__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 44ch;
+}
+
+.section-intro {
+  max-width: 640px;
+}
+
+.section-intro h2 {
+  margin-bottom: var(--space-5);
+}
+
+
+/* --------------------------------------------------------------------------
+   9. CTA SECTION
+   -------------------------------------------------------------------------- */
+
+.cta-section {
+  background-color: var(--color-ink);
+  color: var(--color-bg);
+  text-align: center;
+  padding-block: var(--section-padding-y);
+}
+
+.cta-section h2 {
+  color: var(--color-bg);
+  margin-bottom: var(--space-5);
+}
+
+.cta-section p {
+  color: rgba(244, 242, 237, 0.75);
+  max-width: 52ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-7);
+}
+
+.cta-section .divider {
+  margin-inline: auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  background-color: var(--color-ink);
+  color: rgba(244, 242, 237, 0.6);
+  padding-block: var(--space-8) var(--space-6);
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-8);
+  align-items: start;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: var(--space-7);
+}
+
+.footer-logo {
+  max-height: 44px;
+}
+
+.footer-logo img {
+  height: 44px;
+  width: auto;
+}
+
+.footer-nav {
+  display: flex;
+  gap: var(--space-3) var(--space-5);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.footer-nav a {
+  position: relative;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: rgba(244, 242, 237, 0.55);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.footer-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-accent);
+  transition: width var(--duration) var(--ease-out);
+}
+
+.footer-nav a:hover { color: rgba(244, 242, 237, 0.95); }
+.footer-nav a:hover::after { width: 100%; }
+
+.footer-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+
+.footer-bottom__copy {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: rgba(244, 242, 237, 0.4);
+}
+
+.footer-bottom__copy a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(244, 242, 237, 0.25);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.footer-bottom__copy a:hover { color: rgba(244, 242, 237, 0.9); }
+
+.footer-bottom__brand {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-sterling-logo {
+  height: 28px;
+  width: auto;
+  opacity: 0.45;
+  display: block;
+}
+
+.footer-bottom__links {
+  display: flex;
+  gap: var(--space-5);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.footer-bottom__links a {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: rgba(244, 242, 237, 0.4);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.footer-bottom__links a:hover { color: rgba(244, 242, 237, 0.9); }
+
+/* Compliance / community-policy badges (Fair Housing, ADA, Pet-Friendly,
+   Non-Smoking) — near-white SVGs sit on the navy footer. */
+.footer-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-2) var(--section-padding-x) var(--space-6);
+}
+.footer-badges img {
+  height: 30px;
+  width: auto;
+  opacity: 0.72;
+  transition: opacity var(--duration) var(--ease-out);
+}
+.footer-badges img:hover { opacity: 1; }
+
+
+/* --------------------------------------------------------------------------
+   FLOOR-PLAN IMAGES + MATTERPORT VIRTUAL-TOUR LIGHTBOX (shared)
+   Used by the homepage floor-plan selector and by floor-plans.html.
+   -------------------------------------------------------------------------- */
+.fp-plan-img,
+.plan-card__img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--color-border); border-radius: var(--radius-base);
+  background: #fff;
+}
+.fp-plan-img   { margin-bottom: var(--space-5); }
+.plan-card__img { margin-bottom: var(--space-4); }
+
+/* Disabled "virtual tour coming soon" pill (Borden, Chester, Burlington, Hamilton) */
+.fp-vtour-disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+.mp-modal { position: fixed; inset: 0; z-index: 10000; display: none; }
+.mp-modal.is-open { display: block; }
+.mp-modal__backdrop { position: absolute; inset: 0; background: rgba(75, 61, 50, 0.72); }
+.mp-modal__dialog {
+  position: relative; z-index: 1; width: min(1100px, 92vw); margin: 5vh auto 0;
+  background: #fff; border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg); display: flex; flex-direction: column; max-height: 90vh;
+}
+.mp-modal__title {
+  font-family: var(--font-heading); font-size: var(--text-lg); font-weight: var(--weight-light);
+  color: var(--color-text); padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+.mp-modal__frame { position: relative; width: 100%; aspect-ratio: 16 / 10; background: #000; }
+.mp-modal__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.mp-modal__close {
+  position: absolute; top: 10px; right: 12px; z-index: 2; width: 40px; height: 40px;
+  border-radius: 50%; background: rgba(255,255,255,0.92); color: var(--color-text);
+  font-size: 26px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: background-color var(--duration) var(--ease-out);
+}
+.mp-modal__close:hover { background: #fff; }
+/* Full-screen floor-plan viewer. Plan images are detailed line drawings, so
+   the point is to see them large — the dialog is sized to the viewport and the
+   image scales to fit inside it. */
+.fp-lightbox { position: fixed; inset: 0; z-index: 10002; display: none; }
+.fp-lightbox.is-open { display: block; }
+.fp-lightbox__backdrop { position: absolute; inset: 0; background: rgba(75, 61, 50, 0.88); }
+.fp-lightbox__dialog {
+  position: relative; z-index: 1;
+  width: min(1400px, 96vw); height: 92vh; margin: 4vh auto 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.fp-lightbox__dialog img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  background: #fff; border-radius: var(--radius-base);
+  box-shadow: var(--shadow-lg);
+}
+.fp-lightbox__close {
+  position: absolute; top: -2px; right: 0; z-index: 2;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: 28px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background-color var(--duration) var(--ease-out);
+}
+.fp-lightbox__close:hover { background: #fff; }
+
+/* Gallery mode — photos get a caption and prev/next; plans show neither. */
+.fp-lightbox__dialog { flex-direction: column; }
+.fp-lightbox__nav,
+.fp-lightbox__caption { display: none; }
+.fp-lightbox.is-gallery .fp-lightbox__dialog img { max-height: calc(100% - 3rem); background: none; }
+.fp-lightbox.is-gallery .fp-lightbox__caption {
+  display: block;
+  margin: var(--space-3) 0 0;
+  color: rgba(255,255,255,0.85);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  text-align: center;
+  white-space: pre-wrap;
+}
+.fp-lightbox.is-gallery .fp-lightbox__nav {
+  position: absolute; top: 50%; z-index: 2;
+  transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: 34px; line-height: 1; padding-bottom: 4px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--duration) var(--ease-out);
+}
+.fp-lightbox__nav:hover { background: #fff; }
+.fp-lightbox__nav--prev { left: var(--space-3); }
+.fp-lightbox__nav--next { right: var(--space-3); }
+
+/* The plan images and gallery tiles are the click target, so say so */
+.fp-plan-img, .plan-card__img { cursor: zoom-in; }
+.gallery-item:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+
+body.mp-open { overflow: hidden; }
+@media (max-width: 640px) { .mp-modal__dialog { width: 96vw; margin-top: 3vh; } }
+
+@media (max-width: 640px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+
+  .footer-bottom {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    text-align: center;
+  }
+
+  .footer-bottom__links {
+    justify-content: center;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   11. BUTTONS
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-7);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  border-radius: var(--radius-base);
+  transition: background-color var(--duration) var(--ease-out),
+              color var(--duration) var(--ease-out),
+              transform var(--duration) var(--ease-out),
+              box-shadow var(--duration) var(--ease-out);
+  white-space: nowrap;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background-color: var(--color-accent);   /* see 29e: buttons read the --btn-* tokens */
+  color: var(--color-ink);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-accent-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: inherit;                        /* ink on the field, cream on dark bands */
+  border: 1.5px solid currentColor;
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-accent);
+  color: var(--color-ink);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-on-dark);
+  border: 1.5px solid rgba(244, 242, 237, 0.6);
+}
+
+.btn--ghost:hover {
+  background-color: rgba(244, 242, 237, 0.12);
+  border-color: var(--color-accent-light);
+}
+
+.btn--nav {
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--color-accent);
+  color: var(--color-ink);
+  border-radius: var(--radius-base);
+}
+
+.btn--nav:hover {
+  background-color: var(--color-accent-light);
+}
+
+
+/* --------------------------------------------------------------------------
+   11a. ANIMATED CTA — colour-pulse + travelling border (.btn--pulse)
+   --------------------------------------------------------------------------
+   Subtle eye-catch for the primary "Schedule a Tour" action. COLOUR ONLY —
+   no scaling / heartbeat. A bright highlight also traces the button outline.
+   Both effects honour prefers-reduced-motion.
+   -------------------------------------------------------------------------- */
+
+@property --ar-bd-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.btn--pulse {
+  position: relative;
+  isolation: isolate;
+  --ar-bd-angle: 0deg;            /* static fallback where @property is unsupported */
+  border: none;
+  background-color: var(--color-accent);
+  /* Gradient shifts deeper → lighter → deeper across the face */
+  background-image: linear-gradient(100deg,
+    var(--color-accent-dark) 0%,
+    var(--color-accent) 30%,
+    #CCC9C0 50%,
+    var(--color-accent) 70%,
+    var(--color-accent-dark) 100%);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  animation: ar-btn-pulse 5s ease-in-out infinite alternate;
+}
+
+.btn--pulse:hover {
+  background-color: var(--color-accent-light);
+  animation-duration: 2.6s;       /* livens up under the cursor */
+}
+
+@keyframes ar-btn-pulse {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* Bright highlight that travels around the outline */
+.btn--pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;                    /* above the fill, below the label */
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--ar-bd-angle),
+    rgba(255,255,255,0)   0deg,
+    rgba(255,255,255,0)   250deg,
+    rgba(244,242,237,0.9) 312deg,
+    #ffffff               335deg,
+    rgba(244,242,237,0.9) 352deg,
+    rgba(255,255,255,0)   360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ar-btn-border 3.2s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes ar-btn-border {
+  to { --ar-bd-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--pulse {
+    animation: none;
+    background-image: none;
+    background-color: var(--color-accent);
+  }
+  .btn--pulse::after { animation: none; display: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   11b. ACCORDION (collapsible lists)
+   -------------------------------------------------------------------------- */
+
+.accordion {
+  border-top: 1px solid var(--color-border);
+}
+
+.accordion__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accordion__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.accordion__trigger:hover,
+.accordion__trigger[aria-expanded="true"] {
+  color: var(--color-primary);
+}
+
+.accordion__label-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 2px;
+}
+
+.accordion__trigger[aria-expanded="true"] .accordion__label-eyebrow {
+  color: var(--color-primary);
+}
+
+.accordion__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  transition: transform var(--duration) var(--ease-out);
+}
+
+.accordion__icon::before,
+.accordion__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: currentColor;
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+}
+
+.accordion__icon::before { width: 100%; height: 2px; }
+.accordion__icon::after  { width: 2px; height: 100%; }
+
+/* + rotates toward × when open */
+.accordion__trigger[aria-expanded="true"] .accordion__icon {
+  transform: rotate(45deg);
+}
+
+.accordion__panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 320ms var(--ease-out);
+}
+
+.accordion__panel-inner {
+  padding-bottom: var(--space-5);
+}
+
+
+/* --------------------------------------------------------------------------
+   12. SCROLL ANIMATIONS
+   -------------------------------------------------------------------------- */
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 700ms var(--ease-out),
+              transform 700ms var(--ease-out);
+}
+
+/* Directional / scale reveal variants — same [data-animate] hook + JS toggle */
+[data-animate="left"]  { transform: translateX(-36px); }
+[data-animate="right"] { transform: translateX(36px); }
+[data-animate="scale"] { transform: scale(0.94); }
+[data-animate="fade"]  { transform: none; }
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate="left"].is-visible,
+[data-animate="right"].is-visible,
+[data-animate="scale"].is-visible,
+[data-animate="fade"].is-visible {
+  transform: none;
+}
+
+/* Stagger delays — applied by JS index, these are fallback overrides */
+[data-animate][data-delay="1"] { transition-delay: 80ms; }
+[data-animate][data-delay="2"] { transition-delay: 160ms; }
+[data-animate][data-delay="3"] { transition-delay: 240ms; }
+[data-animate][data-delay="4"] { transition-delay: 320ms; }
+[data-animate][data-delay="5"] { transition-delay: 400ms; }
+[data-animate][data-delay="6"] { transition-delay: 480ms; }
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate],
+  [data-animate="left"],
+  [data-animate="right"],
+  [data-animate="scale"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   13. BLOCK EDITOR (GUTENBERG) SUPPORT
+   -------------------------------------------------------------------------- */
+
+.wp-block-group,
+.wp-block-columns {
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+.wp-block-image img {
+  border-radius: var(--radius-base);
+}
+
+.alignwide  { max-width: var(--container-wide); margin-inline: auto; }
+.alignfull  { max-width: 100%; }
+
+
+/* --------------------------------------------------------------------------
+   14. PAGE HERO (inner pages)
+   -------------------------------------------------------------------------- */
+
+.page-hero {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: flex-end;
+  padding-block: 0;
+  padding-bottom: var(--space-9);
+  overflow: hidden;
+}
+
+.page-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.page-hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+/* The hero is a wide, short strip, so on desktop only a band of the photo shows.
+   Image Focus (page-hero sidebar) picks which band; unset keeps the 35% default. */
+.page-hero--focus-top    .page-hero__bg img { object-position: center 10%; }
+.page-hero--focus-center .page-hero__bg img { object-position: center 50%; }
+.page-hero--focus-lower  .page-hero__bg img { object-position: center 65%; }
+.page-hero--focus-bottom .page-hero__bg img { object-position: center 90%; }
+
+.page-hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.08) 100%);
+}
+
+.page-hero__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+  color: #fff;
+}
+
+.page-hero__content .eyebrow { color: rgba(255,255,255,0.6); }
+.page-hero__content h1 { color: #fff; max-width: 20ch; margin-bottom: 0; font-size: var(--text-3xl); }
+
+
+/* --------------------------------------------------------------------------
+   15. AMENITY ACCORDION (homepage + amenities page)
+   -------------------------------------------------------------------------- */
+
+.amenities-split {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  margin-top: var(--space-8);
+}
+
+.amenity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  align-content: start;
+  /* Without this a grid item stretches to its row height, so opening one
+     accordion inflated the closed tile beside it into a tall white box. */
+  align-items: start;
+}
+
+.amenity {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.amenity__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  transition: background-color var(--duration) var(--ease-out);
+}
+
+.amenity__head:hover { background-color: var(--color-bg-alt); }
+
+.amenity__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  transition: transform var(--duration) var(--ease-out);
+}
+
+.amenity.is-open .amenity__icon { transform: scale(1.1); }
+
+.amenity__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  flex: 1;
+  /* Reserve two lines so a name that wraps and one that does not produce the
+     same tile height, keeping rows level however the labels fall. */
+  min-height: 2.9em;
+  display: flex;
+  align-items: center;
+  /* Long names still wrap to three lines and unbalance a row; cap the label so
+     every closed tile is the same height regardless of the name. */
+  overflow: hidden;
+}
+
+.amenity__plus {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  transition: transform var(--duration) var(--ease-out), color var(--duration) var(--ease-out);
+}
+
+.amenity__plus::before,
+.amenity__plus::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentColor;
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+}
+
+.amenity__plus::before { width: 100%; height: 1.5px; }
+.amenity__plus::after  { width: 1.5px; height: 100%; }
+
+.amenity.is-open .amenity__plus { transform: rotate(45deg); color: var(--color-primary); }
+
+.amenity__panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 300ms var(--ease-out);
+}
+
+.amenity__detail {
+  padding: 0 var(--space-5) var(--space-5) calc(var(--space-5) + 28px + var(--space-4));
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.amenities-photo {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.amenities-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out);
+}
+
+.amenities-photo:hover img { transform: scale(1.04); }
+
+.amenities-photo__overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: var(--space-6);
+  background: linear-gradient(to top, rgba(75, 61, 50, 0.78) 0%, rgba(75, 61, 50, 0) 100%);
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-list li {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.feature-list li span { color: var(--color-primary); flex-shrink: 0; }
+
+
+/* --------------------------------------------------------------------------
+   16. RESIDENCE GRID (homepage)
+   -------------------------------------------------------------------------- */
+
+.residence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-2) var(--space-7);
+  margin-top: var(--space-8);
+}
+
+.residence-grid li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+.residence-grid__check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--color-accent);   /* Intrigue circle, espresso check */
+  color: var(--color-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Two-column residences: features on one side, interior photo on the other */
+.residences-split {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--space-8);
+  align-items: center;
+  margin-top: var(--space-8);
+}
+.residences-split__photo {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 440px;
+  align-self: stretch;
+}
+.residences-split__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out);
+}
+.residences-split__photo:hover img { transform: scale(1.04); }
+@media (max-width: 860px) {
+  .residences-split { grid-template-columns: 1fr; }
+  .residences-split__photo { min-height: 300px; order: -1; }
+}
+
+/* Neighborhood photo band (location section) */
+.location-photo {
+  position: relative;
+  margin-top: var(--space-7);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  height: clamp(240px, 32vw, 400px);
+}
+.location-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.location-photo__caption {
+  position: absolute;
+  left: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 1;
+  color: #fff;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  background: rgba(75, 61, 50, 0.55);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-base);
+}
+
+
+/* --------------------------------------------------------------------------
+   17. FLOOR PLAN SELECTOR (homepage inline version)
+   -------------------------------------------------------------------------- */
+
+.fp-selector {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: var(--space-7);
+  margin-top: var(--space-8);
+  align-items: start;
+}
+
+.fp-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.fp-option {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color var(--duration) var(--ease-out),
+              background-color var(--duration) var(--ease-out),
+              transform var(--duration) var(--ease-out);
+}
+
+.fp-option:hover { border-color: var(--color-accent); transform: translateX(2px); }
+
+.fp-option__specs {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.fp-option__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.fp-option__size { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+.fp-option__tag {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+  font-size: 10px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: var(--color-bg-alt);
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.fp-option.is-active { border-color: var(--color-primary); background: var(--color-bg-alt); }
+.fp-option.is-active .fp-option__name { color: var(--color-primary); }
+
+.fp-option.is-active::after {
+  content: '';
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  background: var(--color-bg-alt);
+  border-top: 1.5px solid var(--color-primary);
+  border-right: 1.5px solid var(--color-primary);
+  transform: translateY(-50%) rotate(45deg);
+  display: none;
+}
+
+@media (min-width: 901px) { .fp-option.is-active::after { display: block; } }
+
+.fp-detail {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--space-7);
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-4));
+}
+
+/* Below 900px the selector stacks, so main.js re-parents #fp-detail into .fp-list
+   directly beneath the tapped plan (accordion) instead of leaving it below the
+   whole list. It borrows the active option's colours so the two read as one
+   block. Class is added/removed by JS — inert on desktop. */
+@media (max-width: 900px) {
+  .fp-detail--inline {
+    border-color: var(--color-primary);
+    background: var(--color-bg-alt);
+    padding: var(--space-5);
+    animation: fpDetailIn 260ms var(--ease-out) both;
+  }
+  /* 2x2 rather than a 3-then-1 wrap, so the inline panel stays short */
+  .fp-detail--inline .fp-detail__specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@keyframes fpDetailIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-detail--inline { animation: none; }
+}
+
+.fp-detail__eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.fp-detail__name { font-size: var(--text-2xl); margin-bottom: var(--space-5); }
+
+.fp-detail__specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.fp-spec span:first-child {
+  display: block;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.fp-spec span:last-child {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  color: var(--color-text);
+}
+
+.fp-diagram {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-base);
+  background: repeating-linear-gradient(45deg, var(--color-bg) 0 12px, var(--color-bg-alt) 12px 24px);
+  border: 1px dashed var(--color-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.fp-diagram__watermark {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-light);
+  color: var(--color-text);
+  opacity: 0.35;
+}
+
+.fp-diagram__note {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.fp-detail__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+.fp-vtour-note {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+  font-style: italic;
+}
+
+
+/* --------------------------------------------------------------------------
+   18. FLOOR PLAN CARDS (floor-plans page)
+   -------------------------------------------------------------------------- */
+
+.plan-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.plan-tab-btn {
+  padding: var(--space-3) var(--space-7);
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--duration) var(--ease-out), border-color var(--duration) var(--ease-out);
+}
+
+.plan-tab-btn:hover { color: var(--color-text); }
+.plan-tab-btn.is-active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+.plan-panel[hidden] { display: none; }
+
+.group-label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.plan-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  transition: border-color var(--duration) var(--ease-out),
+              transform var(--duration) var(--ease-out),
+              box-shadow var(--duration) var(--ease-out);
+}
+
+.plan-card--default { border: 1.5px solid var(--color-border); }
+.plan-card--featured { border: 1.5px solid var(--color-primary); background: var(--color-bg-alt); }
+
+.plan-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.plan-card h3 { transition: color var(--duration) var(--ease-out); }
+.plan-card:hover h3 { color: var(--color-primary); }
+.plan-card .btn { white-space: normal; text-align: left; }
+
+.plan-meta {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+  align-self: flex-start;
+}
+
+.plan-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.plan-meta-item span:first-child {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.plan-meta-item span:last-child {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+/* Every residence includes band */
+.includes-band {
+  background: linear-gradient(135deg, #4B3D32 0%, #3A2F27 60%, #44382E 100%);
+  color: #fff;
+  padding-block: var(--space-9);
+}
+
+.includes-band__head { max-width: 640px; }
+.includes-band h2 { color: #fff; margin-bottom: var(--space-4); }
+.includes-band p { color: rgba(255,255,255,0.8); max-width: 56ch; }
+
+.includes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-2) var(--space-7);
+  margin-top: var(--space-6);
+  list-style: none;
+  padding: 0;
+}
+
+.includes-grid li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  font-size: var(--text-base);
+  color: #fff;
+}
+
+.includes-grid__icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.includes-grid__icon svg { color: #fff; }
+
+.availability-cta {
+  background: var(--color-ink);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-7);
+  display: flex;
+  gap: var(--space-6) var(--space-8);
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: var(--space-9);
+}
+
+.availability-cta h2 { color: #fff; margin-bottom: var(--space-3); font-size: var(--text-2xl); }
+.availability-cta p { color: rgba(255,255,255,0.8); margin: 0; max-width: 52ch; }
+.availability-cta .btn { flex-shrink: 0; }
+
+
+/* --------------------------------------------------------------------------
+   19. GALLERY GRID
+   -------------------------------------------------------------------------- */
+
+.gallery-tabs {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.gallery-tab {
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  font-weight: var(--weight-medium);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-base);
+  color: var(--color-text-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease-out);
+}
+
+.gallery-tab:hover,
+.gallery-tab.is-active {
+  background: var(--color-ink);
+  color: #fff;
+  border-color: var(--color-text);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 280px;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  cursor: zoom-in;
+}
+
+.gallery-item--wide  { grid-column: span 2; }
+.gallery-item--tall  { grid-row: span 2; }
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out);
+}
+
+.gallery-item:hover img { transform: scale(1.05); }
+
+.gallery-item__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+  color: rgba(255,255,255,0.85);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+}
+
+.gallery-item:hover .gallery-item__caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* --------------------------------------------------------------------------
+   20. LOCATION — transit strip + stats
+   -------------------------------------------------------------------------- */
+
+.transit-strip {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  padding-block: var(--space-8);
+}
+
+.transit-strip .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-6);
+  text-align: center;
+}
+
+.transit-stat__number {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-light);
+  color: #fff;
+  display: block;
+  letter-spacing: var(--tracking-tight);
+}
+
+.transit-stat__label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: rgba(244, 242, 237, 0.55);
+  display: block;
+  margin-top: var(--space-2);
+}
+
+.loc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  margin-top: var(--space-7);
+}
+
+/* Copy is always visible — no tap-to-reveal. The eye-catch is a highlight that
+   travels the card outline, reusing the technique and the ar-btn-border
+   keyframes from the animated "Schedule a Tour" button (11a), tinted to the
+   brand blue so it reads against a white card. */
+.loc-stat {
+  position: relative;
+  isolation: isolate;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--space-6) var(--space-5);
+  --ar-bd-angle: 0deg;            /* static fallback where @property is unsupported */
+  transition: border-color var(--duration) var(--ease-out), box-shadow var(--duration) var(--ease-out);
+}
+
+.loc-stat:hover { border-color: var(--color-accent); box-shadow: var(--shadow-sm); }
+
+.loc-stat::after {
+  content: '';
+  position: absolute;
+  inset: -1px;                    /* -1px so the ring covers the 1px border exactly */
+  z-index: -1;                    /* above the card fill, below the text */
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--ar-bd-angle),
+    rgba(129, 137, 129, 0)    0deg,
+    rgba(129, 137, 129, 0)    250deg,
+    rgba(129, 137, 129, 0.40) 312deg,
+    var(--color-accent)    335deg,
+    rgba(129, 137, 129, 0.40) 352deg,
+    rgba(129, 137, 129, 0)    360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ar-btn-border 3.2s linear infinite;
+  pointer-events: none;
+}
+
+/* Offset each card so the highlight reads as one sweep across the row */
+.loc-stat:nth-child(2)::after { animation-delay: -1.07s; }
+.loc-stat:nth-child(3)::after { animation-delay: -2.13s; }
+
+.loc-stat__num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-light);
+  color: var(--color-primary);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+}
+
+.loc-stat__label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-top: var(--space-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loc-stat::after { animation: none; display: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   21. NEIGHBORHOOD EXPLORER
+   -------------------------------------------------------------------------- */
+
+.neighborhood-explorer {
+  display: grid;
+  /* minmax(0,...) removes the automatic min-content floor on an fr track.
+     Without it a long, non-wrapping button in the list panel forced that
+     column wider and stole width from the map beside it. */
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  align-items: start;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+.explorer__list-panel { display: flex; flex-direction: column; }
+
+.explorer__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  border-bottom: 1.5px solid var(--color-border);
+  margin-bottom: var(--space-6);
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1.5px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  transition: color var(--duration) var(--ease-out), border-color var(--duration) var(--ease-out);
+}
+
+.tab-btn:hover { color: var(--color-text); }
+.tab-btn.is-active { color: var(--color-text); border-bottom-color: var(--color-primary); }
+
+/* Category ladder — brand metals plus warm neutrals.
+   Keep in sync with categoryColors in preview/site.js (and the
+   $categories colours in blocks/neighborhood-explorer/render.php once forked).
+   NOTE: the #C62828 further down in .emergency-card--urgent is an error state, not a
+   category colour — leave it red. */
+.tab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.tab-dot--transit   { background: #596159; }  /* deep Intrigue             */
+.tab-dot--dining    { background: #4B3D32; }  /* espresso                  */
+.tab-dot--shopping  { background: #675A49; }  /* deep sky                  */
+.tab-dot--rec       { background: #818981; }  /* deep sage                 */
+.tab-dot--education { background: #CCC9C0; }  /* stone (espresso numerals) */
+
+.explorer__list {
+  overflow-y: auto;
+  max-height: calc(100vh - 220px);
+  padding-right: var(--space-2);
+  scroll-behavior: smooth;
+}
+
+.explorer__list::-webkit-scrollbar { width: 4px; }
+.explorer__list::-webkit-scrollbar-track { background: transparent; }
+.explorer__list::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+
+.poi-category-list { margin-bottom: var(--space-6); }
+.poi-category-list:last-child { margin-bottom: 0; }
+
+.poi-cat-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.poi-cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+.explorer-poi-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--duration) var(--ease-out);
+}
+
+.explorer-poi-item:hover { background-color: var(--color-bg-alt); }
+.explorer-poi-item.is-active { background-color: var(--color-bg-alt); }
+.explorer-poi-item.is-active .explorer-poi-name { color: var(--color-primary); }
+
+@keyframes poi-flash {
+  0%   { background-color: rgba(129, 137, 129, 0.20); }
+  55%  { background-color: rgba(129, 137, 129, 0.20); }
+  100% { background-color: var(--color-bg-alt); }
+}
+
+.explorer-poi-item.is-highlighted { animation: poi-flash 1000ms ease-out forwards; }
+
+.poi-num-badge {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.explorer-poi-name {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+  display: block;
+  transition: color var(--duration) var(--ease-out);
+}
+
+.explorer-poi-detail {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Drive time from the property, shown under each place (Andrew, 8/26). */
+.explorer-poi-drive {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-primary);
+}
+
+/* The directions label grows with the place name, which was resizing the map
+   column beside it. .explorer-actions is a full-width column child of
+   .explorer__list-panel, so 100% caps the button at the panel's own width -
+   long names clip rather than pushing the map. */
+#explorer-directions {
+  max-width: 100%;
+  min-width: 0;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.explorer-actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+
+.explorer__map-panel {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-2));
+}
+
+.explorer-map {
+  width: 100%;
+  height: calc(100vh - 160px);
+  min-height: 460px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: block;
+  box-shadow: var(--shadow-md);
+}
+
+/* Tab visibility filter */
+.neighborhood-explorer[data-active-tab="transit"]   .poi-category-list:not([data-category="transit"]),
+.neighborhood-explorer[data-active-tab="shopping"]  .poi-category-list:not([data-category="shopping"]),
+.neighborhood-explorer[data-active-tab="dining"]    .poi-category-list:not([data-category="dining"]),
+.neighborhood-explorer[data-active-tab="rec"]       .poi-category-list:not([data-category="rec"]),
+.neighborhood-explorer[data-active-tab="education"] .poi-category-list:not([data-category="education"]) { display: none; }
+
+.neighborhood-explorer:not([data-active-tab="all"]) .poi-cat-heading { display: none; }
+
+/* Google Maps InfoWindow compact overrides */
+.gm-style .gm-style-iw-c { border-radius: 6px !important; padding: 0 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important; min-width: 0 !important; }
+.gm-style .gm-style-iw-d { overflow: hidden !important; padding: 0 !important; }
+.gm-style .gm-style-iw-tc { display: none !important; }
+.gm-style .gm-style-iw-t::after { display: none !important; }
+.gm-ui-hover-effect { display: none !important; }
+.gm-style .gm-style-iw-chr { display: none !important; }
+
+
+/* --------------------------------------------------------------------------
+   22. CONTACT FORM & GRID
+   -------------------------------------------------------------------------- */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.contact-info p { max-width: none; margin-bottom: var(--space-4); }
+
+.contact-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.contact-info a { color: var(--color-primary); }
+.contact-info a:hover { color: var(--color-primary-dark); }
+
+.contact-form { display: flex; flex-direction: column; gap: var(--space-4); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.form-group { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.form-group label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: var(--space-4);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background: var(--color-surface);
+  outline: none;
+  transition: border-color var(--duration) var(--ease-out);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--color-primary); }
+
+.form-group textarea { resize: vertical; min-height: 120px; }
+
+/* Honeypot (inc/leads.php): hidden from people and screen readers; bots fill it in */
+.form-hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* Quick contact strip */
+.quick-contact-strip {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-7);
+}
+
+.quick-contact-strip .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-6);
+}
+
+.qc-item__label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.qc-item__value {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  color: var(--color-text);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+}
+
+.qc-item__value a { color: var(--color-primary); }
+.qc-item__value a:hover { color: var(--color-primary-dark); }
+
+.contact-map {
+  width: 100%;
+  height: 400px;
+  border: 0;
+  display: block;
+  border-radius: var(--radius-lg);
+}
+
+
+/* --------------------------------------------------------------------------
+   23. AVAILABILITY PAGE
+   -------------------------------------------------------------------------- */
+
+.appfolio-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  margin-top: var(--space-7);
+}
+
+.appfolio-fallback {
+  padding: var(--space-9);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.appfolio-fallback p { color: var(--color-text-muted); font-size: var(--text-sm); max-width: 48ch; }
+
+.apply-band {
+  background: linear-gradient(135deg, #4B3D32 0%, #3A2F27 60%, #44382E 100%);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.apply-band h2 { color: #fff; margin-bottom: 0; }
+.apply-band p  { color: rgba(255,255,255,0.8); max-width: 52ch; }
+.apply-band__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center; }
+
+.how-it-works {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.how-step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  transition: border-color var(--duration) var(--ease-out),
+              transform var(--duration) var(--ease-out),
+              box-shadow var(--duration) var(--ease-out);
+}
+
+.how-step:hover { border-color: var(--color-accent); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+.how-step__num {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-alt);
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.how-step h3 { font-size: var(--text-lg); }
+.how-step p  { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+
+
+/* --------------------------------------------------------------------------
+   24. RESIDENTS PORTAL
+   -------------------------------------------------------------------------- */
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.portal-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: box-shadow var(--duration) var(--ease-out), transform var(--duration) var(--ease-out);
+}
+
+.portal-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.portal-card--primary { background: var(--color-ink); color: #fff; }
+.portal-card--primary h3, .portal-card--primary p { color: #fff; }
+.portal-card--primary p { color: rgba(255,255,255,0.8); }
+.portal-card--border { border: 1.5px solid var(--color-border); background: var(--color-surface); }
+.portal-card--alt    { background: var(--color-bg-alt); border: 1.5px solid var(--color-border); }
+
+.portal-card__icon { color: var(--color-primary); }
+.portal-card--primary .portal-card__icon { color: rgba(255,255,255,0.85); }
+
+.resource-list { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.resource-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: border-color var(--duration) var(--ease-out), background var(--duration) var(--ease-out);
+}
+
+.resource-item:hover { border-color: var(--color-primary); background: var(--color-bg-alt); }
+.resource-item svg { color: var(--color-primary); flex-shrink: 0; }
+.resource-item__name { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text); display: block; }
+.resource-item__desc { font-size: var(--text-xs); color: var(--color-text-muted); display: block; margin-top: 2px; }
+.resource-item__arrow { margin-left: auto; color: var(--color-text-muted); flex-shrink: 0; }
+
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.policy-block__heading {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+  display: block;
+}
+
+.policy-block ul { display: flex; flex-direction: column; gap: var(--space-2); }
+.policy-block li { display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); }
+.policy-block li span { color: var(--color-primary); flex-shrink: 0; }
+
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.emergency-card {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.emergency-card--urgent { border-color: #C62828; background: #FFF5F5; }
+
+.emergency-card__label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.emergency-card--urgent .emergency-card__label { color: #C62828; }
+.emergency-card__name { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text); display: block; margin-bottom: var(--space-2); }
+.emergency-card__contact { font-family: var(--font-heading); font-size: var(--text-xl); font-weight: var(--weight-light); }
+.emergency-card__contact a { color: var(--color-primary); }
+.emergency-card--urgent .emergency-card__contact a { color: #C62828; }
+
+
+/* --------------------------------------------------------------------------
+   25. COMMUNITIES TEASER + STERLING BANNER
+   -------------------------------------------------------------------------- */
+
+.communities-teaser {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+/* Card links to the community's Sterling Portfolio page. The leading letter-mark
+   icon was dropped at the client's request (2026-08-18). The theme pattern puts a
+   real link on the name and stretches it over the card via ::after; the static
+   preview makes the whole card an <a>. Both share these styles. */
+.community-teaser {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--space-5);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow var(--duration) var(--ease-out), transform var(--duration) var(--ease-out),
+              border-color var(--duration) var(--ease-out);
+}
+
+.community-teaser:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.community-teaser:hover .community-teaser__name { color: var(--color-primary); }
+
+.community-teaser__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.15;
+  transition: color var(--duration) var(--ease-out);
+}
+
+/* Stretched link — makes the whole card clickable from the name's anchor */
+.community-teaser__name a::after { content: ''; position: absolute; inset: 0; }
+.community-teaser__loc  { font-size: var(--text-xs); color: var(--color-text-muted); margin: 2px 0 0; }
+
+.badge--soon {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  background: var(--color-bg-alt);
+  color: var(--color-text-muted);
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-2);
+}
+
+.sterling-banner {
+  background: linear-gradient(135deg, #4B3D32 0%, #3A2F27 60%, #44382E 100%);
+  color: #fff;
+}
+
+.sterling-banner .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6) var(--space-8);
+  flex-wrap: wrap;
+}
+
+.sterling-banner__left { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
+.sterling-banner__logo { height: 34px; width: auto; opacity: 0.95; }
+.sterling-banner__text { font-size: var(--text-base); color: rgba(255,255,255,0.85); max-width: 42ch; margin: 0; }
+
+
+/* --------------------------------------------------------------------------
+   26. INQUIRY POP-UP (site-wide lead capture)
+   --------------------------------------------------------------------------
+   Opens shortly after page load, once per browser session. In the static
+   preview the markup is injected by preview-1/inquiry-popup.js; in the theme
+   the same markup is emitted server-side. Sits above .mp-modal's z-index so a
+   stray overlap can never bury it.
+   -------------------------------------------------------------------------- */
+
+.inq-popup { position: fixed; inset: 0; z-index: 10001; display: none; }
+.inq-popup.is-open { display: block; }
+
+.inq-popup__backdrop {
+  position: absolute; inset: 0; background: rgba(75, 61, 50, 0.72);
+  animation: inqFade 260ms var(--ease-out) both;
+}
+
+.inq-popup__dialog {
+  position: relative; z-index: 1;
+  width: min(900px, 92vw); max-height: 90vh;
+  margin: max(5vh, 16px) auto;
+  display: grid; grid-template-columns: 0.8fr 1fr;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: inqRise 340ms var(--ease-out) both;
+}
+
+.inq-popup__media { position: relative; min-height: 100%; background: var(--color-bg-alt); }
+.inq-popup__media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: center 60%;
+}
+
+.inq-popup__body {
+  padding: var(--space-7); overflow-y: auto; min-height: 0;  /* grid items default to min-height:auto */
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+.inq-popup__title { font-size: var(--text-2xl); margin: 0; }
+.inq-popup__text { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+.inq-popup__form { display: flex; flex-direction: column; gap: var(--space-4); }
+.inq-popup__form .btn { width: 100%; justify-content: center; }
+.inq-popup__fineprint {
+  font-size: var(--text-xs); color: var(--color-text-muted); margin: 0;
+}
+.inq-popup__fineprint a { color: var(--color-primary); }
+
+.inq-popup__close {
+  position: absolute; top: 10px; right: 12px; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: 26px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background-color var(--duration) var(--ease-out),
+              border-color var(--duration) var(--ease-out);
+}
+.inq-popup__close:hover { background: #fff; border-color: var(--color-primary); }
+
+/* Submission failed (theme only — the static preview never posts) */
+.inq-popup__error {
+  font-size: var(--text-sm); margin: 0;
+  color: #C62828; background: #FFF5F5;
+  border: 1px solid #C62828; border-radius: var(--radius-base);
+  padding: var(--space-4);
+}
+.inq-popup__error a { color: #C62828; text-decoration: underline; }
+
+/* Post-submit confirmation state */
+.inq-popup__thanks { text-align: left; display: flex; flex-direction: column; gap: var(--space-3); }
+.inq-popup__thanks h3 { font-size: var(--text-xl); margin: 0; }
+.inq-popup__thanks p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+.inq-popup__thanks p a { color: var(--color-primary); }
+
+body.inq-open { overflow: hidden; }
+
+@keyframes inqFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes inqRise {
+  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 720px) {
+  /* Stack: short banner image on top, form below; the dialog itself scrolls.
+     Trimmed tight so the submit button lands above the fold on a phone. */
+  .inq-popup__dialog {
+    grid-template-columns: 1fr; width: min(460px, 94vw);
+    margin: max(3vh, 12px) auto; overflow-y: auto;
+  }
+  .inq-popup__media { min-height: 104px; height: 104px; }
+  .inq-popup__body { padding: var(--space-6); overflow: visible; gap: var(--space-3); }
+  .inq-popup__title { font-size: var(--text-xl); }
+  .inq-popup__form { gap: var(--space-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inq-popup__backdrop, .inq-popup__dialog { animation: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   27. RESPONSIVE OVERRIDES
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .amenities-split        { grid-template-columns: 1fr; }
+  .fp-selector            { grid-template-columns: 1fr; }
+  .fp-detail              { position: static; }
+  .neighborhood-explorer  { grid-template-columns: 1fr; }
+  .explorer__map-panel    { position: static; order: 2; }
+  .explorer__list-panel   { order: 1; }
+  .explorer-map           { height: 360px; min-height: 300px; }
+  .explorer__list         { max-height: 460px; }
+  .communities-teaser     { grid-template-columns: repeat(2, 1fr); }
+  .gallery-grid           { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
+  .gallery-item--wide     { grid-column: span 2; }
+  .gallery-item--tall     { grid-row: span 1; }
+  .contact-grid           { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .amenity-grid           { grid-template-columns: 1fr; }
+  .loc-stats              { grid-template-columns: 1fr; }
+  .form-row               { grid-template-columns: 1fr; }
+  .communities-teaser     { grid-template-columns: 1fr; }
+  .tab-btn                { padding: var(--space-2) var(--space-3); font-size: 10px; }
+  .portal-grid            { grid-template-columns: 1fr; }
+  .gallery-grid           { grid-template-columns: 1fr; grid-auto-rows: 260px; }
+  .gallery-item--wide     { grid-column: span 1; }
+  .footer-nav             { justify-content: flex-start; }
+}
+
+
+/* --------------------------------------------------------------------------
+   28. BLOCK PATTERN BRIDGES
+   --------------------------------------------------------------------------
+   Maps native block editor output (patterns in /patterns + theme.json presets)
+   onto the component styles above. Added when the homepage was rebuilt for
+   visual block editing — see blocks/ and patterns/. These selectors are scoped
+   so they only affect block-pattern markup, never the original components.
+   -------------------------------------------------------------------------- */
+
+/* Full-bleed section groups span the viewport; inner .container re-centres. */
+.wp-block-group.alignfull,
+.section--alt.wp-block-group,
+.feature.wp-block-group,
+.cta-section.wp-block-group,
+.sterling-banner.wp-block-group { max-width: none; }
+
+.wp-block-group.container     { max-width: var(--container-max); }
+.wp-block-group.section-intro { max-width: 640px; margin-inline: 0; }
+
+/* Block groups used as grid or flex items must not keep the generic
+   `.wp-block-group { margin-inline: auto }` from section 13. On a grid item an
+   auto inline margin beats `justify-self: stretch`, so the item collapses to
+   its fit-content width instead of filling the track. For .feature__image,
+   whose only child is an absolutely positioned <img>, fit-content is 0 — the
+   photo vanishes entirely. Elsewhere it just renders cards narrower than their
+   cell. Every layout container the patterns place groups inside is listed here. */
+.feature > .wp-block-group,
+.policy-grid > .wp-block-group,
+.emergency-grid > .wp-block-group,
+.communities-teaser > .wp-block-group,
+.quick-contact-strip .container > .wp-block-group,
+.transit-strip .container > .wp-block-group,
+.sterling-banner .container > .wp-block-group {
+  margin-inline: 0;
+  max-width: none;
+}
+
+/* Gallery mosaic (section 19) built from core Image blocks. Core adds a bottom
+   margin, rounded corners and a centred caption to .wp-block-image; the mosaic
+   wants flush tiles and the caption as a bottom-left overlay. */
+.gallery-grid > .wp-block-image {
+  margin: 0;
+  height: 100%;          /* a <figure> grid item wraps its image instead of
+                            filling the row the way the preview's <div> did */
+  border-radius: var(--radius-lg);
+}
+.gallery-grid .wp-block-image img { border-radius: 0; }
+.gallery-grid .wp-block-image figcaption.gallery-item__caption {
+  margin: 0;
+  text-align: left;
+  font-size: var(--text-xs);
+}
+
+/* Feature image fills its grid cell (reset default figure margin + radius). */
+.feature__image .wp-block-image      { margin: 0; height: 100%; }
+.feature__image .wp-block-image img  { border-radius: 0; }
+
+/* Sterling banner logo (className lands on the <figure>). */
+.sterling-banner__logo img { height: 34px; width: auto; opacity: 0.95; }
+
+/* Core Separator used as the brand divider. */
+.wp-block-separator.divider {
+  border: none;
+  opacity: 1;
+  height: 2px;
+  width: 48px;
+  max-width: 48px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dark));
+}
+.cta-section .wp-block-separator.divider { margin-inline: auto; }
+
+/* Residence features as a core list (CSS checkmark replaces the inline SVG). */
+.residence-grid.wp-block-list { list-style: none; padding: 0; }
+.residence-grid.wp-block-list li::before {
+  content: "✓";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--color-accent);
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: var(--weight-bold);
+}
+
+/* Eyebrow paragraph block style. */
+.is-style-arden-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+
+/* Core Buttons → Rivergate .btn appearance (block styles registered in PHP). */
+.wp-block-button.is-style-arden-primary   > .wp-block-button__link,
+.wp-block-button.is-style-arden-secondary > .wp-block-button__link,
+.wp-block-button.is-style-arden-ghost     > .wp-block-button__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-7);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  border-radius: var(--radius-base);
+  white-space: nowrap;
+  transition: background-color var(--duration) var(--ease-out),
+              color var(--duration) var(--ease-out),
+              transform var(--duration) var(--ease-out),
+              box-shadow var(--duration) var(--ease-out);
+}
+
+.wp-block-button.is-style-arden-primary > .wp-block-button__link {
+  background-color: var(--color-accent);   /* matches .btn--primary */
+  color: var(--color-ink);
+}
+.wp-block-button.is-style-arden-primary > .wp-block-button__link:hover {
+  background-color: var(--color-accent-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.wp-block-button.is-style-arden-secondary > .wp-block-button__link {
+  background-color: transparent;
+  color: inherit;                        /* adaptive: ink on the field, cream on dark bands */
+  border: 1.5px solid currentColor;
+}
+.wp-block-button.is-style-arden-secondary > .wp-block-button__link:hover {
+  background-color: var(--color-accent);
+  color: var(--color-ink);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.wp-block-button.is-style-arden-ghost > .wp-block-button__link {
+  background-color: transparent;
+  color: var(--color-on-dark);
+  border: 1.5px solid rgba(244, 242, 237, 0.6);
+}
+.wp-block-button.is-style-arden-ghost > .wp-block-button__link:hover {
+  background-color: rgba(244, 242, 237, 0.12);
+  border-color: var(--color-accent-light);
+}
+
+/* CTA closing band — stack the buttons vertically (like the preview) and give
+   the primary "Schedule a Tour" the animated pulse (matches .btn--pulse). */
+.cta-section .wp-block-buttons.is-layout-flex {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+.cta-section .wp-block-button.is-style-arden-primary > .wp-block-button__link {
+  position: relative;
+  isolation: isolate;
+  --ar-bd-angle: 0deg;
+  border: none;
+  background-color: var(--color-accent);
+  background-image: linear-gradient(100deg,
+    var(--color-accent-dark) 0%, var(--color-accent) 30%, #CCC9C0 50%,
+    var(--color-accent) 70%, var(--color-accent-dark) 100%);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  animation: ar-btn-pulse 5s ease-in-out infinite alternate;
+}
+.cta-section .wp-block-button.is-style-arden-primary > .wp-block-button__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--ar-bd-angle),
+    rgba(255,255,255,0)   0deg,
+    rgba(255,255,255,0)   250deg,
+    rgba(244,242,237,0.9) 312deg,
+    #ffffff               335deg,
+    rgba(244,242,237,0.9) 352deg,
+    rgba(255,255,255,0)   360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ar-btn-border 3.2s linear infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-section .wp-block-button.is-style-arden-primary > .wp-block-button__link {
+    animation: none;
+    background-image: none;
+    background-color: var(--color-accent);
+  }
+  .cta-section .wp-block-button.is-style-arden-primary > .wp-block-button__link::after {
+    animation: none;
+    display: none;
+  }
+}
+
+/* Community teasers: WP wraps each card in a flow-layout group, which inherits
+   the generic `.wp-block-group { margin-inline: auto }` above. On a grid item an
+   auto inline margin means shrink-to-fit, so the cards sized to their text
+   instead of filling the column — reset both axes so all six are equal size. */
+.communities-teaser > .community-teaser { margin-block: 0; margin-inline: 0; }
+
+/* Inner-page icon lists rebuilt as core lists — icon drawn via ::before.
+   (feature-list / includes-grid already strip list markers via their own rules.) */
+.feature-list.wp-block-list li::before {
+  content: "✓";
+  flex-shrink: 0;
+  color: var(--color-primary);
+  font-weight: var(--weight-bold);
+}
+.includes-grid.wp-block-list li::before {
+  content: "✓";
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: var(--weight-bold);
+}
+.policy-block .wp-block-list { list-style: none; }
+.policy-block .wp-block-list li::before {
+  content: "→";
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+
+/* --------------------------------------------------------------------------
+   29. ARDEN ADDITIONS
+   --------------------------------------------------------------------------
+   Everything below is new for The Arden (or for Riverbend / Bellclair before
+   it, and kept). Kept at the end so the forked sections above stay diffable
+   against riverbend-florhampark, bellclair-montclair and rivergate-bordentown.
+   29a–29m are the site-wide brand layer; 29n onward is the coming-soon splash.
+   -------------------------------------------------------------------------- */
+
+/* ---- 29a. Serif display type ----------------------------------------------
+   The brand's primary face (Ansam) is a light, high-contrast serif set in
+   sentence case — no tracked capitals, unlike Riverbend's Condor. The italic
+   carries emphasis inside headings (<em>). */
+h1, h2, h3, h4, h5,
+.hero__headline,
+.nav-overlay__links a,
+.card__heading,
+.fp-option__name,
+.fp-detail__name,
+.community-teaser__name,
+.mp-modal__title,
+.accordion__trigger {
+  font-weight: var(--weight-light);
+  text-transform: none;
+  letter-spacing: var(--tracking-display);
+}
+h4, h5 { font-weight: var(--weight-regular); }
+h1, h2, h3 { line-height: 1.08; }
+:is(h1, h2, h3, h4) em { font-style: italic; }
+.hero__headline { max-width: 20ch; }
+
+/* ---- 29b. Josefin Sans labels -----------------------------------------------
+   The guide's secondary face sets sub-headers; here it carries the small
+   tracked labels (eyebrows, form labels, footer links). Josefin's capitals
+   sit high in their line box, so a hair of top padding re-centres them. */
+.eyebrow,
+.fp-detail__eyebrow,
+.contact-label,
+.form-group label,
+.emergency-card__label,
+.policy-block__heading,
+.footer-col__heading,
+.footer-nav a,
+.amenities-photo__caption,
+.location-photo__caption,
+.amenity__name {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.eyebrow { font-size: 0.75rem; line-height: 1.6; padding-top: 0.12em; }
+.btn { letter-spacing: 0.18em; }
+
+/* ---- 29c. Two-logo header ---------------------------------------------------
+   "the arden" in espresso on the light header; in stone while the header sits
+   on a dark hero or the open menu. */
+.nav-logo { max-height: none; }
+.nav-logo img { height: 46px; width: auto; }
+@media (max-width: 640px) { .nav-logo img { height: 36px; } }
+.nav-logo .logo--on-dark { display: none; }
+.has-video-hero .site-header:not(.is-scrolled) .nav-logo .logo--on-light,
+body.nav-is-open .nav-logo .logo--on-light { display: none; }
+.has-video-hero .site-header:not(.is-scrolled) .nav-logo .logo--on-dark,
+body.nav-is-open .nav-logo .logo--on-dark { display: block; }
+
+.footer-logo { max-height: none; }
+.footer-logo img { height: 72px; }
+
+/* ---- 29d. Hairline divider --------------------------------------------------
+   A single fine rule in Intrigue (Stone on dark bands, via --color-rule).
+   Works on <div> and on the patterns' <hr class="wp-block-separator divider">. */
+.divider,
+.wp-block-separator.divider {
+  width: 64px;
+  max-width: 64px;
+  height: 1px;
+  border: 0;
+  border-radius: 0;
+  background: var(--color-rule);
+  opacity: 1;
+}
+
+/* ---- 29e. Buttons read the --btn-* tokens -----------------------------------
+   Espresso with a stone-white label on the light field; Stone with an
+   espresso label on the dark bands (the tokens flip in section 4). Covers the
+   core Button block styles too, for the WordPress fork. */
+.btn--primary,
+.btn--nav,
+.wp-block-button.is-style-arden-primary > .wp-block-button__link {
+  background-color: var(--btn-fill);
+  color: var(--btn-label);
+}
+.btn--primary:hover,
+.btn--nav:hover,
+.wp-block-button.is-style-arden-primary > .wp-block-button__link:hover {
+  background-color: var(--btn-fill-hover);
+  color: var(--btn-label);
+}
+.btn--secondary:hover,
+.wp-block-button.is-style-arden-secondary > .wp-block-button__link:hover {
+  background-color: var(--btn-fill);
+  border-color: var(--btn-fill);
+  color: var(--btn-label);
+}
+.btn--pulse,
+.cta-section .wp-block-button.is-style-arden-primary > .wp-block-button__link {
+  background-color: var(--btn-fill);
+  background-image: linear-gradient(100deg,
+    var(--btn-fill) 0%, var(--btn-fill) 30%, var(--btn-fill-hover) 50%,
+    var(--btn-fill) 70%, var(--btn-fill) 100%);
+  color: var(--btn-label);
+}
+.btn--pulse:hover { background-color: var(--btn-fill-hover); }
+@media (prefers-reduced-motion: reduce) {
+  .btn--pulse,
+  .cta-section .wp-block-button.is-style-arden-primary > .wp-block-button__link {
+    background-image: none;
+    background-color: var(--btn-fill);
+  }
+}
+.btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+
+/* ---- 29g. Amenity photo panel cross-fades when an amenity is opened ------- */
+.amenities-photo img { transition: transform 600ms var(--ease-out), opacity 320ms var(--ease-out); }
+.amenities-photo img.is-swapping { opacity: 0; }
+.amenities-photo__caption {
+  display: block;
+  margin-bottom: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-on-dark);
+}
+
+/* ---- 29h. Floor-plan placeholder (plans not yet supplied) ----------------- */
+.fp-diagram { border-color: var(--color-accent); }
+
+/* ---- 29i. Map fallback (OpenStreetMap embed if Google Maps refuses the key) */
+.explorer-map iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+/* ---- 29j. Overlay nav carries a 7th link (Residents) — extend the stagger */
+.nav-overlay__links a:nth-child(7) { transition-delay: 360ms; }
+
+/* ---- 29j-2. Overlay nav fits short screens (carried from Riverbend) -------
+   Start below the header, centre with auto margins (which fall back to
+   top-aligned rather than overflowing upward), size links and gaps by
+   viewport height, and let anything still too tall scroll inside the overlay
+   under a solid header. The dvh lines follow vh fallbacks for Safari. */
+.nav-overlay {
+  justify-content: flex-start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  gap: clamp(1rem, 3vh, 2.5rem);
+  gap: clamp(1rem, 3dvh, 2.5rem);
+  padding-top: calc(var(--nav-height) + var(--space-5));
+  padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+}
+.nav-overlay > :first-child { margin-top: auto; }
+.nav-overlay > :last-child  { margin-bottom: auto; }
+.nav-overlay__links {
+  gap: clamp(0.25rem, 1.4vh, 1rem);
+  gap: clamp(0.25rem, 1.4dvh, 1rem);
+}
+.nav-overlay__links a {
+  font-size: min(max(1.75rem, 3.5vw), 3rem, max(1.25rem, 4.4vh));
+  font-size: min(max(1.75rem, 3.5vw), 3rem, max(1.25rem, 4.4dvh));
+  line-height: 1.25;
+}
+.nav-overlay__divider {
+  flex-shrink: 0;
+  height: clamp(16px, 4vh, 40px);
+  height: clamp(16px, 4dvh, 40px);
+}
+body.nav-is-open .site-header,
+body.has-video-hero.nav-is-open .site-header { background-color: var(--color-ink); }
+@media (max-width: 640px) {
+  .nav-overlay { padding-top: calc(var(--nav-height-mob) + var(--space-4)); }
+}
+
+/* ---- 29j-3. No sideways scroll on narrow phones (carried from Riverbend) --
+   A plain 1fr column grows to its widest no-wrap child, and elements waiting
+   to slide in sit off-screen until revealed. `clip`, unlike `hidden`, creates
+   no scroll container, so the sticky header keeps working. */
+@media (max-width: 900px) {
+  .feature { grid-template-columns: minmax(0, 1fr); }
+}
+html, body { overflow-x: clip; }
+
+/* ---- 29k. Hero and page-hero eyebrows sit in Stone on the photo ---------- */
+.hero__eyebrow { color: var(--color-stone); }
+.page-hero__content .eyebrow { color: var(--color-stone); }
+
+/* ---- 29l. Photo overlays in espresso -------------------------------------- */
+.hero__bg::after {
+  background:
+    linear-gradient(90deg, rgba(75, 61, 50, 0.66) 0%, rgba(75, 61, 50, 0.32) 48%, rgba(75, 61, 50, 0) 74%),
+    linear-gradient(to top, rgba(75, 61, 50, 0.72) 0%, rgba(75, 61, 50, 0.22) 50%, rgba(75, 61, 50, 0.18) 100%);
+}
+.amenities-photo__overlay {
+  background: linear-gradient(to top, rgba(75, 61, 50, 0.86) 0%, rgba(75, 61, 50, 0.55) 55%, rgba(75, 61, 50, 0) 100%);
+}
+.amenity-grid > .amenity:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+
+/* ---- 29m. WordPress block bridges (carried from Riverbend) ----------------
+   The theme's patterns build the preview's markup from core blocks. These
+   rules close the gaps the section 28 bridges do not cover. */
+.gallery-grid .gallery-item > figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+  color: rgba(255,255,255,0.85);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-align: left;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+}
+.gallery-grid .gallery-item:hover > figcaption,
+.gallery-grid .gallery-item:focus-visible > figcaption {
+  opacity: 1;
+  transform: translateY(0);
+}
+.portal-grid > .wp-block-group,
+.how-it-works > .wp-block-group {
+  margin-inline: 0;
+  max-width: none;
+}
+.portal-card h3 { font-size: var(--text-xl); }
+.portal-card > .wp-block-buttons { margin-top: auto; }
+.portal-note {
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  background: var(--color-bg-alt);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.portal-note p { max-width: none; font-size: var(--text-sm); margin: 0; }
+.portal-note a { color: var(--color-primary); }
+.policy-block .wp-block-list li::before { content: "—"; }
+.contact-info > p:not(.contact-label) + .contact-label { margin-top: var(--space-6); }
+.feature__body p.eyebrow,
+.cta-section p.eyebrow { margin-bottom: var(--space-4); }
+.cta-section p.eyebrow { color: var(--color-primary); }
+.cta-section .wp-block-buttons.is-layout-flex {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.container > .residences-split.wp-block-group { margin-top: var(--space-8); }
+.contact-info.wp-block-group > p:last-child { margin-bottom: var(--space-4); }
+
+
+/* ==========================================================================
+   29n. COMING-SOON SPLASH (index.html until the full site launches)
+   ==========================================================================
+   One page: a dark brand hero (no photography exists yet, so the hero is the
+   logo on espresso over the terrain-line texture), an introduction, the three
+   brand values on a dark band, the setting, and the interest-list form. Every
+   dark component here is registered in BOTH dark-band lists in section 4.
+   ========================================================================== */
+
+/* ---- Header on the splash: two anchor links and the Inquire button, no menu */
+.is-splash .nav-actions { gap: var(--space-6); }
+.splash-nav-link {
+  font-family: var(--font-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding-top: 0.12em;
+  color: var(--color-text);
+  transition: color var(--duration) var(--ease-out);
+}
+.splash-nav-link:hover { color: var(--color-primary); }
+.has-video-hero .site-header:not(.is-scrolled) .splash-nav-link { color: var(--color-on-dark); }
+.has-video-hero .site-header:not(.is-scrolled) .splash-nav-link:hover { color: var(--color-stone); }
+.has-video-hero .site-header:not(.is-scrolled) .btn--nav {
+  background-color: var(--color-stone);
+  color: var(--color-ink);
+}
+.has-video-hero .site-header:not(.is-scrolled) .btn--nav:hover { background-color: var(--color-on-dark); }
+#about, #setting, #inquire { scroll-margin-top: var(--nav-height); }
+@media (max-width: 640px) {
+  .splash-nav-link { display: none; }
+  .is-splash .nav-actions .btn--nav { display: inline-flex; padding: var(--space-2) var(--space-4); }
+  #about, #setting, #inquire { scroll-margin-top: var(--nav-height-mob); }
+}
+
+/* ---- Terrain-line texture (assets/images/texture/contours.svg) ------------
+   Stone contour lines generated for the brand's "natural landscapes" story
+   (Six Mile Run, Colonial Park). Used at low opacity on dark and sage fields. */
+.terrain {
+  position: absolute;
+  inset: -4%;
+  z-index: -1;
+  background: url("../images/texture/contours.svg") center / cover no-repeat;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* ---- Hero ------------------------------------------------------------------ */
+.splash-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--nav-height) + var(--space-6)) var(--section-padding-x) calc(var(--space-10) + var(--space-4));
+  background-color: var(--color-ink);
+  background-image: radial-gradient(ellipse 62% 56% at 50% 47%, rgba(103, 90, 73, 0.6) 0%, rgba(75, 61, 50, 0) 72%);
+  overflow: hidden;
+  text-align: center;
+}
+.splash-hero .terrain { animation: ar-terrain-drift 50s ease-in-out infinite alternate; }
+@keyframes ar-terrain-drift {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to   { transform: scale(1.07) translate3d(-1.5%, 1%, 0); }
+}
+.splash-hero__content {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.splash-hero__kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: none;
+  margin-bottom: clamp(2rem, 5vh, 3.25rem);
+  font-family: var(--font-accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--color-stone);
+}
+.splash-hero__kicker span { padding: 0.15em 0 0 0.36em; }   /* re-centre Josefin caps; balance the trailing tracking */
+.splash-hero__kicker::before,
+.splash-hero__kicker::after {
+  content: '';
+  width: clamp(32px, 6vw, 64px);
+  height: 1px;
+  background: rgba(204, 201, 192, 0.55);
+}
+.splash-hero__logo { margin: 0; line-height: 0; }
+.splash-hero__logo img { width: min(560px, 78vw); height: auto; }
+.splash-hero__lockup {
+  max-width: none;
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+  padding-left: 0.5em;
+  font-family: var(--font-accent);
+  font-size: clamp(0.72rem, 1.4vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--color-stone);
+}
+.splash-hero__tagline {
+  max-width: 30ch;
+  margin-top: clamp(1.75rem, 4.5vh, 3rem);
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-style: italic;
+  font-weight: var(--weight-light);
+  line-height: 1.45;
+  color: var(--color-on-dark);
+}
+.splash-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+.splash-hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-6);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-accent);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-on-dark-muted);
+  padding-left: 0.3em;
+}
+.splash-hero__scroll::after {
+  content: '';
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, rgba(204, 201, 192, 0.9), rgba(204, 201, 192, 0));
+  transform-origin: top;
+  animation: ar-scroll-cue 2.4s var(--ease-out) infinite;
+}
+@keyframes ar-scroll-cue {
+  0%   { transform: scaleY(0); opacity: 1; }
+  70%  { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+/* Entrance: the hero's lines rise in sequence on load (no JS) */
+.splash-hero__content > * { animation: ar-rise 1.2s var(--ease-out) both; }
+.splash-hero__content > :nth-child(2) { animation-delay: 150ms; }
+.splash-hero__content > :nth-child(3) { animation-delay: 380ms; }
+.splash-hero__content > :nth-child(4) { animation-delay: 520ms; }
+.splash-hero__content > :nth-child(5) { animation-delay: 660ms; }
+@keyframes ar-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (max-height: 640px) and (min-width: 641px) {
+  .splash-hero__scroll { display: none; }
+}
+
+/* ---- Introduction ------------------------------------------------------------ */
+.splash-intro { position: relative; isolation: isolate; overflow: hidden; }
+.splash-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
+}
+.splash-intro__lead h2 { font-size: var(--text-3xl); max-width: 13ch; }
+.splash-intro__lead h2 em { color: var(--color-walnut); }
+.splash-intro__body { padding-top: var(--space-2); }
+.splash-intro__body p { margin-bottom: var(--space-5); }
+.splash-intro__lede {
+  font-size: var(--text-lg);
+  line-height: 1.7;
+  color: var(--color-text);
+}
+.splash-intro__body .btn { margin-top: var(--space-4); }
+.splash-intro__mark {
+  position: absolute;
+  z-index: -1;
+  right: -4%;
+  bottom: -14%;
+  width: clamp(260px, 34vw, 480px);
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* ---- Brand values on a dark band ------------------------------------------- */
+.splash-pillars { position: relative; isolation: isolate; overflow: hidden; }
+.splash-pillars .terrain { opacity: 0.09; background-position: 70% 30%; }
+.splash-pillars__head { text-align: center; max-width: 760px; margin: 0 auto var(--space-9); }
+.splash-pillars__head .divider { margin-inline: auto; }
+.splash-pillars__head h2 { font-size: var(--text-3xl); }
+.splash-pillars__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(204, 201, 192, 0.24);
+}
+.splash-pillar {
+  padding: var(--space-8) clamp(1.25rem, 3vw, 2.75rem) 0;
+  border-left: 1px solid rgba(204, 201, 192, 0.24);
+}
+.splash-pillar:first-child { border-left: 0; padding-left: 0; }
+.splash-pillar:last-child { padding-right: 0; }
+.splash-pillar__num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-style: italic;
+  font-weight: var(--weight-light);
+  line-height: 1;
+  color: var(--color-sage);                 /* large text: 3.4:1 on espresso */
+}
+.splash-pillar h3 { font-size: var(--text-2xl); margin: var(--space-4) 0; }
+.splash-pillars .splash-pillar p { color: var(--color-on-dark-muted); max-width: 34ch; }
+
+/* ---- The setting ---------------------------------------------------------------- */
+.splash-setting__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: center;
+}
+.splash-setting__art {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  background-color: var(--color-intrigue);
+  /* Espresso deepens toward the foot so the caption sits on ~6:1, not on bare
+     Intrigue (which fails small text in any of the brand colours). */
+  background-image: linear-gradient(170deg, rgba(75, 61, 50, 0) 35%, rgba(75, 61, 50, 0.62) 100%);
+}
+.splash-setting__art .terrain { opacity: 0.42; background-size: 230% auto; background-position: 28% 42%; }
+.splash-setting__mark { width: clamp(84px, 11vw, 132px); opacity: 0.9; }
+.splash-setting__place {
+  max-width: none;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-style: italic;
+  font-weight: var(--weight-light);
+  line-height: 1.05;
+  color: var(--color-on-dark);              /* large text on Intrigue: 3.2:1 */
+}
+.splash-setting__place span {
+  display: block;
+  margin-top: var(--space-4);
+  font-family: var(--font-accent);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  line-height: 1.8;
+  text-transform: uppercase;
+  color: var(--color-on-dark);
+}
+.splash-places { margin-top: var(--space-7); border-top: 1px solid var(--color-border); }
+.splash-place {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.splash-place svg { width: 32px; height: 32px; color: var(--color-accent); margin-top: 2px; }
+.splash-place__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-regular);
+  line-height: 1.2;
+  color: var(--color-text);
+}
+.splash-place p:not(.splash-place__name) { margin: var(--space-1) 0 0; font-size: var(--text-sm); }
+
+/* ---- Interest list ------------------------------------------------------------ */
+.splash-interest__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2.5rem, 7vw, 6.5rem);
+  align-items: start;
+}
+.splash-interest__info h2 { font-size: var(--text-3xl); }
+.splash-interest__facts { margin-top: var(--space-7); display: grid; gap: var(--space-5); }
+.splash-interest__facts p { margin: 0; max-width: none; }
+.splash-interest__facts .contact-label { margin-bottom: var(--space-1); }
+.splash-interest__facts p:not(.contact-label) { color: var(--color-text); }
+.splash-form {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.splash-form__title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-2);
+}
+.splash-form__intro { font-size: var(--text-sm); margin-bottom: var(--space-6); }
+.splash-form .contact-form .btn { align-self: flex-start; margin-top: var(--space-2); }
+/* Inputs size to their column, not to the browser's default ~20ch, so the
+   two-up name row cannot push past the card. */
+.form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.form-group input,
+.form-group select,
+.form-group textarea { width: 100%; min-width: 0; }
+.splash-form__fine { font-size: var(--text-xs); margin: 0; }
+.splash-form__success { text-align: center; padding: var(--space-8) 0; }
+.splash-form__success img { width: 88px; margin: 0 auto var(--space-6); opacity: 0.85; }
+.splash-form__success h3 { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
+.splash-form__success p { margin-inline: auto; }
+.splash-form__success .splash-form__fine { margin-top: var(--space-6); }
+.form-group input:invalid:not(:placeholder-shown) { border-color: #9C4A3A; }
+
+/* ---- Footer (splash) -------------------------------------------------------- */
+.is-splash .footer-inner { align-items: center; }
+
+/* ---- Responsive ------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .splash-intro__grid,
+  .splash-setting__grid,
+  .splash-interest__grid { grid-template-columns: minmax(0, 1fr); }
+  .splash-intro__lead h2 { max-width: 16ch; }
+  .splash-pillars__grid { grid-template-columns: minmax(0, 1fr); border-top: 0; }
+  .splash-pillar,
+  .splash-pillar:first-child {
+    border-left: 0;
+    border-top: 1px solid rgba(204, 201, 192, 0.24);
+    padding: var(--space-7) 0;
+  }
+  .splash-pillar:last-child { padding-bottom: 0; }
+  .splash-setting__art { aspect-ratio: 5 / 4; }
+}
+@media (max-width: 640px) {
+  .splash-hero__ctas { flex-direction: column; align-items: stretch; width: min(100%, 320px); }
+  .splash-setting__art { aspect-ratio: 1 / 1; }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-hero .terrain,
+  .splash-hero__content > *,
+  .splash-hero__scroll::after { animation: none; }
+}
+
+
+/* ==========================================================================
+   BRAND WEBFONTS — Ansam, Mont
+   --------------------------------------------------------------------------
+   Both faces are commercial and are NOT in the repo yet (Josefin Sans, the
+   third brand face, is a Google Font and is loaded by each page). Once
+   Sterling supplies licensed webfont files, drop them into
+   theme/arden-franklin/assets/fonts/ with the filenames below and uncomment
+   this block. Until then the --font-heading / --font-body stacks use the
+   Google Fonts fallbacks (Cormorant, Montserrat) loaded by each page. Left
+   commented so pages do not request missing files on every load.
+   ========================================================================== */
+/*
+@font-face {
+  font-family: 'Ansam';
+  src: url('../fonts/Ansam-Regular.woff2') format('woff2'),
+       url('../fonts/Ansam-Regular.otf') format('opentype');
+  font-weight: 300 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mont';
+  src: url('../fonts/Mont-Regular.woff2') format('woff2'),
+       url('../fonts/Mont-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mont';
+  src: url('../fonts/Mont-SemiBold.woff2') format('woff2'),
+       url('../fonts/Mont-SemiBold.otf') format('opentype');
+  font-weight: 500 600;
+  font-style: normal;
+  font-display: swap;
+}
+*/
