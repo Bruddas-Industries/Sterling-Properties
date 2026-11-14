@@ -259,27 +259,12 @@ add_action( 'wp_head', 'riverbend_seo_schema', 3 );
 
 
 // ---------------------------------------------------------------------------
-// SITEMAP — leave out pages that only redirect
+// SITEMAP
 // ---------------------------------------------------------------------------
 
-// Contact and Location 301 to homepage anchors (functions.php §10). Listing
-// them makes Search Console report "Page with redirect" for each.
-add_filter( 'wp_sitemaps_posts_query_args', function ( array $args, string $post_type ): array {
-	if ( 'page' !== $post_type ) {
-		return $args;
-	}
-	$ids = [];
-	foreach ( array_keys( riverbend_legacy_redirect_map() ) as $slug ) {
-		$page = get_page_by_path( $slug );
-		if ( $page ) {
-			$ids[] = $page->ID;
-		}
-	}
-	if ( $ids ) {
-		$args['post__not_in'] = array_merge( $args['post__not_in'] ?? [], $ids );
-	}
-	return $args;
-}, 10, 2 );
+// Bellclair's theme hid the pages its legacy redirects pointed away from. Riverbend's
+// redirects (functions.php §10) only fire for URLs that would 404, so there are no
+// such pages to hide.
 
 
 // ---------------------------------------------------------------------------
