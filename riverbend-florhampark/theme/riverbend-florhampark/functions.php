@@ -4,7 +4,7 @@
  * Riverbend at Florham Park, forked from bellclair-montclair 1.1.4.
  */
 
-define( 'RIVERBEND_VERSION', '1.0.0' );
+define( 'RIVERBEND_VERSION', '1.0.1' );
 // Same referrer-restricted key as Rivergate (OPERATIONS trap 7): every domain
 // Riverbend is served from must be in its allowed referrers.
 define( 'RIVERBEND_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' );
@@ -284,40 +284,91 @@ add_filter( 'acf/settings/save_json', function (): string {
 
 
 // ---------------------------------------------------------------------------
-// 10. LEGACY PAGE REDIRECTS
-//     The standalone Contact and Location pages were folded into the homepage
-//     (#contact and #neighborhood). Nothing links to them any more, but the
-//     URLs stay valid so old links and search results still land somewhere
-//     sensible instead of 404ing.
+// 10. LEGACY URL REDIRECTS
+//     riverbendatflorhampark.com was a 2016 WordPress site (Wellsbrook /
+//     parallelus-vellum themes) before this one. Its pages are indexed and
+//     bookmarked, so once the domain points here each old URL is sent to its
+//     new home instead of 404ing. Inventory: the old site's page and portfolio
+//     sitemaps and its header links (2026-11-13). The theme-demo pages that
+//     shipped with the old theme (samples, features, our-work, blog) are left
+//     to 404 so search engines drop them.
+//
+//     Only requests that would otherwise 404 are redirected, so a real page
+//     at the same path always wins. /residents/ exists on both sites and
+//     needs no entry.
 //
 //     NOTE: 301 is cached hard by browsers. While iterating pre-launch you can
 //     drop this to 302 with:
 //         add_filter( 'riverbend_legacy_redirect_status', fn() => 302 );
 // ---------------------------------------------------------------------------
 
-// Slug => homepage target. Also read by inc/seo.php to keep these pages out
-// of the sitemap.
+// Old path (relative to the site root, no slashes at either end) => new
+// target. A trailing "/*" matches everything below that path.
 function riverbend_legacy_redirect_map(): array {
     return apply_filters(
         'riverbend_legacy_redirects',
         [
-            'contact'  => '/#contact',
-            'location' => '/#neighborhood',
+            'amenities'                         => '/#amenities',
+            'floor-plans'                       => '/#floor-plans',
+            'photo-gallery'                     => '/gallery/',
+            'portfolio/*'                       => '/gallery/',      // old gallery photo pages
+            'view-availability'                 => '/availability/',
+            'request-availability-the-madison'    => '/availability/',
+            'request-availability-the-livingston' => '/availability/',
+            'request-availability-the-chatham'    => '/availability/',
+            'request-availability-the-florham'    => '/availability/',
+            'thank-request-availability'        => '/availability/',
+            'location'                          => '/#neighborhood',
+            'contact'                           => '/#contact',
+            'thank-you'                         => '/#contact',
+            'about'                             => '/#about',
+            'residents-4-blocks'                => '/residents/',
         ]
     );
 }
 
-function riverbend_legacy_page_redirects(): void {
-    if ( is_admin() || wp_doing_ajax() || ! is_page() ) {
-        return;
+/**
+ * The redirect target for a request path, or '' if none applies.
+ *
+ * @param string $path Request path relative to the site root, e.g. "floor-plans".
+ */
+function riverbend_legacy_redirect_target( string $path ): string {
+    $path = strtolower( trim( $path, '/' ) );
+    if ( '' === $path ) {
+        return '';
     }
-
-    foreach ( riverbend_legacy_redirect_map() as $slug => $target ) {
-        if ( is_page( $slug ) ) {
-            $status = (int) apply_filters( 'riverbend_legacy_redirect_status', 301 );
-            wp_safe_redirect( home_url( $target ), $status );
-            exit;
+    foreach ( riverbend_legacy_redirect_map() as $old => $target ) {
+        $old = strtolower( trim( $old, '/' ) );
+        if ( str_ends_with( $old, '/*' ) ) {
+            $prefix = substr( $old, 0, -2 );
+            if ( $path === $prefix || str_starts_with( $path, $prefix . '/' ) ) {
+                return $target;
+            }
+        } elseif ( $path === $old ) {
+            return $target;
         }
     }
+    return '';
 }
-add_action( 'template_redirect', 'riverbend_legacy_page_redirects' );
+
+function riverbend_legacy_url_redirects(): void {
+    if ( ! is_404() ) {
+        return;
+    }
+    $request = (string) wp_parse_url( (string) ( $_SERVER['REQUEST_URI'] ?? '' ), PHP_URL_PATH );
+    // Strip the site's own path, which is not "/" while it lives on the staging host.
+    $base = (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH );
+    if ( '' !== $base && str_starts_with( $request, $base ) ) {
+        $request = substr( $request, strlen( $base ) );
+    }
+    $target = riverbend_legacy_redirect_target( rawurldecode( $request ) );
+    if ( '' === $target ) {
+        return;
+    }
+    $status = (int) apply_filters( 'riverbend_legacy_redirect_status', 301 );
+    wp_safe_redirect( home_url( $target ), $status );
+    exit;
+}
+// Priority 1: before core's redirect_canonical(), which would otherwise try to
+// guess a "close" page for a 404.
+add_action( 'template_redirect', 'riverbend_legacy_url_redirects', 1 );
