@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated: 2026-11-13.** Update this file when something here changes — it is the first
+**Last updated: 2026-11-16.** Update this file when something here changes — it is the first
 thing to read when picking the project back up.
 
 Environment and deploy details are in [`OPERATIONS.md`](./OPERATIONS.md); architecture and
@@ -562,19 +562,35 @@ referrer, `blog_public` 1, a Search Console token, and `scripts/maintenance/site
 
 ## Where The Arden stands
 
-Property #4 of 10: **The Arden at Sterling Pointe**, Franklin Township (Somerset County), NJ. The
-working name was "Sterling Pointe". Brief: Nina Chichelo's emails "The Arden (Sterling Pointe) -
+Property #4 of 10: **The Arden**, 100 Spangenburg Lane, Franklin Township (Somerset County), NJ
+08873. The working name was "Sterling Pointe", and the brand guide's lockup "The Arden at Sterling
+Pointe" is **retired**: Nina (2026-11-16) says it is "just called The Arden" from now on. Brief: Nina Chichelo's emails "The Arden (Sterling Pointe) -
 Next Website" (2026-11-11, to John and Chris) and her reply the same day: **a splash page first,
 then the official website closer to the end of December.** She describes a splash page as "one
 page of a website with general information and more of a COMING SOON vibe. 'Inquire here for
 more information' etc.", and points to Blue Hill's (`bluehillnj.com`) as the example.
 
-**Stage: coming-soon splash built (2026-11-13, branch `feature/arden-splash`)** in
-`arden-franklin/preview/index.html`. It is a single page; there are no Residents, Availability or
-Gallery pages yet. `theme/arden-franklin/` holds only `assets/` (`global.css`, logos, site icons,
-the share image, the terrain texture and the fonts README). The Vercel project is
-`arden-franklin-preview`, to be added by John in the dashboard; the client link will be
-`https://arden-franklin-preview.vercel.app/` once the branch is merged.
+**Stage: coming-soon splash in client review; round 1 of revisions done (2026-11-16).** The page
+is `arden-franklin/preview/index.html` (built 2026-11-13, PR #60). It is a single page; there are
+no Residents, Availability or Gallery pages yet. `theme/arden-franklin/` holds only `assets/`
+(`global.css`, logos, site icons, the share image, the line-pattern texture and the fonts README).
+The client link is `https://arden-franklin-preview.vercel.app/` (Vercel project
+`arden-franklin-preview`, Root Directory `arden-franklin/`), sent to Nina 2026-11-14. Her first
+reaction: "we love the modern background design and neutral colors."
+
+**Round 1 (Nina, 2026-11-16, three emails in the same thread, after a call with the team):**
+- Address 100 Spangenburg Lane, Franklin Township NJ 08873, and email `thearden@spgnj.com` added to
+  the interest section. **No phone number yet.**
+- "At Sterling Pointe" removed everywhere (the hero line under the logo, the title and share
+  tags, the location fact, the footer) and from the share image.
+- **Background pattern:** she asked for something closer to a screenshot of Kelly Wearstler's
+  *Graffito* wallpaper (bold cream hand-drawn angular lines on black). That is a commercial,
+  copyrighted design, so the new texture is an **original** generated pattern in the same spirit
+  (`assets/images/texture/lines.svg`: non-touching angular meanders and hairpins with a wobbly
+  brush, Stone on Espresso), not a trace of it. It replaces the contour lines on the hero, the
+  values band and the setting panel, and the share image. The hero has an espresso pool behind
+  the logo so it stays legible at the higher opacity.
+- Domain bought: `theardennj.com` (DNS not set up yet; nothing on the page links it).
 
 **Naming (decided with John, 2026-11-13).**
 - Slug: `arden-franklin`.
@@ -585,9 +601,11 @@ the share image, the terrain texture and the fonts README). The Vercel project i
 **Facts and their sources.**
 | Fact | Value | Source |
 |---|---|---|
-| Name | The Arden ("the arden" in the logo); "Arden at Sterling Pointe" on the guide's identity page and business-card mock-up | Brief; branding proposal |
+| Name | **The Arden** — never "at Sterling Pointe" (dropped by Sterling, 2026-11-16; the guide's identity page and business-card mock-up still show it) | Brief; Nina, 2026-11-16 |
+| Address | 100 Spangenburg Lane, Franklin Township, NJ 08873 | Nina, 2026-11-16 |
+| Email | `thearden@spgnj.com`. No phone number yet | Nina, 2026-11-16 |
 | Town | Franklin Township, NJ (Somerset County) | Branding proposal cover ("Sterling Pointe, Franklin Township") |
-| Domain | `TheArdenNJ.com` — registration and DNS control not yet confirmed | Branding proposal, page 2 |
+| Domain | `theardennj.com`, bought by Sterling 2026-11-16; DNS not pointed anywhere yet | Branding proposal, page 2; Nina, 2026-11-16 |
 | Brand story | "Arden evokes a sense of natural beauty and timeless sophistication… from the wooded trails of Six Mile Run to the gardens and open green spaces of Colonial Park"; vibe board: "Calm, Comfortable, & Contemporary" | Branding proposal, pages 2–3 |
 | Palette | Espresso `#4B3D32`, Walnut `#675A49`, Sage Mountain `#999381`, Intrigue `#818981`, Stone `#CCC9C0`, plus white and black | Branding proposal, page 4 |
 | Typefaces | Ansam (headlines, tagline), Mont (headlines, sub-heads, body), Josefin Sans (sub-heads, body). The font packet also shows Craw Modern, with no stated use | Branding proposal, pages 4–5 |
@@ -606,17 +624,18 @@ the share image, the terrain texture and the fonts README). The Vercel project i
   are commercial: Cormorant and Montserrat stand in, with the `@font-face` block commented out
   (see `assets/fonts/README.txt`).
 - **No photography or renderings exist yet**, so the hero is the logo in Stone on Espresso (the
-  guide's colour logo panel) over a terrain-line texture (`assets/images/texture/contours.svg`,
-  generated contour lines in Stone that nod to the parks named in the brand story). None of the
-  vibe-board photos is used; they are mood imagery of unknown licence.
+  guide's colour logo panel) over the line pattern (`assets/images/texture/lines.svg`; round 1
+  above). The generator is a seeded Python script (seed 11) kept outside the repo; regenerate
+  rather than hand-edit the SVG. None of the vibe-board photos is used; they are mood imagery of
+  unknown licence.
 - Arden-only CSS is in section 29: 29a–29m are the brand layer (most carried from Riverbend),
-  29n onward the splash components (`.splash-*`, `.terrain`). Riverbend's wave divider, wave
+  29n onward the splash components (`.splash-*`, including `.splash-pattern`). Riverbend's wave divider, wave
   texture and shuttle band are gone.
 - `preview/site.js` is cut down to the header, smooth scrolling, scroll reveal and the form. The
   form shows a thank-you state and sends nothing; on WordPress it becomes a lead form (theme
   1.18's Leads). There is no inquiry pop-up: the whole page is the inquiry.
 - Site icons are the espresso "ar" mark on Stone, opaque (32–512px); the 1200×630 share image is
-  the hero lockup.
+  the hero (logo, "Coming Soon", "Franklin Township, NJ") on the line pattern.
 
 ### Open — The Arden
 
@@ -633,20 +652,20 @@ the share image, the terrain texture and the fonts README). The Vercel project i
 - **The setting.** Six Mile Run and Colonial Park come from the branding proposal. The D&R Canal
   towpath and the park descriptions (Six Mile Run State Park is part of D&R Canal State Park;
   Colonial Park has the Rudolf W. van der Goot Rose Garden) are public facts added for the page.
-  No distances are given; measure with OSRM once the address is known.
+  No distances are given; now that the address is known they can be measured with OSRM if
+  Sterling wants them.
 - **"The Arden Way of Living"** pillars (Calm / Comfortable / Contemporary) expand the brand's
   vibe-board line with general copy that makes no factual claim.
 - **Form fields.** Name, email, phone, ideal move-in timing and questions. Ask Nina what she
   wants collected (Blue Hill's shows no form fields), and where leads should go.
 
-**Waiting on Nina:** the street address; the leasing phone and `@spgnj.com` email (confirm the
-spelling); whether a leasing office or sales centre will be open before launch; the leasing or
-opening timeline; any renderings, floor plans or site photography; web licences for Ansam and
-Mont; and whether `TheArdenNJ.com` is registered and who controls its DNS.
+**Waiting on Nina:** the leasing phone; whether a leasing office or sales centre will be open
+before launch; the leasing or opening timeline; the 55+ question; what the form should collect
+and where leads go; any renderings, floor plans or site photography; web licences for Ansam and
+Mont; and who controls DNS for `theardennj.com`.
 
-**Next:** merge, then John adds the `arden-franklin-preview` Vercel project (Root Directory
-`arden-franklin/`, framework Other, no build command) and sends Nina the link. Revision rounds
-use **edit-site-dev**. For the go-live of the splash itself, decide with John whether it goes
+**Next:** merge round 1 so the client link updates, and send Nina the changelog. Further revision
+rounds use **edit-site-dev**. For the go-live of the splash itself, decide with John whether it goes
 onto the multisite as a one-page Arden site (the splash as a page pattern) or stays static until
 the December site.
 

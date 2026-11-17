@@ -39,7 +39,7 @@ Sterling Properties/
 | Rivergate Bordentown | `rivergate-bordentown` | Live — rivergatenj.com |
 | Bellclair at Montclair | `bellclair-montclair` | Live — bellclair.com |
 | Riverbend at Florham Park | `riverbend-florhampark` | On the Cloudways staging host (blog 4); domain cutover pending |
-| The Arden at Sterling Pointe | `arden-franklin` | Coming-soon splash in client review (static preview); full site due end of December |
+| The Arden | `arden-franklin` | Coming-soon splash in client review (static preview); full site due end of December; domain theardennj.com |
 
 ## Quick Links
 
