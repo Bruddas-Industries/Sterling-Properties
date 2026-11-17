@@ -592,6 +592,20 @@ reaction: "we love the modern background design and neutral colors."
   the logo so it stays legible at the higher opacity.
 - Domain bought: `theardennj.com` (DNS not set up yet; nothing on the page links it).
 
+**Round 2 (John, 2026-11-16):**
+- **The Arden is a 55+ community** (confirmed by John). The page says so in the line under the
+  hero logo ("A 55+ Community", where "At Sterling Pointe" was), the intro ("a new 55+ community
+  … a place for adults 55 and over to enjoy life's next chapter"), the "A 55+ Community By
+  Sterling Properties" fact, the title, description and share tags, and the share image.
+- The Intrigue "Franklin Township / Somerset County, New Jersey" panel with the mark in the
+  setting section is gone. The section is now two columns like the intro: heading and copy on
+  the left, the three places on the right.
+
+**55+ wording (client-verified constraint, John 2026-11-16).** Say "55+ community", "55+ adult
+community" or "adults 55 and over". **Never "senior", "elderly" or "retirement"**, which read the
+wrong way. Make no claim about age verification, occupancy rules or HOPA status unless Sterling
+supplies the wording.
+
 **Naming (decided with John, 2026-11-13).**
 - Slug: `arden-franklin`.
 - For the fork: `arden_` / `ARDEN_`, CPTs `ar_amenity` / `ar_floor_plan`, ACF groups `group_ar_*`,
@@ -635,18 +649,13 @@ reaction: "we love the modern background design and neutral colors."
   form shows a thank-you state and sends nothing; on WordPress it becomes a lead form (theme
   1.18's Leads). There is no inquiry pop-up: the whole page is the inquiry.
 - Site icons are the espresso "ar" mark on Stone, opaque (32–512px); the 1200×630 share image is
-  the hero (logo, "Coming Soon", "Franklin Township, NJ") on the line pattern.
+  the hero (logo, "Coming Soon", "A 55+ Community · Franklin Township, NJ") on the line pattern.
 
 ### Open — The Arden
 
 **Copy to confirm with the client.** None of these is verified with Sterling:
-- **55+ / age restriction.** A 2021 Franklin Reporter article on the Planning Board approval
-  calls Sterling Pointe "a 55-and-over community", and the neighbouring Four Seasons at Sterling
-  Pointe is age-restricted. The brief never says so, and the vibe board shows older couples.
-  The splash makes **no age claim**, as at Riverbend, because an age restriction has
-  fair-housing weight. Ask Nina.
-- **What the building is.** The page says only "a new community from Sterling Properties" and
-  "new homes". The same article describes two four-storey buildings of 30 apartments each; a
+- **What the building is.** Beyond 55+, the page says only "a new 55+ community from Sterling
+  Properties". The same article describes two four-storey buildings of 30 apartments each; a
   traffic letter in the township's records says 60 apartments in two three-storey buildings.
   Neither figure, nor "luxury", nor any unit mix, amenity or finish is on the page.
 - **The setting.** Six Mile Run and Colonial Park come from the branding proposal. The D&R Canal
@@ -660,7 +669,7 @@ reaction: "we love the modern background design and neutral colors."
   wants collected (Blue Hill's shows no form fields), and where leads should go.
 
 **Waiting on Nina:** the leasing phone; whether a leasing office or sales centre will be open
-before launch; the leasing or opening timeline; the 55+ question; what the form should collect
+before launch; the leasing or opening timeline; what the form should collect
 and where leads go; any renderings, floor plans or site photography; web licences for Ansam and
 Mont; and who controls DNS for `theardennj.com`.
 
