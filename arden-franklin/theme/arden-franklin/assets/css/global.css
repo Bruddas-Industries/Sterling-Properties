@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THE ARDEN AT STERLING POINTE — GLOBAL STYLESHEET
+   THE ARDEN — GLOBAL STYLESHEET
    ==========================================================================
    Forked from riverbend-florhampark (2026-11), itself a fork of
    bellclair-montclair and rivergate-bordentown. What differs from Riverbend:
@@ -20,7 +20,7 @@
 
 
 /* --------------------------------------------------------------------------
-   1. BRAND TOKENS — The Arden at Sterling Pointe
+   1. BRAND TOKENS — The Arden
    --------------------------------------------------------------------------
    Source: Sterling Pointe Branding Proposal (updated 11/4/2026), "Brand
    Identity" page (SharePoint 07_Assets/The Arden/Branding & Logos).
@@ -3471,7 +3471,7 @@ html, body { overflow-x: clip; }
    29n. COMING-SOON SPLASH (index.html until the full site launches)
    ==========================================================================
    One page: a dark brand hero (no photography exists yet, so the hero is the
-   logo on espresso over the terrain-line texture), an introduction, the three
+   logo on espresso over the hand-drawn line pattern), an introduction, the three
    brand values on a dark band, the setting, and the interest-list form. Every
    dark component here is registered in BOTH dark-band lists in section 4.
    ========================================================================== */
@@ -3503,15 +3503,17 @@ html, body { overflow-x: clip; }
   #about, #setting, #inquire { scroll-margin-top: var(--nav-height-mob); }
 }
 
-/* ---- Terrain-line texture (assets/images/texture/contours.svg) ------------
-   Stone contour lines generated for the brand's "natural landscapes" story
-   (Six Mile Run, Colonial Park). Used at low opacity on dark and sage fields. */
-.terrain {
+/* ---- Line pattern (assets/images/texture/lines.svg) -------------------------
+   An original hand-drawn pattern of bold, angular Stone lines that meander
+   without touching, made at Sterling's request (round 1, 2026-11-16) for a
+   graphic, wallpaper-like field in place of the first round's contour lines.
+   Used on the dark hero and band and on the Intrigue panel. */
+.splash-pattern {
   position: absolute;
   inset: -4%;
   z-index: -1;
-  background: url("../images/texture/contours.svg") center / cover no-repeat;
-  opacity: 0.2;
+  background: url("../images/texture/lines.svg") center / cover no-repeat;
+  opacity: 0.3;
   pointer-events: none;
 }
 
@@ -3529,8 +3531,18 @@ html, body { overflow-x: clip; }
   overflow: hidden;
   text-align: center;
 }
-.splash-hero .terrain { animation: ar-terrain-drift 50s ease-in-out infinite alternate; }
-@keyframes ar-terrain-drift {
+.splash-hero .splash-pattern { z-index: -2; animation: ar-pattern-drift 50s ease-in-out infinite alternate; }
+/* A pool of espresso behind the logo and tagline keeps them on a quiet field
+   while the pattern stays bold toward the edges. */
+.splash-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse 46% 40% at 50% 47%, rgba(75, 61, 50, 0.94) 0%, rgba(75, 61, 50, 0.8) 45%, rgba(75, 61, 50, 0) 100%);
+  pointer-events: none;
+}
+@keyframes ar-pattern-drift {
   from { transform: scale(1) translate3d(0, 0, 0); }
   to   { transform: scale(1.07) translate3d(-1.5%, 1%, 0); }
 }
@@ -3564,17 +3576,6 @@ html, body { overflow-x: clip; }
 }
 .splash-hero__logo { margin: 0; line-height: 0; }
 .splash-hero__logo img { width: min(560px, 78vw); height: auto; }
-.splash-hero__lockup {
-  max-width: none;
-  margin-top: clamp(1.25rem, 3vh, 2rem);
-  padding-left: 0.5em;
-  font-family: var(--font-accent);
-  font-size: clamp(0.72rem, 1.4vw, 0.85rem);
-  font-weight: 600;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--color-stone);
-}
 .splash-hero__tagline {
   max-width: 30ch;
   margin-top: clamp(1.75rem, 4.5vh, 3rem);
@@ -3627,7 +3628,6 @@ html, body { overflow-x: clip; }
 .splash-hero__content > :nth-child(2) { animation-delay: 150ms; }
 .splash-hero__content > :nth-child(3) { animation-delay: 380ms; }
 .splash-hero__content > :nth-child(4) { animation-delay: 520ms; }
-.splash-hero__content > :nth-child(5) { animation-delay: 660ms; }
 @keyframes ar-rise {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: none; }
@@ -3666,7 +3666,7 @@ html, body { overflow-x: clip; }
 
 /* ---- Brand values on a dark band ------------------------------------------- */
 .splash-pillars { position: relative; isolation: isolate; overflow: hidden; }
-.splash-pillars .terrain { opacity: 0.09; background-position: 70% 30%; }
+.splash-pillars .splash-pattern { opacity: 0.1; background-position: 70% 30%; }
 .splash-pillars__head { text-align: center; max-width: 760px; margin: 0 auto var(--space-9); }
 .splash-pillars__head .divider { margin-inline: auto; }
 .splash-pillars__head h2 { font-size: var(--text-3xl); }
@@ -3714,7 +3714,7 @@ html, body { overflow-x: clip; }
      Intrigue (which fails small text in any of the brand colours). */
   background-image: linear-gradient(170deg, rgba(75, 61, 50, 0) 35%, rgba(75, 61, 50, 0.62) 100%);
 }
-.splash-setting__art .terrain { opacity: 0.42; background-size: 230% auto; background-position: 28% 42%; }
+.splash-setting__art .splash-pattern { opacity: 0.3; background-size: 160% auto; background-position: 30% 40%; }
 .splash-setting__mark { width: clamp(84px, 11vw, 132px); opacity: 0.9; }
 .splash-setting__place {
   max-width: none;
@@ -3769,6 +3769,14 @@ html, body { overflow-x: clip; }
 .splash-interest__facts p { margin: 0; max-width: none; }
 .splash-interest__facts .contact-label { margin-bottom: var(--space-1); }
 .splash-interest__facts p:not(.contact-label) { color: var(--color-text); }
+.splash-interest__facts a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule);
+  text-underline-offset: 0.25em;
+  transition: color var(--duration) var(--ease-out);
+}
+.splash-interest__facts a:hover { color: var(--color-primary); }
 .splash-form {
   position: relative;
   background: var(--color-surface);
@@ -3822,7 +3830,7 @@ html, body { overflow-x: clip; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .splash-hero .terrain,
+  .splash-hero .splash-pattern,
   .splash-hero__content > *,
   .splash-hero__scroll::after { animation: none; }
 }
