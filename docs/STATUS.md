@@ -350,11 +350,12 @@ production changes go through **edit-site-prod**.
 - **Not done yet:** a check that every page opens in the editor with no invalid blocks (the
   content is the same as local, where all four passed). "Hello world!" and "Sample Page" are
   still there; trash them at cutover.
-- **Forms:** both are addressed to `riverbend@spgnj.com` and send as it, but there is no
-  FluentSMTP connection for that address yet, so until Rob adds one (sender exactly
-  `riverbend@spgnj.com`, lowercase, as `RIVERBEND_MAIL_FROM`) mail would go out through the
-  default Rivergate connection. Submissions are saved under Leads either way. Not test-submitted
-  on production.
+- **Forms:** both are addressed to `riverbend@spgnj.com`. Rob added the FluentSMTP connection
+  (2026-11-16, reply to "One more FluentSMTP connection: Riverbend"), saving the sender as
+  **`Riverbend@spgnj.com`**, capitalised like Rivergate@ and Bellclaire@. Theme **1.0.2** sets
+  `RIVERBEND_MAIL_FROM` to match exactly; under 1.0.0–1.0.1 the lowercase sender matched no
+  connection, so mail would have gone out through the default Rivergate one. Submissions are
+  saved under Leads either way. Delivery not yet test-submitted on production.
 
 **WordPress fork (theme 1.0.0, 2026-11-09).**
 - **Base.** `bellclair-montclair` 1.1.4, copied in around the preview's `assets/` and re-prefixed
