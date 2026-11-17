@@ -339,6 +339,15 @@ production changes go through **edit-site-prod**.
   `/residents-4-blocks/`). Path-matched and only on a 404, so a real page always wins; the old
   theme's demo pages (samples, features, our-work, blog) are left to 404. Map in
   `functions.php` §10.
+- **Copy trim (2026-11-16).** Nina asked for the text to be "modernized and shortened". It was
+  judged already short and current, so only 15 lines changed: repeated words ("community …
+  community", "complimentary courtesy"), stock phrases ("Photos only tell part of the story",
+  "Don't hesitate to reach out") and facts said twice on Availability and Residents. No fact
+  changed. Applied to production pages 4–7 (see "Changes made directly in the database"), and
+  the same text is in the patterns and the preview. The theme-rendered text (hero, amenity cards,
+  plan labels, explorer, forms, titles) was left alone. The shuttle amenity card in
+  `_shared.php` still says "complimentary courtesy shuttle"; change it at the next theme release
+  if wanted.
 - `acf-json/` written in place from `main` (master:www-data, 775/664, as on Bellclair); ACF
   registers both groups (4 amenity fields, 13 floor-plan fields).
 - Pages 4–7 (Home, Availability, Gallery, Residents) inserted from their patterns with
@@ -513,6 +522,8 @@ using foot routing under 25 minutes on foot and car routing beyond that.
 - **Shuttle.** The schedule is confirmed (2026-10-22) and is on the homepage as a timetable.
   "Complimentary" still comes only from the old homepage. The PDF's tables run to the bottom
   edge of its single page; if a second page has later runs, add them.
+- **9-foot ceilings** (Residence Features list) has no recorded source: it is not on the floor-plan
+  sheets or in the facts table above. Confirm it with Nina.
 - **Pets.** The fees and the two-pet limit are confirmed (2026-10-22). Ask whether there are
   size, weight or breed limits, or buildings without pets, since the old sources said "small
   dogs" and "select buildings".
@@ -698,6 +709,7 @@ rebuilt from patterns, re-apply them.
 | 6–9 (Bellclair) | 2026-10-14 — repaired block-comment escapes that the setup script stripped (OPERATIONS trap 10: the Availability hero read "Pricing u0026 Online Applications"); office hours (6) and lease termination (9) swapped in | `~/premigration/bellclair-setup/site3-before-repair-2026-10-14-2243.sql` + per-page `post-<id>-*.html` |
 | 6 (Bellclair Home) | 2026-10-15 — "By appointment only" added above the hours, and the six community cards replaced. The first attempt dropped the last old card's closing tag, so the page stopped rendering after the hours (contact form and cards missing) for a few minutes. It was restored from the backup and re-applied with a structure check (`restore-and-swap-home.php`: same top-level blocks, balanced block comments, nothing unparsed) | `~/premigration/bellclair-setup/post-6-home-20261015-215218.html` |
 | site 4 (Riverbend) | 2026-11-10 — site created on the staging host (`/riverbend-florhampark/`, `blog_public` 0); theme enabled for blog 4 only; pages 4–7 inserted from patterns | `~/premigration/riverbend-setup/network-before-riverbend-2026-11-10-0254.sql` |
+| 4–7 (Riverbend) | 2026-11-16 — copy trim: 15 text-only edits (Home 3, Availability 3, Gallery 2, Residents 7) via `prod.sh edit`; structure check passed on each. Mirrored in the patterns and preview, so a re-insert keeps them | `~/premigration/riverbend-copy/site4-riverbend-20261117-005408.sql` (blog 4 tables) + `~/premigration/edits/blog4-post{4,5,6,7}-20261117-*.html` |
 | network (user `rsadsts`, ID 5) | 2026-10-23 — Rob given FluentSMTP access: user meta `sterling_manage_email = 1`, set by John in Network Admin → Users. Applies on every site he belongs to; role unchanged (Editor). Undo: untick the box, or `wp user meta delete rsadsts sterling_manage_email` | none needed (one meta row) |
 | network (site option) | 2026-10-24 — `sterling_lead_bcc = jjosephsen@bruddasindustries.com`: lead emails on every property BCC John while delivery is confirmed (read by Rivergate 1.18.4+ / Bellclair 1.1.4+ / Riverbend 1.0.0+). **Temporary.** Undo: `scripts/prod.sh wp site option delete sterling_lead_bcc --url=rivergatenj.com` | none needed (one option row) |
 

@@ -51,7 +51,7 @@ case "$cmd" in
     ;;
   backup)
     domain="${1:?usage: prod.sh backup <domain> <label>}"; label="${2:?usage: prod.sh backup <domain> <label>}"
-    remote "mkdir -p ~/premigration/$label && f=~/premigration/$label/\$(echo $domain | tr . -)-\$(date +%Y%m%d-%H%M%S).sql && wp db export \"\$f\" --tables=\$(wp db tables --url=$domain --format=csv) --url=$domain --quiet && ls -l \"\$f\""
+    remote "mkdir -p ~/premigration/$label && f=~/premigration/$label/\$(echo $domain | tr ./ --)-\$(date +%Y%m%d-%H%M%S).sql && wp db export \"\$f\" --tables=\$(wp db tables --url=$domain --format=csv) --url=$domain --quiet && ls -l \"\$f\""
     ;;
   edit)
     domain="${1:?usage: prod.sh edit <domain> <post-id> <spec> [apply]}"; id="${2:?post id}"; spec="${3:?spec file}"; shift 3

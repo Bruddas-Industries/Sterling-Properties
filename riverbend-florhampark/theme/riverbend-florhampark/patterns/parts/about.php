@@ -23,7 +23,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <hr class="wp-block-separator has-alpha-channel-opacity divider"/>
 <!-- /wp:separator -->
 <!-- wp:paragraph -->
-<p>Riverbend is a small, community-oriented Sterling Properties community of garden-style apartments in Florham Park. Every home has its own private entrance, a balcony, a full-size washer and dryer and a garage, and residents share a renovated clubhouse, a fitness center and a pool.</p>
+<p>Riverbend is a small, close-knit community of garden-style apartments in Florham Park, by Sterling Properties. Every home has its own private entrance, a balcony, a full-size washer and dryer and a garage, and residents share a renovated clubhouse, a fitness center and a pool.</p>
 <!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
