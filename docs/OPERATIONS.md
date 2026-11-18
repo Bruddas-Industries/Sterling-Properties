@@ -157,7 +157,8 @@ each site sends as its own address, so each uses its own connection.
   From is `wordpress@<domain>`, which matches nothing, so before 1.18.4 / 1.1.4 everything went out
   through the default (Rivergate) connection. Each theme now sets `wp_mail_from` to its
   `<PREFIX>_MAIL_FROM` constant (`functions.php`; the filter is in `inc/email-settings.php`):
-  `Rivergate@spgnj.com` and `Bellclaire@spgnj.com`, capitalised exactly as Rob saved them. If a
+  `Rivergate@spgnj.com`, `Bellclaire@spgnj.com` and `Riverbend@spgnj.com`, capitalised exactly as Rob
+  saved them (Rob capitalises the first letter; check before setting a new property's constant). If a
   sender is ever re-saved with different capitalisation, change the constant to match, or that
   site silently falls back to the default connection. **A new property needs its own connection
   from Rob and its constant set to that sender.** Check which connection sent a message in

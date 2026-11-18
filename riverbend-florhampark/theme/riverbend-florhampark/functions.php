@@ -4,15 +4,16 @@
  * Riverbend at Florham Park, forked from bellclair-montclair 1.1.4.
  */
 
-define( 'RIVERBEND_VERSION', '1.0.1' );
+define( 'RIVERBEND_VERSION', '1.0.2' );
 // Same referrer-restricted key as Rivergate (OPERATIONS trap 7): every domain
 // Riverbend is served from must be in its allowed referrers.
 define( 'RIVERBEND_MAPS_API_KEY', 'AIzaSyBC-Y1aEPHAfptChXYDDZy210906U5IKVE' );
 // This property's sending address. FluentSMTP picks its connection by matching
 // the From address against each connection's sender, exactly and case-sensitively,
 // so this must match the sender saved in FluentSMTP character for character
-// (inc/email-settings.php; OPERATIONS → Mail).
-define( 'RIVERBEND_MAIL_FROM', 'riverbend@spgnj.com' );
+// (inc/email-settings.php; OPERATIONS → Mail). Rob saved it capitalised
+// ("Riverbend@spgnj.com", 2026-11-16), as he did Rivergate@ and Bellclaire@.
+define( 'RIVERBEND_MAIL_FROM', 'Riverbend@spgnj.com' );
 // Brand faces are Condor Light, Acme Gothic Extrawide and Area Normal, which are
 // commercial and not yet licensed for web. Jost, Syncopate and Manrope stand in
 // until the files arrive (see assets/fonts/README.txt and the @font-face block at the end of
