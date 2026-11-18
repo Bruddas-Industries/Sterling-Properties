@@ -18,7 +18,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <div class="wp-block-group section-intro">
 <!-- wp:paragraph {"className":"eyebrow"} --><p class="eyebrow">Real-Time Listings</p><!-- /wp:paragraph -->
 <!-- wp:heading --><h2 class="wp-block-heading">Check What's Available Now</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Live availability, pricing and online applications are all managed through <strong>AppFolio</strong>. Browse open residences below and apply directly online — no appointment required.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Live availability, pricing and applications are all on <strong>AppFolio</strong>. Browse open residences and apply online — no appointment needed.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
@@ -37,14 +37,14 @@ $img = get_template_directory_uri() . '/assets/images';
 <div class="wp-block-group how-step">
 <!-- wp:paragraph {"className":"how-step__num"} --><p class="how-step__num">2</p><!-- /wp:paragraph -->
 <!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Apply Online</h3><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Submit your application securely through AppFolio in minutes — no office visit needed.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Apply securely through AppFolio in minutes.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"how-step"} -->
 <div class="wp-block-group how-step">
 <!-- wp:paragraph {"className":"how-step__num"} --><p class="how-step__num">3</p><!-- /wp:paragraph -->
 <!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Move In</h3><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Our leasing team guides you through approval, lease signing and key handoff from there.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Our leasing team guides you through approval, lease signing and key handoff.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 </div>

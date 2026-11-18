@@ -81,7 +81,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <div class="wp-block-group section-intro">
 <!-- wp:paragraph {"className":"eyebrow"} --><p class="eyebrow">Clubhouse &amp; Fitness</p><!-- /wp:paragraph -->
 <!-- wp:heading --><h2 class="wp-block-heading">The Renovated Clubhouse</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>A fireside lounge, a coffee bar and a fitness center, renovated for residents.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>A fireside lounge, a coffee bar and a fitness center, all for residents.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"gallery-grid"} -->
@@ -203,7 +203,7 @@ $img = get_template_directory_uri() . '/assets/images';
 <!-- wp:paragraph {"className":"eyebrow"} --><p class="eyebrow">Experience It Firsthand</p><!-- /wp:paragraph -->
 <!-- wp:separator {"className":"divider"} --><hr class="wp-block-separator has-alpha-channel-opacity divider"/><!-- /wp:separator -->
 <!-- wp:heading --><h2 class="wp-block-heading">See Riverbend in Person</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Photos only tell part of the story. Come see the residences, the clubhouse and the grounds for yourself.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Come see the residences, the clubhouse and the grounds for yourself.</p><!-- /wp:paragraph -->
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons">
 <!-- wp:button {"className":"is-style-riverbend-primary"} --><div class="wp-block-button is-style-riverbend-primary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/#contact' ) ); ?>">Schedule a Tour</a></div><!-- /wp:button -->

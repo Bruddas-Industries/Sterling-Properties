@@ -26,7 +26,7 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <div class="wp-block-group section-intro">
 <!-- wp:paragraph {"className":"eyebrow"} --><p class="eyebrow">Resident Services</p><!-- /wp:paragraph -->
 <!-- wp:heading --><h2 class="wp-block-heading">Your Online Resident Portal</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Everything you need to manage your home at Riverbend — from paying rent to submitting a maintenance request — is available through the Sterling Properties resident portal, powered by AppFolio.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Pay rent, request maintenance and manage your lease online through the Sterling Properties resident portal, powered by AppFolio.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"portal-grid"} -->
@@ -59,7 +59,7 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <div class="wp-block-group portal-card portal-card--alt">
 <!-- wp:html --><svg class="portal-card__icon" width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="24" height="28" rx="2"/><path d="M14 16 h12 M14 22 h12 M14 28 h8"/></svg><!-- /wp:html -->
 <!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Lease Documents</h3><!-- /wp:heading -->
-<!-- wp:paragraph {"className":"card__text"} --><p class="card__text">Access your lease agreement, addenda and renewal documents securely through the resident portal.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"card__text"} --><p class="card__text">Access your lease agreement, addenda and renewal documents securely online.</p><!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
 <!-- wp:button {"className":"is-style-riverbend-secondary"} --><div class="wp-block-button is-style-riverbend-secondary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( $portal ); ?>" target="_blank" rel="noopener noreferrer">View Documents →</a></div><!-- /wp:button -->
@@ -71,7 +71,7 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <div class="wp-block-group portal-card portal-card--border">
 <!-- wp:html --><svg class="portal-card__icon" width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="20" cy="16" r="6"/><path d="M8 34 c0-8 24-8 24 0"/></svg><!-- /wp:html -->
 <!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Manage Your Account</h3><!-- /wp:heading -->
-<!-- wp:paragraph {"className":"card__text"} --><p class="card__text">Update contact information, add authorized occupants and manage your account preferences.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"card__text"} --><p class="card__text">Update your contact information, add authorized occupants and set your preferences.</p><!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
 <!-- wp:button {"className":"is-style-riverbend-secondary"} --><div class="wp-block-button is-style-riverbend-secondary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( $portal ); ?>" target="_blank" rel="noopener noreferrer">My Account →</a></div><!-- /wp:button -->
@@ -83,7 +83,7 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <!-- /wp:group -->
 <!-- wp:group {"className":"portal-note"} -->
 <div class="wp-block-group portal-note">
-<!-- wp:paragraph --><p>The resident portal is powered by <strong>AppFolio Property Manager</strong>. If you do not have login credentials or are having trouble accessing your account, please contact the leasing office at <a href="tel:9736650050">973.665.0050</a> or <a href="mailto:riverbend@spgnj.com">riverbend@spgnj.com</a>.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Need a login, or having trouble signing in? Contact the leasing office at <a href="tel:9736650050">973.665.0050</a> or <a href="mailto:riverbend@spgnj.com">riverbend@spgnj.com</a>.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 </div>
@@ -99,7 +99,7 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <div class="wp-block-group section-intro">
 <!-- wp:paragraph {"className":"eyebrow"} --><p class="eyebrow">Resident Resources</p><!-- /wp:paragraph -->
 <!-- wp:heading --><h2 class="wp-block-heading">Helpful Information &amp; Links</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Quick access to the forms and information you may need during your residency at Riverbend.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Forms and information you may need while living at Riverbend.</p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 <!-- wp:html -->
@@ -164,7 +164,7 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <!-- wp:group {"className":"policy-block"} -->
 <div class="wp-block-group policy-block">
 <!-- wp:paragraph {"className":"policy-block__heading"} --><p class="policy-block__heading">Chatham Station Shuttle</p><!-- /wp:paragraph -->
-<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>Complimentary courtesy shuttle on weekdays</li><!-- /wp:list-item --><!-- wp:list-item --><li>Mornings from the front of the Gate House, 5:22 to 8:27 AM</li><!-- /wp:list-item --><!-- wp:list-item --><li>Evenings from Chatham station every 15 minutes, 5:30 to 8:30 PM</li><!-- /wp:list-item --></ul><!-- /wp:list -->
+<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>Complimentary shuttle on weekdays</li><!-- /wp:list-item --><!-- wp:list-item --><li>Mornings from the front of the Gate House, 5:22 to 8:27 AM</li><!-- /wp:list-item --><!-- wp:list-item --><li>Evenings from Chatham station every 15 minutes, 5:30 to 8:30 PM</li><!-- /wp:list-item --></ul><!-- /wp:list -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"policy-block"} -->
@@ -254,7 +254,7 @@ $portal = 'https://sterlingproperties.appfolio.com/connect';
 <!-- wp:paragraph {"className":"eyebrow"} --><p class="eyebrow">Need Help?</p><!-- /wp:paragraph -->
 <!-- wp:separator {"className":"divider"} --><hr class="wp-block-separator has-alpha-channel-opacity divider"/><!-- /wp:separator -->
 <!-- wp:heading --><h2 class="wp-block-heading">We're Here for You</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>The Riverbend leasing and management team is on site in Florham Park. Don't hesitate to reach out.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>The Riverbend leasing and management team is on site in Florham Park.</p><!-- /wp:paragraph -->
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons">
 <!-- wp:button {"className":"is-style-riverbend-primary"} --><div class="wp-block-button is-style-riverbend-primary"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/#contact' ) ); ?>">Contact the Leasing Office</a></div><!-- /wp:button -->

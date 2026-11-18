@@ -18,7 +18,7 @@
 <h2 class="wp-block-heading">Explore the Neighborhood</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Riverbend sits beside the Passaic River at the Chatham line. Filter the map by category; times are measured from Riverbend, with drive times shown without traffic.</p>
+<p>Riverbend sits beside the Passaic River at the Chatham line. Filter the map by category. Times are measured from Riverbend; drive times assume no traffic.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->

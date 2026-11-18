@@ -25,7 +25,7 @@
 <hr class="wp-block-separator has-alpha-channel-opacity divider"/>
 <!-- /wp:separator -->
 <!-- wp:paragraph -->
-<p>A complimentary courtesy shuttle runs between Riverbend and the Chatham NJ Transit station every weekday morning and evening. Morning pickups are in front of the Gate House.</p>
+<p>A complimentary shuttle runs between Riverbend and the Chatham NJ Transit station every weekday morning and evening. Morning pickups are in front of the Gate House.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
