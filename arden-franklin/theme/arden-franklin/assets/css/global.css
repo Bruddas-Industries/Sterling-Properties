@@ -3474,7 +3474,7 @@ html, body { overflow-x: clip; }
    29n. COMING-SOON SPLASH (index.html until the full site launches)
    ==========================================================================
    One page: a dark brand hero (no photography exists yet, so the hero is the
-   logo on espresso over the hand-drawn line pattern), an introduction, the
+   logo on espresso over the contour-line texture), an introduction, the
    amenity and unit-feature lists on a dark band, the setting, and the interest-list form. Every
    dark component here is registered in BOTH dark-band lists in section 4.
    ========================================================================== */
@@ -3506,17 +3506,17 @@ html, body { overflow-x: clip; }
   #about, #setting, #inquire { scroll-margin-top: var(--nav-height-mob); }
 }
 
-/* ---- Line pattern (assets/images/texture/lines.svg) -------------------------
-   An original hand-drawn pattern of bold, angular Stone lines that meander
-   without touching, made at Sterling's request (round 1, 2026-11-16) for a
-   graphic, wallpaper-like field in place of the first round's contour lines.
-   Used on the dark hero and band and on the Intrigue panel. */
+/* ---- Contour-line texture (assets/images/texture/contours.svg) --------------
+   Stone contour lines ("the swirls") generated for the brand's natural-
+   landscape story. Round 1 swapped them for a hand-drawn line pattern; the
+   team chose these back on 2026-11-24 (Nina), so they are restored with their
+   round-1 opacity and no espresso pool behind the hero logo. */
 .splash-pattern {
   position: absolute;
   inset: -4%;
   z-index: -1;
-  background: url("../images/texture/lines.svg") center / cover no-repeat;
-  opacity: 0.3;
+  background: url("../images/texture/contours.svg") center / cover no-repeat;
+  opacity: 0.2;
   pointer-events: none;
 }
 
@@ -3534,17 +3534,7 @@ html, body { overflow-x: clip; }
   overflow: hidden;
   text-align: center;
 }
-.splash-hero .splash-pattern { z-index: -2; animation: ar-pattern-drift 50s ease-in-out infinite alternate; }
-/* A pool of espresso behind the logo and tagline keeps them on a quiet field
-   while the pattern stays bold toward the edges. */
-.splash-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(ellipse 46% 40% at 50% 47%, rgba(75, 61, 50, 0.94) 0%, rgba(75, 61, 50, 0.8) 45%, rgba(75, 61, 50, 0) 100%);
-  pointer-events: none;
-}
+.splash-hero .splash-pattern { animation: ar-pattern-drift 50s ease-in-out infinite alternate; }
 @keyframes ar-pattern-drift {
   from { transform: scale(1) translate3d(0, 0, 0); }
   to   { transform: scale(1.07) translate3d(-1.5%, 1%, 0); }
@@ -3683,7 +3673,7 @@ html, body { overflow-x: clip; }
    Round 3 (Nina, 2026-11-23) replaced the Calm / Comfortable / Contemporary
    values with two half-width lists divided by a Stone hairline. */
 .splash-features { position: relative; isolation: isolate; overflow: hidden; }
-.splash-features .splash-pattern { opacity: 0.1; background-position: 70% 30%; }
+.splash-features .splash-pattern { opacity: 0.09; background-position: 70% 30%; }
 .splash-features__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
