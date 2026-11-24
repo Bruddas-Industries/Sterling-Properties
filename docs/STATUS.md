@@ -582,10 +582,10 @@ then the official website closer to the end of December.** She describes a splas
 page of a website with general information and more of a COMING SOON vibe. 'Inquire here for
 more information' etc.", and points to Blue Hill's (`bluehillnj.com`) as the example.
 
-**Stage: coming-soon splash in client review; round 3 of revisions done (2026-11-23).** The page
+**Stage: coming-soon splash in client review; round 4 of revisions done (2026-11-24).** The page
 is `arden-franklin/preview/index.html` (built 2026-11-13, PR #60). It is a single page; there are
 no Residents, Availability or Gallery pages yet. `theme/arden-franklin/` holds only `assets/`
-(`global.css`, logos, site icons, the share image, the line-pattern texture and the fonts README).
+(`global.css`, logos, site icons, the share image, the contour-line texture, the email header and the fonts README).
 The client link is `https://arden-franklin-preview.vercel.app/` (Vercel project
 `arden-franklin-preview`, Root Directory `arden-franklin/`), sent to Nina 2026-11-14. Her first
 reaction: "we love the modern background design and neutral colors."
@@ -638,10 +638,18 @@ reaction: "we love the modern background design and neutral colors."
   served at `https://arden-franklin-preview.vercel.app/preview/email/inquiry-thank-you.html` once
   merged. A table-based 600px email in the splash's palette and type (Georgia/Arial fallbacks where
   the client blocks web fonts): the header pattern (`assets/images/email/header-pattern.jpg`, a
-  1200×560 render of `lines.svg`; Outlook shows plain espresso), a thank-you, an echo of the
+  1200×560 render of the texture, re-rendered on `contours.svg` in round 4; Outlook shows plain espresso), a thank-you, an echo of the
   submitted fields (sample data), Nina's amenity and unit-feature lists, contact details and an
   "Email The Arden" button. Images use absolute preview-host URLs; repoint them to the live theme
   when it is wired into the WordPress lead form. Expect revisions.
+
+**Round 4 (Nina, 2026-11-24): the contour lines are back.** "The team prefers the original
+background graphic with the swirls." Round 1's hand-drawn line pattern (`lines.svg`) is deleted
+(it is in git history at `e6ee2a6`) and `assets/images/texture/contours.svg` is restored from the
+first build (`12d6bcf`) with its original settings: opacity 0.2 on the hero, 0.09 on the features
+band, and **no** espresso pool behind the hero logo. The class is still `.splash-pattern`. The share
+image and the email header were re-rendered on the contours. **Don't swap the pattern again without
+Nina asking.**
 
 **Community wording (client-verified constraint, Nina 2026-11-23; replaces John's 2026-11-16 "55+
 community" rule).** Call it an **"active adult rental community"**. **Never "senior", "elderly" or
@@ -680,9 +688,8 @@ HOPA status unless Sterling supplies the wording.
   are commercial: Cormorant and Montserrat stand in, with the `@font-face` block commented out
   (see `assets/fonts/README.txt`).
 - **No photography or renderings exist yet**, so the hero is the logo in Stone on Espresso (the
-  guide's colour logo panel) over the line pattern (`assets/images/texture/lines.svg`; round 1
-  above). The generator is a seeded Python script (seed 11) kept outside the repo; regenerate
-  rather than hand-edit the SVG. None of the vibe-board photos is used; they are mood imagery of
+  guide's colour logo panel) over the contour-line texture (`assets/images/texture/contours.svg`;
+  see round 4). None of the vibe-board photos is used; they are mood imagery of
   unknown licence.
 - Arden-only CSS is in section 29: 29a–29m are the brand layer (most carried from Riverbend),
   29n onward the splash components (`.splash-*`, including `.splash-pattern`). Riverbend's wave divider, wave
@@ -692,7 +699,7 @@ HOPA status unless Sterling supplies the wording.
   1.18's Leads). There is no inquiry pop-up: the whole page is the inquiry.
 - Site icons are the espresso "ar" mark on Stone, opaque (32–512px); the 1200×630 share image is
   the hero (logo, "Coming Soon", "An Active Adult Rental Community · Franklin Township, NJ") on the
-  line pattern, rendered from HTML with Playwright (round 3).
+  contour lines, rendered from HTML with Playwright (round 4).
 
 ### Open — The Arden
 
