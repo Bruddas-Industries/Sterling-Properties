@@ -582,7 +582,7 @@ then the official website closer to the end of December.** She describes a splas
 page of a website with general information and more of a COMING SOON vibe. 'Inquire here for
 more information' etc.", and points to Blue Hill's (`bluehillnj.com`) as the example.
 
-**Stage: coming-soon splash in client review; round 1 of revisions done (2026-11-16).** The page
+**Stage: coming-soon splash in client review; round 3 of revisions done (2026-11-23).** The page
 is `arden-franklin/preview/index.html` (built 2026-11-13, PR #60). It is a single page; there are
 no Residents, Availability or Gallery pages yet. `theme/arden-franklin/` holds only `assets/`
 (`global.css`, logos, site icons, the share image, the line-pattern texture and the fonts README).
@@ -613,10 +613,33 @@ reaction: "we love the modern background design and neutral colors."
   setting section is gone. The section is now two columns like the intro: heading and copy on
   the left, the three places on the right.
 
-**55+ wording (client-verified constraint, John 2026-11-16).** Say "55+ community", "55+ adult
-community" or "adults 55 and over". **Never "senior", "elderly" or "retirement"**, which read the
-wrong way. Make no claim about age verification, occupancy rules or HOPA status unless Sterling
-supplies the wording.
+**Round 3 (Nina, 2026-11-23, PR for `feature/arden-splash-round3`):**
+- Every "55+ community" is now **"active adult rental community"**: the hero line under the logo,
+  the intro, the interest-section fact ("An Active Adult Rental Community Presented By / Sterling
+  Properties"), the title, description and share tags, and the share image (rebuilt). The intro
+  still says "a place for adults 55 and over" (she asked only about "55+ community"; see Copy to
+  confirm).
+- About: "presented by Sterling Properties" (was "from"); the paragraph about the name (Six Mile
+  Run, Colonial Park) is gone.
+- The Calm / Comfortable / Contemporary band is replaced by two half-width lists on the same dark
+  band (`#features`, `.splash-features`): **Amenity Highlights** — Fitness Center, Community
+  Garden, Courtyard / Pergola, Dog Park, Community Clubroom, Pet Friendly, Private Road — and
+  **Unit Features** — Balconies, Quartz Countertops, Stainless Steel Appliances, In-Unit Laundry,
+  Private, Covered Garage Parking Available, Storage Rooms Available. Both lists are Nina's; the
+  eyebrows ("The Community", "The Residences") are ours.
+- The paragraph under "Join the interest list." is gone.
+- Footer: a **no-smoking** badge (`badges/no-smoking.svg`, drawn to match the other two) and a
+  white heart in place of the red ❤️ in the Brudda's credit.
+- She also asked for screenshots of each background pattern to compare: the round-1 contour lines
+  and the current line pattern, both on today's hero, were sent separately (not in the repo).
+- **Not done here:** the form. Nina wants every submission collected and an auto-responder email;
+  John is emailing Rob about the SMTP connection for `thearden@spgnj.com`, and offering a pre-built
+  HTML auto-responder template (not built yet).
+
+**Community wording (client-verified constraint, Nina 2026-11-23; replaces John's 2026-11-16 "55+
+community" rule).** Call it an **"active adult rental community"**. **Never "senior", "elderly" or
+"retirement"**, which read the wrong way. Make no claim about age verification, occupancy rules or
+HOPA status unless Sterling supplies the wording.
 
 **Naming (decided with John, 2026-11-13).**
 - Slug: `arden-franklin`.
@@ -661,31 +684,35 @@ supplies the wording.
   form shows a thank-you state and sends nothing; on WordPress it becomes a lead form (theme
   1.18's Leads). There is no inquiry pop-up: the whole page is the inquiry.
 - Site icons are the espresso "ar" mark on Stone, opaque (32–512px); the 1200×630 share image is
-  the hero (logo, "Coming Soon", "A 55+ Community · Franklin Township, NJ") on the line pattern.
+  the hero (logo, "Coming Soon", "An Active Adult Rental Community · Franklin Township, NJ") on the
+  line pattern, rendered from HTML with Playwright (round 3).
 
 ### Open — The Arden
 
 **Copy to confirm with the client.** None of these is verified with Sterling:
-- **What the building is.** Beyond 55+, the page says only "a new 55+ community from Sterling
-  Properties". The same article describes two four-storey buildings of 30 apartments each; a
+- **"Adults 55 and over."** The intro still says "a place for adults 55 and over to enjoy life's
+  next chapter". Round 3 moved every "55+ community" to "active adult rental community"; ask Nina
+  whether this age line should stay or go too.
+- **What the building is.** Beyond the amenity and unit-feature lists (Nina, round 3), the page
+  says only "a new active adult rental community presented by Sterling Properties". The same article describes two four-storey buildings of 30 apartments each; a
   traffic letter in the township's records says 60 apartments in two three-storey buildings.
-  Neither figure, nor "luxury", nor any unit mix, amenity or finish is on the page.
+  Neither figure, nor "luxury", nor any unit mix is on the page.
 - **The setting.** Six Mile Run and Colonial Park come from the branding proposal. The D&R Canal
   towpath and the park descriptions (Six Mile Run State Park is part of D&R Canal State Park;
   Colonial Park has the Rudolf W. van der Goot Rose Garden) are public facts added for the page.
   No distances are given; now that the address is known they can be measured with OSRM if
   Sterling wants them.
-- **"The Arden Way of Living"** pillars (Calm / Comfortable / Contemporary) expand the brand's
-  vibe-board line with general copy that makes no factual claim.
-- **Form fields.** Name, email, phone, ideal move-in timing and questions. Ask Nina what she
-  wants collected (Blue Hill's shows no form fields), and where leads should go.
+- **Form fields.** Name, email, phone, ideal move-in timing and questions. Nina (round 3) wants
+  all submissions collected plus an auto-responder; the delivery route waits on Rob (SMTP for
+  `thearden@spgnj.com`).
 
 **Waiting on Nina:** the leasing phone; whether a leasing office or sales centre will be open
-before launch; the leasing or opening timeline; what the form should collect
-and where leads go; any renderings, floor plans or site photography; web licences for Ansam and
+before launch; the leasing or opening timeline; Rob's SMTP set-up for `thearden@spgnj.com`
+and whether they want the HTML auto-responder template; any renderings, floor plans or site photography; web licences for Ansam and
 Mont; and who controls DNS for `theardennj.com`.
 
-**Next:** merge round 1 so the client link updates, and send Nina the changelog. Further revision
+**Next:** merge round 3 so the client link updates, and send Nina the changelog and the two
+pattern screenshots. Further revision
 rounds use **edit-site-dev**. For the go-live of the splash itself, decide with John whether it goes
 onto the multisite as a one-page Arden site (the splash as a page pattern) or stays static until
 the December site.
