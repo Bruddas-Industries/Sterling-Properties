@@ -616,9 +616,8 @@ reaction: "we love the modern background design and neutral colors."
 **Round 3 (Nina, 2026-11-23, PR for `feature/arden-splash-round3`):**
 - Every "55+ community" is now **"active adult rental community"**: the hero line under the logo,
   the intro, the interest-section fact ("An Active Adult Rental Community Presented By / Sterling
-  Properties"), the title, description and share tags, and the share image (rebuilt). The intro
-  still says "a place for adults 55 and over" (she asked only about "55+ community"; see Copy to
-  confirm).
+  Properties"), the title, description and share tags, and the share image (rebuilt). The intro's
+  "a place for adults 55 and over" is gone too (John, 2026-11-23): the page makes no age claim.
 - About: "presented by Sterling Properties" (was "from"); the paragraph about the name (Six Mile
   Run, Colonial Park) is gone.
 - The Calm / Comfortable / Contemporary band is replaced by two half-width lists on the same dark
@@ -634,7 +633,15 @@ reaction: "we love the modern background design and neutral colors."
   and the current line pattern, both on today's hero, were sent separately (not in the repo).
 - **Not done here:** the form. Nina wants every submission collected and an auto-responder email;
   John is emailing Rob about the SMTP connection for `thearden@spgnj.com`, and offering a pre-built
-  HTML auto-responder template (not built yet).
+  HTML auto-responder template.
+- **Auto-responder sample** (for Nina's review, 2026-11-23): `preview/email/inquiry-thank-you.html`,
+  served at `https://arden-franklin-preview.vercel.app/preview/email/inquiry-thank-you.html` once
+  merged. A table-based 600px email in the splash's palette and type (Georgia/Arial fallbacks where
+  the client blocks web fonts): the header pattern (`assets/images/email/header-pattern.jpg`, a
+  1200×560 render of `lines.svg`; Outlook shows plain espresso), a thank-you, an echo of the
+  submitted fields (sample data), Nina's amenity and unit-feature lists, contact details and an
+  "Email The Arden" button. Images use absolute preview-host URLs; repoint them to the live theme
+  when it is wired into the WordPress lead form. Expect revisions.
 
 **Community wording (client-verified constraint, Nina 2026-11-23; replaces John's 2026-11-16 "55+
 community" rule).** Call it an **"active adult rental community"**. **Never "senior", "elderly" or
@@ -690,9 +697,6 @@ HOPA status unless Sterling supplies the wording.
 ### Open — The Arden
 
 **Copy to confirm with the client.** None of these is verified with Sterling:
-- **"Adults 55 and over."** The intro still says "a place for adults 55 and over to enjoy life's
-  next chapter". Round 3 moved every "55+ community" to "active adult rental community"; ask Nina
-  whether this age line should stay or go too.
 - **What the building is.** Beyond the amenity and unit-feature lists (Nina, round 3), the page
   says only "a new active adult rental community presented by Sterling Properties". The same article describes two four-storey buildings of 30 apartments each; a
   traffic letter in the township's records says 60 apartments in two three-storey buildings.
