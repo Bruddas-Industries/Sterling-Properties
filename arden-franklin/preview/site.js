@@ -36,7 +36,7 @@
 
   /* ------------------------------------------------ 2. scroll reveal */
   var reveal = $$('[data-animate]');
-  $$('.splash-pillars__grid, .splash-places').forEach(function (grid) {
+  $$('.splash-places').forEach(function (grid) {
     $$('[data-animate]', grid).forEach(function (el, i) { el.style.transitionDelay = (i * 90) + 'ms'; });
   });
   if (!('IntersectionObserver' in window)) {
